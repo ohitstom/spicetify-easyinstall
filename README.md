@@ -19,3 +19,8 @@ I would like to mention this in no way replaces the installation process recomme
 * Easy to use config modifier that shows you all available options, and can be ran both on initial setup or any time you want using the startup menu.
 
 * Everything offered by spicetify
+
+# **Warning:**
+This is not official, make sure to read all the source code to your hearts content before using this software! And if you have any further questions or need more help, please check out the discord here: discord.gg/placeholder
+
+If you would like to contribute to the project please email me here: lt.tfitz@gmail.com
