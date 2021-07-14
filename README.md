@@ -5,7 +5,7 @@ An open source installer for the github repository of spicetify. Only compatible
 # **Information:**
 *I would just like to preface that this could not have been done without spicetify and its incredible developers, and that my spahgetti code doesnt even scratch the surface of their genius. Please check out their github here: https://github.com/khanhas/spicetify-cli*
 
-Both spotify and spicetify will be locked to their respective working versions and will not auto update, keeping your spicetify working for longer. Every couple of months i'll update to the versions of spotify and spicetify that work together.
+Both spotify and spicetify will be locked to their respective working versions and will not auto update, keeping your spicetify working for longer. Every couple of months i'll update the versions of spotify and spicetify that work together.
 
 I would like to mention this in no way replaces the installation process recommended by spicetify on their wiki, its instead a fall back if you are unable to get the latest version of spicetify running no matter what you've tried. if you havent tried the traditional method i do not recommend starting here.
 
