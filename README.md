@@ -1,4 +1,4 @@
-![Alt Text](https://camo.githubusercontent.com/04af757763126b654906e864d2d569c7efd891bfa26a045ed0348d6643cc26db/68747470733a2f2f692e696d6775722e636f6d2f6977634c4954512e706e67)
+![Alt Text](https://i.ibb.co/TPVYWJY/68747470733a2f2f692e696d6775722e636f6d2f6977634c4954512e706e67.png)
 
 An open source installer for the github repository of spicetify. Only compatible with windows, this .exe (or .py) will install spicetify and a spotify version verified by me to work together onto your windows computer. 
 
