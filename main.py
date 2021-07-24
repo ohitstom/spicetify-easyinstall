@@ -5,16 +5,30 @@ import time
 import shutil
 import psutil
 import colorama
+import requests
 import icaclswrap as icacls
 import subprocess;
 from os import mkdir
 from pathlib import Path
+from clint.textui import progress
 from colorama import init, Fore, Back, Style
 init()
 os.system("mode con: cols=90 lines=30")
 os.system("title " + "Spicetify Easyinstall")
 
 #SIDE FUNCTIONS
+def requests_progress(url, path):
+    if os.path.isdir(path) == True:
+        mkdir(path)
+    r = requests.get(url, stream=True) 
+    with open(path, 'w') as f:
+        total_length = int(r.headers.get('content-length'))
+        for chunk in progress.bar(r.iter_content(chunk_size=1024000), expected_size=round(total_length/1024000)):
+            if chunk:
+                f.write(str(chunk))
+                f.flush()
+        print ("\033[A                                                     \033[A")
+
 def startProgram(program):
     SW_HIDE = 0
     info = subprocess.STARTUPINFO()
@@ -46,10 +60,10 @@ def INSTALL():
     temp = os.environ['TEMP']
     FolderDictionary = [(user_profile + '\spicetify-cli'), (user_profile + '\.spicetify'), (appdata_local + '\spotify'), (appdata + '\spotify'), (temp)]
     my_file = Path(user_profile + "\AppData\Roaming\Spotify\prefs")
-
-    if os.path.isdir(appdata + "\Spotify")== True:  
+    
+    if os.path.isdir(appdata + "\Spotify")== True:
         print(Fore.YELLOW + "Uninstalling Spotify.")
-        terminateProgram('Spotify.exe')         
+        terminateProgram('Spotify.exe')
         subprocess.Popen(["powershell", 'cmd /c "%USERPROFILE%\AppData\Roaming\Spotify\Spotify.exe" /UNINSTALL /SILENT'])
         while True:
             if checkIfProcessRunning('powershell') == False:
@@ -66,15 +80,21 @@ def INSTALL():
         except OSError as e :
             print(Fore.RED + '"%s", was not found.\n' % x)
     print(Fore.MAGENTA + "[Finished Wiping Folders]\n")
+
+    print(Fore.YELLOW + 'Downloading Spotify Version.')
+    if os.path.isdir(temp) == False:
+        mkdir(temp)
+    requests_progress('https://download1591.mediafire.com/9t6d6qio80xg/rcszp96g4nqiinj/spotify-1-1-62-583.exe',temp + '\spotify-1-1-62-583.exe')
+    print(Fore.GREEN + 'Finished Downloading Spotify Version.\n')
     
     print(Fore.YELLOW + "Installing Spotify.")
     terminateProgram('Spotify.exe')
-    startProgram('.\\data\spotify-1-1-62-583.exe')
+    startProgram(temp + '\spotify-1-1-62-583.exe')
     while True:
         if checkIfProcessRunning('spotify-1-1-62-583.exe') == False and my_file.is_file():
             print(Fore.GREEN + "Finished Installing Spotify.\n")
             terminateProgram('Spotify.exe')
-
+            os.remove(temp + '\spotify-1-1-62-583.exe')
             break
     
     print(Fore.YELLOW + "Installing Spicetify.")
@@ -160,4 +180,3 @@ while True:
     except Exception as e:
         os.system("cls")
         print(Fore.RED + "[!]", e ,"[!]")
-
