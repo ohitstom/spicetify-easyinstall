@@ -21,7 +21,7 @@ def requests_progress(url, path):
     if os.path.isdir(path) == True:
         mkdir(path)
     r = requests.get(url, stream=True) 
-    with open(path, 'w') as f:
+    with open(path, 'wb') as f:
         total_length = int(r.headers.get('content-length'))
         for chunk in progress.bar(r.iter_content(chunk_size=1024000), expected_size=round(total_length/1024000)):
             if chunk:
