@@ -1,0 +1,14 @@
+IMPORTANT: FIX DOWNLOADING OF THEMES AND APPS
+
+
+theme picker,
+color picker,
+extension picker,
+app picker.
+
+wrap in exe.
+create a v1 variant.
+
+
+optional:
+backup and restore spotify settings and login
