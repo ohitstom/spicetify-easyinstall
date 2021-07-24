@@ -25,7 +25,7 @@ def requests_progress(url, path):
         total_length = int(r.headers.get('content-length'))
         for chunk in progress.bar(r.iter_content(chunk_size=1024000), expected_size=round(total_length/1024000)):
             if chunk:
-                f.write(str(chunk))
+                f.write(chunk)
                 f.flush()
         print ("\033[A                                                     \033[A")
 
