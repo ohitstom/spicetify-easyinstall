@@ -22,7 +22,7 @@ def requests_progress(url, path):
         mkdir(path)
     r = requests.get(url, stream=True) 
     with open(path, 'wb') as f:
-        total_length = int(r.headers.get('content-length'))
+        total_length = int((r.headers.get('content-length')))
         for chunk in progress.bar(r.iter_content(chunk_size=1024000), expected_size=round(total_length/1024000)):
             if chunk:
                 f.write(chunk)
@@ -84,7 +84,7 @@ def INSTALL():
     print(Fore.YELLOW + 'Downloading Spotify Version.')
     if os.path.isdir(temp) == False:
         mkdir(temp)
-    requests_progress('https://download1591.mediafire.com/9t6d6qio80xg/rcszp96g4nqiinj/spotify-1-1-62-583.exe',temp + '\spotify-1-1-62-583.exe')
+    requests_progress('https://github.com/OhItsTom/Spotify-Version/releases/download/spotify-1-1-62-583/spotify-1-1-62-583.exe',temp + '\spotify-1-1-62-583.exe')
     print(Fore.GREEN + 'Finished Downloading Spotify Version.\n')
     
     print(Fore.YELLOW + "Installing Spotify.")
