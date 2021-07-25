@@ -1,0 +1,4 @@
+psutil
+colorama
+requests
+icaclswrap
