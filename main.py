@@ -1,17 +1,13 @@
 #IMPORTS
 import os
-import sys
-import time
 import shutil
 import psutil
-import colorama
 import requests
-import icaclswrap as icacls
 import subprocess;
 from os import mkdir
 from pathlib import Path
+from colorama import init, Fore
 from clint.textui import progress
-from colorama import init, Fore, Back, Style
 init()
 os.system("mode con: cols=90 lines=30")
 os.system("title " + "Spicetify Easyinstall")
