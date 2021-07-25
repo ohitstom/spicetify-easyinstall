@@ -20,7 +20,7 @@ os.system("title " + "Spicetify Easyinstall")
 def requests_progress(url, path):
     if os.path.isdir(path) == True:
         mkdir(path)
-    r = requests.get(url, stream=True) 
+    r = requests.get(url, stream=True)
     with open(path, 'wb') as f:
         total_length = int((r.headers.get('content-length')))
         for chunk in progress.bar(r.iter_content(chunk_size=1024000), expected_size=round(total_length/1024000)):
@@ -35,7 +35,7 @@ def startProgram(program):
     info.dwFlags = subprocess.STARTF_USESHOWWINDOW
     info.wShowWindow = SW_HIDE
     subprocess.Popen(program, startupinfo=info)
-        
+
 def terminateProgram(processName):
     for proc in psutil.process_iter():
         if processName.lower() in proc.name().lower():
@@ -60,7 +60,7 @@ def INSTALL():
     temp = os.environ['TEMP']
     FolderDictionary = [(user_profile + '\spicetify-cli'), (user_profile + '\.spicetify'), (appdata_local + '\spotify'), (appdata + '\spotify'), (temp)]
     my_file = Path(user_profile + "\AppData\Roaming\Spotify\prefs")
-    
+
     if os.path.isdir(appdata + "\Spotify")== True:
         print(Fore.YELLOW + "Uninstalling Spotify.")
         terminateProgram('Spotify.exe')
@@ -71,7 +71,7 @@ def INSTALL():
                 break
     else:
         print(Fore.GREEN + "Spotify Already Uninstalled.\n")
-        
+
     print(Fore.MAGENTA + "[Wiping Folders]\n")
     for x in FolderDictionary:
         try:
@@ -86,7 +86,7 @@ def INSTALL():
         mkdir(temp)
     requests_progress('https://github.com/OhItsTom/Spotify-Version/releases/download/spotify-1-1-62-583/spotify-1-1-62-583.exe',temp + '\spotify-1-1-62-583.exe')
     print(Fore.GREEN + 'Finished Downloading Spotify Version.\n')
-    
+
     print(Fore.YELLOW + "Installing Spotify.")
     terminateProgram('Spotify.exe')
     startProgram(temp + '\spotify-1-1-62-583.exe')
@@ -96,7 +96,7 @@ def INSTALL():
             terminateProgram('Spotify.exe')
             os.remove(temp + '\spotify-1-1-62-583.exe')
             break
-    
+
     print(Fore.YELLOW + "Installing Spicetify.")
     terminateProgram('powershell')
     subprocess.Popen(["powershell","$ProgressPreference = 'SilentlyContinue'\n$v='2.5.0'; Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/OhItsTom/spicetify-easyinstall/Spicetify-v2/install.ps1' | Invoke-Expression\n$all = spicetify\n $all = spicetify backup apply enable-devtool"])
@@ -113,7 +113,7 @@ def INSTALL():
 
     print(Fore.YELLOW + "Downloading Themes.")
     terminateProgram('powershell')
-    subprocess.Popen(["powershell",'$ProgressPreference = "SilentlyContinue"\n$sp_dir = "${HOME}\spicetify-cli"\n$zip_file = "${sp_dir}\Themes.zip"\n$download_uri = "https://github.com/morpheusthewhite/spicetify-themes/archive/refs/heads/master.zip"\nInvoke-WebRequest -Uri $download_uri -UseBasicParsing -OutFile $zip_file\nExpand-Archive -Path $zip_file -DestinationPath $sp_dir -Force\nRemove-Item -Path $zip_file\nRemove-Item -LiteralPath "${HOME}\spicetify-cli\Themes" -Force -Recurse\nRename-Item "${HOME}\spicetify-cli\spicetify-themes-master" "${HOME}\spicetify-cli\Themes"\nRemove-Item "${HOME}\spicetify-cli\Themes\*.*" -Force -Recurse | Where { ! $_.PSIsContainer }\nRename-Item "${HOME}\spicetify-cli\Themes\default" "${HOME}\spicetify-cli\Themes\SpicetifyDefault"']) 
+    subprocess.Popen(["powershell",'$ProgressPreference = "SilentlyContinue"\n$sp_dir = "${HOME}\spicetify-cli"\n$zip_file = "${sp_dir}\Themes.zip"\n$download_uri = "https://github.com/morpheusthewhite/spicetify-themes/archive/refs/heads/master.zip"\nInvoke-WebRequest -Uri $download_uri -UseBasicParsing -OutFile $zip_file\nExpand-Archive -Path $zip_file -DestinationPath $sp_dir -Force\nRemove-Item -Path $zip_file\nRemove-Item -LiteralPath "${HOME}\spicetify-cli\Themes" -Force -Recurse\nRename-Item "${HOME}\spicetify-cli\spicetify-themes-master" "${HOME}\spicetify-cli\Themes"\nRemove-Item "${HOME}\spicetify-cli\Themes\*.*" -Force -Recurse | Where { ! $_.PSIsContainer }\nRename-Item "${HOME}\spicetify-cli\Themes\default" "${HOME}\spicetify-cli\Themes\SpicetifyDefault"'])
     while True:
         if checkIfProcessRunning('powershell') == False:
             print(Fore.GREEN + "Finished Downloading Themes.")
@@ -125,7 +125,7 @@ def UPDATE_CONFIG():
 def UPDATE_ADDONS():
     print("Downloading Themes.")
     terminateProgram('powershell')
-    subprocess.Popen(["powershell",'$sp_dir = "${HOME}\spicetify-cli"\n$zip_file = "${sp_dir}\Themes.zip"\n$download_uri = "https://github.com/morpheusthewhite/spicetify-themes/archive/refs/heads/master.zip"\nInvoke-WebRequest -Uri $download_uri -UseBasicParsing -OutFile $zip_file\nExpand-Archive -Path $zip_file -DestinationPath $sp_dir -Force\nRemove-Item -Path $zip_file\nRemove-Item -LiteralPath "${HOME}\spicetify-cli\Themes" -Force -Recurse\nRename-Item "${HOME}\spicetify-cli\spicetify-themes-master" "${HOME}\spicetify-cli\Themes"\nRemove-Item "${HOME}\spicetify-cli\Themes\*.*" -Force -Recurse | Where { ! $_.PSIsContainer }\nRename-Item "${HOME}\spicetify-cli\Themes\default" "${HOME}\spicetify-cli\Themes\SpicetifyDefault"']) 
+    subprocess.Popen(["powershell",'$sp_dir = "${HOME}\spicetify-cli"\n$zip_file = "${sp_dir}\Themes.zip"\n$download_uri = "https://github.com/morpheusthewhite/spicetify-themes/archive/refs/heads/master.zip"\nInvoke-WebRequest -Uri $download_uri -UseBasicParsing -OutFile $zip_file\nExpand-Archive -Path $zip_file -DestinationPath $sp_dir -Force\nRemove-Item -Path $zip_file\nRemove-Item -LiteralPath "${HOME}\spicetify-cli\Themes" -Force -Recurse\nRename-Item "${HOME}\spicetify-cli\spicetify-themes-master" "${HOME}\spicetify-cli\Themes"\nRemove-Item "${HOME}\spicetify-cli\Themes\*.*" -Force -Recurse | Where { ! $_.PSIsContainer }\nRename-Item "${HOME}\spicetify-cli\Themes\default" "${HOME}\spicetify-cli\Themes\SpicetifyDefault"'])
     while True:
         if checkIfProcessRunning('powershell') == False:
             print("Finished Downloading Themes.")
@@ -149,7 +149,7 @@ while True:
 
         print(Fore.RESET)
         os.system("cls")
- 
+
         if launch == 1:
             INSTALL()
             print(Fore.MAGENTA)
@@ -157,11 +157,11 @@ while True:
             if return_start == "N" or return_start == "n" or return_start == "no" or return_start == "No" or return_start == "NO":
                 break
             os.system("cls")
-            
+
         elif launch == 2:
             UPDATE_CONFIG()
             break
-        
+
         elif launch == 3:
             UPDATE_ADDONS()
             print(Fore.MAGENTA)
@@ -169,14 +169,14 @@ while True:
             if return_start == "N" or return_start == "n" or return_start == "no" or return_start == "No" or return_start == "NO":
                 break
             os.system("cls")
-        
+
         elif launch == 4:
             UNINSTALL()
             break
 
         else:
             print(Fore.RED + "[!] INVALID OPTION! Please Make Sure To Choose A Valid Option (1-4) [!]")
-            
+
     except Exception as e:
         os.system("cls")
         print(Fore.RED + "[!]", e ,"[!]")
