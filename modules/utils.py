@@ -25,10 +25,10 @@ def start_process(path):
     info = subprocess.STARTUPINFO()
     info.dwFlags = subprocess.STARTF_USESHOWWINDOW
     info.wShowWindow = SW_HIDE
-    subprocess.Popen(path, startupinfo=info)
+    return subprocess.Popen(path, startupinfo=info)
 
 
-def kill_process(name):
+def kill_processes(name):
     name = name.lower()
     for proc in psutil.process_iter():
         try:
@@ -43,6 +43,16 @@ def process_running(name):
     for proc in psutil.process_iter():
         try:
             if proc.name().lower() == name:
+                return True
+        except Exception:
+            pass
+    return False
+
+
+def process_pid_running(pid):
+    for proc in psutil.process_iter():
+        try:
+            if proc.pid == pid:
                 return True
         except Exception:
             pass
