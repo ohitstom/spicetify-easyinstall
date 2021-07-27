@@ -29,18 +29,20 @@ def start_process(path):
 
 
 def kill_process(name):
+    name = name.lower()
     for proc in psutil.process_iter():
         try:
-            if name.lower() == proc.name().lower():
+            if proc.name().lower() == name:
                 proc.kill()
         except Exception:
             pass
 
 
 def process_running(name):
+    name = name.lower()
     for proc in psutil.process_iter():
         try:
-            if name.lower() == proc.name().lower():
+            if proc.name().lower() == name:
                 return True
         except Exception:
             pass
