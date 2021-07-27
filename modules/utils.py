@@ -31,7 +31,7 @@ def start_process(path):
 def kill_process(name):
     for proc in psutil.process_iter():
         try:
-            if name.lower() in proc.name().lower():
+            if name.lower() == proc.name().lower():
                 proc.kill()
         except Exception:
             pass
@@ -40,7 +40,7 @@ def kill_process(name):
 def process_running(name):
     for proc in psutil.process_iter():
         try:
-            if name.lower() in proc.name().lower():
+            if name.lower() == proc.name().lower():
                 return True
         except Exception:
             pass
