@@ -1,21 +1,24 @@
-#IMPORTS
 import os
 import shutil
 import psutil
 import requests
-import subprocess;
-from os import mkdir
+import subprocess
 from pathlib import Path
 from colorama import init, Fore
 from clint.textui import progress
+
+FULL_SETUP_URL = 'https://github.com/OhItsTom/Spotify-Version/releases/download/spotify-1-1-62-583/spotify-1-1-62-583.exe'
+
+
 init()
 os.system("mode con: cols=90 lines=30")
 os.system("title " + "Spicetify Easyinstall")
 
+
 #SIDE FUNCTIONS
 def requests_progress(url, path):
     if os.path.isdir(path) == True:
-        mkdir(path)
+        os.mkdir(path)
     r = requests.get(url, stream=True)
     with open(path, 'wb') as f:
         total_length = int((r.headers.get('content-length')))
@@ -25,154 +28,183 @@ def requests_progress(url, path):
                 f.flush()
         print ("\033[A                                                     \033[A")
 
-def startProgram(program):
+
+def start_process(path):
     SW_HIDE = 0
     info = subprocess.STARTUPINFO()
     info.dwFlags = subprocess.STARTF_USESHOWWINDOW
     info.wShowWindow = SW_HIDE
-    subprocess.Popen(program, startupinfo=info)
+    subprocess.Popen(path, startupinfo=info)
 
-def terminateProgram(processName):
-    for proc in psutil.process_iter():
-        if processName.lower() in proc.name().lower():
-            proc.terminate()
-        else:
-            continue
 
-def checkIfProcessRunning(processName):
+def kill_process(name):
     for proc in psutil.process_iter():
         try:
-            if processName.lower() in proc.name().lower():
+            if name.lower() in proc.name().lower():
+                proc.kill()
+        except Exception:
+            pass
+
+
+def process_running(name):
+    for proc in psutil.process_iter():
+        try:
+            if name.lower() in proc.name().lower():
                 return True
-        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+        except Exception:
             pass
     return False;
 
-#MAIN FUNCTIONS
-def INSTALL():
-    user_profile = os.environ['USERPROFILE']
-    appdata_local = os.environ['LOCALAPPDATA']
-    appdata = os.environ['APPDATA']
-    temp = os.environ['TEMP']
-    FolderDictionary = [(user_profile + '\spicetify-cli'), (user_profile + '\.spicetify'), (appdata_local + '\spotify'), (appdata + '\spotify'), (temp)]
-    my_file = Path(user_profile + "\AppData\Roaming\Spotify\prefs")
 
-    if os.path.isdir(appdata + "\Spotify")== True:
-        print(Fore.YELLOW + "Uninstalling Spotify.")
-        terminateProgram('Spotify.exe')
+#MAIN FUNCTIONS
+def install():
+    user_profile  = os.environ['USERPROFILE']
+    appdata_local = os.environ['LOCALAPPDATA']
+    appdata       = os.environ['APPDATA']
+    temp          = os.environ['TEMP']
+    folders = [
+                   (user_profile + '\spicetify-cli'),
+                   (user_profile + '\.spicetify'),
+                   (appdata_local + '\spotify'),
+                   (appdata + '\spotify'),
+                   (temp)
+              ]
+    spotify_prefs = Path(user_profile + "\AppData\Roaming\Spotify\prefs")
+
+    if os.path.isdir(appdata + "\Spotify"):
+        print(f"{Fore.YELLOW}Uninstalling Spotify.")
+        kill_process('Spotify.exe')
         subprocess.Popen(["powershell", 'cmd /c "%USERPROFILE%\AppData\Roaming\Spotify\Spotify.exe" /UNINSTALL /SILENT'])
         while True:
-            if checkIfProcessRunning('powershell') == False:
-                print(Fore.GREEN + "Finished Uninstalling Spotify.\n")
+            if not process_running('powershell'):
+                print(f"{Fore.GREEN}Finished Uninstalling Spotify.\n")
                 break
+            # FIXME: very unreliable check, should catch PID of spawned process and check that instead of common executable name
     else:
-        print(Fore.GREEN + "Spotify Already Uninstalled.\n")
+        print(f"{Fore.GREEN}Spotify Already Uninstalled.\n")
 
-    print(Fore.MAGENTA + "[Wiping Folders]\n")
-    for x in FolderDictionary:
+    print(f"{Fore.MAGENTA}[Wiping Folders]\n")
+    for folder in folders:
         try:
-            shutil.rmtree(x)
-            print(Fore.GREEN + '"%s", has been deleted.\n' % x)
+            shutil.rmtree(folder)
+            print(f'{Fore.GREEN}"{folder}" has been deleted.\n')
         except OSError as e :
-            print(Fore.RED + '"%s", was not found.\n' % x)
-    print(Fore.MAGENTA + "[Finished Wiping Folders]\n")
+            print(f'{Fore.RED}"{folder}" was not deleted: {e}\n')
+    print(f"{Fore.MAGENTA}[Finished Wiping Folders]\n")
 
-    print(Fore.YELLOW + 'Downloading Spotify Version.')
-    if os.path.isdir(temp) == False:
-        mkdir(temp)
-    requests_progress('https://github.com/OhItsTom/Spotify-Version/releases/download/spotify-1-1-62-583/spotify-1-1-62-583.exe',temp + '\spotify-1-1-62-583.exe')
-    print(Fore.GREEN + 'Finished Downloading Spotify Version.\n')
+    print(f'{Fore.YELLOW}Downloading Spotify Version.')
+    if not os.path.isdir(temp):
+        os.mkdir(temp)
+    requests_progress(FULL_SETUP_URL, (temp + '\spotify-1-1-62-583.exe'))
+    print(f'{Fore.GREEN}Finished Downloading Spotify Version.\n')
 
-    print(Fore.YELLOW + "Installing Spotify.")
-    terminateProgram('Spotify.exe')
-    startProgram(temp + '\spotify-1-1-62-583.exe')
+    print(f"{Fore.YELLOW}Installing Spotify.")
+    kill_process('Spotify.exe')
+    start_process(temp + '\spotify-1-1-62-583.exe')
     while True:
-        if checkIfProcessRunning('spotify-1-1-62-583.exe') == False and my_file.is_file():
-            print(Fore.GREEN + "Finished Installing Spotify.\n")
-            terminateProgram('Spotify.exe')
+        if not process_running('spotify-1-1-62-583.exe') and spotify_prefs.is_file():
+            # FIXME: again, unreliable check
+            print(f"{Fore.GREEN}Finished Installing Spotify.\n")
+            kill_process('Spotify.exe')
             os.remove(temp + '\spotify-1-1-62-583.exe')
             break
 
-    print(Fore.YELLOW + "Installing Spicetify.")
-    terminateProgram('powershell')
-    subprocess.Popen(["powershell","$ProgressPreference = 'SilentlyContinue'\n$v='2.5.0'; Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/OhItsTom/spicetify-easyinstall/Spicetify-v2/install.ps1' | Invoke-Expression\n$all = spicetify\n $all = spicetify backup apply enable-devtool"])
-    while True:
-        if checkIfProcessRunning('powershell') == False:
-            print(Fore.GREEN + "Finished Installing Spicetify.\n")
+    print(f"{Fore.YELLOW}Installing Spicetify.")
+    kill_process('powershell')
 
-            if os.path.isdir(appdata_local + "\\Spotify\\Update") == False:
-                mkdir(appdata_local + "\\Spotify\\Update")
+    subprocess.Popen(["powershell", "$ProgressPreference = 'SilentlyContinue'\n$v='2.5.0'; Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/OhItsTom/spicetify-easyinstall/Spicetify-v2/install.ps1' | Invoke-Expression\n$all = spicetify\n $all = spicetify backup apply enable-devtool"])
+
+    while True:
+        if not process_running('powershell'):
+            # FIXME: again, unreliable check
+            print(f"{Fore.GREEN}Finished Installing Spicetify.\n")
+
+            if not os.path.isdir(appdata_local + "\\Spotify\\Update"):
+                os.mkdir(appdata_local + "\\Spotify\\Update")
             subprocess.Popen(["powershell", '$all = cmd /c icacls %localappdata%\\Spotify\\Update /deny %username%:D'])
             subprocess.Popen(["powershell", '$all = cmd /c icacls %localappdata%\\Spotify\\Update /deny %username%:R'])
-            terminateProgram('Spotify.exe')
+            kill_process('Spotify.exe')
             break
 
-    print(Fore.YELLOW + "Downloading Themes.")
-    terminateProgram('powershell')
+    print(f"{Fore.YELLOW}Downloading Themes.")
+    kill_process('powershell')
     subprocess.Popen(["powershell",'$ProgressPreference = "SilentlyContinue"\n$sp_dir = "${HOME}\spicetify-cli"\n$zip_file = "${sp_dir}\Themes.zip"\n$download_uri = "https://github.com/morpheusthewhite/spicetify-themes/archive/refs/heads/master.zip"\nInvoke-WebRequest -Uri $download_uri -UseBasicParsing -OutFile $zip_file\nExpand-Archive -Path $zip_file -DestinationPath $sp_dir -Force\nRemove-Item -Path $zip_file\nRemove-Item -LiteralPath "${HOME}\spicetify-cli\Themes" -Force -Recurse\nRename-Item "${HOME}\spicetify-cli\spicetify-themes-master" "${HOME}\spicetify-cli\Themes"\nRemove-Item "${HOME}\spicetify-cli\Themes\*.*" -Force -Recurse | Where { ! $_.PSIsContainer }\nRename-Item "${HOME}\spicetify-cli\Themes\default" "${HOME}\spicetify-cli\Themes\SpicetifyDefault"'])
     while True:
-        if checkIfProcessRunning('powershell') == False:
-            print(Fore.GREEN + "Finished Downloading Themes.")
+        if not process_running('powershell'):
+            # FIXME: still an unreliable check
+            print(f"{Fore.GREEN}Finished Downloading Themes.")
             break
 
-def UPDATE_CONFIG():
+
+def update_config():
     print("placeholder")
 
-def UPDATE_ADDONS():
+
+def update_addons():
     print("Downloading Themes.")
-    terminateProgram('powershell')
+    kill_process('powershell')
     subprocess.Popen(["powershell",'$sp_dir = "${HOME}\spicetify-cli"\n$zip_file = "${sp_dir}\Themes.zip"\n$download_uri = "https://github.com/morpheusthewhite/spicetify-themes/archive/refs/heads/master.zip"\nInvoke-WebRequest -Uri $download_uri -UseBasicParsing -OutFile $zip_file\nExpand-Archive -Path $zip_file -DestinationPath $sp_dir -Force\nRemove-Item -Path $zip_file\nRemove-Item -LiteralPath "${HOME}\spicetify-cli\Themes" -Force -Recurse\nRename-Item "${HOME}\spicetify-cli\spicetify-themes-master" "${HOME}\spicetify-cli\Themes"\nRemove-Item "${HOME}\spicetify-cli\Themes\*.*" -Force -Recurse | Where { ! $_.PSIsContainer }\nRename-Item "${HOME}\spicetify-cli\Themes\default" "${HOME}\spicetify-cli\Themes\SpicetifyDefault"'])
     while True:
-        if checkIfProcessRunning('powershell') == False:
+        if not process_running('powershell'):
+            # FIXME: and again, unreliable check
             print("Finished Downloading Themes.")
             break
 
-def UNINSTALL():
+
+def uninstall():
     print("placeholder")
 
+
 #START MENU
-while True:
-    try:
-        print(Fore.MAGENTA + "\n[Startup]\n\n" + Fore.GREEN + ' -Install\n\n -Update Config\n\n -Download Latest Themes And Extensions\n\n -Uninstall\n' + Fore.MAGENTA)
-
+if __name__ == "__main__":
+    while True:
         try:
-            launch = int(input("Choose From The List Above (1-4): "))
-        except:
-            print(Fore.RESET)
+            print(f"{Fore.MAGENTA}\n"
+                  f"[Startup]\n"
+                  f"\n{Fore.GREEN}"
+                  f" 1) Install\n"
+                  f"\n"
+                  f" 2) Update Config\n"
+                  f"\n"
+                  f" 3) Download Latest Themes And Extensions\n"
+                  f"\n"
+                  f" 4) Uninstall\n"
+                  f"{Fore.MAGENTA}")
+
+            try:
+                launch = int(input("Choose From The List Above (1-4): "))
+            except Exception:
+                os.system("cls")
+                print(f"{Fore.RED}[!] INVALID OPTION! Make Sure To Choose A (WHOLE) Number Corresponding To Your Choice [!]")
+                continue
+
             os.system("cls")
-            print(Fore.RED + "[!] INVALID OPTION! Make Sure To Choose A (WHOLE) Number Corresponding To Your Choice [!]")
-            continue
 
-        print(Fore.RESET)
-        os.system("cls")
+            if launch == 1:
+                install()
+                return_start = input(f"{Fore.MAGENTA}\nReturn To Startup? Y/N: ")
+                if return_start.lower() in ["n", "no"]:
+                    break
+                os.system("cls")
 
-        if launch == 1:
-            INSTALL()
-            print(Fore.MAGENTA)
-            return_start = input("Return To Startup? Y/N: ")
-            if return_start == "N" or return_start == "n" or return_start == "no" or return_start == "No" or return_start == "NO":
+            elif launch == 2:
+                update_config()
                 break
-            os.system("cls")
 
-        elif launch == 2:
-            UPDATE_CONFIG()
-            break
+            elif launch == 3:
+                update_addons()
+                return_start = input(f"{Fore.MAGENTA}\nReturn To Startup? Y/N: ")
+                if return_start.lower() in ["n", "no"]:
+                    break
+                os.system("cls")
 
-        elif launch == 3:
-            UPDATE_ADDONS()
-            print(Fore.MAGENTA)
-            return_start = input("Return To Startup? Y/N: ")
-            if return_start == "N" or return_start == "n" or return_start == "no" or return_start == "No" or return_start == "NO":
+            elif launch == 4:
+                uninstall()
                 break
+
+            else:
+                print(f"{Fore.RED}[!] INVALID OPTION! Please Make Sure To Choose A Valid Option (1-4) [!]")
+
+        except Exception as e:
             os.system("cls")
-
-        elif launch == 4:
-            UNINSTALL()
-            break
-
-        else:
-            print(Fore.RED + "[!] INVALID OPTION! Please Make Sure To Choose A Valid Option (1-4) [!]")
-
-    except Exception as e:
-        os.system("cls")
-        print(Fore.RED + "[!]", e ,"[!]")
+            print(f"{Fore.RED}[!]{e}[!]")
