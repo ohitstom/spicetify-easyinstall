@@ -15,7 +15,6 @@ from colorama import init, Fore, Back, Style
 init()
 os.system("mode con: cols=90 lines=30")
 os.system("title " + "Spicetify Easyinstall")
-print("nuts")
 
 #SIDE FUNCTIONS
 def requests_progress(url, path):
