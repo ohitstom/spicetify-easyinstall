@@ -57,7 +57,7 @@ def install():
     os.remove(temp + '\spotify-1-1-62-583.exe')
 
     print(f"{Fore.YELLOW}Installing Spicetify.")
-    powershell_install_pid = subprocess.Popen(["powershell", "$ProgressPreference = 'SilentlyContinue'\n$v='2.6.0'; Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/OhItsTom/spicetify-easyinstall/Spicetify-v2/install.ps1' | Invoke-Expression\n$all = spicetify\n $all = spicetify backup apply enable-devtool"]).pid
+    powershell_install_pid = subprocess.Popen(["powershell", "$ProgressPreference = 'SilentlyContinue'\n$v='2.5.0'; Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/OhItsTom/spicetify-easyinstall/Spicetify-v2/install.ps1' | Invoke-Expression\n$all = spicetify\n $all = spicetify backup apply enable-devtool"]).pid
     while utils.process_pid_running(powershell_install_pid):
         time.sleep(1)
     print(f"{Fore.GREEN}Finished Installing Spicetify.\n")
