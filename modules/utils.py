@@ -10,7 +10,8 @@ from modules import globals
 def requests_progress(url, path):
     if os.path.isdir(path) == True:
         os.mkdir(path)
-    r = requests.get(url, stream=True)
+    warnings.filterwarnings('ignore', message='Unverified HTTPS request') #Extremely janky way to bypass shitty pyinstaller sslerrors that i just cant seem to fix for the moment.
+    r = requests.get(url, stream=True, verify=False)
     with open(path, 'wb') as f:
         total_length = int((r.headers.get('content-length')))
         for chunk in progress.bar(r.iter_content(chunk_size=1024000), expected_size=round(total_length/1024000)):
