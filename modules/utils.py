@@ -19,6 +19,8 @@ def requests_progress(url, path):
                 f.write(chunk)
                 f.flush()
         print ("\033[A                                                     \033[A")
+        
+        #Reminder - Add except loop when headers cant be found [division error (0)]
 
 
 def start_process(path):
