@@ -18,6 +18,8 @@ def requests_progress(url, path):
             if chunk:
                 f.write(chunk)
                 f.flush()
+            except:
+                    print("ERROR Loading ProgressBar.")
         print ("\033[A                                                     \033[A")
         
         #Reminder - Add except loop when headers cant be found [division error (0)]
