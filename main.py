@@ -1,8 +1,8 @@
-from colorama import init, Fore
 import os
 
-from modules import globals, core, utils
+from colorama import Fore, init
 
+from modules import core, globals, utils
 
 if __name__ == "__main__":
     init()
