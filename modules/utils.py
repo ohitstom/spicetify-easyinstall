@@ -1,8 +1,10 @@
-from clint.textui import progress
-import subprocess
-import requests
-import psutil
 import os
+import subprocess
+import warnings
+
+import psutil
+import requests
+from clint.textui import progress
 
 from modules import globals
 
@@ -15,11 +17,12 @@ def requests_progress(url, path):
     with open(path, 'wb') as f:
         total_length = int((r.headers.get('content-length')))
         for chunk in progress.bar(r.iter_content(chunk_size=1024000), expected_size=round(total_length/1024000)):
-            if chunk:
-                f.write(chunk)
-                f.flush()
+            try:
+                if chunk:
+                    f.write(chunk)
+                    f.flush()
             except:
-                    print("ERROR Loading ProgressBar.")
+                print("ERROR Loading ProgressBar.")
         print ("\033[A                                                     \033[A")
         
         #Reminder - Add except loop when headers cant be found [division error (0)]
