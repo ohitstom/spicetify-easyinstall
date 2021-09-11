@@ -4,19 +4,19 @@ block_cipher = None
 
 
 a = Analysis(['main.py'],
-             pathex=['C:\\OhItsTom\\Python\\!Projects\\spicetify-easyinstall'],
+             pathex=[],
              binaries=[],
-             datas=[( 'resources', 'resources' )],
+             datas=[],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=['pyinstaller_use_lib_dir.py'],
-             excludes=['bz2', 'decimal', 'lzma', 'multiprocessing', 'pyexpat'],
+             excludes=[],
              win_no_prefer_redirects=False,
              win_private_assemblies=False,
              cipher=block_cipher,
              noarchive=False)
 pyz = PYZ(a.pure, a.zipped_data,
-             cipher=block_cipher)
+          cipher=block_cipher)
 exe = EXE(pyz,
           a.scripts,
           [],
@@ -26,7 +26,7 @@ exe = EXE(pyz,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
-          console=False,
+          console=True,
           uac_admin=True,
           icon='resources/icons/icon.ico')
 coll = COLLECT(exe,

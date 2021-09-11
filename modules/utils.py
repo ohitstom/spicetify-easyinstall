@@ -25,7 +25,7 @@ def requests_progress(url, path):
             except:
                 print("ERROR Loading ProgressBar.")
         print ("\033[A                                                     \033[A")
-        
+
         #Reminder - Add except loop when headers cant be found [division error (0)]
 
 

@@ -4,6 +4,7 @@ from colorama import Fore, init
 
 from modules import core, globals, utils
 
+
 if __name__ == "__main__":
     init()
     os.system("mode con: cols=90 lines=30")
