@@ -1,8 +1,7 @@
-name: Build Release Package
+name: Manual Package
 
 on:
-  release:
-    types: [ published ]
+  workflow_dispatch:
 
 jobs:
 
@@ -69,25 +68,24 @@ jobs:
           copy /y requirements.txt                                                  dist\windows\Spicetify-Easyinstall
           copy /y modules                                                           dist\windows\Spicetify-Easyinstall\modules
 
+      - name: Get short SHA string
+        uses: benjlevesque/short-sha@v1.2
+        id: short-sha
+        with:
+          length: 7
+
       - name: Zip package
         shell: cmd
-        run: 7z a -r .\Spicetify-Easyinstall-v${{ github.event.release.tag_name }}.zip .\Spicetify-Easyinstall\dist\windows\Spicetify-Easyinstall\*
+        run: 7z a -r .\Spicetify-Easyinstall-manual-${{ steps.short-sha.outputs.sha }}.zip .\Spicetify-Easyinstall\dist\windows\Spicetify-Easyinstall\*
 
-      - name: Publish package
-        uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
         with:
-          files: ./Spicetify-Easyinstall-v${{ github.event.release.tag_name }}.zip
+          name: Spicetify-Easyinstall-manual-${{ steps.short-sha.outputs.sha }}
+          path: ./Spicetify-Easyinstall-manual-${{ steps.short-sha.outputs.sha }}.zip
 
       - name: Purge old artifacts
         uses: kolpav/purge-artifacts-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           expire-in: 0
-
-      - name: Delete skipped workflow runs
-        uses: Willy-JL/delete-skipped-workflow-runs@main
-        with:
-          retain_days: 0
-          keep_minimum_runs: 0
