@@ -3,8 +3,8 @@
 block_cipher = None
 
 
-a = Analysis(['F95Checker.py'],
-             pathex=['C:\\WillyJL\\Python\\!Projects\\F95Checker'],
+a = Analysis(['main.py'],
+             pathex=['C:\\OhItsTom\\Python\\!Projects\\spicetify-easyinstall'],
              binaries=[],
              datas=[( 'resources', 'resources' )],
              hiddenimports=[],
@@ -21,7 +21,7 @@ exe = EXE(pyz,
           a.scripts,
           [],
           exclude_binaries=True,
-          name='F95Checker',
+          name='Spicetify-Easyinstall',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
@@ -36,4 +36,4 @@ coll = COLLECT(exe,
                strip=False,
                upx=True,
                upx_exclude=[],
-               name='F95Checker')
+               name='Spicetify-Easyinstall')
