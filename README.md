@@ -8,7 +8,7 @@
 
 <img align="top" height="40px" style="visibility: hidden;">
 
-<img src="https://user-images.githubusercontent.com/26436809/118751529-d0abcf00-b8a4-11eb-9876-8b15f930a691.png" alt="img" align="right" width="375px">
+<img src="https://user-images.githubusercontent.com/26436809/118751529-d0abcf00-b8a4-11eb-9876-8b15f930a691.png" alt="img" align="right" width="400px">
 A fallback tool for installing spicetify. Completely open source, with an easy to use gui.
 
 ### Features
