@@ -6,12 +6,10 @@
   <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><img src="https://img.shields.io/badge/OS-windows-lightgrey"></a>
 </p>
 
-<h4 align="center">
-  A fallback tool for installing spicetify. 
-</h4>
-<h4 id="-usage-https-github-com-ohitstom-spicetify-easyinstall-wiki-usage-usage-wiki-" align="center"><a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Usage" title="Usage WIKI">Usage</a></h4>
-<h4 id="-credit-https-github-com-ohitstom-spicetify-easyinstall-wiki-credit-credits-" align="center"><a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Credit" title="Credits">Credit</a></h4>
-<h4 id="-wiki-https-github-com-ohitstom-spicetify-easyinstall-wiki-wiki-" align="center"><a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki" title="WIKI">Wiki</a></h4>
+A fallback tool for installing spicetify. 
+<h4 id="-usage-https-github-com-ohitstom-spicetify-easyinstall-wiki-usage-usage-wiki-" align="left"><a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Usage" title="Usage WIKI">Usage</a></h4>
+<h4 id="-credit-https-github-com-ohitstom-spicetify-easyinstall-wiki-credit-credits-" align="left"><a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Credit" title="Credits">Credit</a></h4>
+<h4 id="-wiki-https-github-com-ohitstom-spicetify-easyinstall-wiki-wiki-" align="left"><a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki" title="WIKI">Wiki</a></h4>
 
 ### **Features**
 * Downloads and installs spotify and spicetify.
@@ -23,18 +21,18 @@
 ### **Information**
 <details>
   <summary>Click to expand!</summary>
-*I would just like to preface that this could not have been done without spicetify and its incredible developers, and that my spahgetti code doesnt even scratch the surface of their genius. Please check out their github here: https://github.com/khanhas/spicetify-cli*
-
-Both spotify and spicetify will be locked to their respective working versions and will not auto update, keeping your spicetify working for longer. Every couple of months i'll update the versions of spotify and spicetify that work together.
-
-I would like to mention this in no way replaces the installation process recommended by spicetify on their wiki, its instead a fall back if you are unable to get the latest version of spicetify running no matter what you've tried. if you havent tried the traditional method i do not recommend starting here.
+<p><em>I would just like to preface that this could not have been done without spicetify and its incredible developers, and that my spahgetti code doesnt even scratch the surface of their genius. Please check out their github here: <a href="https://github.com/khanhas/spicetify-cli">https://github.com/khanhas/spicetify-cli</a></em></p>
+<p>Both spotify and spicetify will be locked to their respective working versions and will not auto update, keeping your spicetify working for longer. Every couple of months i&#39;ll update the versions of spotify and spicetify that work together.</p>
+<p>I would like to mention this in no way replaces the installation process recommended by spicetify on their wiki, its instead a fall back if you are unable to get the latest version of spicetify running no matter what you&#39;ve tried. if you havent tried the traditional method i do not recommend starting here.</p>
 </details>
 
 ### **Warnings**
 <details>
   <summary>Click to expand!</summary>
-* I am not liable for anything that happens to your computers files. Read the source code and make sure you are aware of what it does and changes.
-* Do not spam the issues page with spicetify specific issues. Only submit issues that stem from my installer.
-* When submitting Pull Requests, make sure to do so with relative detail and minimal but informative annotations. Make sure to outline what it solves.
-* Feel free to advertise this repo, but not to an extent that causes annoyance for others.
+<ul>
+<li>I am not liable for anything that happens to your computers files. Read the source code and make sure you are aware of what it does and changes.</li>
+<li>Do not spam the issues page with spicetify specific issues. Only submit issues that stem from my installer.</li>
+<li>When submitting Pull Requests, make sure to do so with relative detail and minimal but informative annotations. Make sure to outline what it solves.</li>
+<li>Feel free to advertise this repo, but not to an extent that causes annoyance for others.</li>
+</ul>
 </details>
