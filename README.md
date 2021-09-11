@@ -16,6 +16,7 @@ A fallback tool for installing spicetify. Supports Windows.
 
 # **How To Use:**
 [Usage](https://github.com/OhItsTom/spicetify-easyinstall/wiki/Usage "Usage WIKI")
+
 [Information](https://github.com/OhItsTom/spicetify-easyinstall/wiki/Information "Information WIKI")
 
 # **Warning:**
