@@ -1,6 +1,6 @@
-<h3 align="center">
+<h1 align="center">
   <img src="https://i.ibb.co/TPVYWJY/68747470733a2f2f692e696d6775722e636f6d2f6977634c4954512e706e67.png" height="280px">
-</h3>
+</h1>
 <p align="center">
   <a href="https://github.com/OhItsTom/spicetify-easyinstall/releases/latest">
     <img src="https://img.shields.io/github/v/release/ohitstom/spicetify-easyinstall?include_prereleases">
