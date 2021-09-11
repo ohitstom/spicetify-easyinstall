@@ -27,7 +27,7 @@ exe = EXE(pyz,
           strip=False,
           upx=True,
           console=True,
-          uac_admin=True,
+          uac_admin=False,
           icon='resources/icons/icon.ico')
 coll = COLLECT(exe,
                a.binaries,
