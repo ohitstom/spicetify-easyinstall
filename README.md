@@ -11,7 +11,9 @@ A fallback tool for installing spicetify. Supports Windows.
 
 # **Credit:**
 *https://github.com/khanhas/spicetify-cli
+
 *https://linktr.ee/WillyJL
+
 *Contributers
 
 # **How To Use:**
