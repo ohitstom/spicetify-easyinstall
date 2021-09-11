@@ -15,17 +15,11 @@ A fallback tool for installing spicetify. Completely open source, with an easy t
 <li>Automatic downloading of all currently available themes and extensions, including blockthespot.</li>
 <li>Easy to use config modifier that shows you all available options, and can be ran both on initial setup or any time you want using the startup menu.</li>
 </ul>
+<br />
 
-  
 <p align="center">
-<h4 id="-information-https-github-com-ohitstom-spicetify-easyinstall-wiki-information-" align="center"><a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/information" 
-title="Information">Information</a></h4> 
-  
-<h4 id="-usage-https-github-com-ohitstom-spicetify-easyinstall-wiki-usage-" align="left"><a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Usage" title="Usage">Usage</a></h4>
-  
-<h4 id="-credits-https-github-com-ohitstom-spicetify-easyinstall-wiki-credits-" align="left"><a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Credits" title="Credits">Credits</a></h4>
-  
-<h4 id="-contact-https-github-com-ohitstom-spicetify-easyinstall-wiki-contact-" align="left"><a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Contact" title="Contact">Contact</a></h4>
-  
-<h4 id="-wiki-https-github-com-ohitstom-spicetify-easyinstall-wiki-" align="left"><a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki"
-title="WIKI">WIKI</a></h4>
+  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/information" title="Information">Information |</a></h4> 
+  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Usage" title="Usage">Usage |</a></h4>
+  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Credits" title="Credits">Credits |</a></h4>
+  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Contact" title="Contact">Contact |</a></h4>
+  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki" title="WIKI">WIKI</a></h4>
