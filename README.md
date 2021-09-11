@@ -8,14 +8,14 @@
 
 <img align="top" height="40px" style="visibility: hidden;">
 
-<img src="https://user-images.githubusercontent.com/26436809/118751529-d0abcf00-b8a4-11eb-9876-8b15f930a691.png" alt="img" align="right" width="405px">
-A fallback tool for installing spicetify. Completely open source, with an easy to use gui.
+<img src="https://user-images.githubusercontent.com/26436809/118751529-d0abcf00-b8a4-11eb-9876-8b15f930a691.png" alt="img" align="right" width="375px">
+A fallback tool for installing spicetify. 100% source, with an easy to use gui.
 
 ### Features
  - Downloads and installs spotify and spicetify.
  - Provides an easy way to uninstall spicetify.
- - Automatic downloading of all currently available themes and extensions, including blockthespot.
- - Easy to use config modifier that shows you all available options, and can be ran both on initial setup or any time you want using the startup menu.
+ - Downloading of all currently available themes and extensions, including blockthespot.
+ - Simple config modifier, can be ran any time using the startup menu.
 
 <br />
 
