@@ -2,16 +2,16 @@
 
 A fallback tool for installing spicetify. Supports Windows.
 
-**Features**
+###**Features**
 * Downloads and installs spotify and spicetify.
 * Provides an easy way to uninstall spicetify.
 * Automatic downloading of all currently available themes and extensions, including blockthespot.
 * Easy to use config modifier that shows you all available options, and can be ran both on initial setup or any time you want using the startup menu.
 * Everything offered by spicetify.
 
-[Usage](https://github.com/OhItsTom/spicetify-easyinstall/wiki/Usage "Usage WIKI")
+###[Usage](https://github.com/OhItsTom/spicetify-easyinstall/wiki/Usage "Usage WIKI")
 
-[Information](https://github.com/OhItsTom/spicetify-easyinstall/wiki/Information "Information WIKI")
+###[Information](https://github.com/OhItsTom/spicetify-easyinstall/wiki/Information "Information WIKI")
 
 # **Credit:**
 * https://github.com/khanhas/spicetify-cli
