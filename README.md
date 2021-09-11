@@ -2,7 +2,7 @@
   <img src="https://i.ibb.co/TPVYWJY/68747470733a2f2f692e696d6775722e636f6d2f6977634c4954512e706e67.png" height="280px">
 </h1>
 <p align="center">
-  -----------------------------------
+  This repo is a work in progress and could benefit from contributors.
 </p>
 <p align="center">
   <a href="https://github.com/OhItsTom/spicetify-easyinstall/releases/latest">
