@@ -1,4 +1,8 @@
 ![Alt Text](https://i.ibb.co/TPVYWJY/68747470733a2f2f692e696d6775722e636f6d2f6977634c4954512e706e67.png)
+[![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/ohitstom/spicetify-easyinstall?include_prereleases)](https://github.com/OhItsTom/spicetify-easyinstall/releases/latest)
+[![GitHub all releases](https://img.shields.io/github/downloads/ohitstom/spicetify-easyinstall/total)](https://github.com/OhItsTom/spicetify-easyinstall/releases)
+[![GitHub closed issues](https://img.shields.io/github/issues-closed/OhItsTom/spicetify-easyinstall)](https://github.com/OhItsTom/spicetify-easyinstall/issues?q=is%3Aissue+is%3Aclosed)
+![OS Support](https://img.shields.io/badge/OS-windows-lightgrey)
 
 A fallback tool for installing spicetify. Supports Windows.
 
