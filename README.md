@@ -9,15 +9,14 @@ A fallback tool for installing spicetify. Supports Windows.
 * Easy to use config modifier that shows you all available options, and can be ran both on initial setup or any time you want using the startup menu.
 * Everything offered by spicetify.
 
+[Usage](https://github.com/OhItsTom/spicetify-easyinstall/wiki/Usage "Usage WIKI")
+
+[Information](https://github.com/OhItsTom/spicetify-easyinstall/wiki/Information "Information WIKI")
+
 # **Credit:**
 * https://github.com/khanhas/spicetify-cli
 * https://linktr.ee/WillyJL
 * Contributers
-
-# **How To Use:**
-[Usage](https://github.com/OhItsTom/spicetify-easyinstall/wiki/Usage "Usage WIKI")
-
-[Information](https://github.com/OhItsTom/spicetify-easyinstall/wiki/Information "Information WIKI")
 
 # **Warning:**
 This is not official, make sure to read all the source code to your hearts content before using this software! And if you have any further questions or need more help, please check out the discord here: discord.gg/placeholder
