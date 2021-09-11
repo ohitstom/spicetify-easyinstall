@@ -15,8 +15,8 @@ A fallback tool for installing spicetify. Supports Windows.
 * Contributers
 
 # **How To Use:**
-![Usage][https://github.com/OhItsTom/spicetify-easyinstall/wiki/Usage "Usage"]
-![Information][https://github.com/OhItsTom/spicetify-easyinstall/wiki/Information "Information"]
+[Usage][https://github.com/OhItsTom/spicetify-easyinstall/wiki/Usage]
+[Information][https://github.com/OhItsTom/spicetify-easyinstall/wiki/Information]
 
 # **Warning:**
 This is not official, make sure to read all the source code to your hearts content before using this software! And if you have any further questions or need more help, please check out the discord here: discord.gg/placeholder
