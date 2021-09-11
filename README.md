@@ -15,8 +15,10 @@ A fallback tool for installing spicetify. Completely open source, with an easy t
 <li>Automatic downloading of all currently available themes and extensions, including blockthespot.</li>
 <li>Easy to use config modifier that shows you all available options, and can be ran both on initial setup or any time you want using the startup menu.</li>
 </ul>
+  
 <br />
-
+<br />
+  
 <p align="center">
   <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/information" title="Information">Information |</a></h4> 
   <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Usage" title="Usage">Usage |</a></h4>
