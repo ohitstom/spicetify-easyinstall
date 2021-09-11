@@ -33,12 +33,12 @@ A fallback tool for installing spicetify. 100% open source, with an easy to use 
 
 <p align="center">
   <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/information" title="Information">Information</a>
-   | 
+   · 
   <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Usage"       title="Usage"      >Usage</a>
-   | 
+   · 
   <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Credits"     title="Credits"    >Credits</a>
-   | 
+   · 
   <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Contact"     title="Contact"    >Contact</a>
-   | 
+   · 
   <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki"             title="WIKI"       >Wiki</a>
 </p>
