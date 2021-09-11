@@ -2,7 +2,7 @@
 
 A fallback tool for installing spicetify. Supports Windows.
 
-# **Features:**
+**Features**
 * Downloads and installs spotify and spicetify.
 * Provides an easy way to uninstall spicetify.
 * Automatic downloading of all currently available themes and extensions, including blockthespot.
