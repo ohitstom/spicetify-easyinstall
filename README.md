@@ -6,14 +6,10 @@
   <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><img src="https://img.shields.io/badge/OS-windows-lightgrey"></a>
 </p>
 
-<br />
+<img align="top" height="40px" style="visibility: hidden;">
 
-<br />
-
-<br />
-
-<img src="https://user-images.githubusercontent.com/26436809/118751529-d0abcf00-b8a4-11eb-9876-8b15f930a691.png" alt="img" align="right" width="430px">
-A fallback tool for installing spicetify. 100% open source, with an easy to use gui.
+<img src="https://user-images.githubusercontent.com/26436809/118751529-d0abcf00-b8a4-11eb-9876-8b15f930a691.png" alt="img" align="right" width="400px">
+A fallback tool for installing spicetify. Completely open source, with an easy to use gui.
 
 ### Features
  - Downloads and installs spotify and spicetify.
@@ -26,13 +22,13 @@ A fallback tool for installing spicetify. 100% open source, with an easy to use 
 <br />
 
 <p align="center">
-  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/information" style="font-size:11px" title="Information">Information</a>
+  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/information" title="Information">Information</a>
   |
-  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Usage" title="Usage">Usage</a>
+  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Usage"       title="Usage"      >Usage</a>
   |
-  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Credits" title="Credits">Credits</a>
+  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Credits"     title="Credits">Credits</a>
   |
-  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Contact" title="Contact">Contact</a>
+  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Contact"     title="Contact">Contact</a>
   |
-  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki" title="WIKI">WIKI</a>
+  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki"             title="WIKI">WIKI</a>
 </p>
