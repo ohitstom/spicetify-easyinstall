@@ -7,8 +7,8 @@ import (
 	"os"
 	"runtime"
 
-	"github.com/khanhas/spicetify-cli/src/cmd"
-	"github.com/khanhas/spicetify-cli/src/utils"
+	"github.com/OhItsTom/spicetify-easyinstall/src/cmd"
+	"github.com/OhItsTom/spicetify-easyinstall/src/utils"
 	colorable "github.com/mattn/go-colorable"
 )
 
