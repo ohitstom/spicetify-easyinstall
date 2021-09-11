@@ -1,5 +1,4 @@
-<h3 align="center"><img src="https://i.ibb.co/TPVYWJY/68747470733a2f2f692e696d6775722e636f6d2f6977634c4954512e706e67.png width="400px" height="280px"></h3>
-
+<h3 align="center"><img src="https://i.ibb.co/TPVYWJY/68747470733a2f2f692e696d6775722e636f6d2f6977634c4954512e706e67.png" height="280px"></h3>
 <p align="center">
   <a href="https://github.com/OhItsTom/spicetify-easyinstall/releases/latest"><img src="https://img.shields.io/github/v/release/ohitstom/spicetify-easyinstall?include_prereleases"></a>
   <a href="https://github.com/OhItsTom/spicetify-easyinstall/releases"><img src="https://img.shields.io/github/downloads/ohitstom/spicetify-easyinstall/total"></a>
@@ -7,27 +6,33 @@
   <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><img src="https://img.shields.io/badge/OS-windows-lightgrey"></a>
 </p>
 
-<img src="https://user-images.githubusercontent.com/26436809/118751529-d0abcf00-b8a4-11eb-9876-8b15f930a691.png" alt="img" align="right" width="400px">  
-A fallback tool for installing spicetify. Completely open source, with an easy to use gui.
-  
-### **Features**
-<ul>
-<li>Downloads and installs spotify and spicetify.</li>
-<li>Provides an easy way to uninstall spicetify.</li>
-<li>Automatic downloading of all currently available themes and extensions, including blockthespot.</li>
-<li>Easy to use config modifier that shows you all available options, and can be ran both on initial setup or any time you want using the startup menu.</li>
-</ul>
-  
 <br />
+
 <br />
-  
+
+<br />
+
+<img src="https://user-images.githubusercontent.com/26436809/118751529-d0abcf00-b8a4-11eb-9876-8b15f930a691.png" alt="img" align="right" width="430px">
+A fallback tool for installing spicetify. 100% open source, with an easy to use gui.
+
+### Features
+ - Downloads and installs spotify and spicetify.
+ - Provides an easy way to uninstall spicetify.
+ - Automatic downloading of all currently available themes and extensions, including blockthespot.
+ - Easy to use config modifier that shows you all available options, and can be ran both on initial setup or any time you want using the startup menu.
+
+<br />
+
+<br />
+
 <p align="center">
-  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/information" title="Information">Information</a></h4>
+  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/information" style="font-size:11px" title="Information">Information</a>
   |
-  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Usage" title="Usage">Usage</a></h4>
+  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Usage" title="Usage">Usage</a>
   |
-  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Credits" title="Credits">Credits</a></h4>
+  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Credits" title="Credits">Credits</a>
   |
-  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Contact" title="Contact">Contact</a></h4>
+  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki/Contact" title="Contact">Contact</a>
   |
-  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki" title="WIKI">WIKI</a></h4>
+  <a href="https://github.com/OhItsTom/spicetify-easyinstall/wiki" title="WIKI">WIKI</a>
+</p>
