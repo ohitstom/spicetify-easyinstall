@@ -3,10 +3,10 @@
 block_cipher = None
 
 
-a = Analysis(['main.py'],
+a = Analysis(['Spicetify-Easyinstall.py'],
              pathex=[],
              binaries=[],
-             datas=[],
+             datas=[( 'resources', 'resources' )],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=['pyinstaller_use_lib_dir.py'],
