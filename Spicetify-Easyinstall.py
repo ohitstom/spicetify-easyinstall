@@ -27,16 +27,14 @@ if __name__ == "__main__":
                 launch = int(input("Choose From The List Above (1-4): "))
             except Exception:
                 os.system("cls")
-                print(
-                    f"{Fore.RED}[!] INVALID OPTION! Make Sure To Choose A (WHOLE) Number Corresponding To Your Choice [!]")
+                print(f"{Fore.RED}[!] INVALID OPTION! Make Sure To Choose A (WHOLE) Number Corresponding To Your Choice [!]")
                 continue
 
             os.system("cls")
 
             if launch == 1:
                 core.install()
-                return_start = input(
-                    f"{Fore.MAGENTA}\nReturn To Startup? Y/N: ")
+                return_start = input(f"{Fore.MAGENTA}\nReturn To Startup? Y/N: ")
                 if return_start.lower() in ["n", "no"]:
                     break
                 os.system("cls")
@@ -47,8 +45,7 @@ if __name__ == "__main__":
 
             elif launch == 3:
                 core.update_addons()
-                return_start = input(
-                    f"{Fore.MAGENTA}\nReturn To Startup? Y/N: ")
+                return_start = input(f"{Fore.MAGENTA}\nReturn To Startup? Y/N: ")
                 if return_start.lower() in ["n", "no"]:
                     break
                 os.system("cls")
@@ -58,8 +55,7 @@ if __name__ == "__main__":
                 break
 
             else:
-                print(
-                    f"{Fore.RED}[!] INVALID OPTION! Please Make Sure To Choose A Valid Option (1-4) [!]")
+                print(f"{Fore.RED}[!] INVALID OPTION! Please Make Sure To Choose A Valid Option (1-4) [!]")
 
         except Exception as e:
             os.system("cls")

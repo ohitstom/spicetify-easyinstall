@@ -2,6 +2,7 @@ import glob
 import os
 import shutil
 import subprocess
+import tempfile
 import time
 from pathlib import Path
 
@@ -11,10 +12,10 @@ from modules import globals, utils
 
 
 def install():
-    user_profile = os.environ['USERPROFILE']
+    user_profile = os.path.expanduser("~")
     appdata_local = os.environ['LOCALAPPDATA']
     appdata = os.environ['APPDATA']
-    temp = os.environ['TEMP']
+    temp = tempfile.gettempdir()
     folders = [
         (user_profile + '\spicetify-cli'),
         (user_profile + '\.spicetify'),
@@ -100,13 +101,13 @@ def install():
               user_profile + '\spicetify-cli\Themes')
 
     for item in list(Path(user_profile + '\spicetify-cli\Themes').glob('*')):
-            item = str(item.name)
-            if os.path.isdir(item):
-                if item[0] != ".":
-                    shutil.rmtree(item)
-            else:
-                os.chmod(item, 0o777)
-                os.remove(item)
+        fullpath = str(item)
+        filename = str(item.name)
+        if os.path.isdir(fullpath):
+            if filename[0] == ".":
+                shutil.rmtree(fullpath)
+        else:
+            os.remove(fullpath)
 
     os.rename(user_profile + '\spicetify-cli\Themes\Default',
               user_profile + '\spicetify-cli\Themes\SpicetifyDefault')
