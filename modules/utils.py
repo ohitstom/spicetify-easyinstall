@@ -13,20 +13,22 @@ from modules import globals
 def requests_progress(url, path):
     if os.path.isdir(path) == True:
         os.mkdir(path)
-    warnings.filterwarnings('ignore', message='Unverified HTTPS request') #Extremely janky way to bytime.sleep(0.25) shitty pyinstaller sslerrors that i just cant seem to fix for the moment.
-    r = requests.get(url, stream=True, verify=False)
-    with open(path, 'wb') as f:
-        total_length = int((r.headers.get('content-length')))
-        for chunk in progress.bar(r.iter_content(chunk_size=1024000), expected_size=round(total_length/1024000)):
-            try:
+
+    r = requests.get(url, headers={'User-Agent': 'Developer'}, stream=True)
+    try:
+        with open(path, 'wb') as f:
+            total_length = int((r.headers.get('content-length')))
+            for chunk in progress.bar(r.iter_content(chunk_size=1024000), expected_size=round(total_length/1024000)):
                 if chunk:
                     f.write(chunk)
                     f.flush()
-            except:
-                print("ERROR Loading ProgressBar.")
-        print ("\033[A                                                     \033[A")
+    except:
+        print("ERROR Loading ProgressBar. Downloading Without It.")
+        r = requests.get(url, stream=True)
+        with open(path, 'wb') as f:
+            f.write(r.content)
 
-        #Reminder - Add except loop when headers cant be found [division error (0)]
+    print("\033[A                                                     \033[A")
 
 
 def start_process(path):
