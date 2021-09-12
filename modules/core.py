@@ -99,13 +99,14 @@ def install():
     os.rename(user_profile + '\spicetify-cli\spicetify-themes-cbd332f7c683575f65b102b662ee9fd008d4d284',
               user_profile + '\spicetify-cli\Themes')
 
-    for item in os.listdir(user_profile + '\\spicetify-cli\\Themes\\'):
-        if item.find(".") != -1:
-            try:
-                os.remove((user_profile + '\\spicetify-cli\\Themes\\') + item)
-            except:
-                shutil.rmtree(
-                    (user_profile + '\\spicetify-cli\\Themes\\') + item)
+    for item in list(Path(user_profile + '\spicetify-cli\Themes').glob('*')):
+            item = str(item.name)
+            if os.path.isdir(item):
+                if item[0] != ".":
+                    shutil.rmtree(item)
+            else:
+                os.chmod(item, 0o777)
+                os.remove(item)
 
     os.rename(user_profile + '\spicetify-cli\Themes\Default',
               user_profile + '\spicetify-cli\Themes\SpicetifyDefault')
