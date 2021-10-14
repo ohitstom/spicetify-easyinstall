@@ -1,4 +1,5 @@
 import os
+import stat
 import subprocess
 import time
 import warnings
@@ -6,14 +7,19 @@ import warnings
 import psutil
 import requests
 from clint.textui import progress
+from requests import exceptions
 
 from modules import globals
 
+def handleError(func, path, exc_info):
+    if not os.access(path, os.W_OK):
+       os.chmod(path, stat.S_IWUSR)
+       func(path)
 
 def requests_progress(url, path):
     if os.path.isdir(path) == True:
         os.mkdir(path)
-
+    
     r = requests.get(url, headers={'User-Agent': 'Developer'}, stream=True)
     try:
         with open(path, 'wb') as f:
@@ -22,11 +28,16 @@ def requests_progress(url, path):
                 if chunk:
                     f.write(chunk)
                     f.flush()
-    except:
-        print("ERROR Loading ProgressBar. Downloading Without It.")
+    
+    except (TypeError, #Fill in for proper error checking, simply checks if int((r.headers.get('content-length'))) isnt nonetype, or doesnt throw any errors.
+            ZeroDivisionError, AttributeError) as e:
+        print("[!]ERROR Loading ProgressBar. Attempting To Downloading Without It.[!]")
         r = requests.get(url, stream=True)
         with open(path, 'wb') as f:
             f.write(r.content)
+    
+    except Exception as e:
+        raise TypeError(e)
 
     print("\033[A                                                     \033[A")
 

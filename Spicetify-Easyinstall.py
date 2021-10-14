@@ -52,7 +52,10 @@ if __name__ == "__main__":
 
             elif launch == 4:
                 core.uninstall()
-                break
+                return_start = input(f"{Fore.MAGENTA}\nReturn To Startup? Y/N: ")
+                if return_start.lower() in ["n", "no"]:
+                    break
+                os.system("cls")
 
             else:
                 print(f"{Fore.RED}[!] INVALID OPTION! Please Make Sure To Choose A Valid Option (1-4) [!]")
