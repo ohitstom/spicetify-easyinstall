@@ -52,17 +52,17 @@ def install():
     print(f"{Fore.YELLOW}Downloading Spotify Version.")  # Section 3
     if not os.path.isdir(temp):
         os.mkdir(temp)
-    utils.requests_progress(globals.FULL_SETUP_URL, (temp + "\spotify-1-1-62-583.exe"))
+    utils.requests_progress(globals.FULL_SETUP_URL, (temp + globals.INSTALLER_NAME))
     print(f"{Fore.GREEN}Finished Downloading Spotify Version.\n")
 
     print(f"{Fore.YELLOW}Installing Spotify.")  # Section 4
     utils.kill_processes("Spotify.exe")
-    spotify_install_pid = utils.start_process(temp + "\spotify-1-1-62-583.exe").pid
+    spotify_install_pid = utils.start_process(temp + globals.INSTALLER_NAME).pid
     while utils.process_pid_running(spotify_install_pid) or not spotify_prefs.is_file():
         time.sleep(0.25)
     print(f"{Fore.GREEN}Finished Installing Spotify.\n")
     utils.kill_processes("Spotify.exe")
-    os.remove(temp + "\spotify-1-1-62-583.exe")
+    os.remove(temp + globals.INSTALLER_NAME)
 
     print(f"{Fore.YELLOW}Installing Spicetify.")  # Section 6
     powershell_install_pid = subprocess.Popen(
