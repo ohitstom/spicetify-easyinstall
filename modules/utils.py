@@ -24,8 +24,11 @@ def requests_progress(url, path):
                     f.flush()
     
     except (TypeError, #Fill in for proper error checking, simply checks if int((r.headers.get('content-length'))) isnt nonetype, or doesnt throw any errors.
-            ZeroDivisionError, AttributeError) as e:
+            ZeroDivisionError, 
+            AttributeError,
+           ) as e:
         print("[!]ERROR Loading ProgressBar. Attempting To Downloading Without It.[!]")
+        
         r = requests.get(url, stream=True)
         with open(path, 'wb') as f:
             f.write(r.content)
