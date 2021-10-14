@@ -52,9 +52,7 @@ def install():
     print(f"{Fore.YELLOW}Downloading Spotify Version.")  # Section 3
     if not os.path.isdir(temp):
         os.mkdir(temp)
-    error_check = utils.requests_progress(globals.FULL_SETUP_URL, (temp + globals.INSTALLER_NAME))
-    if error_check is not none:
-        raise BarException("Error Downloading Themes;", error_check)
+    utils.requests_progress(globals.FULL_SETUP_URL, (temp + globals.INSTALLER_NAME))
     print(f"{Fore.GREEN}Finished Downloading Spotify Version.\n")
 
     print(f"{Fore.YELLOW}Installing Spotify.")  # Section 4
@@ -99,11 +97,9 @@ def install():
 
     print(f"{Fore.YELLOW}Downloading Themes.")  # Section 9
     shutil.rmtree(user_profile + "\spicetify-cli\Themes") 
-    error_check = utils.requests_progress(
+    utils.requests_progress(
         globals.DOWNLOAD_THEME_URL, (user_profile + "\spicetify-cli\Themes.zip")
     )
-    if error_check is not none:
-        raise BarException("Error Downloading Themes;", error_check)
     shutil.unpack_archive(
         user_profile + "\spicetify-cli\Themes.zip", user_profile + "\spicetify-cli"
     )
@@ -142,12 +138,9 @@ def update_addons():
     user_profile = os.environ["USERPROFILE"]
     print(f"{Fore.YELLOW}Downloading Themes.")
     shutil.rmtree(user_profile + "\spicetify-cli\Themes")
-    error_check = utils.requests_progress(
+    utils.requests_progress(
         globals.DOWNLOAD_THEME_URL, (user_profile + "\spicetify-cli\Themes.zip")
     )
-    if error_check is not none:
-        raise BarException("Error Downloading Themes;", error_check)
-        
     shutil.unpack_archive(
         user_profile + "\spicetify-cli\Themes.zip", user_profile + "\spicetify-cli"
     )
