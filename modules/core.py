@@ -16,15 +16,15 @@ def install():
     appdata_local = os.environ["LOCALAPPDATA"]
     appdata = os.environ["APPDATA"]
     temp = tempfile.gettempdir()
+    spotify_prefs = Path(user_profile + "\AppData\Roaming\Spotify\prefs")
     folders = [
-        (user_profile + "\spicetify-cli"),
-        (user_profile + "\.spicetify"),
+        (user_profile  + "\spicetify-cli"),
+        (user_profile  + "\.spicetify"),
         (appdata_local + "\spotify"),
         (appdata + "\spotify"),
         (temp),
     ]
-    spotify_prefs = Path(user_profile + "\AppData\Roaming\Spotify\prefs")
-
+    
     if os.path.isdir(appdata + "\Spotify"):  # Section 1
         print(f"{Fore.YELLOW}Uninstalling Spotify.")
         utils.kill_processes("Spotify.exe")

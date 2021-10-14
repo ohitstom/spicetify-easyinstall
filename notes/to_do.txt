@@ -1,16 +1,13 @@
-theme picker,
-color picker,
-extension picker,
-app picker.
+Config Modifier:
+    -theme picker,
+    -color picker,
+    -extension picker,
+    -app picker.
 
-create a v1 variant.
+Optional:
+    Backup and restore spotify settings and login
 
-
-optional:
-backup and restore spotify settings and login
-
-
-
+Create a v1 variant.
 Fix requests error checking, find a way to return the error from the function, and then return to main menu.
 Fix deletion of folders permission errors
 Move Spicetify Version Selecting to globals.py
