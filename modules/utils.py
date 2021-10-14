@@ -11,26 +11,33 @@ from requests import exceptions
 
 from modules import globals
 
+
 def requests_progress(url, path):
     if os.path.isdir(path) == True:
         os.mkdir(path)
-    
-    r = requests.get(url, headers={'User-Agent': 'Developer'}, stream=True)
+
+    r = requests.get(url, headers={"User-Agent": "Developer"}, stream=True)
     try:
-        with open(path, 'wb') as f:
-            total_length = int((r.headers.get('content-length')))
-            for chunk in progress.bar(r.iter_content(chunk_size=1024000), expected_size=round(total_length/1024000)):
+        with open(path, "wb") as f:
+            total_length = int((r.headers.get("content-length")))
+            for chunk in progress.bar(
+                r.iter_content(chunk_size=1024000),
+                expected_size=round(total_length / 1024000),
+            ):
                 if chunk:
                     f.write(chunk)
                     f.flush()
-    
-    except (TypeError, #Fill in for proper error checking, simply checks if int((r.headers.get('content-length'))) isnt nonetype, or doesnt throw any errors.
-            ZeroDivisionError, AttributeError) as e:
+
+    except (
+        TypeError,  # Fill in for proper error checking, simply checks if int((r.headers.get('content-length'))) isnt nonetype, or doesnt throw any errors.
+        ZeroDivisionError,
+        AttributeError,
+    ) as e:
         print("[!]ERROR Loading ProgressBar. Attempting To Downloading Without It.[!]")
         r = requests.get(url, stream=True)
-        with open(path, 'wb') as f:
+        with open(path, "wb") as f:
             f.write(r.content)
-    
+
     except Exception as e:
         raise TypeError(e)
 
