@@ -64,11 +64,6 @@ def install():
     utils.kill_processes("Spotify.exe")
     os.remove(temp + "\spotify-1-1-62-583.exe")
 
-    if globals.DEPRECATED_BOOL == True:
-        print(f"{Fore.YELLOW}Downloading Spicetify.")  # Section 5
-        utils.requests_progress(globals.OLD_EXTRACTED_URL, (temp + "Extracted.zip"))
-        print(f"{Fore.GREEN}Finished Downloading Spicetify.\n")
-
     print(f"{Fore.YELLOW}Installing Spicetify.")  # Section 6
     powershell_install_pid = subprocess.Popen(
         [
@@ -81,13 +76,6 @@ def install():
         time.sleep(0.25)
     utils.kill_processes("Spotify.exe")
     print(f"{Fore.GREEN}Finished Installing Spicetify.\n")
-
-    if globals.DEPRECATED_BOOL == True:
-        print(f"{Fore.YELLOW}Replacing Deprecated Files.")  # Section 7
-        shutil.rmtree(user_profile + "\.spicetify\Extracted")
-        shutil.unpack_archive(temp + "Extracted.zip", user_profile + "\.spicetify")
-        os.remove(temp + "Extracted.zip")
-        print(f"{Fore.GREEN}Finished Replacing Deprecated Files.\n")
 
     print(f"{Fore.YELLOW}Preventing Spotify From Updating.")  # Section 8
     if not os.path.isdir(appdata_local + "\\Spotify\\Update"):
