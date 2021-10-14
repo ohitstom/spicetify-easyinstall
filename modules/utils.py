@@ -11,12 +11,6 @@ from requests import exceptions
 
 from modules import globals
 
-
-def handleError(func, path, exc_info):
-    if not os.access(path, os.W_OK):
-       os.chmod(path, stat.S_IWUSR)
-       func(path)
-
 def requests_progress(url, path):
     if os.path.isdir(path) == True:
         os.mkdir(path)
