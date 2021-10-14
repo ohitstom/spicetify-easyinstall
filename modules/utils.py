@@ -39,7 +39,7 @@ def requests_progress(url, path):
             f.write(r.content)
 
     except Exception as e:
-        raise TypeError(e)
+        return TypeError(e)
 
     print("\033[A                                                                \033[A")
 
