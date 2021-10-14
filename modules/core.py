@@ -106,7 +106,7 @@ def install():
     os.remove(user_profile + "\spicetify-cli\Themes.zip")
     os.rename(
         user_profile
-        + "\spicetify-cli\spicetify-themes-cbd332f7c683575f65b102b662ee9fd008d4d284",
+        + "\spicetify-cli" + globals.THEMES_EXTRACTED,
         user_profile + "\spicetify-cli\Themes",
     )
 
@@ -148,7 +148,7 @@ def update_addons():
     os.remove(user_profile + "\spicetify-cli\Themes.zip")
     os.rename(
         user_profile
-        + "\spicetify-cli\spicetify-themes-cbd332f7c683575f65b102b662ee9fd008d4d284",
+        + "\spicetify-cli" + globals.THEMES_EXTRACTED,
         user_profile + "\spicetify-cli\Themes",
     )
 
