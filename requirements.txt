@@ -2,3 +2,5 @@ clint
 psutil
 colorama
 requests
+consolemenu
+console-menu

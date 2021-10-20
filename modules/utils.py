@@ -1,21 +1,104 @@
 import os
-import stat
 import subprocess
 import time
-import warnings
 
 import psutil
-import requests, requests.exceptions
+import requests
+import requests.exceptions
 from clint.textui import progress
+from colorama import Fore, init
 
-from modules import globals
+
+# >[Config Management]<
+
+def replace_config_line(file_name, line_num, text): #replace_config_line("pathto\config.txt", 5, "new text") <- Example Usage | Last stage of set_config_entry.
+    lines = open(file_name, 'r').readlines()
+    lines[line_num] = text+"\n"
+    out = open(file_name, 'w')
+    out.writelines(lines)
+    out.close()
 
 
-def requests_progress(url, path):
+def find_config_entry(entry, replacement=None):     #find_config_entry("extensions") <- Example usage | Optional var: "replacement" [Used for set_config_entry].
+
+    config = os.path.expanduser("~") + "\.spicetify\config-xpui.ini"
+    with open(config, "r") as file:
+        count = 0
+        for line in file:
+            count += 1
+            if entry in line:
+                break
+
+        if replacement != None:
+            found_line_str = line
+            found_line_int = count-1
+            a, b = found_line_str.split(" = ")
+            b = b.replace(b, replacement)
+            final_write_data = (a+" = "+b)
+            return(config, found_line_int, final_write_data)
+        else:
+            found_line_str = line.strip("\n")
+            a, b = found_line_str.split(" = ")
+            final_write_data = b
+            return(final_write_data)
+
+
+def set_config_entry(entry, replacement):           #set_config_entry("current_theme", "themename") <- Example Usage | Sets specific parts of the config.
+
+    data = find_config_entry(entry, replacement)
+    replace_config_line(data[0], data[1], data[2])
+
+
+def list_config_available(selection):               #1=Themes, 2=Extensions, 3=Custom Apps <- Usage Options | Lists out available configurations.
+    if is_installed() == True:
+        if selection == 1:  # List Themes
+            themes = os.listdir(os.path.expanduser(
+                "~") + "\spicetify-cli\Themes")
+            themes.remove("_Extra")
+            return(themes)
+
+        elif selection == 2:  # List Extensions
+            extensions = os.listdir(os.path.expanduser(
+                "~") + "\spicetify-cli\Extensions")
+            return(extensions)
+
+        elif selection == 3:  # List Custom apps
+            custom_apps = os.listdir(os.path.expanduser(
+                "~") + "\spicetify-cli\CustomApps")
+            return(custom_apps)
+    else:
+        return("Not Installed")
+
+
+# >[Bool Checkers]<
+
+def is_installed():                                 #Checks if spicetify is installed
+    if os.path.exists(os.path.expanduser("~") + "\.spicetify\config-xpui.ini") == True:
+        return(True)
+    else:
+        return(False)
+
+def is_theme_set():                                 #Checks if a theme is set, made obsolete by find_config_entry
+    config = os.path.expanduser("~") + "\.spicetify\config-xpui.ini"
+    with open(config, "r") as file:
+        for line in file:
+            if "current_theme" in line:
+                break
+        found_line = line.rstrip('\n')
+        a, b = found_line.split(" = ")
+        if not b or b == "SpicetifyDefault":
+            return(False)
+        else:
+            return(b)
+
+
+# >[UI Management]<
+
+def requests_progress(url, path):                   #requests_progress("urltodownload.com/download.zip", "%userprofile%/desktop") <- Example Usage | Adds a timer and bar to downloads.
     if os.path.isdir(path) == True:
         os.mkdir(path)
 
-    r = requests.get(url, headers={"User-Agent": "Developer"}, stream=True)
+    r = requests.get(url, stream=True, headers={'Accept-Encoding': None})
     try:
         with open(path, "wb") as f:
             total_length = int((r.headers.get("content-length")))
@@ -27,22 +110,17 @@ def requests_progress(url, path):
                     f.write(chunk)
                     f.flush()
 
-    except (
-        TypeError,  # Fill in for proper error checking, simply checks if int((r.headers.get('content-length'))) isnt nonetype, or doesnt throw any errors.
-        ZeroDivisionError,
-        AttributeError,
-    ) as e:
-        print("[!]ERROR Loading ProgressBar. Attempting To Downloading Without It.[!]")
-
+    except (TypeError, ZeroDivisionError, AttributeError) as e:
+        print(
+            "[!]ERROR Loading ProgressBar. Attempting To Downloading Without It.[!]\n"+f"[!]{e}[!]")
         r = requests.get(url, stream=True)
         with open(path, "wb") as f:
             f.write(r.content)
 
-    except Exception as e:
-        return TypeError(e)
+    print(
+        "\033[A                                                                \033[A")
 
-    print("\033[A                                                                \033[A")
-
+# >[Process Management]<
 
 def start_process(path):
     SW_HIDE = 0

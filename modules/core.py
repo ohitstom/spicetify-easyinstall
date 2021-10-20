@@ -1,15 +1,16 @@
-import glob
+import importlib
 import os
 import shutil
+import stat
 import subprocess
+import sys
 import tempfile
 import time
 from pathlib import Path
-
+import types
 from colorama import Fore
 
 from modules import globals, utils
-
 
 def install():
     user_profile = os.path.expanduser("~")  # Vars
@@ -31,7 +32,7 @@ def install():
         powershell_uninstall_pid = subprocess.Popen(
             [
                 "powershell",
-                'cmd /c "%USERPROFILE%\AppData\Roaming\Spotify\Spotify.exe" /UNINSTALL /SILENT',
+                'cmd /c "%USERPROFILE%\AppData\Roaming\Spotify\Spotify.exe" /UNINSTALL /SILENT\n$all = cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:D\n$all = cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:R'
             ]
         ).pid
         while utils.process_pid_running(powershell_uninstall_pid):
@@ -39,13 +40,17 @@ def install():
         print(f"{Fore.GREEN}Finished Uninstalling Spotify.\n")
     else:
         print(f"{Fore.GREEN}Spotify Already Uninstalled.\n")
-
+   
     print(f"{Fore.MAGENTA}[Wiping Folders]\n")  # Section 2
     for folder in folders:
         try:
-            shutil.rmtree(folder)
-            print(f'{Fore.GREEN}"{folder}" has been deleted.\n')
-        except OSError as e:
+            shutil.rmtree(folder, ignore_errors=True)
+            if os.path.exists(folder) != True:
+                print(f'{Fore.GREEN}"{folder}" is already empty.\n')
+            else:
+                print(f'{Fore.GREEN}"{folder}" has been deleted.\n')
+
+        except Exception as e:
             print(f'{Fore.RED}"{folder}" was not deleted: {e}\n')
     print(f"{Fore.MAGENTA}[Finished Wiping Folders]\n")
 
@@ -74,29 +79,25 @@ def install():
     ).pid
     while utils.process_pid_running(powershell_install_pid):
         time.sleep(0.25)
-    utils.kill_processes("Spotify.exe")
     print(f"{Fore.GREEN}Finished Installing Spicetify.\n")
 
     print(f"{Fore.YELLOW}Preventing Spotify From Updating.")  # Section 8
+    utils.kill_processes("Spotify.exe")
     if not os.path.isdir(appdata_local + "\\Spotify\\Update"):
         os.mkdir(appdata_local + "\\Spotify\\Update")
 
-    subprocess.Popen(
+    powershell_prevention_pid = subprocess.Popen(
         [
-            "powershell",
-            "$all = cmd /c icacls %localappdata%\\Spotify\\Update /deny %username%:D",
+            "powershell", 
+            "$all = cmd /c icacls %localappdata%\\Spotify\\Update /deny %username%:D\n$all = cmd /c icacls %localappdata%\\Spotify\\Update /deny %username%:R",
         ]
-    )
-    subprocess.Popen(
-        [
-            "powershell",
-            "$all = cmd /c icacls %localappdata%\\Spotify\\Update /deny %username%:R",
-        ]
-    )
+    ).pid
+    while utils.process_pid_running(powershell_prevention_pid):
+        time.sleep(0.25)
     print(f"{Fore.GREEN}Finished Preventing Spotify From Updating.\n")
 
     print(f"{Fore.YELLOW}Downloading Themes.")  # Section 9
-    shutil.rmtree(user_profile + "\spicetify-cli\Themes") 
+    shutil.rmtree(user_profile + "\spicetify-cli\Themes")
     utils.requests_progress(
         globals.DOWNLOAD_THEME_URL, (user_profile + "\spicetify-cli\Themes.zip")
     )
@@ -123,16 +124,22 @@ def install():
         user_profile + "\spicetify-cli\Themes\Default",
         user_profile + "\spicetify-cli\Themes\SpicetifyDefault",
     )
-    shutil.move(
-        user_profile + "\spicetify-cli\Themes\Dribbblish\Dribbblish.js",
-        user_profile + "\spicetify-cli\Extensions",
-    )
     print(f"{Fore.GREEN}Finished Downloading Themes.")
-
+    
+    # End of the terminal page
+    # I need to add a bool checker for if launch when ready is enabled
 
 def update_config():
-    print("placeholder")
-
+    count = 0
+    for themes in utils.list_config_available(1):
+        count += 1
+        print(f"{Fore.GREEN}\n{count}) {themes}")
+        
+        launch = int(input(f"\nChoose From The List Above (1-{count}): "))
+        utils.set_config_entry("current_theme", utils.list_config_available(1)[launch-1])
+    
+    # Current Quick Mockup of function usage
+    # Needs to run after the gui is finished, so i need to have the config menu rendered here? Or just pass variables saved in main.py to the func on run after gui is closed.
 
 def update_addons():
     user_profile = os.environ["USERPROFILE"]
@@ -164,30 +171,29 @@ def update_addons():
         user_profile + "\spicetify-cli\Themes\Default",
         user_profile + "\spicetify-cli\Themes\SpicetifyDefault",
     )
-    shutil.move(
-        user_profile + "\spicetify-cli\Themes\Dribbblish\Dribbblish.js",
-        user_profile + "\spicetify-cli\Extensions",
-    )
     print(f"{Fore.GREEN}Finished Downloading Themes.")
-
+    # End of the terminal page
+    # Needs to read a bool of what was selected, latest or current.
 
 def uninstall():
     user_profile = os.path.expanduser("~")  # Vars
-    temp = tempfile.gettempdir()
+    appdata_local = os.environ["LOCALAPPDATA"]
+    temp = "C:\\Users\\WDAGUtilityAccount\\AppData\\Local\\temp"
     folders = [
         (user_profile + "\spicetify-cli"),
         (user_profile + "\.spicetify"),
         (temp),
     ]
 
-    print(f"{Fore.MAGENTA}[Wiping Folders]\n")  # Section 1
+    print(f"{Fore.MAGENTA}[Wiping Folders]\n")  # Section 2
     for folder in folders:
         try:
             shutil.rmtree(folder)
-            print(f'{Fore.GREEN}"{folder}" has been deleted.\n')
-        except OSError as e:
+        except Exception as e:
             print(f'{Fore.RED}"{folder}" was not deleted: {e}\n')
-
+    print(f"{Fore.MAGENTA}[Finished Wiping Folders]")
     # subprocess.Popen( #Delete ENV VAR
     # ["powershell", '$all = cmd /c setx Path '])
-    print(f"{Fore.MAGENTA}[Finished Wiping Folders]\n")
+
+    # End of the terminal page
+    # Needs rewriting

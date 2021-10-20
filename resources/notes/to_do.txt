@@ -1,14 +1,13 @@
 Config Modifier:
-    -theme picker,
-    -color picker,
-    -extension picker,
-    -app picker.
+    -color picker
 
 Optional:
     -Backup and restore spotify settings and login
     -Create a v1 and latest variant.
 
 Fix:
-    -Downloading new themes, provide option for latest themes, or shipped themes.
+    -Provide option for latest themes, or shipped themes.
     -Fix requests error checking, find a way to return the error from the function, and then return to main menu.
-    -Fix deletion of folders permission errors
+
+Major:
+    -REWORK ALL UI
