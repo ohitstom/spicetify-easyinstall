@@ -8,7 +8,6 @@ import requests.exceptions
 from clint.textui import progress
 from colorama import Fore, init
 
-
 # >[Config Management]<
 
 def replace_config_line(file_name, line_num, text): #replace_config_line("pathto\config.txt", 5, "new text") <- Example Usage | Last stage of set_config_entry.

@@ -1,16 +1,14 @@
-import importlib
 import os
 import shutil
-import stat
 import subprocess
-import sys
 import tempfile
 import time
 from pathlib import Path
-import types
+
 from colorama import Fore
 
 from modules import globals, utils
+
 
 def install():
     user_profile = os.path.expanduser("~")  # Vars
