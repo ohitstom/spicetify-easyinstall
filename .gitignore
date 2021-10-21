@@ -7,3 +7,4 @@ temp/
 build/
 dist/
 *.log
+log.txt
