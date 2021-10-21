@@ -4,7 +4,6 @@ import asyncio
 import tempfile
 import subprocess
 from pathlib import Path
-from typing import Type
 
 from modules import globals, utils
 
@@ -31,7 +30,8 @@ async def install():
             [
                 "powershell",
                 'cmd /c "%USERPROFILE%\AppData\Roaming\Spotify\Spotify.exe" /UNINSTALL /SILENT\n$all = cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:D\n$all = cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:R'
-            ]
+            ],
+            shell=True
         ).pid
         while utils.process_pid_running(powershell_uninstall_pid):
             await asyncio.sleep(0.25)
@@ -77,7 +77,8 @@ async def install():
             "powershell",
             "$ProgressPreference = 'SilentlyContinue'\n$v='%s'; Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/OhItsTom/spicetify-easyinstall/Spicetify-v2/install.ps1' | Invoke-Expression\n$all = spicetify\n $all = spicetify backup apply enable-devtool"
             % globals.SPICETIFY_VERSION,
-        ]
+        ],
+        shell=True
     ).pid
     while utils.process_pid_running(powershell_install_pid):
         await asyncio.sleep(0.25)
@@ -91,7 +92,8 @@ async def install():
         [
             "powershell",
             "$all = cmd /c icacls %localappdata%\\Spotify\\Update /deny %username%:D\n$all = cmd /c icacls %localappdata%\\Spotify\\Update /deny %username%:R",
-        ]
+        ],
+        shell=True
     ).pid
     while utils.process_pid_running(powershell_prevention_pid):
         await asyncio.sleep(0.25)
