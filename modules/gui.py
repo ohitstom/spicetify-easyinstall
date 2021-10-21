@@ -237,17 +237,20 @@ class BottomBar(QuickWidget):
                          layout=QtWidgets.QHBoxLayout,
                          margins=(16, 12, 16, 12))
 
+        def watermark_callback(*_):
+            webbrowser.open_new_tab(globals.HOMEPAGE)
+
         self.icon = QtWidgets.QLabel(parent=self)
         # Read image, scale to small square, cut off sides to only keep the relevant part
         self.icon.setPixmap(QtGui.QPixmap("resources/icons/icon.png").scaled(36, 36, transformMode=QtCore.Qt.SmoothTransformation).copy(6, 0, 24, 36))
         # Labels don't have a clicked signal, need to replace mousePressEvent
-        self.icon.mousePressEvent = lambda *_: webbrowser.open_new_tab(globals.HOMEPAGE)
+        self.icon.mousePressEvent = watermark_callback
         clickable(self.icon)
         self.layout().addWidget(self.icon)
 
         self.watermark = QtWidgets.QLabel(parent=self)
         self.watermark.setText(globals.WATERMARK)
-        self.watermark.mousePressEvent = lambda *_: webbrowser.open_new_tab(globals.HOMEPAGE)
+        self.watermark.mousePressEvent = watermark_callback
         clickable(self.watermark)
         self.layout().addWidget(self.watermark)
 
