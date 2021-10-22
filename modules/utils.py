@@ -1,12 +1,11 @@
 import os
-import subprocess
-import time
-
 import psutil
-import requests
-import requests.exceptions
-from clint.textui import progress
-from colorama import Fore, init
+import aiohttp
+import aiofiles
+import subprocess
+
+from modules import globals, logger, progress
+
 
 # >[Config Management]<
 
@@ -93,31 +92,25 @@ def is_theme_set():                                 #Checks if a theme is set, m
 
 # >[UI Management]<
 
-def requests_progress(url, path):                   #requests_progress("urltodownload.com/download.zip", "%userprofile%/desktop") <- Example Usage | Adds a timer and bar to downloads.
-    if os.path.isdir(path) == True:
-        os.mkdir(path)
-
-    r = requests.get(url, stream=True, headers={'Accept-Encoding': None})
-    try:
-        with open(path, "wb") as f:
-            total_length = int((r.headers.get("content-length")))
-            for chunk in progress.bar(
-                r.iter_content(chunk_size=1024000),
-                expected_size=round(total_length / 1024000),
-            ):
-                if chunk:
-                    f.write(chunk)
-                    f.flush()
-
-    except (TypeError, ZeroDivisionError, AttributeError) as e:
-        print(
-            "[!]ERROR Loading ProgressBar. Attempting To Downloading Without It.[!]\n"+f"[!]{e}[!]")
-        r = requests.get(url, stream=True)
-        with open(path, "wb") as f:
-            f.write(r.content)
-
-    print(
-        "\033[A                                                                \033[A")
+async def chunked_download(url, path, label):                   #chunked_download("urltodownload.com/download.zip", "%userprofile%\\file.zip", "file.zip") <- Example Usage.
+    async with aiohttp.ClientSession() as cs:
+        async with cs.get(url, headers={'Accept-Encoding': "null"}) as r:
+            async with aiofiles.open(path, 'wb') as f:
+                logger._pause_file_output = True
+                total_length = int(r.headers.get('content-length'))
+                bar = progress.Bar(expected_size=round(total_length / 1024), label=label, width=28, hide=False)
+                bar.show(0)
+                i = 0
+                while True:
+                    chunk = await r.content.read(1024)
+                    i += 1
+                    if chunk:
+                        await f.write(chunk)
+                        bar.show(i)
+                    else:
+                        logger._pause_file_output = False
+                        bar.done()
+                        break
 
 # >[Process Management]<
 
@@ -136,7 +129,7 @@ def kill_processes(name):
             if proc.name().lower() == name:
                 proc.kill()
         except Exception:
-            time.sleep(0.25)
+            pass
 
 
 def process_running(name):
@@ -146,7 +139,7 @@ def process_running(name):
             if proc.name().lower() == name:
                 return True
         except Exception:
-            time.sleep(0.25)
+            pass
     return False
 
 
@@ -156,5 +149,5 @@ def process_pid_running(pid):
             if proc.pid == pid:
                 return True
         except Exception:
-            time.sleep(0.25)
+            pass
     return False
