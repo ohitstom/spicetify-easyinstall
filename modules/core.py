@@ -128,11 +128,9 @@ def install():
     # I need to add a bool checker for if launch when ready is enabled
 
 def update_config():
-    count = 0
-    for themes in utils.list_config_available(1):
-        count += 1
+    for count, themes in enumerate(utils.list_config_available(1), start=1):
         print(f"{Fore.GREEN}\n{count}) {themes}")
-        
+
         launch = int(input(f"\nChoose From The List Above (1-{count}): "))
         utils.set_config_entry("current_theme", utils.list_config_available(1)[launch-1])
     
