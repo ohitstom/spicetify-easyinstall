@@ -10,4 +10,4 @@ Fix:
     -Fix requests error checking, find a way to return the error from the function, and then return to main menu.
 
 Major:
-    -REWORK ALL UI
+    -Implement config section of GUI
