@@ -1,10 +1,11 @@
 import sys
 import traceback
-from modules.gui import *
+
 from PyQt5 import QtWidgets
 from qasync import asyncSlot
 
-from modules import globals, core
+from modules import core, globals
+from modules.gui import *
 
 
 class LicenseScreen(SlidingScreen):
@@ -16,7 +17,7 @@ class LicenseScreen(SlidingScreen):
         self.license = QtWidgets.QPlainTextEdit(parent=self)
         # License text has weird width, compensate with left padding
         self.license.setStyleSheet(
-            '\x1f            QPlainTextEdit {\x1f                padding: 0px 0px 0px 24px;\x1f                font-size: 7.5pt;\x1f            }\x1f        '
+            "\x1f            QPlainTextEdit {\x1f                padding: 0px 0px 0px 24px;\x1f                font-size: 7.5pt;\x1f            }\x1f        "
         )
 
         self.license.setPlainText(globals.LICENSE_AGREEMENT)
@@ -24,7 +25,9 @@ class LicenseScreen(SlidingScreen):
         self.license.children()[3].children()[0].setDocumentMargin(12)
         self.layout().addWidget(self.license)
 
-        self.accept_license = QtWidgets.QCheckBox(parent=self, text="I accept the license agreement")
+        self.accept_license = QtWidgets.QCheckBox(
+            parent=self, text="I accept the license agreement"
+        )
         clickable(self.accept_license)
         self.layout().addWidget(self.accept_license)
 
@@ -34,16 +37,24 @@ class LicenseScreen(SlidingScreen):
         slider = self.parent().parent().slider
 
         # Toggle the next buttom when accept checkbox is toggled
-        connect(signal=self.accept_license.stateChanged,
-                callback=lambda *_: bottom_bar.next.setEnabled(self.accept_license.isChecked()))
+        connect(
+            signal=self.accept_license.stateChanged,
+            callback=lambda *_: bottom_bar.next.setEnabled(
+                self.accept_license.isChecked()
+            ),
+        )
 
         # Setup quit button
         connect(signal=bottom_bar.back.clicked, callback=globals.app.quit)
         bottom_bar.back.setText("Quit")
         bottom_bar.back.setEnabled(True)
         # Setup next button
-        connect(signal=bottom_bar.next.clicked,
-                callback=lambda *_: slider.slideTo(slider.main_menu_screen, direction="next"))
+        connect(
+            signal=bottom_bar.next.clicked,
+            callback=lambda *_: slider.slideTo(
+                slider.main_menu_screen, direction="next"
+            ),
+        )
         bottom_bar.next.setEnabled(self.accept_license.isChecked())
 
 
@@ -54,12 +65,15 @@ class MainMenuScreen(SlidingScreen):
         super().__init__(parent=parent, icon="󰙪", title="What do you want to do?")
 
         # Make sure alignment is ok
-        self.top_spacer = QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding)
+        self.top_spacer = QtWidgets.QSpacerItem(
+            0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding
+        )
         self.layout().addItem(self.top_spacer)
 
         self.button_grid = QuickWidget(parent=self, margins=(0, 0, 0, 0), spacing=20)
         # Radio buttons that look like push buttons
-        self.button_grid.setStyleSheet(f"""
+        self.button_grid.setStyleSheet(
+            f"""
             QRadioButton {{
                 margin: 0px;
                 padding: 5px 10px 5px 10px;
@@ -90,56 +104,87 @@ class MainMenuScreen(SlidingScreen):
                 font-size: 18pt;
                 font-weight: 400;
             }}
-        """)
+        """
+        )
         self.layout().addWidget(self.button_grid, stretch=1)
 
         # Define buttons and setup custom text + icon inside
         self.install = QtWidgets.QRadioButton(parent=self.button_grid, text="")
         self.install.setLayout(QtWidgets.QHBoxLayout())
-        self.install.layout().addItem(QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding))
+        self.install.layout().addItem(
+            QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding)
+        )
         self.install.layout().addWidget(QtWidgets.QLabel(parent=self.install, text="󰄠"))
         self.install.children()[-1].setObjectName("icon")
-        self.install.layout().addWidget(QtWidgets.QLabel(parent=self.install, text="Install"))
-        self.install.layout().addItem(QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding))
+        self.install.layout().addWidget(
+            QtWidgets.QLabel(parent=self.install, text="Install")
+        )
+        self.install.layout().addItem(
+            QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding)
+        )
         clickable(self.install)
         self.button_grid.layout().addWidget(self.install, 0, 0)
 
         self.config = QtWidgets.QRadioButton(parent=self.button_grid, text="")
         self.config.setLayout(QtWidgets.QHBoxLayout())
-        self.config.layout().addItem(QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding))
+        self.config.layout().addItem(
+            QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding)
+        )
         self.config.layout().addWidget(QtWidgets.QLabel(parent=self.config, text="󰢻"))
         self.config.children()[-1].setObjectName("icon")
-        self.config.layout().addWidget(QtWidgets.QLabel(parent=self.config, text="Config"))
-        self.config.layout().addItem(QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding))
+        self.config.layout().addWidget(
+            QtWidgets.QLabel(parent=self.config, text="Config")
+        )
+        self.config.layout().addItem(
+            QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding)
+        )
         clickable(self.config)
         self.button_grid.layout().addWidget(self.config, 0, 1)
         self.config.setEnabled(False)  # FIXME: implement config section
 
         self.uninstall = QtWidgets.QRadioButton(parent=self.button_grid, text="")
         self.uninstall.setLayout(QtWidgets.QHBoxLayout())
-        self.uninstall.layout().addItem(QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding))
-        self.uninstall.layout().addWidget(QtWidgets.QLabel(parent=self.uninstall, text="󰩺"))
+        self.uninstall.layout().addItem(
+            QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding)
+        )
+        self.uninstall.layout().addWidget(
+            QtWidgets.QLabel(parent=self.uninstall, text="󰩺")
+        )
         self.uninstall.children()[-1].setObjectName("icon")
-        self.uninstall.layout().addWidget(QtWidgets.QLabel(parent=self.uninstall, text="Uninstall"))
-        self.uninstall.layout().addItem(QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding))
+        self.uninstall.layout().addWidget(
+            QtWidgets.QLabel(parent=self.uninstall, text="Uninstall")
+        )
+        self.uninstall.layout().addItem(
+            QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding)
+        )
         clickable(self.uninstall)
         self.button_grid.layout().addWidget(self.uninstall, 1, 0)
 
         self.update = QtWidgets.QRadioButton(parent=self.button_grid, text="")
         self.update.setLayout(QtWidgets.QHBoxLayout())
-        self.update.layout().addItem(QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding))
+        self.update.layout().addItem(
+            QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding)
+        )
         self.update.layout().addWidget(QtWidgets.QLabel(parent=self.update, text="󰓦"))
         self.update.children()[-1].setObjectName("icon")
-        self.update.layout().addWidget(QtWidgets.QLabel(parent=self.update, text="Update"))
-        self.update.layout().addItem(QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding))
+        self.update.layout().addWidget(
+            QtWidgets.QLabel(parent=self.update, text="Update")
+        )
+        self.update.layout().addItem(
+            QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding)
+        )
         clickable(self.update)
         self.button_grid.layout().addWidget(self.update, 1, 1)
 
         # Make sure alignment is ok
-        self.bottom_spacer = QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding)
+        self.bottom_spacer = QtWidgets.QSpacerItem(
+            0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding
+        )
         self.layout().addItem(self.bottom_spacer)
 
-        self.debug_mode = QtWidgets.QCheckBox(parent=self, text="Enable Debug Mode (more verbose)")
+        self.debug_mode = QtWidgets.QCheckBox(
+            parent=self, text="Enable Debug Mode (more verbose)"
+        )
         clickable(self.debug_mode)
         self.layout().addWidget(self.debug_mode)
 
@@ -155,14 +200,17 @@ class MainMenuScreen(SlidingScreen):
                     bottom_bar.next.setEnabled(True)
                     return
             bottom_bar.next.setEnabled(False)
-        connect(signal=self.install.toggled,   callback=set_next_button_enabled)
-        connect(signal=self.config.toggled,    callback=set_next_button_enabled)
+
+        connect(signal=self.install.toggled, callback=set_next_button_enabled)
+        connect(signal=self.config.toggled, callback=set_next_button_enabled)
         connect(signal=self.uninstall.toggled, callback=set_next_button_enabled)
-        connect(signal=self.update.toggled,    callback=set_next_button_enabled)
+        connect(signal=self.update.toggled, callback=set_next_button_enabled)
 
         # Setup back button
-        connect(signal=bottom_bar.back.clicked,
-                callback=lambda *_: slider.slideTo(slider.license_screen, direction="back"))
+        connect(
+            signal=bottom_bar.back.clicked,
+            callback=lambda *_: slider.slideTo(slider.license_screen, direction="back"),
+        )
         bottom_bar.back.setText("Back")
         bottom_bar.back.setEnabled(True)
 
@@ -179,6 +227,7 @@ class MainMenuScreen(SlidingScreen):
                 next_screen = slider.update_menu_screen
             if next_screen:
                 slider.slideTo(next_screen, direction="next")
+
         connect(signal=bottom_bar.next.clicked, callback=next_button_callback)
         bottom_bar.next.setText("Next")
         set_next_button_enabled()
@@ -188,14 +237,16 @@ class InstallConfirmScreen(ConfirmScreen):
     screen_name = "install_confirm_screen"
 
     def __init__(self, parent):
-        super().__init__(parent=parent,
-                         icon="󰄠",
-                         title="Install Spicetify",
-                         subtitle="Details of this install:",
-                         rundown=globals.INSTALL_RUNDOWN_MD,
-                         action_name="Install",
-                         back_screen="main_menu_screen",
-                         next_screen="install_log_screen")
+        super().__init__(
+            parent=parent,
+            icon="󰄠",
+            title="Install Spicetify",
+            subtitle="Details of this install:",
+            rundown=globals.INSTALL_RUNDOWN_MD,
+            action_name="Install",
+            back_screen="main_menu_screen",
+            next_screen="install_log_screen",
+        )
 
         self.launch_after = QtWidgets.QCheckBox(parent=self, text="Launch when ready")
         clickable(self.launch_after)
@@ -234,14 +285,16 @@ class UninstallConfirmScreen(ConfirmScreen):
     screen_name = "uninstall_confirm_screen"
 
     def __init__(self, parent):
-        super().__init__(parent=parent,
-                         icon="󰩺",
-                         title="Uninstall Spicetify",
-                         subtitle="Details of this uninstall:",
-                         rundown=globals.UNINSTALL_RUNDOWN_MD,
-                         action_name="Uninstall",
-                         back_screen="main_menu_screen",
-                         next_screen="uninstall_log_screen")
+        super().__init__(
+            parent=parent,
+            icon="󰩺",
+            title="Uninstall Spicetify",
+            subtitle="Details of this uninstall:",
+            rundown=globals.UNINSTALL_RUNDOWN_MD,
+            action_name="Uninstall",
+            back_screen="main_menu_screen",
+            next_screen="uninstall_log_screen",
+        )
 
     @asyncSlot()
     async def shownCallback(self):
@@ -278,12 +331,15 @@ class UpdateMenuScreen(SlidingScreen):
         super().__init__(parent=parent, icon="󰓦", title="What do you want to update?")
 
         # Make sure alignment is ok
-        self.top_spacer = QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding)
+        self.top_spacer = QtWidgets.QSpacerItem(
+            0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding
+        )
         self.layout().addItem(self.top_spacer)
 
         self.button_grid = QuickWidget(parent=self, margins=(0, 0, 0, 0), spacing=20)
         # Radio buttons that look like push buttons
-        self.button_grid.setStyleSheet(f"""
+        self.button_grid.setStyleSheet(
+            f"""
             QRadioButton {{
                 margin: 0px;
                 padding: 5px 10px 5px 10px;
@@ -321,40 +377,97 @@ class UpdateMenuScreen(SlidingScreen):
                 font-weight: 400;
                 text-align: center;
             }}
-        """)
+        """
+        )
         self.layout().addWidget(self.button_grid)
 
         # Define buttons and setup custom text + icon inside
         self.shipped = QtWidgets.QRadioButton(parent=self.button_grid, text="")
         self.shipped.setLayout(QtWidgets.QGridLayout())
-        self.shipped.layout().addItem(QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding), 0, 0, 1, 4)
-        self.shipped.layout().addItem(QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding), 1, 0)
-        self.shipped.layout().addWidget(QtWidgets.QLabel(parent=self.shipped, text="󰏗"), 1, 1)
+        self.shipped.layout().addItem(
+            QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding),
+            0,
+            0,
+            1,
+            4,
+        )
+        self.shipped.layout().addItem(
+            QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding), 1, 0
+        )
+        self.shipped.layout().addWidget(
+            QtWidgets.QLabel(parent=self.shipped, text="󰏗"), 1, 1
+        )
         self.shipped.children()[-1].setObjectName("icon")
-        self.shipped.layout().addWidget(QtWidgets.QLabel(parent=self.shipped, text="Shipped"), 1, 2)
-        self.shipped.layout().addItem(QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding), 1, 3)
-        self.shipped.layout().addWidget(QtWidgets.QLabel(parent=self.shipped, text="Preinstalled addons"), 2, 0, 1, 4, QtCore.Qt.AlignCenter)
+        self.shipped.layout().addWidget(
+            QtWidgets.QLabel(parent=self.shipped, text="Shipped"), 1, 2
+        )
+        self.shipped.layout().addItem(
+            QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding), 1, 3
+        )
+        self.shipped.layout().addWidget(
+            QtWidgets.QLabel(parent=self.shipped, text="Preinstalled addons"),
+            2,
+            0,
+            1,
+            4,
+            QtCore.Qt.AlignCenter,
+        )
         self.shipped.children()[-1].setObjectName("description")
-        self.shipped.layout().addItem(QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding), 3, 0, 1, 4)
+        self.shipped.layout().addItem(
+            QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding),
+            3,
+            0,
+            1,
+            4,
+        )
         clickable(self.shipped)
         self.button_grid.layout().addWidget(self.shipped, 0, 0)
 
         self.latest = QtWidgets.QRadioButton(parent=self.button_grid, text="")
         self.latest.setLayout(QtWidgets.QGridLayout())
-        self.latest.layout().addItem(QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding), 0, 0, 1, 4)
-        self.latest.layout().addItem(QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding), 1, 0)
-        self.latest.layout().addWidget(QtWidgets.QLabel(parent=self.latest, text="󰚰"), 1, 1)
+        self.latest.layout().addItem(
+            QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding),
+            0,
+            0,
+            1,
+            4,
+        )
+        self.latest.layout().addItem(
+            QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding), 1, 0
+        )
+        self.latest.layout().addWidget(
+            QtWidgets.QLabel(parent=self.latest, text="󰚰"), 1, 1
+        )
         self.latest.children()[-1].setObjectName("icon")
-        self.latest.layout().addWidget(QtWidgets.QLabel(parent=self.latest, text="Latest"), 1, 2)
-        self.latest.layout().addItem(QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding), 1, 3)
-        self.latest.layout().addWidget(QtWidgets.QLabel(parent=self.shipped, text="Third party addons"), 2, 0, 1, 4, QtCore.Qt.AlignCenter)
+        self.latest.layout().addWidget(
+            QtWidgets.QLabel(parent=self.latest, text="Latest"), 1, 2
+        )
+        self.latest.layout().addItem(
+            QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding), 1, 3
+        )
+        self.latest.layout().addWidget(
+            QtWidgets.QLabel(parent=self.shipped, text="Third party addons"),
+            2,
+            0,
+            1,
+            4,
+            QtCore.Qt.AlignCenter,
+        )
         self.latest.children()[-1].setObjectName("description")
-        self.latest.layout().addItem(QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding), 3, 0, 1, 4)
+        self.latest.layout().addItem(
+            QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding),
+            3,
+            0,
+            1,
+            4,
+        )
         clickable(self.latest)
         self.button_grid.layout().addWidget(self.latest, 0, 1)
 
         # Make sure alignment is ok
-        self.bottom_spacer = QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding)
+        self.bottom_spacer = QtWidgets.QSpacerItem(
+            0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding
+        )
         self.layout().addItem(self.bottom_spacer)
 
     @asyncSlot()
@@ -369,12 +482,17 @@ class UpdateMenuScreen(SlidingScreen):
                     bottom_bar.next.setEnabled(True)
                     return
             bottom_bar.next.setEnabled(False)
+
         connect(signal=self.shipped.toggled, callback=set_next_button_enabled)
-        connect(signal=self.latest.toggled,  callback=set_next_button_enabled)
+        connect(signal=self.latest.toggled, callback=set_next_button_enabled)
 
         # Setup back button
-        connect(signal=bottom_bar.back.clicked,
-                callback=lambda *_: slider.slideTo(slider.main_menu_screen, direction="back"))
+        connect(
+            signal=bottom_bar.back.clicked,
+            callback=lambda *_: slider.slideTo(
+                slider.main_menu_screen, direction="back"
+            ),
+        )
         bottom_bar.back.setText("Back")
         bottom_bar.back.setEnabled(True)
 
@@ -387,6 +505,7 @@ class UpdateMenuScreen(SlidingScreen):
                 next_screen = slider.update_latest_confirm_screen
             if next_screen:
                 slider.slideTo(next_screen, direction="next")
+
         connect(signal=bottom_bar.next.clicked, callback=next_button_callback)
         bottom_bar.next.setText("Next")
         set_next_button_enabled()
@@ -396,14 +515,16 @@ class UpdateShippedConfirmScreen(ConfirmScreen):
     screen_name = "update_shipped_confirm_screen"
 
     def __init__(self, parent):
-        super().__init__(parent=parent,
-                         icon="󰏗",
-                         title="Update Shipped Addons",
-                         subtitle="Details of this update:",
-                         rundown=globals.UPDATE_SHIPPED_RUNDOWN_MD,
-                         action_name="Update",
-                         back_screen="update_menu_screen",
-                         next_screen="update_shipped_log_screen")
+        super().__init__(
+            parent=parent,
+            icon="󰏗",
+            title="Update Shipped Addons",
+            subtitle="Details of this update:",
+            rundown=globals.UPDATE_SHIPPED_RUNDOWN_MD,
+            action_name="Update",
+            back_screen="update_menu_screen",
+            next_screen="update_shipped_log_screen",
+        )
 
     @asyncSlot()
     async def shownCallback(self):
@@ -437,14 +558,16 @@ class UpdateLatestConfirmScreen(ConfirmScreen):
     screen_name = "update_latest_confirm_screen"
 
     def __init__(self, parent):
-        super().__init__(parent=parent,
-                         icon="󰚰",
-                         title="Update Latest Addons",
-                         subtitle="Details of this update:",
-                         rundown=globals.UPDATE_LATEST_RUNDOWN_MD,
-                         action_name="Update",
-                         back_screen="update_menu_screen",
-                         next_screen="update_latest_log_screen")
+        super().__init__(
+            parent=parent,
+            icon="󰚰",
+            title="Update Latest Addons",
+            subtitle="Details of this update:",
+            rundown=globals.UPDATE_LATEST_RUNDOWN_MD,
+            action_name="Update",
+            back_screen="update_menu_screen",
+            next_screen="update_latest_log_screen",
+        )
 
     @asyncSlot()
     async def shownCallback(self):

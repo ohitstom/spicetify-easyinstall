@@ -86,9 +86,9 @@ def is_theme_set():                                 #Checks if a theme is set, m
             return(b)
 
 
-# >[UI Management]<
+# >[TUI Management]<
 
-async def chunked_download(url, path, label):                   #chunked_download("urltodownload.com/download.zip", "%userprofile%\\file.zip", "file.zip") <- Example Usage.
+async def chunked_download(url, path, label):       #chunked_download("urltodownload.com/download.zip", "%userprofile%\\file.zip", "file.zip") <- Example Usage.
     async with aiohttp.ClientSession() as cs:
         async with cs.get(url, headers={'Accept-Encoding': "null"}) as r:
             async with aiofiles.open(path, 'wb') as f:

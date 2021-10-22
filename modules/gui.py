@@ -1,7 +1,8 @@
 import asyncio
 import webbrowser
-from qasync import asyncSlot
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+from qasync import asyncSlot
 
 from modules import globals, logger
 
