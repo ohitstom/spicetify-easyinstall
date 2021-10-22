@@ -14,7 +14,7 @@ _pause_file_output = False
 def _file_write(message):
     if _pause_file_output:
         return
-    with open(f"log.txt", "a", encoding='utf-8') as log:
+    with open('log.txt', "a", encoding='utf-8') as log:
         log.write(message)
 
 class __stdout_override():
