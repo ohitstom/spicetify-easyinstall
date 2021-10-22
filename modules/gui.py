@@ -297,13 +297,10 @@ class Title(QuickWidget):
 
         self.text = QtWidgets.QLabel(parent=self, text=text)
         # Change font type and size
-        self.text.setStyleSheet(f"""
-            QLabel {{
-                font-family: Poppins;
-                font-size: 13pt;
-                font-weight: 400;
-            }}
-        """)
+        self.text.setStyleSheet(
+            '\x1f            QLabel {\x1f                font-family: Poppins;\x1f                font-size: 13pt;\x1f                font-weight: 400;\x1f            }\x1f        '
+        )
+
         self.layout().addWidget(self.text, alignment=QtCore.Qt.AlignBottom)
 
         # Make sure title aligns to left
