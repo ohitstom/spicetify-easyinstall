@@ -114,19 +114,17 @@ async def chunked_download(
                 logger._pause_file_output = True
                 total_length = int(r.headers.get("content-length"))
                 bar = progress.Bar(
-                    expected_size=round(total_length / 1024),
+                    expected_size=total_length,
                     label=label,
                     width=28,
                     hide=False,
                 )
                 bar.show(0)
-                i = 0
-                while True:
-                    chunk = await r.content.read(1024)
-                    i += 1
+                done = 0
+                async for chunk in r.content.iter_any():
                     if chunk:
-                        await f.write(chunk)
-                        bar.show(i)
+                        done += await f.write(chunk)
+                        bar.show(done)
                     else:
                         logger._pause_file_output = False
                         bar.done()
