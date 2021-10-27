@@ -326,7 +326,7 @@ class Title(QuickWidget):
         self.text = QtWidgets.QLabel(parent=self, text=text)
         # Change font type and size
         self.text.setStyleSheet(
-            """
+            f"""
             QLabel {{
                 font-family: Poppins;
                 font-size: 13pt;
