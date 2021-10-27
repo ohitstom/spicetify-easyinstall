@@ -16,7 +16,7 @@ class LicenseScreen(SlidingScreen):
         self.license = QtWidgets.QPlainTextEdit(parent=self)
         # License text has weird width, compensate with left padding
         self.license.setStyleSheet(
-            """
+            f"""
             QPlainTextEdit {{
                 padding: 0px 0px 0px 24px;
                 font-size: 7.5pt;
