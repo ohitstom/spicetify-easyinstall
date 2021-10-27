@@ -26,13 +26,14 @@ async def install():
     print(f"(1/{steps_count}) Uninstalling Spotify...")  # Section 1
     if os.path.isdir(appdata + "\Spotify"):
         utils.kill_processes("Spotify.exe")
-        powershell_uninstall_pid = subprocess.Popen(
+        powershell_uninstall_proc = subprocess.Popen(
             [
                 "powershell",
                 'cmd /c "%USERPROFILE%\AppData\Roaming\Spotify\Spotify.exe" /UNINSTALL /SILENT\n$all = cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:D\n$all = cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:R',
             ],
-        ).pid
-        while utils.process_pid_running(powershell_uninstall_pid):
+            creationflags=subprocess.CREATE_NO_WINDOW,
+        )
+        while utils.process_pid_running(powershell_uninstall_proc.pid):
             await asyncio.sleep(0.25)
         print("Finished uninstalling Spotify!\n")
     else:
@@ -79,14 +80,15 @@ async def install():
     print("Finished installing Spotify!\n")
 
     print(f"(5/{steps_count}) Installing Spicetify...")  # Section 5
-    powershell_install_pid = subprocess.Popen(
+    powershell_install_proc = subprocess.Popen(
         [
             "powershell",
             "$ProgressPreference = 'SilentlyContinue'\n$v='%s'; Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/OhItsTom/spicetify-easyinstall/Spicetify-v2/install.ps1' | Invoke-Expression\n$all = spicetify\n $all = spicetify backup apply enable-devtool"
             % globals.SPICETIFY_VERSION,
         ],
-    ).pid
-    while utils.process_pid_running(powershell_install_pid):
+        creationflags=subprocess.CREATE_NO_WINDOW,
+    )
+    while utils.process_pid_running(powershell_install_proc.pid):
         await asyncio.sleep(0.25)
     print("Finished installing Spicetify!\n")
 
@@ -94,13 +96,14 @@ async def install():
     utils.kill_processes("Spotify.exe")
     if not os.path.isdir(appdata_local + "\\Spotify\\Update"):
         os.mkdir(appdata_local + "\\Spotify\\Update")
-    powershell_prevention_pid = subprocess.Popen(
+    powershell_prevention_proc = subprocess.Popen(
         [
             "powershell",
             "$all = cmd /c icacls %localappdata%\\Spotify\\Update /deny %username%:D\n$all = cmd /c icacls %localappdata%\\Spotify\\Update /deny %username%:R",
         ],
-    ).pid
-    while utils.process_pid_running(powershell_prevention_pid):
+        creationflags=subprocess.CREATE_NO_WINDOW,
+    )
+    while utils.process_pid_running(powershell_prevention_proc.pid):
         await asyncio.sleep(0.25)
     print("Finished blocking Spotify updates!\n")
 
