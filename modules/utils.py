@@ -126,9 +126,9 @@ async def chunked_download(
                         done += await f.write(chunk)
                         bar.show(done)
                     else:
-                        logger._pause_file_output = False
-                        bar.done()
                         break
+                logger._pause_file_output = False
+                bar.done()
 
 
 # >[Process Management]<
