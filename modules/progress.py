@@ -81,30 +81,28 @@ class Bar(object):
                 * (self.expected_size - progress)
             )
             self.etadisp = self.format_time(self.eta)
-        if not self.hide and (
-            (
-                (progress % self.every) == 0
-                or (progress == self.expected_size)  # True every "every" updates
-            )
-        ):  # And when we're done
-            # STREAM.write(BAR_TEMPLATE % (
-            #     self.label, self.filled_char * x,
-            #     self.empty_char * (self.width - x), progress,
-            #     self.expected_size, self.etadisp))
-            BAR_TEMPLATE = "%-4s - %s [%s%s] %-24s\r"
-            percent = f"{int(progress/self.expected_size*100)}%"
-            x = int(self.width * progress / self.expected_size)
-            STREAM.write(
-                BAR_TEMPLATE
-                % (
-                    percent,
-                    self.etadisp,
-                    self.filled_char * x,
-                    self.empty_char * (self.width - x),
-                    self.label[:24],
+        x = int(self.width * progress / self.expected_size)
+        if not self.hide:
+            if (progress % self.every) == 0 or (  # True every "every" updates
+                progress == self.expected_size
+            ):  # And when we're done
+                # STREAM.write(BAR_TEMPLATE % (
+                #     self.label, self.filled_char * x,
+                #     self.empty_char * (self.width - x), progress,
+                #     self.expected_size, self.etadisp))
+                BAR_TEMPLATE = "%-4s - %s [%s%s] %-24s\r"
+                percent = f"{int(progress/self.expected_size*100)}%"
+                STREAM.write(
+                    BAR_TEMPLATE
+                    % (
+                        percent,
+                        self.etadisp,
+                        self.filled_char * x,
+                        self.empty_char * (self.width - x),
+                        self.label[:24],
+                    )
                 )
-            )
-            STREAM.flush()
+                STREAM.flush()
 
     def done(self):
         self.elapsed = time.time() - self.start

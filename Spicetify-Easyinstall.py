@@ -1,22 +1,20 @@
 # Setup logging console to file output
-import asyncio
-import functools
-import sys
+from modules import logger
 
+# Sanity check: try importing all needed packages
+from qasync import asyncSlot, QApplication
+from PyQt5 import QtCore, QtGui, QtWidgets
+import win32api, win32event, winerror
+import functools
 import aiofiles
+import asyncio
 import aiohttp
 import psutil
 import qasync
-import win32api
-import win32event
-import winerror
-from PyQt5 import QtCore, QtGui, QtWidgets
-
-# Sanity check: try importing all needed packages
-from qasync import QApplication, asyncSlot
+import sys
 
 # Local imports
-from modules import core, globals, gui, logger, progress, screens, singleton, utils
+from modules import globals, core, gui, progress, screens, singleton, utils
 
 # Setup singleton: only one app instance running at a time
 globals.singleton = singleton.Singleton("spicetify-easyinstall")

@@ -1,11 +1,10 @@
 import sys
 import traceback
-
+from modules.gui import *
 from PyQt5 import QtWidgets
 from qasync import asyncSlot
 
-from modules import core, globals
-from modules.gui import *
+from modules import globals, core
 
 
 class LicenseScreen(SlidingScreen):
@@ -17,9 +16,13 @@ class LicenseScreen(SlidingScreen):
         self.license = QtWidgets.QPlainTextEdit(parent=self)
         # License text has weird width, compensate with left padding
         self.license.setStyleSheet(
-            "\x1f            QPlainTextEdit {\x1f                padding: 0px 0px 0px 24px;\x1f                font-size: 7.5pt;\x1f            }\x1f        "
+            """
+            QPlainTextEdit {{
+                padding: 0px 0px 0px 24px;
+                font-size: 7.5pt;
+            }}
+        """
         )
-
         self.license.setPlainText(globals.LICENSE_AGREEMENT)
         self.license.setReadOnly(True)
         self.license.children()[3].children()[0].setDocumentMargin(12)
