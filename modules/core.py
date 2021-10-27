@@ -100,7 +100,7 @@ async def install():
     print("Finished blocking Spotify updates!\n")
 
     print(f"(7/{steps_count}) Downloading themes...")  # Section 7
-    shutil.rmtree(user_profile + "\spicetify-cli\Themes")
+    shutil.rmtree(user_profile + "\spicetify-cli\Themes", ignore_errors=True)
     retries = 0
     while True:
         try:
@@ -164,7 +164,7 @@ async def update_addons(addon_type):
     return
     user_profile = os.environ["USERPROFILE"]
     print("Downloading Themes.")
-    shutil.rmtree(user_profile + "\spicetify-cli\Themes")
+    shutil.rmtree(user_profile + "\spicetify-cli\Themes", ignore_errors=True)
     await utils.chunked_download(
         url=globals.DOWNLOAD_THEME_URL,
         path=(user_profile + "\spicetify-cli\Themes.zip"),
