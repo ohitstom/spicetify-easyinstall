@@ -165,19 +165,26 @@ def update_config():
 
 
 async def update_addons(addon_type):
+    steps_count = 3
     if addon_type == "shipped":
-        print("Not yet implemented!")
+        download_url = globals.DOWNLOAD_THEME_URL
     elif addon_type == "latest":
-        print("Not yet implemented!")
-    return
+        download_url = globals.DOWNLOAD_THEME_URL
     user_profile = os.environ["USERPROFILE"]
-    print("Downloading Themes.")
+
+    print(f"(1/{steps_count}) Deleting old themes...")  # Section 1
     shutil.rmtree(user_profile + "\spicetify-cli\Themes", ignore_errors=True)
+    print("Finished deleting old themes!\n")
+
+    print(f"(2/{steps_count}) Downloading {addon_type} themes...")  # Section 2
     await utils.chunked_download(
-        url=globals.DOWNLOAD_THEME_URL,
+        url=download_url,
         path=(user_profile + "\spicetify-cli\Themes.zip"),
         label="Themes.zip",
     )
+    print(f"Finished downloading {addon_type} themes!\n")
+
+    print(f"(3/{steps_count}) Unpacking new themes...")  # Section 3
     shutil.unpack_archive(
         user_profile + "\spicetify-cli\Themes.zip", user_profile + "\spicetify-cli"
     )
@@ -186,7 +193,6 @@ async def update_addons(addon_type):
         user_profile + "\spicetify-cli" + globals.THEMES_EXTRACTED,
         user_profile + "\spicetify-cli\Themes",
     )
-
     for item in list(Path(user_profile + "\spicetify-cli\Themes").glob("*")):
         fullpath = str(item)
         filename = str(item.name)
@@ -195,14 +201,11 @@ async def update_addons(addon_type):
                 shutil.rmtree(fullpath)
         else:
             os.remove(fullpath)
-
     os.rename(
         user_profile + "\spicetify-cli\Themes\Default",
         user_profile + "\spicetify-cli\Themes\SpicetifyDefault",
     )
-    print(f"Finished Downloading Themes.")
-    # End of the terminal page
-    # Needs to read a bool of what was selected, latest or current.
+    print("Finished unpacking new themes!\n")
 
 
 async def uninstall():
