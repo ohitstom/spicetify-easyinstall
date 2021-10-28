@@ -1,52 +1,45 @@
-# Setup logging console to file output
-from modules import logger
+#  ______  ______  __  ______  ______  ______  __  ______  __  __         ______  ______  ______  __  __  __  __   __  ______  ______  ______  __      __
+# /\  ___\/\  == \/\ \/\  ___\/\  ___\/\__  _\/\ \/\  ___\/\ \_\ \       /\  ___\/\  __ \/\  ___\/\ \_\ \/\ \/\ "-.\ \/\  ___\/\__  _\/\  __ \/\ \    /\ \
+# \ \___  \ \  _-/\ \ \ \ \___\ \  __\\/_/\ \/\ \ \ \  __\\ \____ \      \ \  __\\ \  __ \ \___  \ \____ \ \ \ \ \-.  \ \___  \/_/\ \/\ \  __ \ \ \___\ \ \____
+#  \/\_____\ \_\   \ \_\ \_____\ \_____\ \ \_\ \ \_\ \_\   \/\_____\      \ \_____\ \_\ \_\/\_____\/\_____\ \_\ \_\\"\_\/\_____\ \ \_\ \ \_\ \_\ \_____\ \_____\
+#   \/_____/\/_/    \/_/\/_____/\/_____/  \/_/  \/_/\/_/    \/_____/       \/_____/\/_/\/_/\/_____/\/_____/\/_/\/_/ \/_/\/_____/  \/_/  \/_/\/_/\/_____/\/_____/
 
-# Sanity check: try importing all needed packages
-from qasync import asyncSlot, QApplication
-from PyQt5 import QtCore, QtGui, QtWidgets
-import win32api, win32event, winerror
-import functools
-import aiofiles
 import asyncio
-import aiohttp
-import psutil
-import qasync
 import sys
 
-# Local imports
-from modules import globals, core, gui, progress, screens, singleton, utils
 
-# Setup singleton: only one app instance running at a time
-globals.singleton = singleton.Singleton("spicetify-easyinstall")
+# Only start if running as main and not import
+if __name__ == "__main__":
 
+    # Setup logging console to file output
+    from modules import logger
 
-# Most of this is the setup for qasync, allowing the gui to run asynchronously
-# instead of threaded. This code was taken from the example at the qasync repo:
-# https://github.com/CabbageDevelopment/qasync/blob/master/examples/aiohttp_fetch.py
+    # Sanity check: try importing all needed third party libs
+    from PyQt5 import QtCore, QtGui, QtWidgets
+    from qasync import asyncSlot, QEventLoop
+    import win32api, win32event, winerror
+    import aiofiles
+    import aiohttp
+    import psutil
 
+    # Sanity checck: try importing all local modules
+    from modules import globals, core, gui, progress, screens, singleton, utils
 
-async def main():
-    def close_future(future, loop):
-        loop.call_later(10, future.cancel)
-        future.cancel("Close Application")
+    # Setup singleton: only one app instance running at a time
+    globals.singleton = singleton.Singleton("spicetify-easyinstall")
 
-    future = asyncio.Future()
-    globals.app = QApplication.instance()
+    # Create App
+    globals.app = QtWidgets.QApplication(sys.argv)
     globals.app.setStyleSheet(gui.QSS)
-    if hasattr(globals.app, "aboutToQuit"):
-        getattr(globals.app, "aboutToQuit").connect(
-            functools.partial(close_future, future, asyncio.get_event_loop())
-        )
 
+    # Configure asyncio loop to work with PyQt5
+    loop = QEventLoop(globals.app)
+    asyncio.set_event_loop(loop)
+
+    # Setup GUI
     globals.gui = gui.MainWindow()
     globals.gui.show()
 
-    await future
-    return True
-
-
-if __name__ == "__main__":
-    try:
-        qasync.run(main())
-    except asyncio.exceptions.CancelledError:
-        sys.exit(0)
+    # Set off loop
+    with loop:
+        sys.exit(loop.run_forever())

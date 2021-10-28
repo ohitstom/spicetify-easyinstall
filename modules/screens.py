@@ -48,7 +48,7 @@ class LicenseScreen(SlidingScreen):
         )
 
         # Setup quit button
-        connect(signal=bottom_bar.back.clicked, callback=globals.app.quit)
+        connect(signal=bottom_bar.back.clicked, callback=globals.gui.close)
         bottom_bar.back.setText("Quit")
         bottom_bar.back.setEnabled(True)
         # Setup next button
