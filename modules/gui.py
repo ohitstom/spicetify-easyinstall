@@ -141,7 +141,8 @@ class QuickWidget(QtWidgets.QWidget):
             self.setObjectName(name)
         if width and height:
             self.setFixedSize(width, height)
-        self.setLayout(layout())
+        if layout:
+            self.setLayout(layout())
         self.layout().setSpacing(spacing)
         self.layout().setContentsMargins(*margins)
 
@@ -185,7 +186,7 @@ class SlidingFrame(QuickWidget):
             name="sliding_frame",
             width=WIDTH,
             height=(HEIGHT - BOTTOM_BAR_HEIGHT),
-            layout=QtWidgets.QGridLayout,
+            layout=None,
             margins=(0, 0, 0, 0),
             spacing=0,
         )
@@ -455,7 +456,7 @@ class ConfirmScreen(SlidingScreen):
             self.subtitle = QtWidgets.QLabel(parent=self, text=subtitle)
             self.layout().addWidget(self.subtitle)
 
-        # Rundown of install details, uses GitHub flavored markdown
+        # Rundown of action details, uses GitHub flavored markdown
         self.rundown = QtWidgets.QTextEdit(parent=self)
         self.rundown.findChild(QtGui.QTextDocument).setIndentWidth(10)
         self.rundown.setMarkdown(rundown)

@@ -275,7 +275,9 @@ class InstallLogScreen(ConsoleLogScreen):
 
         # Actual install
         try:
-            await core.install(launch=slider.install_confirm_screen.launch_after.isChecked())
+            await core.install(
+                launch=slider.install_confirm_screen.launch_after.isChecked()
+            )
         except Exception:
             exc = "".join(traceback.format_exception(*sys.exc_info()))
             print(exc)
