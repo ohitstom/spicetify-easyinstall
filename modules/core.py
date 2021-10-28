@@ -42,12 +42,11 @@ async def install(launch=False):
     print(f"(2/{steps_count}) Wiping folders...")  # Section 2
     for folder in folders:
         try:
-            shutil.rmtree(folder, ignore_errors=True)
-            if os.path.exists(folder) != True:
+            if not os.path.exists(folder) or len(os.listdir(folder)) == 0:
                 print(f'"{folder}" is already empty.')
             else:
+                shutil.rmtree(folder, ignore_errors=True)
                 print(f'"{folder}" has been deleted.')
-
         except Exception as e:
             print(f'"{folder}" was not deleted: {e}.')
     print("Finished wiping folders!\n")
@@ -215,12 +214,11 @@ async def uninstall():
     print(f"(1/{steps_count}) Wiping folders...")  # Section 1
     for folder in folders:
         try:
-            shutil.rmtree(folder, ignore_errors=True)
-            if os.path.exists(folder) != True:
+            if not os.path.exists(folder) or len(os.listdir(folder)) == 0:
                 print(f'"{folder}" is already empty.')
             else:
+                shutil.rmtree(folder, ignore_errors=True)
                 print(f'"{folder}" has been deleted.')
-
         except Exception as e:
             print(f'"{folder}" was not deleted: {e}.')
     print("Finished wiping folders!\n")
