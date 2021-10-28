@@ -139,7 +139,7 @@ async def install(launch=False):
     print("Finished unpacking themes!\n")
 
     if launch:
-        pass  # FIXME: add actual launch command
+        subprocess.Popen([appdata + "\spotify\spotify.exe"])
 
 
 def update_config():
