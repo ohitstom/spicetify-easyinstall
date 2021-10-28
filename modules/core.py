@@ -14,22 +14,22 @@ async def install(launch=False):
     appdata_local = os.environ["LOCALAPPDATA"]
     appdata = os.environ["APPDATA"]
     temp = tempfile.gettempdir()
-    spotify_prefs = Path(user_profile + "\AppData\Roaming\Spotify\prefs")
+    spotify_prefs = Path(user_profile + "\\AppData\\Roaming\\Spotify\\prefs")
     folders = [
-        (user_profile + "\spicetify-cli"),
-        (user_profile + "\.spicetify"),
-        (appdata_local + "\spotify"),
-        (appdata + "\spotify"),
+        (user_profile + "\\spicetify-cli"),
+        (user_profile + "\\.spicetify"),
+        (appdata_local + "\\spotify"),
+        (appdata + "\\spotify"),
         (temp),
     ]
 
     print(f"(1/{steps_count}) Uninstalling Spotify...")  # Section 1
-    if os.path.isdir(appdata + "\Spotify"):
+    if os.path.isdir(appdata + "\\Spotify"):
         utils.kill_processes("Spotify.exe")
         powershell_uninstall_proc = subprocess.Popen(
             [
                 "powershell",
-                'cmd /c "%USERPROFILE%\AppData\Roaming\Spotify\Spotify.exe" /UNINSTALL /SILENT\n$all = cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:D\n$all = cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:R',
+                'cmd /c "%USERPROFILE%\\AppData\\Roaming\\Spotify\\Spotify.exe" /UNINSTALL /SILENT\n$all = cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:D\n$all = cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:R',
             ],
             creationflags=subprocess.CREATE_NO_WINDOW,
         )
@@ -107,24 +107,24 @@ async def install(launch=False):
     print("Finished blocking Spotify updates!\n")
 
     print(f"(7/{steps_count}) Downloading themes...")  # Section 7
-    shutil.rmtree(user_profile + "\spicetify-cli\Themes", ignore_errors=True)
+    shutil.rmtree(user_profile + "\\spicetify-cli\\Themes", ignore_errors=True)
     await utils.chunked_download(
         url=globals.DOWNLOAD_THEME_URL,
-        path=(user_profile + "\spicetify-cli\Themes.zip"),
+        path=(user_profile + "\\spicetify-cli\\Themes.zip"),
         label="Themes.zip",
     )
     print("Finished downloading themes!\n")
 
     print(f"(8/{steps_count}) Unpacking themes...")  # Section 8
     shutil.unpack_archive(
-        user_profile + "\spicetify-cli\Themes.zip", user_profile + "\spicetify-cli"
+        user_profile + "\\spicetify-cli\\Themes.zip", user_profile + "\\spicetify-cli"
     )
-    os.remove(user_profile + "\spicetify-cli\Themes.zip")
+    os.remove(user_profile + "\\spicetify-cli\\Themes.zip")
     os.rename(
-        user_profile + "\spicetify-cli" + globals.THEMES_EXTRACTED,
-        user_profile + "\spicetify-cli\Themes",
+        user_profile + "\\spicetify-cli" + globals.THEMES_EXTRACTED,
+        user_profile + "\\spicetify-cli\\Themes",
     )
-    for item in list(Path(user_profile + "\spicetify-cli\Themes").glob("*")):
+    for item in list(Path(user_profile + "\\spicetify-cli\\Themes").glob("*")):
         fullpath = str(item)
         filename = str(item.name)
         if os.path.isdir(fullpath):
@@ -133,13 +133,13 @@ async def install(launch=False):
         else:
             os.remove(fullpath)
     os.rename(
-        user_profile + "\spicetify-cli\Themes\Default",
-        user_profile + "\spicetify-cli\Themes\SpicetifyDefault",
+        user_profile + "\\spicetify-cli\\Themes\\Default",
+        user_profile + "\\spicetify-cli\\Themes\\SpicetifyDefault",
     )
     print("Finished unpacking themes!\n")
 
     if launch:
-        subprocess.Popen([appdata + "\spotify\spotify.exe"])
+        subprocess.Popen([appdata + "\\spotify\\spotify.exe"])
 
 
 def update_config():
@@ -166,27 +166,27 @@ async def update_addons(addon_type):
     user_profile = os.environ["USERPROFILE"]
 
     print(f"(1/{steps_count}) Wiping old themes...")  # Section 1
-    shutil.rmtree(user_profile + "\spicetify-cli\Themes", ignore_errors=True)
+    shutil.rmtree(user_profile + "\\spicetify-cli\\Themes", ignore_errors=True)
     print("Finished wiping old themes!\n")
 
     print(f"(2/{steps_count}) Downloading {addon_type} themes...")  # Section 2
     await utils.chunked_download(
         url=download_url,
-        path=(user_profile + "\spicetify-cli\Themes.zip"),
+        path=(user_profile + "\\spicetify-cli\\Themes.zip"),
         label="Themes.zip",
     )
     print(f"Finished downloading {addon_type} themes!\n")
 
     print(f"(3/{steps_count}) Unpacking new themes...")  # Section 3
     shutil.unpack_archive(
-        user_profile + "\spicetify-cli\Themes.zip", user_profile + "\spicetify-cli"
+        user_profile + "\\spicetify-cli\\Themes.zip", user_profile + "\\spicetify-cli"
     )
-    os.remove(user_profile + "\spicetify-cli\Themes.zip")
+    os.remove(user_profile + "\\spicetify-cli\\Themes.zip")
     os.rename(
-        user_profile + "\spicetify-cli" + globals.THEMES_EXTRACTED,
-        user_profile + "\spicetify-cli\Themes",
+        user_profile + "\\spicetify-cli" + globals.THEMES_EXTRACTED,
+        user_profile + "\\spicetify-cli\\Themes",
     )
-    for item in list(Path(user_profile + "\spicetify-cli\Themes").glob("*")):
+    for item in list(Path(user_profile + "\\spicetify-cli\\Themes").glob("*")):
         fullpath = str(item)
         filename = str(item.name)
         if os.path.isdir(fullpath):
@@ -195,8 +195,8 @@ async def update_addons(addon_type):
         else:
             os.remove(fullpath)
     os.rename(
-        user_profile + "\spicetify-cli\Themes\Default",
-        user_profile + "\spicetify-cli\Themes\SpicetifyDefault",
+        user_profile + "\\spicetify-cli\\Themes\\Default",
+        user_profile + "\\spicetify-cli\\Themes\\SpicetifyDefault",
     )
     print("Finished unpacking new themes!\n")
 
@@ -206,8 +206,8 @@ async def uninstall():
     user_profile = os.path.expanduser("~")  # Vars
     temp = "C:\\Users\\WDAGUtilityAccount\\AppData\\Local\\temp"
     folders = [
-        (user_profile + "\spicetify-cli"),
-        (user_profile + "\.spicetify"),
+        (user_profile + "\\spicetify-cli"),
+        (user_profile + "\\.spicetify"),
         (temp),
     ]
 

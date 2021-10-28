@@ -12,7 +12,7 @@ from modules import globals, logger, progress
 
 def replace_config_line(
     file_name, line_num, text
-):  # replace_config_line("pathto\config.txt", 5, "new text") <- Example Usage | Last stage of set_config_entry.
+):  # replace_config_line("pathto\\config.txt", 5, "new text") <- Example Usage | Last stage of set_config_entry.
     lines = open(file_name, "r").readlines()
     lines[line_num] = text + "\n"
     out = open(file_name, "w")
@@ -24,7 +24,7 @@ def find_config_entry(
     entry, replacement=None
 ):  # find_config_entry("extensions") <- Example usage | Optional var: "replacement" [Used for set_config_entry].
 
-    config = os.path.expanduser("~") + "\.spicetify\config-xpui.ini"
+    config = os.path.expanduser("~") + "\\.spicetify\\config-xpui.ini"
     with open(config, "r") as file:
         count = 0
         for line in file:
@@ -59,19 +59,19 @@ def list_config_available(
 ):  # 1=Themes, 2=Extensions, 3=Custom Apps <- Usage Options | Lists out available configurations.
     if is_installed() == True:
         if selection == 1:  # List Themes
-            themes = os.listdir(os.path.expanduser("~") + "\spicetify-cli\Themes")
+            themes = os.listdir(os.path.expanduser("~") + "\\spicetify-cli\\Themes")
             themes.remove("_Extra")
             return themes
 
         elif selection == 2:  # List Extensions
             extensions = os.listdir(
-                os.path.expanduser("~") + "\spicetify-cli\Extensions"
+                os.path.expanduser("~") + "\\spicetify-cli\\Extensions"
             )
             return extensions
 
         elif selection == 3:  # List Custom apps
             custom_apps = os.listdir(
-                os.path.expanduser("~") + "\spicetify-cli\CustomApps"
+                os.path.expanduser("~") + "\\spicetify-cli\\CustomApps"
             )
             return custom_apps
     else:
@@ -82,14 +82,14 @@ def list_config_available(
 
 
 def is_installed():  # Checks if spicetify is installed
-    if os.path.exists(os.path.expanduser("~") + "\.spicetify\config-xpui.ini") == True:
+    if os.path.exists(os.path.expanduser("~") + "\\.spicetify\\config-xpui.ini") == True:
         return True
     else:
         return False
 
 
 def is_theme_set():  # Checks if a theme is set, made obsolete by find_config_entry
-    config = os.path.expanduser("~") + "\.spicetify\config-xpui.ini"
+    config = os.path.expanduser("~") + "\\.spicetify\\config-xpui.ini"
     with open(config, "r") as file:
         for line in file:
             if "current_theme" in line:
@@ -107,7 +107,7 @@ def is_theme_set():  # Checks if a theme is set, made obsolete by find_config_en
 
 async def chunked_download(
     url, path, label
-):  # chunked_download("urltodownload.com/download.zip", "%userprofile%\\file.zip", "file.zip") <- Example Usage.
+):  # chunked_download("urltodownload.com/download.zip", f"{userprofile}\\file.zip", "file.zip") <- Example Usage.
     async with aiohttp.ClientSession() as cs:
         async with cs.get(url, headers={"Accept-Encoding": "null"}) as r:
             async with aiofiles.open(path, "wb") as f:
