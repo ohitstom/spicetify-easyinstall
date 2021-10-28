@@ -268,13 +268,15 @@ class InstallLogScreen(ConsoleLogScreen):
 
     @asyncSlot()
     async def shownCallback(self):
+        bottom_bar = self.parent().parent().bottom_bar
+        slider = self.parent().parent().slider
+
         # Configure output widget
         await self.setup()
 
         # Actual install
         try:
-            # await core.install()
-            await core.install()
+            await core.install(launch=slider.install_confirm_screen.launch_after.isChecked())
         except Exception:
             exc = "".join(traceback.format_exception(*sys.exc_info()))
             print(exc)

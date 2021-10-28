@@ -8,7 +8,7 @@ from pathlib import Path
 from modules import globals, utils
 
 
-async def install():
+async def install(launch=False):
     steps_count = 7
     user_profile = os.path.expanduser("~")  # Vars
     appdata_local = os.environ["LOCALAPPDATA"]
@@ -145,8 +145,8 @@ async def install():
     )
     print("Finished downloading themes!\n")
 
-    # End of the terminal page
-    # I need to add a bool checker for if launch when ready is enabled
+    if launch:
+        pass  # FIXME: add actual launch command
 
 
 def update_config():
