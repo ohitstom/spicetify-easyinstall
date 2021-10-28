@@ -211,7 +211,6 @@ async def update_addons(addon_type):
 async def uninstall():
     steps_count = 1
     user_profile = os.path.expanduser("~")  # Vars
-    appdata_local = os.environ["LOCALAPPDATA"]
     temp = "C:\\Users\\WDAGUtilityAccount\\AppData\\Local\\temp"
     folders = [
         (user_profile + "\spicetify-cli"),

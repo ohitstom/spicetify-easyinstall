@@ -379,7 +379,6 @@ class ConsoleLogScreen(SlidingScreen):
 
     async def setup(self):
         bottom_bar = self.parent().parent().bottom_bar
-        slider = self.parent().parent().slider
 
         # Setup back button
         connect(signal=bottom_bar.back.clicked, callback=None)

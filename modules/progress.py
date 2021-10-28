@@ -106,7 +106,6 @@ class Bar(object):
 
     def done(self):
         self.elapsed = time.time() - self.start
-        elapsed_disp = self.format_time(self.elapsed)
         if not self.hide:
             # Print completed bar with elapsed time
             # STREAM.write(BAR_TEMPLATE % (

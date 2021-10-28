@@ -268,7 +268,6 @@ class InstallLogScreen(ConsoleLogScreen):
 
     @asyncSlot()
     async def shownCallback(self):
-        bottom_bar = self.parent().parent().bottom_bar
         slider = self.parent().parent().slider
 
         # Configure output widget
