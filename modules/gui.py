@@ -143,8 +143,8 @@ class QuickWidget(QtWidgets.QWidget):
             self.setFixedSize(width, height)
         if layout:
             self.setLayout(layout())
-        self.layout().setSpacing(spacing)
-        self.layout().setContentsMargins(*margins)
+            self.layout().setSpacing(spacing)
+            self.layout().setContentsMargins(*margins)
 
 
 class MainWindow(QuickWidget):
@@ -365,6 +365,216 @@ class SlidingScreen(QuickWidget):
         pass
 
 
+class MenuScreen(SlidingScreen):
+    """Screen template for a menu selection"""
+
+    def __init__(self, parent, icon, title, back_screen, options):
+        super().__init__(parent=parent, icon=icon, title=title)
+
+        self.button_grid = QuickWidget(parent=self, margins=(0, 0, 0, 0), spacing=20)
+        # Radio buttons that look like push buttons
+        self.button_grid.setStyleSheet(
+            f"""
+            QRadioButton {{
+                margin: 0px;
+                padding: 5px 10px 5px 10px;
+                background: {BACKGROUND};
+                border-radius: 4px;
+                border: 1px solid {BORDER};
+                max-height: 136px;
+            }}
+            QRadioButton:hover {{
+                border: 1px solid {HOVER_BORDER};
+            }}
+            QRadioButton::checked {{
+                border: 1px solid {ACCENT};
+            }}
+            QRadioButton::disabled {{
+                border: 1px solid {DISABLED_BORDER};
+            }}
+            QRadioButton::indicator {{
+                image: url(disabled)
+            }}
+            #icon {{
+                color: {ACCENT};
+                font-family: Material Design Icons;
+                font-size: 26pt;
+            }}
+            QLabel {{
+                font-family: Poppins;
+                font-size: 18pt;
+                font-weight: 400;
+            }}
+            #description {{
+                font-family: Poppins;
+                font-size: 12pt;
+                font-weight: 400;
+                text-align: center;
+            }}
+        """
+        )
+        self.layout().addWidget(self.button_grid, stretch=1)
+
+        # Create buttons from given template
+        self.options = options
+        self.buttons = {}
+        for btn in self.options:
+            self.buttons[btn] = QtWidgets.QRadioButton(parent=self.button_grid, text="")
+            self.buttons[btn].setLayout(QtWidgets.QGridLayout())
+            self.buttons[btn].layout().addItem(
+                QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding),
+                0,
+                0,
+                1,
+                4,
+            )
+            self.buttons[btn].layout().addItem(
+                QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding),
+                1,
+                0,
+            )
+            self.buttons[btn].layout().addWidget(
+                QtWidgets.QLabel(parent=self.buttons[btn], text=self.options[btn]["icon"]),
+                1,
+                1,
+            )
+            self.buttons[btn].children()[-1].setObjectName("icon")
+            self.buttons[btn].layout().addWidget(
+                QtWidgets.QLabel(parent=self.buttons[btn], text=self.options[btn]["text"]),
+                1,
+                2,
+            )
+            self.buttons[btn].layout().addItem(
+                QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding),
+                1,
+                3,
+            )
+            if self.options[btn]["desc"]:
+                self.buttons[btn].layout().addWidget(
+                    QtWidgets.QLabel(parent=self.buttons[btn], text=self.options[btn]["desc"]),
+                    2,
+                    0,
+                    1,
+                    4,
+                    QtCore.Qt.AlignCenter,
+                )
+                self.buttons[btn].children()[-1].setObjectName("description")
+            self.buttons[btn].layout().addItem(
+                QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding),
+                3,
+                0,
+                1,
+                4,
+            )
+            clickable(self.buttons[btn])
+            self.button_grid.layout().addWidget(
+                self.buttons[btn], self.options[btn]["row"], self.options[btn]["column"]
+            )
+
+        # Store other options
+        self.back_screen = back_screen
+
+    @asyncSlot()
+    async def shownCallback(self):
+        bottom_bar = self.parent().parent().bottom_bar
+        slider = self.parent().parent().slider
+
+        # Enable next button when atleast one of the options is selected
+        def set_next_button_enabled(*_):
+            for btn in self.buttons:
+                if self.buttons[btn].isChecked():
+                    bottom_bar.next.setEnabled(True)
+                    return
+            bottom_bar.next.setEnabled(False)
+
+        for btn in self.buttons:
+            connect(signal=self.buttons[btn].toggled, callback=set_next_button_enabled)
+
+        # Setup back button
+        connect(
+            signal=bottom_bar.back.clicked,
+            callback=lambda *_: slider.slideTo(
+                getattr(slider, self.back_screen), direction="back"
+            ),
+        )
+        bottom_bar.back.setText("Back")
+        bottom_bar.back.setEnabled(True)
+
+        # Setup next button
+        def next_button_callback(*_):
+            for btn in self.buttons:
+                if self.buttons[btn].isChecked():
+                    slider.slideTo(
+                        getattr(slider, self.options[btn]["next_screen"]), direction="next"
+                    )
+
+        connect(signal=bottom_bar.next.clicked, callback=next_button_callback)
+        bottom_bar.next.setText("Next")
+        set_next_button_enabled()
+
+
+class ConfirmScreen(SlidingScreen):
+    """Screen template for action rundown and confirmation"""
+
+    def __init__(
+        self,
+        parent,
+        icon,
+        title,
+        subtitle,
+        rundown,
+        action_name,
+        back_screen,
+        next_screen,
+    ):
+        super().__init__(parent=parent, icon=icon, title=title)
+
+        if subtitle:
+            self.subtitle = QtWidgets.QLabel(parent=self, text=subtitle)
+            self.layout().addWidget(self.subtitle)
+
+        # Rundown of action details, uses GitHub flavored markdown
+        self.rundown = QtWidgets.QTextEdit(parent=self)
+        self.rundown.findChild(QtGui.QTextDocument).setIndentWidth(10)
+        self.rundown.setMarkdown(rundown)
+        self.rundown.setReadOnly(True)
+        self.layout().addWidget(self.rundown)
+
+        # Make sure alignment is ok
+        self.spacer = QtWidgets.QSpacerItem(
+            0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding
+        )
+        self.layout().addItem(self.spacer)
+
+        # Store other options
+        self.action_name = action_name
+        self.back_screen = back_screen
+        self.next_screen = next_screen
+
+    @asyncSlot()
+    async def shownCallback(self):
+        bottom_bar = self.parent().parent().bottom_bar
+        slider = self.parent().parent().slider
+
+        # Setup back button
+        connect(
+            signal=bottom_bar.back.clicked,
+            callback=lambda *_: slider.slideTo(
+                getattr(slider, self.back_screen), direction="back"
+            ),
+        )
+        bottom_bar.back.setEnabled(True)
+        # Setup next button
+        connect(
+            signal=bottom_bar.next.clicked,
+            callback=lambda *_: slider.slideTo(
+                getattr(slider, self.next_screen), direction="next"
+            ),
+        )
+        bottom_bar.next.setText(self.action_name)
+        bottom_bar.next.setEnabled(True)
+
+
 class ConsoleLogScreen(SlidingScreen):
     """Screen template for console output widget"""
 
@@ -434,65 +644,3 @@ class ConsoleLogScreen(SlidingScreen):
     @asyncSlot()
     async def shownCallback(self):
         pass
-
-
-class ConfirmScreen(SlidingScreen):
-    """Screen template for action rundown and confirmation"""
-
-    def __init__(
-        self,
-        parent,
-        icon,
-        title,
-        subtitle,
-        rundown,
-        action_name,
-        back_screen,
-        next_screen,
-    ):
-        super().__init__(parent=parent, icon=icon, title=title)
-
-        if subtitle:
-            self.subtitle = QtWidgets.QLabel(parent=self, text=subtitle)
-            self.layout().addWidget(self.subtitle)
-
-        # Rundown of action details, uses GitHub flavored markdown
-        self.rundown = QtWidgets.QTextEdit(parent=self)
-        self.rundown.findChild(QtGui.QTextDocument).setIndentWidth(10)
-        self.rundown.setMarkdown(rundown)
-        self.rundown.setReadOnly(True)
-        self.layout().addWidget(self.rundown)
-
-        # Make sure alignment is ok
-        self.spacer = QtWidgets.QSpacerItem(
-            0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding
-        )
-        self.layout().addItem(self.spacer)
-
-        # Store other options
-        self.action_name = action_name
-        self.back_screen = back_screen
-        self.next_screen = next_screen
-
-    @asyncSlot()
-    async def shownCallback(self):
-        bottom_bar = self.parent().parent().bottom_bar
-        slider = self.parent().parent().slider
-
-        # Setup back button
-        connect(
-            signal=bottom_bar.back.clicked,
-            callback=lambda *_: slider.slideTo(
-                getattr(slider, self.back_screen), direction="back"
-            ),
-        )
-        bottom_bar.back.setEnabled(True)
-        # Setup next button
-        connect(
-            signal=bottom_bar.next.clicked,
-            callback=lambda *_: slider.slideTo(
-                getattr(slider, self.next_screen), direction="next"
-            ),
-        )
-        bottom_bar.next.setText(self.action_name)
-        bottom_bar.next.setEnabled(True)
