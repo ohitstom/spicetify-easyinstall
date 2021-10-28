@@ -434,13 +434,17 @@ class MenuScreen(SlidingScreen):
                 0,
             )
             self.buttons[btn].layout().addWidget(
-                QtWidgets.QLabel(parent=self.buttons[btn], text=self.options[btn]["icon"]),
+                QtWidgets.QLabel(
+                    parent=self.buttons[btn], text=self.options[btn]["icon"]
+                ),
                 1,
                 1,
             )
             self.buttons[btn].children()[-1].setObjectName("icon")
             self.buttons[btn].layout().addWidget(
-                QtWidgets.QLabel(parent=self.buttons[btn], text=self.options[btn]["text"]),
+                QtWidgets.QLabel(
+                    parent=self.buttons[btn], text=self.options[btn]["text"]
+                ),
                 1,
                 2,
             )
@@ -451,7 +455,9 @@ class MenuScreen(SlidingScreen):
             )
             if self.options[btn]["desc"]:
                 self.buttons[btn].layout().addWidget(
-                    QtWidgets.QLabel(parent=self.buttons[btn], text=self.options[btn]["desc"]),
+                    QtWidgets.QLabel(
+                        parent=self.buttons[btn], text=self.options[btn]["desc"]
+                    ),
                     2,
                     0,
                     1,
@@ -505,7 +511,8 @@ class MenuScreen(SlidingScreen):
             for btn in self.buttons:
                 if self.buttons[btn].isChecked():
                     slider.slideTo(
-                        getattr(slider, self.options[btn]["next_screen"]), direction="next"
+                        getattr(slider, self.options[btn]["next_screen"]),
+                        direction="next",
                     )
 
         connect(signal=bottom_bar.next.clicked, callback=next_button_callback)
