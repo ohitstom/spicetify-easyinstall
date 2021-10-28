@@ -6,19 +6,21 @@ import time
 
 STREAM = sys.stderr
 
-BAR_TEMPLATE = "%s[%s%s] %i/%i - %s\r"
+BAR_TEMPLATE = "%-4s - %s [%s%s] %-24s\r"
 MILL_TEMPLATE = "%s %s %i/%i\r"
 
 DOTS_CHAR = "."
 BAR_FILLED_CHAR = "#"
 BAR_EMPTY_CHAR = " "
-MILL_CHARS = ["|", "/", "-", "\\"]
 
 # How long to wait before recalculating the ETA
 ETA_INTERVAL = 1
 # How many intervals (excluding the current one) to calculate the simple moving
 # average
 ETA_SMA_WINDOW = 9
+
+# How long to wait before shifting the indeterminate bar
+INDETERMINATE_INTERVAL = 0.5
 
 
 class Bar(object):
@@ -37,6 +39,7 @@ class Bar(object):
         empty_char=BAR_EMPTY_CHAR,
         filled_char=BAR_FILLED_CHAR,
         expected_size=None,
+        indeterminate=False,
         every=1,
     ):
         if len(label) > 24 and "." in label:
@@ -54,6 +57,7 @@ class Bar(object):
         self.empty_char = empty_char
         self.filled_char = filled_char
         self.expected_size = expected_size
+        self.indeterminate = indeterminate
         self.every = every
         self.start = time.time()
         self.ittimes = []
@@ -63,13 +67,45 @@ class Bar(object):
         self.last_progress = 0
         if self.expected_size:
             self.show(0)
+        elif self.indeterminate:
+            self.indeterminatwidth = int(self.width / 2)
+            self.indeterminateoffset = 0
+            self.indeterminatedelta = time.time()
+            self.show(0)
 
     def show(self, progress, count=None):
         if count is not None:
             self.expected_size = count
-        if self.expected_size is None:
+        if self.expected_size is None and self.indeterminate is False:
             raise Exception("expected_size not initialized")
         self.last_progress = progress
+        if self.indeterminate:
+            if (time.time() - self.indeterminatedelta) > INDETERMINATE_INTERVAL:
+                self.indeterminatedelta = time.time()
+                self.indeterminateoffset += 1
+                if self.indeterminateoffset == self.width:
+                    self.indeterminateoffset = 0
+            if not self.hide:
+                percent = "N/A%"
+                etadisp = "??:??"
+                bardisp = self.empty_char * self.width
+                offset = self.indeterminateoffset
+                todraw = self.indeterminatwidth
+                bardisp = bardisp[:offset] + self.filled_char * min(todraw, self.width - offset) + bardisp[offset+todraw:]
+                todraw = max(0, todraw - (self.width - offset))
+                bardisp = self.filled_char * todraw + bardisp[todraw:]
+                STREAM.write(
+                    BAR_TEMPLATE
+                    % (
+                        percent,
+                        etadisp,
+                        bardisp,
+                        "",
+                        self.label[:24],
+                    )
+                )
+                STREAM.flush()
+                return
         if (time.time() - self.etadelta) > ETA_INTERVAL:
             self.etadelta = time.time()
             self.ittimes = self.ittimes[-ETA_SMA_WINDOW:] + [
@@ -84,13 +120,8 @@ class Bar(object):
         x = int(self.width * progress / self.expected_size)
         if not self.hide:
             if (progress % self.every) == 0 or (  # True every "every" updates
-                progress == self.expected_size
-            ):  # And when we're done
-                # STREAM.write(BAR_TEMPLATE % (
-                #     self.label, self.filled_char * x,
-                #     self.empty_char * (self.width - x), progress,
-                #     self.expected_size, self.etadisp))
-                BAR_TEMPLATE = "%-4s - %s [%s%s] %-24s\r"
+                progress == self.expected_size  # And when we're done
+            ):
                 percent = f"{int(progress/self.expected_size*100)}%"
                 STREAM.write(
                     BAR_TEMPLATE
@@ -103,22 +134,19 @@ class Bar(object):
                     )
                 )
                 STREAM.flush()
+                return
 
     def done(self):
         self.elapsed = time.time() - self.start
+        elapsed_disp = self.format_time(self.elapsed)
         if not self.hide:
             # Print completed bar with elapsed time
-            # STREAM.write(BAR_TEMPLATE % (
-            #     self.label, self.filled_char * self.width,
-            #     self.empty_char * 0, self.last_progress,
-            #     self.expected_size, elapsed_disp))
-            BAR_TEMPLATE = "%-4s - %s [%s%s] %-24s\r"
             percent = "100%"
             STREAM.write(
                 BAR_TEMPLATE
                 % (
                     percent,
-                    self.etadisp,
+                    elapsed_disp,
                     self.filled_char * self.width,
                     self.empty_char * (self.width - self.width),
                     self.label[:24],

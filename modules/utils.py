@@ -112,9 +112,15 @@ async def chunked_download(
         async with cs.get(url, headers={"Accept-Encoding": "null"}) as r:
             async with aiofiles.open(path, "wb") as f:
                 logger._pause_file_output = True
-                total_length = int(r.headers.get("content-length"))
+                try:
+                    total_length = int(r.headers.get("content-length"))
+                    indeterminate = False
+                except Exception:
+                    total_length = 0
+                    indeterminate = True
                 bar = progress.Bar(
                     expected_size=total_length,
+                    indeterminate=indeterminate,
                     label=label,
                     width=28,
                     hide=False,

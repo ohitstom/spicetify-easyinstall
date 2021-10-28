@@ -9,7 +9,7 @@ from modules import globals, utils
 
 
 async def install(launch=False):
-    steps_count = 7
+    steps_count = 8
     user_profile = os.path.expanduser("~")  # Vars
     appdata_local = os.environ["LOCALAPPDATA"]
     appdata = os.environ["APPDATA"]
@@ -109,20 +109,14 @@ async def install(launch=False):
 
     print(f"(7/{steps_count}) Downloading themes...")  # Section 7
     shutil.rmtree(user_profile + "\spicetify-cli\Themes", ignore_errors=True)
-    retries = 0
-    while True:
-        try:
-            await utils.chunked_download(
-                url=globals.DOWNLOAD_THEME_URL,
-                path=(user_profile + "\spicetify-cli\Themes.zip"),
-                label="Themes.zip",
-            )
-            break
-        except TypeError:
-            retries += 1
-            if retries > 20:
-                raise ConnectionError("Couldn't retrieve 'content-length' header")
-            continue
+    await utils.chunked_download(
+        url=globals.DOWNLOAD_THEME_URL,
+        path=(user_profile + "\spicetify-cli\Themes.zip"),
+        label="Themes.zip",
+    )
+    print("Finished downloading themes!\n")
+
+    print(f"(8/{steps_count}) Unpacking themes...")  # Section 8
     shutil.unpack_archive(
         user_profile + "\spicetify-cli\Themes.zip", user_profile + "\spicetify-cli"
     )
@@ -143,7 +137,7 @@ async def install(launch=False):
         user_profile + "\spicetify-cli\Themes\Default",
         user_profile + "\spicetify-cli\Themes\SpicetifyDefault",
     )
-    print("Finished downloading themes!\n")
+    print("Finished unpacking themes!\n")
 
     if launch:
         pass  # FIXME: add actual launch command
@@ -172,9 +166,9 @@ async def update_addons(addon_type):
         download_url = globals.DOWNLOAD_THEME_URL
     user_profile = os.environ["USERPROFILE"]
 
-    print(f"(1/{steps_count}) Deleting old themes...")  # Section 1
+    print(f"(1/{steps_count}) Wiping old themes...")  # Section 1
     shutil.rmtree(user_profile + "\spicetify-cli\Themes", ignore_errors=True)
-    print("Finished deleting old themes!\n")
+    print("Finished wiping old themes!\n")
 
     print(f"(2/{steps_count}) Downloading {addon_type} themes...")  # Section 2
     await utils.chunked_download(
