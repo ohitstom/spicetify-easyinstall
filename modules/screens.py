@@ -1,10 +1,10 @@
 import sys
 import traceback
-from modules.gui import *
 from PyQt5 import QtWidgets
 from qasync import asyncSlot
 
 from modules import globals, core
+from modules.gui import *
 
 
 class LicenseScreen(SlidingScreen):

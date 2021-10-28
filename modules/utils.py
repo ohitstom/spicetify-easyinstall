@@ -82,7 +82,10 @@ def list_config_available(
 
 
 def is_installed():  # Checks if spicetify is installed
-    if os.path.exists(os.path.expanduser("~") + "\\.spicetify\\config-xpui.ini") == True:
+    if (
+        os.path.exists(os.path.expanduser("~") + "\\.spicetify\\config-xpui.ini")
+        == True
+    ):
         return True
     else:
         return False

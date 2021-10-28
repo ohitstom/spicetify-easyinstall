@@ -91,7 +91,11 @@ class Bar(object):
                 bardisp = self.empty_char * self.width
                 offset = self.indeterminateoffset
                 todraw = self.indeterminatwidth
-                bardisp = bardisp[:offset] + self.filled_char * min(todraw, self.width - offset) + bardisp[offset+todraw:]
+                bardisp = (
+                    bardisp[:offset]
+                    + self.filled_char * min(todraw, self.width - offset)
+                    + bardisp[offset + todraw :]
+                )
                 todraw = max(0, todraw - (self.width - offset))
                 bardisp = self.filled_char * todraw + bardisp[todraw:]
                 STREAM.write(
