@@ -189,6 +189,7 @@ async def powershell(cmd, verbose=None, wait=True):
             ],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
+            creationflags=subprocess.CREATE_NO_WINDOW,
         )
         if wait:
             while True:
