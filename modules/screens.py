@@ -335,7 +335,7 @@ class ConfigExtensionsMenuScreen(MenuScreen):
             column += 1
         if self.first_run:
             self.first_run = False
-            selected = utils.find_config_entry("extensions").split("|")
+            selected = [extension[:-3] for extension in utils.find_config_entry("extensions").split("|")]
         for selection in selected:
             if selection in self.buttons:
                 self.buttons[selection].setChecked(True)
