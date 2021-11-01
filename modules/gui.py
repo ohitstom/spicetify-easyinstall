@@ -692,6 +692,10 @@ class ConsoleLogScreen(SlidingScreen):
         self.log.setPlainText("")
 
         def override_file_write(msg):
+            # Save scroll data
+            prev_scroll = self.log.verticalScrollBar().value()
+            prev_max = self.log.verticalScrollBar().maximum()
+            # Remove color codes
             msg = re.sub("\\x1b\[38;2;\d\d?\d?;\d\d?\d?;\d\d?\d?m", "", msg)
             msg = re.sub("\\x1b\[\d\d?\d?m", "", msg)
             # Update log widget
@@ -705,10 +709,12 @@ class ConsoleLogScreen(SlidingScreen):
             if len(msg) > 0 and msg[-1] == "\r":
                 self.reset_last_line = True
             self.log.setPlainText(text + msg)
-            # Scroll to bottom
-            self.log.verticalScrollBar().setValue(
-                self.log.verticalScrollBar().maximum()
-            )
+            # Manage scrolling
+            new_max = self.log.verticalScrollBar().maximum()
+            if prev_scroll == prev_max:
+                self.log.verticalScrollBar().setValue(new_max)
+            else:
+                self.log.verticalScrollBar().setValue(prev_scroll)
             # Run original callback
             self.original_file_write(msg)
 
