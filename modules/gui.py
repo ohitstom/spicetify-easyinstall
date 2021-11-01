@@ -392,6 +392,7 @@ class MenuScreen(SlidingScreen):
         super().__init__(parent=parent, icon=icon, title=title)
 
         # Store options
+        self.scrollable = scrollable
         self.back_screen = back_screen
         self.multichoice = multichoice
         self.allow_no_selection = allow_no_selection
@@ -525,9 +526,12 @@ class MenuScreen(SlidingScreen):
             4,
         )
         clickable(self.buttons[btn_id])
-        self.button_grid.layout().addWidget(self.buttons[btn_id], row, column, QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
-        self.button_grid.layout().setRowStretch(row, 0)
-        self.button_grid.layout().setRowStretch(row + 1, 1)
+        if self.scrollable:
+            self.button_grid.layout().addWidget(self.buttons[btn_id], row, column, QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
+            self.button_grid.layout().setRowStretch(row, 0)
+            self.button_grid.layout().setRowStretch(row + 1, 1)
+        else:
+            self.button_grid.layout().addWidget(self.buttons[btn_id], row, column)
 
     def clearCurrentButtons(self):
         for btn_id in list(self.buttons.keys()):
