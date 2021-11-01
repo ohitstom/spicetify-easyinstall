@@ -142,19 +142,55 @@ async def install(launch=False):
         subprocess.Popen([appdata + "\\spotify\\spotify.exe"])
 
 
-def update_config():
-    count = 0
-    for themes in utils.list_config_available(1):
-        count += 1
-        print(f"\n{count}) {themes}")
+async def apply_config(theme, colorscheme, extensions, customapps):
+    steps_count = 2
 
-        launch = int(input(f"\nChoose From The List Above (1-{count}): "))  # FIXME
-        utils.set_config_entry(
-            "current_theme", utils.list_config_available(1)[launch - 1]
-        )
+    print(f"(1/{steps_count}) Setting opptions...")  # Section 1
+    utils.set_config_entry("current_theme", theme)
+    utils.set_config_entry("color_scheme", colorscheme)
+    utils.set_config_entry("extensions", "|".join(extensions))
+    utils.set_config_entry("custom_apps", "|".join(customapps))
+    print("Finished setting options!\n")
 
-    # Current Quick Mockup of function usage
-    # Needs to run after the gui is finished, so i need to have the config menu rendered here? Or just pass variables saved in main.py to the func on run after gui is closed.
+    print(f"(2/{steps_count}) Applying config...")  # Section 2
+    apply_proc = subprocess.Popen(
+        [
+            "powershell",
+            "spicetify apply",
+        ],
+        creationflags=subprocess.CREATE_NO_WINDOW,
+    )
+    while utils.process_pid_running(apply_proc.pid):
+        await asyncio.sleep(0.25)
+    print("Finished applying config!\n")
+
+
+async def uninstall():
+    steps_count = 1
+    user_profile = os.path.expanduser("~")  # Vars
+    temp = "C:\\Users\\WDAGUtilityAccount\\AppData\\Local\\temp"
+    folders = [
+        (user_profile + "\\spicetify-cli"),
+        (user_profile + "\\.spicetify"),
+        (temp),
+    ]
+
+    print(f"(1/{steps_count}) Wiping folders...")  # Section 1
+    for folder in folders:
+        try:
+            if not os.path.exists(folder) or len(os.listdir(folder)) == 0:
+                print(f'"{folder}" is already empty.')
+            else:
+                shutil.rmtree(folder, ignore_errors=True)
+                print(f'"{folder}" has been deleted.')
+        except Exception as e:
+            print(f'"{folder}" was not deleted: {e}.')
+    print("Finished wiping folders!\n")
+    # subprocess.Popen( #Delete ENV VAR
+    # ["powershell", '$all = cmd /c setx Path '])
+
+    # End of the terminal page
+    # Needs rewriting
 
 
 async def update_addons(addon_type):
@@ -199,31 +235,3 @@ async def update_addons(addon_type):
         user_profile + "\\spicetify-cli\\Themes\\SpicetifyDefault",
     )
     print("Finished unpacking new themes!\n")
-
-
-async def uninstall():
-    steps_count = 1
-    user_profile = os.path.expanduser("~")  # Vars
-    temp = "C:\\Users\\WDAGUtilityAccount\\AppData\\Local\\temp"
-    folders = [
-        (user_profile + "\\spicetify-cli"),
-        (user_profile + "\\.spicetify"),
-        (temp),
-    ]
-
-    print(f"(1/{steps_count}) Wiping folders...")  # Section 1
-    for folder in folders:
-        try:
-            if not os.path.exists(folder) or len(os.listdir(folder)) == 0:
-                print(f'"{folder}" is already empty.')
-            else:
-                shutil.rmtree(folder, ignore_errors=True)
-                print(f'"{folder}" has been deleted.')
-        except Exception as e:
-            print(f'"{folder}" was not deleted: {e}.')
-    print("Finished wiping folders!\n")
-    # subprocess.Popen( #Delete ENV VAR
-    # ["powershell", '$all = cmd /c setx Path '])
-
-    # End of the terminal page
-    # Needs rewriting

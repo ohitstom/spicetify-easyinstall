@@ -58,7 +58,7 @@ QCheckBox::indicator {{
 QCheckBox::indicator:checked {{
     border-color: {ACCENT};
     background: {ACCENT};
-    image: url(resources/icons/check.png)
+    image: url(resources/icons/check.png);
 }}
 QCheckBox::indicator:unchecked:hover {{
     border-color: {HOVER_BORDER};
@@ -76,16 +76,16 @@ QScrollBar::handle:vertical {{
     min-height: 30px;
 }}
 QScrollBar::handle:vertical:hover {{
-    background: {HOVER_BORDER}
+    background: {HOVER_BORDER};
 }}
 QScrollBar::handle:vertical:pressed {{
-    background: {ACCENT}
+    background: {ACCENT};
 }}
 QScrollBar::add-line:vertical {{
-    height: 0px
+    height: 0px;
 }}
 QScrollBar::sub-line:vertical {{
-    height: 0px
+    height: 0px;
 }}
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {{
     background: transparent;
@@ -104,6 +104,10 @@ QPushButton:hover {{
 QPushButton:disabled {{
     border: 1px solid {DISABLED_BORDER};
     color: {DISABLED_TEXT_COLOR};
+}}
+
+QScrollArea, QScrollArea > QWidget > QWidget {{
+    background: transparent;
 }}
 """
 
@@ -143,8 +147,8 @@ class QuickWidget(QtWidgets.QWidget):
             self.setFixedSize(width, height)
         if layout:
             self.setLayout(layout())
-            self.layout().setSpacing(spacing)
             self.layout().setContentsMargins(*margins)
+            self.layout().setSpacing(spacing)
 
 
 class MainWindow(QuickWidget):
@@ -368,10 +372,30 @@ class SlidingScreen(QuickWidget):
 class MenuScreen(SlidingScreen):
     """Screen template for a menu selection"""
 
-    def __init__(self, parent, icon, title, back_screen, options):
+    def __init__(
+        self,
+        parent,
+        icon,
+        title,
+        back_screen,
+        multichoice=False,
+        allow_no_selection=True,
+        scrollable=False,
+        buttons={},
+    ):
         super().__init__(parent=parent, icon=icon, title=title)
 
+        # Store options
+        self.back_screen = back_screen
+        self.multichoice = multichoice
+        self.allow_no_selection = allow_no_selection
+
         self.button_grid = QuickWidget(parent=self, margins=(0, 0, 0, 0), spacing=20)
+        if scrollable:
+            self.button_scroll_area = QtWidgets.QScrollArea(parent=parent)
+            self.button_scroll_area.setFrameShape(QtWidgets.QFrame.NoFrame)
+            self.button_scroll_area.setWidgetResizable(True)
+            self.button_scroll_area.verticalScrollBar().setSingleStep(10)
         # Radio buttons that look like push buttons
         self.button_grid.setStyleSheet(
             f"""
@@ -381,6 +405,7 @@ class MenuScreen(SlidingScreen):
                 background: {BACKGROUND};
                 border-radius: 4px;
                 border: 1px solid {BORDER};
+                min-height: 80px;
                 max-height: 136px;
             }}
             QRadioButton:hover {{
@@ -393,7 +418,7 @@ class MenuScreen(SlidingScreen):
                 border: 1px solid {DISABLED_BORDER};
             }}
             QRadioButton::indicator {{
-                image: url(disabled)
+                image: url(disabled);
             }}
             #icon {{
                 color: {ACCENT};
@@ -413,72 +438,80 @@ class MenuScreen(SlidingScreen):
             }}
         """
         )
-        self.layout().addWidget(self.button_grid, stretch=1)
+        if not scrollable:
+            self.layout().addWidget(self.button_grid, stretch=1)
+        else:
+            self.button_scroll_area.setWidget(self.button_grid)
+            self.layout().addWidget(self.button_scroll_area, stretch=1)
 
         # Create buttons from given template
-        self.options = options
         self.buttons = {}
-        for btn in self.options:
-            self.buttons[btn] = QtWidgets.QRadioButton(parent=self.button_grid, text="")
-            self.buttons[btn].setLayout(QtWidgets.QGridLayout())
-            self.buttons[btn].layout().addItem(
-                QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding),
-                0,
-                0,
+        for btn_id in buttons:
+            self.addMenuButton(btn_id, **buttons[btn_id])
+
+    def addMenuButton(self, btn_id, row, column, **kwargs):
+        self.buttons[btn_id] = QtWidgets.QRadioButton(parent=self.button_grid, text="")
+        for key in kwargs:
+            setattr(self.buttons[btn_id], f"_{key}", kwargs[key])
+        if self.multichoice:
+            self.buttons[btn_id].setAutoExclusive(False)
+        self.buttons[btn_id].setLayout(QtWidgets.QGridLayout())
+        self.buttons[btn_id].layout().addItem(
+            QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding),
+            0,
+            0,
+            1,
+            4,
+        )
+        self.buttons[btn_id].layout().addItem(
+            QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding),
+            1,
+            0,
+        )
+        if kwargs.get("icon"):
+            self.buttons[btn_id].layout().addWidget(
+                QtWidgets.QLabel(parent=self.buttons[btn_id], text=kwargs["icon"]),
                 1,
-                4,
+                1,
             )
-            self.buttons[btn].layout().addItem(
-                QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding),
-                1,
-                0,
-            )
-            self.buttons[btn].layout().addWidget(
-                QtWidgets.QLabel(
-                    parent=self.buttons[btn], text=self.options[btn]["icon"]
-                ),
-                1,
-                1,
-            )
-            self.buttons[btn].children()[-1].setObjectName("icon")
-            self.buttons[btn].layout().addWidget(
-                QtWidgets.QLabel(
-                    parent=self.buttons[btn], text=self.options[btn]["text"]
-                ),
+            self.buttons[btn_id].children()[-1].setObjectName("icon")
+        if kwargs.get("text"):
+            self.buttons[btn_id].layout().addWidget(
+                QtWidgets.QLabel(parent=self.buttons[btn_id], text=kwargs["text"]),
                 1,
                 2,
             )
-            self.buttons[btn].layout().addItem(
-                QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding),
-                1,
-                3,
-            )
-            if self.options[btn]["desc"]:
-                self.buttons[btn].layout().addWidget(
-                    QtWidgets.QLabel(
-                        parent=self.buttons[btn], text=self.options[btn]["desc"]
-                    ),
-                    2,
-                    0,
-                    1,
-                    4,
-                    QtCore.Qt.AlignCenter,
-                )
-                self.buttons[btn].children()[-1].setObjectName("description")
-            self.buttons[btn].layout().addItem(
-                QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding),
-                3,
+        self.buttons[btn_id].layout().addItem(
+            QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding),
+            1,
+            3,
+        )
+        if kwargs.get("desc"):
+            self.buttons[btn_id].layout().addWidget(
+                QtWidgets.QLabel(parent=self.buttons[btn_id], text=kwargs["desc"]),
+                2,
                 0,
                 1,
                 4,
+                QtCore.Qt.AlignCenter,
             )
-            clickable(self.buttons[btn])
-            self.button_grid.layout().addWidget(
-                self.buttons[btn], self.options[btn]["row"], self.options[btn]["column"]
-            )
+            self.buttons[btn_id].children()[-1].setObjectName("description")
+        self.buttons[btn_id].layout().addItem(
+            QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding),
+            3,
+            0,
+            1,
+            4,
+        )
+        clickable(self.buttons[btn_id])
+        self.button_grid.layout().addWidget(self.buttons[btn_id], row, column)
 
-        # Store other options
-        self.back_screen = back_screen
+    def clearCurrentButtons(self):
+        for btn_id in list(self.buttons.keys()):
+            self.button_grid.layout().removeWidget(self.buttons[btn_id])
+            self.buttons[btn_id].setVisible(False)
+            self.buttons[btn_id].destroy()
+            del self.buttons[btn_id]
 
     @asyncSlot()
     async def shownCallback(self):
@@ -487,14 +520,19 @@ class MenuScreen(SlidingScreen):
 
         # Enable next button when atleast one of the options is selected
         def set_next_button_enabled(*_):
-            for btn in self.buttons:
-                if self.buttons[btn].isChecked():
+            if self.multichoice and self.allow_no_selection:
+                bottom_bar.next.setEnabled(True)
+                return
+            for btn_id in self.buttons:
+                if self.buttons[btn_id].isChecked():
                     bottom_bar.next.setEnabled(True)
                     return
             bottom_bar.next.setEnabled(False)
 
-        for btn in self.buttons:
-            connect(signal=self.buttons[btn].toggled, callback=set_next_button_enabled)
+        for btn_id in self.buttons:
+            connect(
+                signal=self.buttons[btn_id].toggled, callback=set_next_button_enabled
+            )
 
         # Setup back button
         connect(
@@ -508,16 +546,36 @@ class MenuScreen(SlidingScreen):
 
         # Setup next button
         def next_button_callback(*_):
-            for btn in self.buttons:
-                if self.buttons[btn].isChecked():
+            for btn_id in self.buttons:
+                if self.buttons[btn_id].isChecked():
                     slider.slideTo(
-                        getattr(slider, self.options[btn]["next_screen"]),
+                        getattr(slider, self.buttons[btn_id]._next_screen),
                         direction="next",
                     )
+                    return
+            for btn_id in self.buttons:
+                slider.slideTo(
+                    getattr(slider, self.buttons[btn_id]._next_screen),
+                    direction="next",
+                )
+                return
 
         connect(signal=bottom_bar.next.clicked, callback=next_button_callback)
         bottom_bar.next.setText("Next")
         set_next_button_enabled()
+
+    def getSelection(self):
+        selected = []
+        for btn_id in self.buttons:
+            if (
+                hasattr(self.buttons[btn_id], "isChecked")
+                and self.buttons[btn_id].isChecked()
+            ):
+                selected.append(btn_id)
+        if not self.multichoice:
+            selected.append(None)
+            selected = selected[0]
+        return selected
 
 
 class ConfirmScreen(SlidingScreen):

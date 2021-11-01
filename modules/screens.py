@@ -3,7 +3,7 @@ import traceback
 from PyQt5 import QtWidgets
 from qasync import asyncSlot
 
-from modules import globals, core
+from modules import globals, core, utils
 from modules.gui import *
 
 
@@ -70,7 +70,7 @@ class MainMenuScreen(MenuScreen):
             icon="󰙪",
             title="What do you want to do?",
             back_screen="license_screen",
-            options={
+            buttons={
                 "install": {
                     "icon": "󰄠",
                     "text": "Install",
@@ -83,7 +83,7 @@ class MainMenuScreen(MenuScreen):
                     "icon": "󰢻",
                     "text": "Config",
                     "desc": "",
-                    "next_screen": "current_screen",
+                    "next_screen": "config_theme_menu_screen",
                     "row": 0,
                     "column": 1,
                 },
@@ -105,8 +105,6 @@ class MainMenuScreen(MenuScreen):
                 },
             },
         )
-
-        self.buttons["config"].setEnabled(False)  # FIXME: implement config section
 
         self.debug_mode = QtWidgets.QCheckBox(
             parent=self, text="Enable Debug Mode (more verbose)"
@@ -170,6 +168,261 @@ class InstallLogScreen(ConsoleLogScreen):
         await self.cleanup()
 
 
+class ConfigThemeMenuScreen(MenuScreen):
+    screen_name = "config_theme_menu_screen"
+
+    def __init__(self, parent):
+        super().__init__(
+            parent=parent,
+            icon="󰠲",
+            title="What theme do you want to use?",
+            back_screen="main_menu_screen",
+            scrollable=True,
+            multichoice=False,
+            buttons={},
+        )
+
+    @asyncSlot()
+    async def shownCallback(self):
+        themes = utils.list_config_available("themes")
+        selected = self.getSelection()
+        self.clearCurrentButtons()
+        row = 0
+        column = 0
+        for theme in themes:
+            if column == 2:
+                column = 0
+                row += 1
+            self.addMenuButton(
+                theme,
+                text=theme,
+                row=row,
+                column=column,
+                next_screen="config_colorscheme_menu_screen",
+            )
+            column += 1
+        if selected in self.buttons:
+            self.buttons[selected].setChecked(True)
+        super().shownCallback()
+
+
+class ConfigColorschemeMenuScreen(MenuScreen):
+    screen_name = "config_colorscheme_menu_screen"
+
+    def __init__(self, parent):
+        super().__init__(
+            parent=parent,
+            icon="󰸌",
+            title="What colorscheme do you want for your theme?",
+            back_screen="config_theme_menu_screen",
+            scrollable=True,
+            multichoice=False,
+            buttons={},
+        )
+
+    @asyncSlot()
+    async def shownCallback(self):
+        bottom_bar = self.parent().parent().bottom_bar
+        slider = self.parent().parent().slider
+
+        theme = slider.config_theme_menu_screen.getSelection()
+        colorschemes = utils.list_config_available("colorschemes", theme)
+        if not colorschemes:
+            self.clearCurrentButtons()
+            self.buttons["none"] = QtWidgets.QLabel(
+                parent=self.button_grid, text="This theme has no colorschemes."
+            )
+            self.button_grid.layout().addWidget(
+                self.buttons["none"],
+                0,
+                0,
+                QtCore.Qt.AlignBottom | QtCore.Qt.AlignHCenter,
+            )
+            self.buttons["nope"] = QtWidgets.QLabel(
+                parent=self.button_grid, text="You can skip this screen!"
+            )
+            self.button_grid.layout().addWidget(
+                self.buttons["nope"], 1, 0, QtCore.Qt.AlignTop | QtCore.Qt.AlignHCenter
+            )
+            connect(
+                signal=bottom_bar.back.clicked,
+                callback=lambda *_: slider.slideTo(
+                    slider.config_theme_menu_screen, direction="back"
+                ),
+            )
+            bottom_bar.back.setEnabled(True)
+            connect(
+                signal=bottom_bar.next.clicked,
+                callback=lambda *_: slider.slideTo(
+                    slider.config_extensions_menu_screen, direction="next"
+                ),
+            )
+            bottom_bar.next.setEnabled(True)
+            # super().shownCallback()
+            return
+        selected = self.getSelection()
+        self.clearCurrentButtons()
+        row = 0
+        column = 0
+        for colorscheme in colorschemes:
+            if column == 2:
+                column = 0
+                row += 1
+            self.addMenuButton(
+                colorscheme,
+                text=colorscheme,
+                row=row,
+                column=column,
+                next_screen="config_extensions_menu_screen",
+            )
+            column += 1
+        if selected in self.buttons:
+            self.buttons[selected].setChecked(True)
+        super().shownCallback()
+
+
+class ConfigExtensionsMenuScreen(MenuScreen):
+    screen_name = "config_extensions_menu_screen"
+
+    def __init__(self, parent):
+        super().__init__(
+            parent=parent,
+            icon="󰩦",
+            title="What extensions do you want to enable?",
+            back_screen="config_colorscheme_menu_screen",
+            scrollable=True,
+            multichoice=True,
+            allow_no_selection=True,
+            buttons={},
+        )
+
+    @asyncSlot()
+    async def shownCallback(self):
+        extensions = utils.list_config_available("extensions")
+        selected = self.getSelection()
+        self.clearCurrentButtons()
+        row = 0
+        column = 0
+        for extension in extensions:
+            if extension[-3:] != ".js":
+                continue
+            extension = extension[:-3]
+            if column == 2:
+                column = 0
+                row += 1
+            self.addMenuButton(
+                extension,
+                text=extension,
+                row=row,
+                column=column,
+                next_screen="config_customapps_menu_screen",
+            )
+            column += 1
+        for selection in selected:
+            if selection in self.buttons:
+                self.buttons[selection].setChecked(True)
+        super().shownCallback()
+
+
+class ConfigCustomappsMenuScreen(MenuScreen):
+    screen_name = "config_customapps_menu_screen"
+
+    def __init__(self, parent):
+        super().__init__(
+            parent=parent,
+            icon="󰲌",
+            title="What custom apps do you want to enable?",
+            back_screen="config_extensions_menu_screen",
+            scrollable=True,
+            multichoice=True,
+            allow_no_selection=True,
+            buttons={},
+        )
+
+    @asyncSlot()
+    async def shownCallback(self):
+        customapps = utils.list_config_available("customapps")
+        selected = self.getSelection()
+        self.clearCurrentButtons()
+        row = 0
+        column = 0
+        for customapp in customapps:
+            if column == 2:
+                column = 0
+                row += 1
+            self.addMenuButton(
+                customapp,
+                text=customapp,
+                row=row,
+                column=column,
+                next_screen="config_confirm_screen",
+            )
+            column += 1
+        for selection in selected:
+            if selection in self.buttons:
+                self.buttons[selection].setChecked(True)
+        super().shownCallback()
+
+
+class ConfigConfirmScreen(ConfirmScreen):
+    screen_name = "config_confirm_screen"
+
+    def __init__(self, parent):
+        super().__init__(
+            parent=parent,
+            icon="󰢻",
+            title="Apply Config",
+            subtitle="Details of this config:",
+            rundown="",
+            action_name="Apply",
+            back_screen="config_customapps_menu_screen",
+            next_screen="config_log_screen",
+        )
+
+    @asyncSlot()
+    async def shownCallback(self):
+        slider = self.parent().parent().slider
+
+        self.rundown.setMarkdown(
+            f"""
+ - **Theme**: {slider.config_theme_menu_screen.getSelection()}
+ - **Color Scheme**: {slider.config_colorscheme_menu_screen.getSelection() or "Default"}
+ - **Extensions**: {", ".join(slider.config_extensions_menu_screen.getSelection()) or "None"}
+ - **Custom Apps**: {", ".join(slider.config_customapps_menu_screen.getSelection()) or "None"}
+""".strip()
+        )
+        super().shownCallback()
+
+
+class ConfigLogScreen(ConsoleLogScreen):
+    screen_name = "config_log_screen"
+
+    def __init__(self, parent):
+        super().__init__(parent=parent, icon="󰢻", title="Config Log")
+
+    @asyncSlot()
+    async def shownCallback(self):
+        slider = self.parent().parent().slider
+
+        # Configure output widget
+        await self.setup()
+
+        # Actual config
+        theme = slider.config_theme_menu_screen.getSelection()
+        colorscheme = slider.config_colorscheme_menu_screen.getSelection() or ""
+        extensions = slider.config_extensions_menu_screen.getSelection()
+        customapps = slider.config_customapps_menu_screen.getSelection()
+        try:
+            await core.apply_config(theme, colorscheme, extensions, customapps)
+        except Exception:
+            exc = "".join(traceback.format_exception(*sys.exc_info()))
+            print(exc)
+            print("\n\n^^ SOMETHING WENT WRONG! ^^")
+
+        # Disconnect console output
+        await self.cleanup()
+
+
 class UninstallConfirmScreen(ConfirmScreen):
     screen_name = "uninstall_confirm_screen"
 
@@ -222,7 +475,7 @@ class UpdateMenuScreen(MenuScreen):
             icon="󰓦",
             title="What do you want to update?",
             back_screen="main_menu_screen",
-            options={
+            buttons={
                 "shipped": {
                     "icon": "󰏗",
                     "text": "Shipped",

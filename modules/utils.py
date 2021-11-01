@@ -35,9 +35,8 @@ def find_config_entry(
         if replacement != None:
             found_line_str = line
             found_line_int = count - 1
-            a, b = found_line_str.split(" = ")
-            b = b.replace(b, replacement)
-            final_write_data = a + " = " + b
+            a = found_line_str.split(" = ")[0]
+            final_write_data = a + " = " + replacement
             return (config, found_line_int, final_write_data)
         else:
             found_line_str = line.strip("\n")
@@ -56,26 +55,45 @@ def set_config_entry(
 
 def list_config_available(
     selection,
-):  # 1=Themes, 2=Extensions, 3=Custom Apps <- Usage Options | Lists out available configurations.
-    if is_installed() == True:
-        if selection == 1:  # List Themes
+    theme=None,
+):  # selection: themes, colorschemes, extensions, custom_apps | Lists out available configurations.
+    if is_installed():
+        if selection == "themes":  # List Themes
             themes = os.listdir(os.path.expanduser("~") + "\\spicetify-cli\\Themes")
             themes.remove("_Extra")
             return themes
 
-        elif selection == 2:  # List Extensions
+        elif selection == "colorschemes" and theme:  # List Color schemes
+            colorschemes = []
+            color_ini = (
+                os.path.expanduser("~")
+                + "\\spicetify-cli\\Themes\\"
+                + theme
+                + "\\color.ini"
+            )
+            if os.path.exists(color_ini):
+                with open(color_ini) as f:
+                    for line in f.readlines():
+                        if line[0] == "[" and line[-2] == "]":
+                            colorschemes.append(line[1:-2])
+            return colorschemes
+
+        elif selection == "extensions":  # List Extensions
             extensions = os.listdir(
                 os.path.expanduser("~") + "\\spicetify-cli\\Extensions"
             )
             return extensions
 
-        elif selection == 3:  # List Custom apps
+        elif selection == "customapps":  # List Custom apps
             custom_apps = os.listdir(
                 os.path.expanduser("~") + "\\spicetify-cli\\CustomApps"
             )
             return custom_apps
+
+        else:
+            raise Exception("Bad arguments")
     else:
-        return "Not Installed"
+        raise Exception("Not Installed")
 
 
 # >[Bool Checkers]<
