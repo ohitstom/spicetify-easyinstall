@@ -1,3 +1,4 @@
+import re
 import asyncio
 import webbrowser
 from qasync import asyncSlot
@@ -15,9 +16,9 @@ ACCENT = "#FF6922"
 DISABLED_ACCENT = "#662810"
 BORDER = "#333333"
 HOVER_BORDER = "#555555"
-DISABLED_BORDER = "#222222"
+DISABLED_BORDER = "#111111"
 TEXT_COLOR = "#EDEDED"
-DISABLED_TEXT_COLOR = "#969696"
+DISABLED_TEXT_COLOR = "#222222"
 
 ANIM_TYPE = QtCore.QEasingCurve.InBack
 ANIM_DURATION = 300
@@ -436,6 +437,9 @@ class MenuScreen(SlidingScreen):
                 font-weight: 400;
                 text-align: center;
             }}
+            QLabel::disabled, #icon::disabled, #description::disabled {{
+                color: {DISABLED_TEXT_COLOR};
+            }}
         """
         )
         if not scrollable:
@@ -448,6 +452,11 @@ class MenuScreen(SlidingScreen):
         self.buttons = {}
         for btn_id in buttons:
             self.addMenuButton(btn_id, **buttons[btn_id])
+
+    def toggleButton(self, btn_id, enabled):
+        self.buttons[btn_id].setEnabled(enabled)
+        for child in self.buttons[btn_id].children():
+            child.setEnabled(enabled)
 
     def addMenuButton(self, btn_id, row, column, **kwargs):
         self.buttons[btn_id] = QtWidgets.QRadioButton(parent=self.button_grid, text="")
@@ -669,6 +678,8 @@ class ConsoleLogScreen(SlidingScreen):
         self.log.setPlainText("")
 
         def override_file_write(msg):
+            msg = re.sub("\\x1b\[38;2;\d\d?\d?;\d\d?\d?;\d\d?\d?m", "", msg)
+            msg = re.sub("\\x1b\[\d\d?\d?m", "", msg)
             # Update log widget
             text = self.log.toPlainText()
             if self.reset_last_line and len(msg) > 0 and msg[-1] == "\n":
@@ -688,6 +699,8 @@ class ConsoleLogScreen(SlidingScreen):
             self.original_file_write(msg)
 
         logger._file_write = override_file_write
+
+        await asyncio.sleep(0.5)
 
     async def cleanup(self):
         bottom_bar = self.parent().parent().bottom_bar

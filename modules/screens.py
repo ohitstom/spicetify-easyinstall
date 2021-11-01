@@ -109,11 +109,21 @@ class MainMenuScreen(MenuScreen):
         self.debug_mode = QtWidgets.QCheckBox(
             parent=self, text="Enable Debug Mode (more verbose)"
         )
+        connect(
+            signal=self.debug_mode.stateChanged,
+            callback=lambda *_: setattr(
+                globals, "verbose", self.debug_mode.isChecked()
+            ),
+        )
         clickable(self.debug_mode)
         self.layout().addWidget(self.debug_mode)
 
     @asyncSlot()
     async def shownCallback(self):
+        is_installed = utils.is_installed()
+        self.toggleButton("config", is_installed)
+        self.toggleButton("uninstall", is_installed)
+        self.toggleButton("update", is_installed)
         super().shownCallback()
 
 

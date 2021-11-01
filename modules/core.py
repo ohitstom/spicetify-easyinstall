@@ -26,15 +26,10 @@ async def install(launch=False):
     print(f"(1/{steps_count}) Uninstalling Spotify...")  # Section 1
     if os.path.isdir(appdata + "\\Spotify"):
         utils.kill_processes("Spotify.exe")
-        powershell_uninstall_proc = subprocess.Popen(
-            [
-                "powershell",
-                'cmd /c "%USERPROFILE%\\AppData\\Roaming\\Spotify\\Spotify.exe" /UNINSTALL /SILENT\n$all = cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:D\n$all = cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:R',
-            ],
-            creationflags=subprocess.CREATE_NO_WINDOW,
+        await utils.powershell(
+            'cmd /c "%USERPROFILE%\\AppData\\Roaming\\Spotify\\Spotify.exe" /UNINSTALL /SILENT\ncmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:D\ncmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:R',
+            verbose=False,
         )
-        while utils.process_pid_running(powershell_uninstall_proc.pid):
-            await asyncio.sleep(0.25)
         print("Finished uninstalling Spotify!\n")
     else:
         print("Spotify is not installed!\n")
@@ -43,12 +38,12 @@ async def install(launch=False):
     for folder in folders:
         try:
             if not os.path.exists(folder) or len(os.listdir(folder)) == 0:
-                print(f'"{folder}" is already empty.')
+                utils.verbose_print(f'"{folder}" is already empty.')
             else:
                 shutil.rmtree(folder, ignore_errors=True)
-                print(f'"{folder}" has been deleted.')
+                utils.verbose_print(f'"{folder}" has been deleted.')
         except Exception as e:
-            print(f'"{folder}" was not deleted: {e}.')
+            utils.verbose_print(f'"{folder}" was not deleted: {e}.')
     print("Finished wiping folders!\n")
 
     print(f"(3/{steps_count}) Downloading correct Spotify version...")  # Section 3
@@ -63,7 +58,9 @@ async def install(launch=False):
 
     print(f"(4/{steps_count}) Installing Spotify...")  # Section 4
     utils.kill_processes("Spotify.exe")
-    spotify_install_pid = utils.start_process(temp + globals.INSTALLER_NAME).pid
+    spotify_install_pid = utils.start_process(
+        temp + globals.INSTALLER_NAME, silent=True
+    ).pid
     while utils.process_pid_running(spotify_install_pid):
         await asyncio.sleep(0.25)
     i = 0
@@ -79,31 +76,19 @@ async def install(launch=False):
     print("Finished installing Spotify!\n")
 
     print(f"(5/{steps_count}) Installing Spicetify...")  # Section 5
-    powershell_install_proc = subprocess.Popen(
-        [
-            "powershell",
-            "$ProgressPreference = 'SilentlyContinue'\n$v='%s'; Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/OhItsTom/spicetify-easyinstall/Spicetify-v2/install.ps1' | Invoke-Expression\n$all = spicetify\n $all = spicetify backup apply enable-devtool"
-            % globals.SPICETIFY_VERSION,
-        ],
-        creationflags=subprocess.CREATE_NO_WINDOW,
+    await utils.powershell(
+        "$ProgressPreference = 'SilentlyContinue'\n$v='%s'; Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/khanhas/spicetify-cli/master/install.ps1' | Invoke-Expression\nspicetify\nspicetify -n backup apply enable-devtool"
+        % globals.SPICETIFY_VERSION
     )
-    while utils.process_pid_running(powershell_install_proc.pid):
-        await asyncio.sleep(0.25)
     print("Finished installing Spicetify!\n")
 
     print(f"(6/{steps_count}) Preventing Spotify from updating...")  # Section 6
     utils.kill_processes("Spotify.exe")
     if not os.path.isdir(appdata_local + "\\Spotify\\Update"):
         os.mkdir(appdata_local + "\\Spotify\\Update")
-    powershell_prevention_proc = subprocess.Popen(
-        [
-            "powershell",
-            "$all = cmd /c icacls %localappdata%\\Spotify\\Update /deny %username%:D\n$all = cmd /c icacls %localappdata%\\Spotify\\Update /deny %username%:R",
-        ],
-        creationflags=subprocess.CREATE_NO_WINDOW,
+    await utils.powershell(
+        "cmd /c icacls %localappdata%\\Spotify\\Update /deny %username%:D\ncmd /c icacls %localappdata%\\Spotify\\Update /deny %username%:R"
     )
-    while utils.process_pid_running(powershell_prevention_proc.pid):
-        await asyncio.sleep(0.25)
     print("Finished blocking Spotify updates!\n")
 
     print(f"(7/{steps_count}) Downloading themes...")  # Section 7
@@ -139,7 +124,7 @@ async def install(launch=False):
     print("Finished unpacking themes!\n")
 
     if launch:
-        subprocess.Popen([appdata + "\\spotify\\spotify.exe"])
+        utils.start_process(appdata + "\\spotify\\spotify.exe", silent=False)
 
 
 async def apply_config(theme, colorscheme, extensions, customapps):
@@ -153,15 +138,8 @@ async def apply_config(theme, colorscheme, extensions, customapps):
     print("Finished setting options!\n")
 
     print(f"(2/{steps_count}) Applying config...")  # Section 2
-    apply_proc = subprocess.Popen(
-        [
-            "powershell",
-            "spicetify apply",
-        ],
-        creationflags=subprocess.CREATE_NO_WINDOW,
-    )
-    while utils.process_pid_running(apply_proc.pid):
-        await asyncio.sleep(0.25)
+    await utils.powershell("spicetify apply -n")
+    await utils.powershell("spicetify restart", wait=False, verbose=False)
     print("Finished applying config!\n")
 
 
@@ -179,15 +157,15 @@ async def uninstall():
     for folder in folders:
         try:
             if not os.path.exists(folder) or len(os.listdir(folder)) == 0:
-                print(f'"{folder}" is already empty.')
+                utils.verbose_print(f'"{folder}" is already empty.')
             else:
                 shutil.rmtree(folder, ignore_errors=True)
-                print(f'"{folder}" has been deleted.')
+                utils.verbose_print(f'"{folder}" has been deleted.')
         except Exception as e:
-            print(f'"{folder}" was not deleted: {e}.')
+            utils.verbose_print(f'"{folder}" was not deleted: {e}.')
     print("Finished wiping folders!\n")
     # subprocess.Popen( #Delete ENV VAR
-    # ["powershell", '$all = cmd /c setx Path '])
+    # ["powershell", 'cmd /c setx Path '])
 
     # End of the terminal page
     # Needs rewriting
@@ -200,9 +178,20 @@ async def update_addons(addon_type):
     elif addon_type == "latest":
         download_url = globals.DOWNLOAD_THEME_URL
     user_profile = os.environ["USERPROFILE"]
+    folders = [
+        (user_profile + "\\spicetify-cli\\Themes"),
+    ]
 
     print(f"(1/{steps_count}) Wiping old themes...")  # Section 1
-    shutil.rmtree(user_profile + "\\spicetify-cli\\Themes", ignore_errors=True)
+    for folder in folders:
+        try:
+            if not os.path.exists(folder) or len(os.listdir(folder)) == 0:
+                utils.verbose_print(f'"{folder}" is already empty.')
+            else:
+                shutil.rmtree(folder, ignore_errors=True)
+                utils.verbose_print(f'"{folder}" has been deleted.')
+        except Exception as e:
+            utils.verbose_print(f'"{folder}" was not deleted: {e}.')
     print("Finished wiping old themes!\n")
 
     print(f"(2/{steps_count}) Downloading {addon_type} themes...")  # Section 2

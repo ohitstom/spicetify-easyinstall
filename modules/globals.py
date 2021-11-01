@@ -13,6 +13,7 @@ WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL"
 app = None
 gui = None
 singleton = None
+verbose = None
 
 # Text to show in different confirm prompts, all support GitHub flavored markdown
 INSTALL_RUNDOWN_MD = """

@@ -1,5 +1,6 @@
 import os
 import psutil
+import asyncio
 import aiohttp
 import aiofiles
 import subprocess
@@ -158,15 +159,57 @@ async def chunked_download(
                 bar.done()
 
 
+def verbose_print(*args, **kwargs):
+    if globals.verbose:
+        print(*args, **kwargs)
+
+
 # >[Process Management]<
 
 
-def start_process(path):
-    SW_HIDE = 0
-    info = subprocess.STARTUPINFO()
-    info.dwFlags = subprocess.STARTF_USESHOWWINDOW
-    info.wShowWindow = SW_HIDE
-    return subprocess.Popen(path, startupinfo=info)
+def start_process(path, silent=True):
+    if silent:
+        SW_HIDE = 0
+        info = subprocess.STARTUPINFO()
+        info.dwFlags = subprocess.STARTF_USESHOWWINDOW
+        info.wShowWindow = SW_HIDE
+        return subprocess.Popen(path, startupinfo=info)
+    else:
+        return subprocess.Popen(path)
+
+
+async def powershell(cmd, verbose=None, wait=True):
+    if verbose is None:
+        verbose = globals.verbose
+    if verbose:
+        proc = subprocess.Popen(
+            [
+                "powershell",
+                cmd,
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+        if wait:
+            while True:
+                line = str(proc.stdout.readline(), encoding="utf-8")
+                if line.strip() != "":
+                    verbose_print(line, end="")
+                elif proc.poll() != None:
+                    break
+                globals.app.processEvents()
+    else:
+        proc = subprocess.Popen(
+            [
+                "powershell",
+                cmd,
+            ],
+            creationflags=subprocess.CREATE_NO_WINDOW,
+        )
+        if wait:
+            while process_pid_running(proc.pid):
+                await asyncio.sleep(0.25)
+    return proc
 
 
 def kill_processes(name):
