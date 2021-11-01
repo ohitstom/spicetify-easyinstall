@@ -2,7 +2,6 @@ import os
 import shutil
 import asyncio
 import tempfile
-import subprocess
 from pathlib import Path
 
 from modules import globals, utils
@@ -121,6 +120,12 @@ async def install(launch=False):
         user_profile + "\\spicetify-cli\\Themes\\Default",
         user_profile + "\\spicetify-cli\\Themes\\SpicetifyDefault",
     )
+    for item in list(Path(user_profile + "\\spicetify-cli\\Themes").glob("**/*.js")):
+        fullpath = str(item)
+        destpath = user_profile + "\\spicetify-cli\\Extensions" + fullpath[fullpath.rfind("\\"):fullpath.rfind(".")] + "Theme.js"
+        if os.path.exists(destpath):
+            os.remove(destpath)
+        shutil.move(fullpath, destpath)
     print("Finished unpacking themes!\n")
 
     if launch:
@@ -225,4 +230,10 @@ async def update_addons(addon_type):
         user_profile + "\\spicetify-cli\\Themes\\Default",
         user_profile + "\\spicetify-cli\\Themes\\SpicetifyDefault",
     )
+    for item in list(Path(user_profile + "\\spicetify-cli\\Themes").glob("**/*.js")):
+        fullpath = str(item)
+        destpath = user_profile + "\\spicetify-cli\\Extensions" + fullpath[fullpath.rfind("\\"):fullpath.rfind(".")] + "Theme.js"
+        if os.path.exists(destpath):
+            os.remove(destpath)
+        shutil.move(fullpath, destpath)
     print("Finished unpacking new themes!\n")

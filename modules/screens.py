@@ -190,6 +190,11 @@ class ConfigThemeMenuScreen(MenuScreen):
             scrollable=True,
             multichoice=False,
             buttons={},
+            font_size_ratio=0.69,
+            min_height=69,
+            max_height=69,
+            min_width=212,
+            max_width=226,
         )
 
     @asyncSlot()
@@ -230,6 +235,11 @@ class ConfigColorschemeMenuScreen(MenuScreen):
             scrollable=True,
             multichoice=False,
             buttons={},
+            font_size_ratio=0.69,
+            min_height=69,
+            max_height=69,
+            min_width=212,
+            max_width=226,
         )
 
     @asyncSlot()
@@ -308,6 +318,11 @@ class ConfigExtensionsMenuScreen(MenuScreen):
             multichoice=True,
             allow_no_selection=True,
             buttons={},
+            font_size_ratio=0.69,
+            min_height=69,
+            max_height=69,
+            min_width=212,
+            max_width=226,
         )
         self.first_run = True
 
@@ -358,6 +373,11 @@ class ConfigCustomappsMenuScreen(MenuScreen):
             multichoice=True,
             allow_no_selection=True,
             buttons={},
+            font_size_ratio=0.69,
+            min_height=69,
+            max_height=69,
+            min_width=212,
+            max_width=226,
         )
         self.first_run = True
 

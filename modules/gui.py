@@ -67,13 +67,13 @@ QCheckBox::indicator:unchecked:hover {{
 
 QScrollBar:vertical {{
     background: transparent;
-    width: 10px;
-    padding: 2px;
+    width: 12px;
+    padding: 4px;
 }}
 QScrollBar::handle:vertical {{
     background: {BORDER};
     border: 0px solid {BACKGROUND};
-    border-radius: 3px;
+    border-radius: 2px;
     min-height: 30px;
 }}
 QScrollBar::handle:vertical:hover {{
@@ -383,6 +383,11 @@ class MenuScreen(SlidingScreen):
         allow_no_selection=True,
         scrollable=False,
         buttons={},
+        font_size_ratio=1,
+        min_height=80,
+        max_height=136,
+        min_width=226,
+        max_width=226,
     ):
         super().__init__(parent=parent, icon=icon, title=title)
 
@@ -398,16 +403,17 @@ class MenuScreen(SlidingScreen):
             self.button_scroll_area.setWidgetResizable(True)
             self.button_scroll_area.verticalScrollBar().setSingleStep(10)
         # Radio buttons that look like push buttons
-        self.button_grid.setStyleSheet(
-            f"""
+        qss = f"""
             QRadioButton {{
                 margin: 0px;
                 padding: 5px 10px 5px 10px;
                 background: {BACKGROUND};
                 border-radius: 4px;
                 border: 1px solid {BORDER};
-                min-height: 80px;
-                max-height: 136px;
+                min-height: {min_height}px;
+                max-height: {max_height}px;
+                min-width: {min_width}px;
+                max-width: {max_width}px;
             }}
             QRadioButton:hover {{
                 border: 1px solid {HOVER_BORDER};
@@ -424,27 +430,33 @@ class MenuScreen(SlidingScreen):
             #icon {{
                 color: {ACCENT};
                 font-family: Material Design Icons;
-                font-size: 26pt;
+                font-size: {round(26 * font_size_ratio, 1)}pt;
             }}
             QLabel {{
                 font-family: Poppins;
-                font-size: 18pt;
+                font-size: {round(18 * font_size_ratio, 1)}pt;
                 font-weight: 400;
             }}
             #description {{
                 font-family: Poppins;
-                font-size: 12pt;
+                font-size: {round(12 * font_size_ratio, 1)}pt;
                 font-weight: 400;
                 text-align: center;
             }}
             QLabel::disabled, #icon::disabled, #description::disabled {{
                 color: {DISABLED_TEXT_COLOR};
             }}
+            QScrollBar:vertical {{
+                width: 16px;
+                padding: 4px;
+                padding-left: 8px;
+            }}
         """
-        )
         if not scrollable:
+            self.button_grid.setStyleSheet(qss)
             self.layout().addWidget(self.button_grid, stretch=1)
         else:
+            self.button_scroll_area.setStyleSheet(qss)
             self.button_scroll_area.setWidget(self.button_grid)
             self.layout().addWidget(self.button_scroll_area, stretch=1)
 
@@ -513,7 +525,9 @@ class MenuScreen(SlidingScreen):
             4,
         )
         clickable(self.buttons[btn_id])
-        self.button_grid.layout().addWidget(self.buttons[btn_id], row, column)
+        self.button_grid.layout().addWidget(self.buttons[btn_id], row, column, QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
+        self.button_grid.layout().setRowStretch(row, 0)
+        self.button_grid.layout().setRowStretch(row + 1, 1)
 
     def clearCurrentButtons(self):
         for btn_id in list(self.buttons.keys()):
