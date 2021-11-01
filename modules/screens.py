@@ -211,6 +211,8 @@ class ConfigThemeMenuScreen(MenuScreen):
                 next_screen="config_colorscheme_menu_screen",
             )
             column += 1
+        if not selected:
+            selected = utils.find_config_entry("current_theme")
         if selected in self.buttons:
             self.buttons[selected].setChecked(True)
         super().shownCallback()
@@ -286,6 +288,8 @@ class ConfigColorschemeMenuScreen(MenuScreen):
                 next_screen="config_extensions_menu_screen",
             )
             column += 1
+        if not selected:
+            selected = utils.find_config_entry("color_scheme")
         if selected in self.buttons:
             self.buttons[selected].setChecked(True)
         super().shownCallback()
@@ -305,6 +309,7 @@ class ConfigExtensionsMenuScreen(MenuScreen):
             allow_no_selection=True,
             buttons={},
         )
+        self.first_run = True
 
     @asyncSlot()
     async def shownCallback(self):
@@ -328,6 +333,9 @@ class ConfigExtensionsMenuScreen(MenuScreen):
                 next_screen="config_customapps_menu_screen",
             )
             column += 1
+        if self.first_run:
+            self.first_run = False
+            selected = utils.find_config_entry("extensions").split("|")
         for selection in selected:
             if selection in self.buttons:
                 self.buttons[selection].setChecked(True)
@@ -348,6 +356,7 @@ class ConfigCustomappsMenuScreen(MenuScreen):
             allow_no_selection=True,
             buttons={},
         )
+        self.first_run = True
 
     @asyncSlot()
     async def shownCallback(self):
@@ -368,6 +377,9 @@ class ConfigCustomappsMenuScreen(MenuScreen):
                 next_screen="config_confirm_screen",
             )
             column += 1
+        if self.first_run:
+            self.first_run = False
+            selected = utils.find_config_entry("custom_apps").split("|")
         for selection in selected:
             if selection in self.buttons:
                 self.buttons[selection].setChecked(True)
