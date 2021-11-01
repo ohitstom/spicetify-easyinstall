@@ -22,6 +22,9 @@ ETA_SMA_WINDOW = 9
 # How long to wait before shifting the indeterminate bar
 INDETERMINATE_INTERVAL = 0.5
 
+# How long to wait before shifting the scrolling label
+LABEL_INTERVAL = 0.25
+
 
 class Bar(object):
     def __enter__(self):
@@ -42,10 +45,23 @@ class Bar(object):
         indeterminate=False,
         every=1,
     ):
-        if len(label) > 24 and "." in label:
-            ext = label[label.rfind(".") :]
-            label = label[: 24 - len(ext) - 2] + ".." + ext
-        self.label = label
+        self.fulllabel = label
+        self.shortlabel = label
+        if len(label) > 24:
+            self.scrolling_label = True
+            if "." in self.shortlabel:
+                ext = self.shortlabel[self.shortlabel.rfind(".") :]
+                if "/" in self.shortlabel.replace("\\", "/"):
+                    self.shortlabel = self.shortlabel[self.shortlabel.replace("\\", "/").rfind("/")+1:]
+                if len(self.shortlabel) > 24:
+                    self.shortlabel = self.shortlabel[: 24 - len(ext) - 2] + ".." + ext
+            else:
+                self.shortlabel = self.shortlabel[:21] + "..."
+            self.fulllabel = self.fulllabel + " " * 6
+        else:
+            self.scrolling_label = False
+        self.labeloffset = 0
+        self.labeldelta = time.time()
         self.width = width
         self.hide = hide
         # Only show bar in terminals by default (better for piping, logging etc.)
@@ -79,6 +95,17 @@ class Bar(object):
         if self.expected_size is None and self.indeterminate is False:
             raise Exception("expected_size not initialized")
         self.last_progress = progress
+        if self.scrolling_label:
+            if (time.time() - self.labeldelta) > LABEL_INTERVAL:
+                self.labeldelta = time.time()
+                self.labeloffset += 1
+            if self.labeloffset == len(self.fulllabel):
+                self.labeloffset = 0
+            labeldisp = self.fulllabel[self.labeloffset:24+self.labeloffset]
+            if 24+self.labeloffset > len(self.fulllabel):
+                labeldisp += self.fulllabel[:(24+self.labeloffset)-len(self.fulllabel)]
+        else:
+            labeldisp = self.shortlabel
         if self.indeterminate:
             if (time.time() - self.indeterminatedelta) > INDETERMINATE_INTERVAL:
                 self.indeterminatedelta = time.time()
@@ -105,7 +132,7 @@ class Bar(object):
                         etadisp,
                         bardisp,
                         "",
-                        self.label[:24],
+                        labeldisp,
                     )
                 )
                 STREAM.flush()
@@ -134,7 +161,7 @@ class Bar(object):
                         self.etadisp,
                         self.filled_char * x,
                         self.empty_char * (self.width - x),
-                        self.label[:24],
+                        labeldisp,
                     )
                 )
                 STREAM.flush()
@@ -153,7 +180,7 @@ class Bar(object):
                     elapsed_disp,
                     self.filled_char * self.width,
                     self.empty_char * (self.width - self.width),
-                    self.label[:24],
+                    self.shortlabel,
                 )
             )
             STREAM.write("\n")

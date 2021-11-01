@@ -51,7 +51,7 @@ async def install(launch=False):
     await utils.chunked_download(
         url=globals.FULL_SETUP_URL,
         path=(temp + globals.INSTALLER_NAME),
-        label=globals.INSTALLER_NAME[1:],
+        label=(temp + globals.INSTALLER_NAME) if globals.verbose else globals.INSTALLER_NAME[1:],
     )
     print("Finished downloading Spotify!\n")
 
@@ -95,7 +95,7 @@ async def install(launch=False):
     await utils.chunked_download(
         url=globals.DOWNLOAD_THEME_URL,
         path=(user_profile + "\\spicetify-cli\\Themes.zip"),
-        label="Themes.zip",
+        label=(user_profile + "\\spicetify-cli\\Themes.zip") if globals.verbose else "Themes.zip",
     )
     print("Finished downloading themes!\n")
 
@@ -205,7 +205,7 @@ async def update_addons(addon_type):
     await utils.chunked_download(
         url=download_url,
         path=(user_profile + "\\spicetify-cli\\Themes.zip"),
-        label="Themes.zip",
+        label=(user_profile + "\\spicetify-cli\\Themes.zip") if globals.verbose else "Themes.zip",
     )
     print(f"Finished downloading {addon_type} themes!\n")
 
