@@ -133,7 +133,9 @@ async def apply_config(theme, colorscheme, extensions, customapps):
     print(f"(1/{steps_count}) Setting opptions...")  # Section 1
     utils.set_config_entry("current_theme", theme)
     utils.set_config_entry("color_scheme", colorscheme)
-    utils.set_config_entry("extensions", "|".join([extension + ".js" for extension in extensions]))
+    utils.set_config_entry(
+        "extensions", "|".join([extension + ".js" for extension in extensions])
+    )
     utils.set_config_entry("custom_apps", "|".join(customapps))
     print("Finished setting options!\n")
 
