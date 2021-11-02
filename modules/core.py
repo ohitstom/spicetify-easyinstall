@@ -110,8 +110,8 @@ async def install(launch=False):
     )
     for item in list(Path(user_profile + "\\spicetify-cli\\Themes").glob("*")):
         fullpath = str(item)
-        filename = str(item.name)
         if os.path.isdir(fullpath):
+            filename = str(item.name)
             if filename[0] == ".":
                 shutil.rmtree(fullpath)
         else:
@@ -139,8 +139,9 @@ async def apply_config(theme, colorscheme, extensions, customapps):
     utils.set_config_entry("current_theme", theme)
     utils.set_config_entry("color_scheme", colorscheme)
     utils.set_config_entry(
-        "extensions", "|".join([extension + ".js" for extension in extensions])
+        "extensions", "|".join(extension + ".js" for extension in extensions)
     )
+
     utils.set_config_entry("custom_apps", "|".join(customapps))
     print("Finished setting options!\n")
 
@@ -180,9 +181,7 @@ async def uninstall():
 
 async def update_addons(addon_type):
     steps_count = 3
-    if addon_type == "shipped":
-        download_url = globals.DOWNLOAD_THEME_URL
-    elif addon_type == "latest":
+    if addon_type in ["shipped", "latest"]:
         download_url = globals.DOWNLOAD_THEME_URL
     user_profile = os.environ["USERPROFILE"]
     folders = [
@@ -220,8 +219,8 @@ async def update_addons(addon_type):
     )
     for item in list(Path(user_profile + "\\spicetify-cli\\Themes").glob("*")):
         fullpath = str(item)
-        filename = str(item.name)
         if os.path.isdir(fullpath):
+            filename = str(item.name)
             if filename[0] == ".":
                 shutil.rmtree(fullpath)
         else:

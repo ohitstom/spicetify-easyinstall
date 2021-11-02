@@ -16,9 +16,8 @@ def replace_config_line(
 ):  # replace_config_line("pathto\\config.txt", 5, "new text") <- Example Usage | Last stage of set_config_entry.
     lines = open(file_name, "r").readlines()
     lines[line_num] = text + "\n"
-    out = open(file_name, "w")
-    out.writelines(lines)
-    out.close()
+    with open(file_name, "w") as out:
+        out.writelines(lines)
 
 
 def find_config_entry(
@@ -58,56 +57,50 @@ def list_config_available(
     selection,
     theme=None,
 ):  # selection: themes, colorschemes, extensions, custom_apps | Lists out available configurations.
-    if is_installed():
-        if selection == "themes":  # List Themes
-            themes = os.listdir(os.path.expanduser("~") + "\\spicetify-cli\\Themes")
-            themes.remove("_Extra")
-            return themes
+    if not is_installed():
+        raise Exception("Not Installed")
+    if selection == "themes":  # List Themes
+        themes = os.listdir(os.path.expanduser("~") + "\\spicetify-cli\\Themes")
+        themes.remove("_Extra")
+        return themes
 
-        elif selection == "colorschemes" and theme:  # List Color schemes
-            colorschemes = []
-            color_ini = (
-                os.path.expanduser("~")
-                + "\\spicetify-cli\\Themes\\"
-                + theme
-                + "\\color.ini"
-            )
-            if os.path.exists(color_ini):
-                with open(color_ini) as f:
-                    for line in f.readlines():
-                        if line[0] == "[" and line[-2] == "]":
-                            colorschemes.append(line[1:-2])
-            return colorschemes
+    elif selection == "colorschemes" and theme:  # List Color schemes
+        colorschemes = []
+        color_ini = (
+            os.path.expanduser("~")
+            + "\\spicetify-cli\\Themes\\"
+            + theme
+            + "\\color.ini"
+        )
+        if os.path.exists(color_ini):
+            with open(color_ini) as f:
+                for line in f.readlines():
+                    if line[0] == "[" and line[-2] == "]":
+                        colorschemes.append(line[1:-2])
+        return colorschemes
 
-        elif selection == "extensions":  # List Extensions
-            extensions = os.listdir(
+    elif selection == "extensions":  # List Extensions
+        return os.listdir(
                 os.path.expanduser("~") + "\\spicetify-cli\\Extensions"
             )
-            return extensions
 
-        elif selection == "customapps":  # List Custom apps
-            custom_apps = os.listdir(
+    elif selection == "customapps":  # List Custom apps
+        return os.listdir(
                 os.path.expanduser("~") + "\\spicetify-cli\\CustomApps"
             )
-            return custom_apps
 
-        else:
-            raise Exception("Bad arguments")
     else:
-        raise Exception("Not Installed")
+        raise Exception("Bad arguments")
 
 
 # >[Bool Checkers]<
 
 
 def is_installed():  # Checks if spicetify is installed
-    if (
+    return (
         os.path.exists(os.path.expanduser("~") + "\\.spicetify\\config-xpui.ini")
         == True
-    ):
-        return True
-    else:
-        return False
+    )
 
 
 def is_theme_set():  # Checks if a theme is set, made obsolete by find_config_entry
@@ -168,14 +161,14 @@ def verbose_print(*args, **kwargs):
 
 
 def start_process(path, silent=True):
-    if silent:
-        SW_HIDE = 0
-        info = subprocess.STARTUPINFO()
-        info.dwFlags = subprocess.STARTF_USESHOWWINDOW
-        info.wShowWindow = SW_HIDE
-        return subprocess.Popen(path, startupinfo=info)
-    else:
+    if not silent:
         return subprocess.Popen(path)
+
+    SW_HIDE = 0
+    info = subprocess.STARTUPINFO()
+    info.dwFlags = subprocess.STARTF_USESHOWWINDOW
+    info.wShowWindow = SW_HIDE
+    return subprocess.Popen(path, startupinfo=info)
 
 
 async def powershell(cmd, verbose=None, wait=True):

@@ -148,24 +148,26 @@ class Bar(object):
                 * (self.expected_size - progress)
             )
             self.etadisp = self.format_time(self.eta)
-        x = int(self.width * progress / self.expected_size)
-        if not self.hide:
-            if (progress % self.every) == 0 or (  # True every "every" updates
+        if not self.hide and (
+            (progress % self.every) == 0
+            or (  # True every "every" updates
                 progress == self.expected_size  # And when we're done
-            ):
-                percent = f"{int(progress/self.expected_size*100)}%"
-                STREAM.write(
-                    BAR_TEMPLATE
-                    % (
-                        percent,
-                        self.etadisp,
-                        self.filled_char * x,
-                        self.empty_char * (self.width - x),
-                        labeldisp,
-                    )
+            )
+        ):
+            percent = f"{int(progress/self.expected_size*100)}%"
+            x = int(self.width * progress / self.expected_size)
+            STREAM.write(
+                BAR_TEMPLATE
+                % (
+                    percent,
+                    self.etadisp,
+                    self.filled_char * x,
+                    self.empty_char * (self.width - x),
+                    labeldisp,
                 )
-                STREAM.flush()
-                return
+            )
+            STREAM.flush()
+            return
 
     def done(self):
         self.elapsed = time.time() - self.start

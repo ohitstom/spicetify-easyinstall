@@ -1,13 +1,7 @@
-Config Modifier:
-    -color picker
-
 Optional:
     -Backup and restore spotify settings and login
     -Create a v1 and latest variant.
 
 Fix:
     -Provide option for latest themes, or shipped themes.
-    -Fix requests error checking, find a way to return the error from the function, and then return to main menu.
-
-Major:
-    -Implement config section of GUI
+    -Weirdly not adding spicetify to env.
