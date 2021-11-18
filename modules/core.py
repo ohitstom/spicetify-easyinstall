@@ -135,7 +135,7 @@ async def install(launch=False):
 async def apply_config(theme, colorscheme, extensions, customapps):
     steps_count = 2
 
-    print(f"(1/{steps_count}) Setting opptions...")  # Section 1
+    print(f"(1/{steps_count}) Setting options...")  # Section 1
     utils.set_config_entry("current_theme", theme)
     utils.set_config_entry("color_scheme", colorscheme)
     utils.set_config_entry(
