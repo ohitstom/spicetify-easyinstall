@@ -68,8 +68,8 @@ async def install(launch=False):
         os.mkdir(globals.temp)
     await utils.chunked_download(
         url=globals.SPOTIFY_SETUP_URL,
-        path=(globals.temp + globals.SPOTIFY_VERSION),
-        label=(globals.temp + globals.SPOTIFY_VERSION)
+        path=(globals.temp + "\\" + globals.SPOTIFY_VERSION),
+        label=(globals.temp + "\\" + globals.SPOTIFY_VERSION)
         if globals.verbose
         else globals.SPOTIFY_VERSION[1:],
     )
@@ -80,7 +80,7 @@ async def install(launch=False):
     print(f"(5/{steps_count}) Installing Spotify...")
     utils.kill_processes("Spotify.exe")
     spotify_install_pid = utils.start_process(
-        globals.temp + globals.SPOTIFY_VERSION, silent=True
+        globals.temp + "\\" + globals.SPOTIFY_VERSION, silent=True
     ).pid
     while utils.process_pid_running(spotify_install_pid):
         await asyncio.sleep(0.25)
@@ -93,7 +93,7 @@ async def install(launch=False):
             )
         await asyncio.sleep(0.25)
     utils.kill_processes("Spotify.exe")
-    os.remove(globals.temp + globals.SPOTIFY_VERSION)
+    os.remove(globals.temp + "\\" + globals.SPOTIFY_VERSION)
     print("Finished installing Spotify!\n")
 
     # >[Section 6]<
@@ -145,7 +145,7 @@ async def install(launch=False):
     )
     os.remove(f"{globals.user_profile}\\spicetify-cli\\Themes.zip")
     os.rename(
-        f"{globals.user_profile}\\spicetify-cli{globals.THEMES_VERSION}",
+        f"{globals.user_profile}\\spicetify-cli\\{globals.THEMES_VERSION}",
         f"{globals.user_profile}\\spicetify-cli\\Themes",
     )
     for item in list(Path(f"{globals.user_profile}\\spicetify-cli\\Themes").glob("*")):
