@@ -1,7 +1,0 @@
-Optional:
-    -Backup and restore spotify settings and login
-    -Create a v1 and latest variant.
-
-Fix:
-    -Provide option for latest themes, or shipped themes.
-    -Weirdly not adding spicetify to env.
