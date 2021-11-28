@@ -1,0 +1,12 @@
+Needed:
+    -Fix slow import of globals, time it using -X importtime
+
+Optional:
+    -Create a latest variant.
+
+Fix:
+    -Normalize Function Usage + Cleanup + Simplification
+    -Implement All Global MD
+    -Debug
+    -Please oh god fuck please fuck me fuck oh god do something to clean up core
++ Black
