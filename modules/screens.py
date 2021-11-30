@@ -151,7 +151,7 @@ class InstallConfirmScreen(ConfirmScreen):
     @asyncSlot()
     async def shownCallback(self):
         formatted = globals.INSTALL_RUNDOWN_MD.format(
-            spicetifyold=asyncio.run(utils.spicetify_version()),
+            spicetifyold=await utils.spicetify_version(),
             spicetifynew=globals.SPICETIFY_VERSION,
             spotify=globals.SPOTIFY_VERSION[18:-4],
             theme=globals.THEMES_VERSION[17:]
