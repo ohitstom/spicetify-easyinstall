@@ -269,7 +269,7 @@ async def spicetify_version():
                     await powershell(
                         "%s -v" % environ_check,
                         verbose=False,
-                        wait=True,
+                        wait=False,
                         start_new_session=False,
                     )
                 ).stdout.read(),

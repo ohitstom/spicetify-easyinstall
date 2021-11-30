@@ -20,7 +20,7 @@ appdata_local = os.environ["LOCALAPPDATA"]
 appdata = os.environ["APPDATA"]
 temp = tempfile.gettempdir()
 cwd = os.getcwd()
-spotify_prefs = Path(f"{user_profile}\\AppData\\Roaming\\Spotify\\prefs")
+spotify_prefs = Path(f"{appdata}\\Spotify\\prefs")
 
 # Temporary Variables + MD Vars
 app = None
@@ -47,9 +47,9 @@ CUSTOM_THEMES = {
 # Text Pages For GUI
 INSTALL_RUNDOWN_MD = (
     """
- - **Spicetify Version**:
- - **Spotify Version**: 
- - **Theme Version**: 
+ - **Spicetify Version**: `{spicetifyold}{spicetifynew}`
+ - **Spotify Version**: `{spotify}`
+ - **Theme Version**: `{theme}`
 """.strip()
 )
 
@@ -57,27 +57,28 @@ UNINSTALL_RUNDOWN_MD = (
     """
  - **Spotify Uninstall**: 
 
- *Version*; `spotify`
+ *Version*: `{spotify}`
 
-
- *Folders*; `location`
+ *Folders*: `{spotifylocation}`
 
 ** **
  - **Spicetify Uninstall**: 
 
- *Version*; `spicetify`
+ *Version*: `{spicetify}`
 
-
- *Folders*; `location`
+ *Folders*: `{spicetifylocation}`
 """.strip()
 )
 
 UPDATE_APP_RUNDOWN_MD = (
     """
 *Updates Your Spicetify-EasyInstall To Latest Release*
-- **Version**: ``
+- **Version**: `{oldver}>>{newver}`
 ** **
 - **Patch Notes**:
+
+
+{notes}
 
 
 

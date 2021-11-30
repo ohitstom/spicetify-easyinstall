@@ -3,12 +3,11 @@ import sys
 import traceback
 
 from PyQt5 import QtWidgets
+from aiohttp.tracing import TraceRequestChunkSentParams
 from qasync import asyncSlot
 
 from modules import core, globals, utils
 from modules.gui import *
-
-
 class LicenseScreen(SlidingScreen):
     screen_name = "license_screen"
 
@@ -151,6 +150,13 @@ class InstallConfirmScreen(ConfirmScreen):
 
     @asyncSlot()
     async def shownCallback(self):
+        formatted = globals.INSTALL_RUNDOWN_MD.format(
+            spicetifyold=asyncio.run(utils.spicetify_version()),
+            spicetifynew=globals.SPICETIFY_VERSION,
+            spotify=globals.SPOTIFY_VERSION[18:-4],
+            theme=globals.THEMES_VERSION[17:]
+        )
+        self.rundown.setMarkdown(formatted)
         super().shownCallback()
 
 
@@ -487,6 +493,13 @@ class UninstallConfirmScreen(ConfirmScreen):
 
     @asyncSlot()
     async def shownCallback(self):
+        formatted = globals.UNINSTALL_RUNDOWN_MD.format(
+            spotify=globals.SPOTIFY_VERSION[18:-4],
+            spotifylocation="Not Implemented",
+            spicetify=str(await utils.spicetify_version())[:-2],
+            spicetifylocation="Not Implemented"
+        )
+        self.rundown.setMarkdown(formatted)
         super().shownCallback()
 
 
@@ -564,6 +577,13 @@ class UpdateAppConfirmScreen(ConfirmScreen):
 
     @asyncSlot()
     async def shownCallback(self):
+        json = await utils.latest_release_GET()
+        formatted = globals.UPDATE_APP_RUNDOWN_MD.format(
+            oldver=globals.RELEASE,
+            newver=json["tag_name"],
+            notes=json["body"].strip().replace("\n", "\n\n")
+        )
+        self.rundown.setMarkdown(formatted)
         super().shownCallback()
 
 
