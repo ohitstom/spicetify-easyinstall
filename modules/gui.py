@@ -197,6 +197,10 @@ class SlidingFrame(QuickWidget):
             spacing=0,
         )
 
+        # Animation timings
+        self.old_anim_done = True
+        self.new_anim_done = True
+
         # Dynamically import and setup all screens from screens.py
         from modules import screens
 
@@ -209,6 +213,12 @@ class SlidingFrame(QuickWidget):
                 else:
                     getattr(self, item.screen_name).setVisible(False)
         self.current_screen.shownCallback()
+
+    async def waitForAnimations(self):
+        while not self.old_anim_done or not self.new_anim_done:
+            print("waiting")
+            # Returning while animation is still running will cause it to stop midway!
+            await asyncio.sleep(0.1)
 
     @asyncSlot()
     async def slideTo(self, new_screen, direction):
@@ -223,30 +233,25 @@ class SlidingFrame(QuickWidget):
         new_anim = QtCore.QPropertyAnimation(new_screen, b"pos")
         new_anim.setDuration(ANIM_DURATION)
         new_anim.setEasingCurve(ANIM_TYPE)
+        old_anim.setStartValue(QtCore.QPoint(0, 0))
+        new_anim.setEndValue(QtCore.QPoint(0, 0))
         if direction == "next":
-            old_anim.setStartValue(QtCore.QPoint(0, 0))
             old_anim.setEndValue(QtCore.QPoint(0 - WIDTH, 0))
             new_anim.setStartValue(QtCore.QPoint(WIDTH, 0))
-            new_anim.setEndValue(QtCore.QPoint(0, 0))
         if direction == "back":
-            old_anim.setStartValue(QtCore.QPoint(0, 0))
             old_anim.setEndValue(QtCore.QPoint(WIDTH, 0))
             new_anim.setStartValue(QtCore.QPoint(0 - WIDTH, 0))
-            new_anim.setEndValue(QtCore.QPoint(0, 0))
         old_anim.start()
         new_anim.start()
         self.current_screen = new_screen
-        old_anim.done = False
-        new_anim.done = False
+        self.old_anim_done = False
+        self.new_anim_done = False
         old_anim.finished.connect(
-            lambda *_: [setattr(old_anim, "done", True), old_screen.setVisible(False)]
+            lambda *_: [setattr(self, "old_anim_done", True), old_screen.setVisible(False)]
         )
-        new_anim.finished.connect(lambda *_: setattr(new_anim, "done", True))
+        new_anim.finished.connect(lambda *_: setattr(self, "new_anim_done", True))
         await new_screen.shownCallback()
-        while not old_anim.done or not new_anim.done:
-            # Returning while animation is still running will cause it to stop midway!
-            await asyncio.sleep(0.1)
-
+        await self.waitForAnimations()
 
 class BottomBar(QuickWidget):
     """Bottom bar widget with icon, watermark and back / next buttons"""
@@ -546,6 +551,9 @@ class MenuScreen(SlidingScreen):
         bottom_bar = self.parent().parent().bottom_bar
         slider = self.parent().parent().slider
 
+        # Wait for animations to finish before enabling buttons again
+        await slider.waitForAnimations()
+
         # Enable next button when atleast one of the options is selected
         def set_next_button_enabled(*_):
             if self.multichoice and self.allow_no_selection:
@@ -649,6 +657,9 @@ class ConfirmScreen(SlidingScreen):
         bottom_bar = self.parent().parent().bottom_bar
         slider = self.parent().parent().slider
 
+        # Wait for animations to finish before enabling buttons again
+        await slider.waitForAnimations()
+
         # Setup back button
         connect(
             signal=bottom_bar.back.clicked,
@@ -683,6 +694,7 @@ class ConsoleLogScreen(SlidingScreen):
 
     async def setup(self):
         bottom_bar = self.parent().parent().bottom_bar
+        slider = self.parent().parent().slider
 
         # Setup back button
         connect(signal=bottom_bar.back.clicked, callback=None)
@@ -692,9 +704,13 @@ class ConsoleLogScreen(SlidingScreen):
         bottom_bar.next.setText("Next")
         bottom_bar.next.setEnabled(False)
 
+        self.log.setPlainText("")
+
+        # Wait for animations to finish before enabling buttons again
+        await slider.waitForAnimations()
+
         # Setup console output redirection
         self.original_file_write = logger._file_write
-        self.log.setPlainText("")
 
         def override_file_write(msg):
             # Save scroll data
@@ -724,8 +740,6 @@ class ConsoleLogScreen(SlidingScreen):
             self.original_file_write(msg)
 
         logger._file_write = override_file_write
-
-        await asyncio.sleep(0.5)
 
     async def cleanup(self):
         bottom_bar = self.parent().parent().bottom_bar

@@ -39,6 +39,11 @@ class LicenseScreen(SlidingScreen):
     async def shownCallback(self):
         bottom_bar = self.parent().parent().bottom_bar
         slider = self.parent().parent().slider
+        bottom_bar.back.setEnabled(False)
+        bottom_bar.next.setEnabled(False)
+
+        # Wait for animations to finish before enabling buttons again
+        await slider.waitForAnimations()
 
         # Toggle the next buttom when accept checkbox is toggled
         connect(
@@ -120,9 +125,11 @@ class MainMenuScreen(MenuScreen):
     
     @asyncSlot()
     async def shownCallback(self):   
-        global loop, testing 
-        loop = asyncio.new_event_loop()
-        testing = loop.create_task(utils.spicetify_version())
+        bottom_bar = self.parent().parent().bottom_bar
+        slider = self.parent().parent().slider
+        bottom_bar.back.setEnabled(False)
+        bottom_bar.next.setEnabled(False)
+
         is_installed = utils.is_installed()
         self.toggleButton("config", is_installed)
         self.toggleButton("uninstall", is_installed)
@@ -150,6 +157,15 @@ class InstallConfirmScreen(ConfirmScreen):
 
     @asyncSlot()
     async def shownCallback(self): 
+        bottom_bar = self.parent().parent().bottom_bar
+        slider = self.parent().parent().slider
+        bottom_bar.back.setEnabled(False)
+        bottom_bar.next.setEnabled(False)
+
+        # Wait for animations to finish before enabling buttons again
+        await slider.waitForAnimations()
+
+        # Format rundown message
         formatted = globals.INSTALL_RUNDOWN_MD.format(
             spicetifyold=await utils.spicetify_version(),
             spicetifynew=globals.SPICETIFY_VERSION,
@@ -208,6 +224,11 @@ class ConfigThemeMenuScreen(MenuScreen):
 
     @asyncSlot()
     async def shownCallback(self):
+        bottom_bar = self.parent().parent().bottom_bar
+        slider = self.parent().parent().slider
+        bottom_bar.back.setEnabled(False)
+        bottom_bar.next.setEnabled(False)
+
         themes = utils.list_config_available("themes")
         selected = self.getSelection()
         self.clearCurrentButtons()
@@ -255,6 +276,8 @@ class ConfigColorschemeMenuScreen(MenuScreen):
     async def shownCallback(self):
         bottom_bar = self.parent().parent().bottom_bar
         slider = self.parent().parent().slider
+        bottom_bar.back.setEnabled(False)
+        bottom_bar.next.setEnabled(False)
 
         theme = slider.config_theme_menu_screen.getSelection()
         colorschemes = utils.list_config_available("colorschemes", theme)
@@ -275,6 +298,7 @@ class ConfigColorschemeMenuScreen(MenuScreen):
             self.button_grid.layout().addWidget(
                 self.buttons["nope"], 1, 0, QtCore.Qt.AlignTop | QtCore.Qt.AlignHCenter
             )
+            await slider.waitForAnimations()
             connect(
                 signal=bottom_bar.back.clicked,
                 callback=lambda *_: slider.slideTo(
@@ -337,6 +361,11 @@ class ConfigExtensionsMenuScreen(MenuScreen):
 
     @asyncSlot()
     async def shownCallback(self):
+        bottom_bar = self.parent().parent().bottom_bar
+        slider = self.parent().parent().slider
+        bottom_bar.back.setEnabled(False)
+        bottom_bar.next.setEnabled(False)
+
         extensions = utils.list_config_available("extensions")
         selected = self.getSelection()
         self.clearCurrentButtons()
@@ -392,6 +421,11 @@ class ConfigCustomappsMenuScreen(MenuScreen):
 
     @asyncSlot()
     async def shownCallback(self):
+        bottom_bar = self.parent().parent().bottom_bar
+        slider = self.parent().parent().slider
+        bottom_bar.back.setEnabled(False)
+        bottom_bar.next.setEnabled(False)
+
         customapps = utils.list_config_available("customapps")
         selected = self.getSelection()
         self.clearCurrentButtons()
@@ -434,7 +468,10 @@ class ConfigConfirmScreen(ConfirmScreen):
 
     @asyncSlot()
     async def shownCallback(self):
+        bottom_bar = self.parent().parent().bottom_bar
         slider = self.parent().parent().slider
+        bottom_bar.back.setEnabled(False)
+        bottom_bar.next.setEnabled(False)
 
         self.rundown.setMarkdown(
             f"""
@@ -493,6 +530,14 @@ class UninstallConfirmScreen(ConfirmScreen):
 
     @asyncSlot()
     async def shownCallback(self):
+        bottom_bar = self.parent().parent().bottom_bar
+        slider = self.parent().parent().slider
+        bottom_bar.back.setEnabled(False)
+        bottom_bar.next.setEnabled(False)
+
+        # Wait for animations to finish before enabling buttons again
+        await slider.waitForAnimations()
+
         formatted = globals.UNINSTALL_RUNDOWN_MD.format(
             spotify=globals.SPOTIFY_VERSION[18:-4],
             spotifylocation="Not Implemented",
@@ -557,6 +602,10 @@ class UpdateMenuScreen(MenuScreen):
 
     @asyncSlot()
     async def shownCallback(self):
+        bottom_bar = self.parent().parent().bottom_bar
+        slider = self.parent().parent().slider
+        bottom_bar.back.setEnabled(False)
+        bottom_bar.next.setEnabled(False)
         super().shownCallback()
 
 
@@ -577,6 +626,14 @@ class UpdateAppConfirmScreen(ConfirmScreen):
 
     @asyncSlot()
     async def shownCallback(self):
+        bottom_bar = self.parent().parent().bottom_bar
+        slider = self.parent().parent().slider
+        bottom_bar.back.setEnabled(False)
+        bottom_bar.next.setEnabled(False)
+
+        # Wait for animations to finish before enabling buttons again
+        await slider.waitForAnimations()
+
         json = await utils.latest_release_GET()
         formatted = globals.UPDATE_APP_RUNDOWN_MD.format(
             oldver=globals.RELEASE,
@@ -641,17 +698,15 @@ class UpdateAppLogScreen(ConsoleLogScreen):
                     bottom_bar.next.setEnabled(True)
                 else:
                     print("Download Was Not Completed Properly, Please Retry!")
-                    await self.cleanup()
             else:
                 print("No updates available!")
-                await self.cleanup()
         except Exception:
             exc = "".join(traceback.format_exception(*sys.exc_info()))
             print(exc)
             print("\n\n^^ SOMETHING WENT WRONG! ^^")
 
         # Restore original console output
-        logger._file_write = self.original_file_write
+        await self.cleanup()
 
 
 class UpdateLatestConfirmScreen(ConfirmScreen):
@@ -671,6 +726,10 @@ class UpdateLatestConfirmScreen(ConfirmScreen):
 
     @asyncSlot()
     async def shownCallback(self):
+        bottom_bar = self.parent().parent().bottom_bar
+        slider = self.parent().parent().slider
+        bottom_bar.back.setEnabled(False)
+        bottom_bar.next.setEnabled(False)
         super().shownCallback()
 
 
