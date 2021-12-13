@@ -10,7 +10,6 @@ from modules import core, globals, utils
 from modules.gui import *
 class LicenseScreen(SlidingScreen):
     screen_name = "license_screen"
-
     def __init__(self, parent):
         super().__init__(parent=parent, icon="󰊛", title="License Agreement")
 
@@ -65,7 +64,6 @@ class LicenseScreen(SlidingScreen):
 
 class MainMenuScreen(MenuScreen):
     screen_name = "main_menu_screen"
-
     def __init__(self, parent):
         super().__init__(
             parent=parent,
@@ -119,15 +117,17 @@ class MainMenuScreen(MenuScreen):
         )
         clickable(self.debug_mode)
         self.layout().addWidget(self.debug_mode)
-
+    
     @asyncSlot()
-    async def shownCallback(self):
+    async def shownCallback(self):   
+        global loop, testing 
+        loop = asyncio.new_event_loop()
+        testing = loop.create_task(utils.spicetify_version())
         is_installed = utils.is_installed()
         self.toggleButton("config", is_installed)
         self.toggleButton("uninstall", is_installed)
         self.toggleButton("update", is_installed)
         super().shownCallback()
-
 
 class InstallConfirmScreen(ConfirmScreen):
     screen_name = "install_confirm_screen"
@@ -149,9 +149,10 @@ class InstallConfirmScreen(ConfirmScreen):
         self.layout().addWidget(self.launch_after)
 
     @asyncSlot()
-    async def shownCallback(self):
+    async def shownCallback(self): 
+        test = await utils.spicetify_version()
         formatted = globals.INSTALL_RUNDOWN_MD.format(
-            spicetifyold=await utils.spicetify_version(),
+            spicetifyold=test,
             spicetifynew=globals.SPICETIFY_VERSION,
             spotify=globals.SPOTIFY_VERSION[18:-4],
             theme=globals.THEMES_VERSION[17:]

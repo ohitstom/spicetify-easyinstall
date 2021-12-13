@@ -1,4 +1,4 @@
-import os
+import os 
 import tempfile
 from pathlib import Path
 
@@ -30,7 +30,8 @@ verbose = None
 
 # Custom Addons
 CUSTOM_EXTENSIONS = {
-    "https://codeload.github.com/fatihkaan22/focus-mode-spicetify/zip/refs/heads/main": f"{user_profile}\\spicetify-cli\\Extensions\Focus Mode.zip"
+    "https://codeload.github.com/fatihkaan22/focus-mode-spicetify/zip/refs/heads/main": f"{user_profile}\\spicetify-cli\\Extensions\Focus Mode.zip",
+    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/7524d9da4ea4d02d1732695e4cfc439d64104751": f"{user_profile}\\spicetify-cli\\Extensions\Focus Mode.zip"
 }
 
 CUSTOM_APPS = {
