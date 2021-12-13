@@ -71,7 +71,7 @@ async def install(launch=False):
         path=(globals.temp + "\\" + globals.SPOTIFY_VERSION),
         label=(globals.temp + "\\" + globals.SPOTIFY_VERSION)
         if globals.verbose
-        else globals.SPOTIFY_VERSION[1:],
+        else globals.SPOTIFY_VERSION,
     )
     print("Finished downloading Spotify!\n")
 
