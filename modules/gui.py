@@ -216,7 +216,6 @@ class SlidingFrame(QuickWidget):
 
     async def waitForAnimations(self):
         while not self.old_anim_done or not self.new_anim_done:
-            print("waiting")
             # Returning while animation is still running will cause it to stop midway!
             await asyncio.sleep(0.1)
 
