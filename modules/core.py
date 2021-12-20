@@ -333,37 +333,40 @@ async def update_addons():
     steps_count = 3
     folders = [
         (f"{globals.user_profile}\\spicetify-cli\\Themes"),
+        (f"{globals.user_profile}\\spicetify-cli\\Extensions"),
+        (f"{globals.user_profile}\\spicetify-cli\\Customapps"),
     ]
 
     # >[Section 1]<
 
-    print(f"(1/{steps_count}) Wiping old themes...")
+    print(f"(1/{steps_count}) Wiping old addons...")
     for folder in folders:
         try:
-            if not os.path.exists(folder) or len(os.listdir(folder)) == 0:
+            if not os.path.exists(folder):
+                utils.verbose_print(f'"{folder}" is already empty.')
+            elif len(os.listdir(folder)) == 0:
+                os.rmdir(folder)
                 utils.verbose_print(f'"{folder}" is already empty.')
             else:
                 shutil.rmtree(folder, ignore_errors=True)
                 utils.verbose_print(f'"{folder}" has been deleted.')
+            if "Themes" not in folder:
+                os.mkdir(folder)
         except Exception as e:
             utils.verbose_print(f'"{folder}" was not deleted: {e}.')
     print("Finished wiping old themes!\n")
 
     # >[Section 2]<
 
-    print(f"(2/{steps_count}) Downloading latest themes...")
+    print(f"(2/{steps_count}) Downloading 'official' addons...")
     await utils.chunked_download(
-        url="https://codeload.github.com/morpheusthewhite/spicetify-themes/archive/refs/heads/master",
+        url=globals.THEMES_URL.replace(globals.THEMES_VERSION[17:], 'refs/heads/master'),
         path=(f"{globals.user_profile}\\spicetify-cli\\Themes.zip"),
         label=(f"{globals.user_profile}\\spicetify-cli\\Themes.zip")
         if globals.verbose
         else "Themes.zip",
     )
-    print("Finished downloading latest themes!\n")
 
-    # >[Section 3]<
-
-    print(f"(3/{steps_count}) Unpacking new themes...")
     shutil.unpack_archive(
         f"{globals.user_profile}\\spicetify-cli\\Themes.zip",
         f"{globals.user_profile}\\spicetify-cli",
@@ -396,8 +399,72 @@ async def update_addons():
         if os.path.exists(destpath):
             os.remove(destpath)
         shutil.move(fullpath, destpath)
-    print("Finished unpacking new themes!\n")
+    print("Finished downloading 'official' themes!\n")
 
+    # >[Section 3]<
+
+    print(f"(3/{steps_count}) Downloading 'custom' addons...")
+    base = {**globals.CUSTOM_THEMES, **globals.CUSTOM_APPS, **globals.CUSTOM_EXTENSIONS}
+    final = {}
+    for url, directory in base.items():
+        if "releases" not in url:
+            newval = f"{url[:-40]}refs/heads/"
+            final[newval + await utils.heads_value(newval)] = directory
+        else:
+            final[url] = directory
+    
+    if globals.verbose:
+        for item in final.items():
+            utils.verbose_print(f"{item}\n") 
+
+    await utils.simultaneous_chunked_download(final, "Custom Addons.zip")
+    
+    for url, download in ({final}).items():
+        if os.path.exists(download):
+            utils.verbose_print(f"{url} was downloaded successfully!")
+            captured = Path(download)
+            directory = captured.parent
+            unpacked_name = captured.with_suffix("").name
+            unpacked_path = f"{directory}\{unpacked_name}"
+
+            if os.path.exists(unpacked_path):
+                shutil.rmtree(unpacked_path)
+
+            shutil.unpack_archive(download, unpacked_path)
+            os.remove(download)  
+
+            for item in os.listdir(unpacked_path):
+                if os.path.isdir(f"{unpacked_path}\{item}") and "assets" not in item:
+                    for src in Path(f"{unpacked_path}\{item}").glob("*"):
+                        if url not in utils.globals.CUSTOM_EXTENSIONS:  
+                            shutil.move(src, unpacked_path)
+
+                        elif ".js" in str(src):
+                            persistent_src = str(src.with_suffix(".js").name)
+                            if os.path.exists(f"{directory}\{persistent_src}"):
+                                os.remove(f"{directory}\{persistent_src}")
+
+                            shutil.move(src, directory)
+
+                    try:
+                        os.rmdir(f"{unpacked_path}\{item}")
+                    except:
+                        shutil.rmtree(unpacked_path)
+
+            for item in list(Path(f"{globals.user_profile}\\spicetify-cli\\Themes").glob("**/*.js")):
+                fullpath = str(item)
+                destpath = (f"{globals.user_profile}\\spicetify-cli\\Extensions"
+                + fullpath[fullpath.rfind('\\') : fullpath.rfind('.')]
+                + "Theme.js"
+                )
+                if os.path.exists(destpath):
+                    os.remove(destpath)
+                shutil.move(fullpath, destpath)  
+
+        else:
+            utils.verbose_print(f"\n{url} was not downloaded...")
+            print("Download Errored, Please retry with verbose enabled for full error info!")
+    print("Finished downloading 'custom' themes!\n")
 
 async def update_app():
     steps_count = 2

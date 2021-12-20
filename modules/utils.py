@@ -90,7 +90,6 @@ def list_config_available(
 
 async def simultaneous_chunked_download(urls_paths, label):
     async with aiohttp.ClientSession() as cs:
-
         async def _fetch(r, path):
             async with sem:
                 async with aiofiles.open(path, "wb") as f:
@@ -292,3 +291,13 @@ def is_installed():  # Checks if spicetify is installed
     return (
         os.path.exists(f"{globals.user_profile}\\.spicetify\\config-xpui.ini") == True
     )
+
+async def heads_value(url):
+    async with aiohttp.ClientSession() as cs:
+        async with cs.get(url + "main") as r:
+            headers = r.headers.get("Content-Disposition")
+            if headers:
+                return("main")
+            else:
+                return("master")
+

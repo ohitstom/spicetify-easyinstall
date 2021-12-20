@@ -1,11 +1,12 @@
 Needed:
+    -Dictionary Broken In Core(update_addons) [step 3]
 
 Optional:
     -Create a latest variant.
 
 Fix:
-    -Normalize Function Usage + Cleanup + Simplification
-    -Implement All Global MD
+    -Normalize Function Usage
     -Debug
-    -Please oh god fuck please fuck me fuck oh god do something to clean up core
+    -Cleanup Core *(if possible)
+    
 + Black

@@ -167,10 +167,10 @@ class InstallConfirmScreen(ConfirmScreen):
 
         # Format rundown message
         formatted = globals.INSTALL_RUNDOWN_MD.format(
-            spicetifyold=await utils.spicetify_version(),
-            spicetifynew=globals.SPICETIFY_VERSION,
-            spotify=globals.SPOTIFY_VERSION[18:-4],
-            theme=globals.THEMES_VERSION[17:]
+            await utils.spicetify_version(),
+            globals.SPICETIFY_VERSION,
+            globals.SPOTIFY_VERSION[18:-4],
+            globals.THEMES_VERSION[17:]
         )
         self.rundown.setMarkdown(formatted)
         super().shownCallback()
@@ -537,12 +537,12 @@ class UninstallConfirmScreen(ConfirmScreen):
 
         # Wait for animations to finish before enabling buttons again
         await slider.waitForAnimations()
-
+        
         formatted = globals.UNINSTALL_RUNDOWN_MD.format(
-            spotify=globals.SPOTIFY_VERSION[18:-4],
-            spotifylocation="Not Implemented",
-            spicetify=str(await utils.spicetify_version())[:-2],
-            spicetifylocation="Not Implemented"
+            globals.SPOTIFY_VERSION[18:-4],
+            "Not Implemented",
+            str(await utils.spicetify_version())[:-2],
+            "Not Implemented"
         )
         self.rundown.setMarkdown(formatted)
         super().shownCallback()
@@ -636,9 +636,9 @@ class UpdateAppConfirmScreen(ConfirmScreen):
 
         json = await utils.latest_release_GET()
         formatted = globals.UPDATE_APP_RUNDOWN_MD.format(
-            oldver=globals.RELEASE,
-            newver=json["tag_name"],
-            notes=json["body"].strip().replace("\n", "\n\n")
+            globals.RELEASE,
+            json["tag_name"],
+            json["body"].strip().replace("\n", "\n\n")
         )
         self.rundown.setMarkdown(formatted)
         super().shownCallback()

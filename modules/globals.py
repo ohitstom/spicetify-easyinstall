@@ -30,27 +30,27 @@ verbose = None
 
 # Custom Addons
 CUSTOM_EXTENSIONS = {
-    "https://codeload.github.com/fatihkaan22/focus-mode-spicetify/zip/refs/heads/main": f"{user_profile}\\spicetify-cli\\Extensions\Focus Mode.zip",
-    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/7524d9da4ea4d02d1732695e4cfc439d64104751": f"{user_profile}\\spicetify-cli\\Extensions\Focus Mode.zip"
+    "https://codeload.github.com/fatihkaan22/focus-mode-spicetify/zip/1e2b978593fc10a7ebf5e9e689281782403b9c71": f"{user_profile}\\spicetify-cli\\Extensions\Focus Mode.zip",
+    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/edf885fd858286fa04d00f184edeeac00c1a7b30": f"{user_profile}\\spicetify-cli\\Extensions\Charlie Repo.zip"
 }
 
 CUSTOM_APPS = {
-    "https://codeload.github.com/CharlieS1103/spicetify-marketplace/zip/refs/heads/main": f"{user_profile}\\spicetify-cli\\CustomApps\\Marketplace.zip"
+    "https://codeload.github.com/CharlieS1103/spicetify-marketplace/zip/545463f8d01e47a6d76a9b1e0162c797a9b203b7": f"{user_profile}\\spicetify-cli\\CustomApps\\Marketplace.zip"
 }
 
 CUSTOM_THEMES = {
     "https://github.com/JulienMaille/dribbblish-dynamic-theme/releases/download/4.0.0/DribbblishDynamic_v4.0.0.zip": f"{user_profile}\\spicetify-cli\\Themes\\Dribbblish-Dynamic.zip",
-    "https://codeload.github.com/hahagu/SpicetifySpectra/zip/refs/heads/main": f"{user_profile}\\spicetify-cli\\Themes\\Spectra.zip",
-    "https://codeload.github.com/NYRI4/Comfy-spicetify/zip/refs/heads/main": f"{user_profile}\\spicetify-cli\\Themes\\Comfy.zip",
-    "https://codeload.github.com/grasonchan/spotify-spice/zip/refs/heads/master": f"{user_profile}\\spicetify-cli\\Themes\\Spice.zip",
+    "https://codeload.github.com/hahagu/SpicetifySpectra/zip/210df65050a8eba86a76e9fa0bcac78ffb3c97ad": f"{user_profile}\\spicetify-cli\\Themes\\Spectra.zip",
+    "https://codeload.github.com/NYRI4/Comfy-spicetify/zip/d27f32c3d6e2c7d0a6ebc7cfd04aa954af3e888c": f"{user_profile}\\spicetify-cli\\Themes\\Comfy.zip",
+    "https://codeload.github.com/grasonchan/spotify-spice/zip/dd77d8606302ba64a22137bcd424cb184f836291": f"{user_profile}\\spicetify-cli\\Themes\\Spice.zip",
 }
 
 # Text Pages For GUI
 INSTALL_RUNDOWN_MD = (
     """
- - **Spicetify Version**: `{spicetifyold}{spicetifynew}`
- - **Spotify Version**: `{spotify}`
- - **Theme Version**: `{theme}`
+ - **Spicetify Version**: `{}{}`
+ - **Spotify Version**: `{}`
+ - **Theme Version**: `{}`
 """.strip()
 )
 
@@ -58,30 +58,27 @@ UNINSTALL_RUNDOWN_MD = (
     """
  - **Spotify Uninstall**: 
 
- *Version*: `{spotify}`
+ *Version*: `{}`
 
- *Folders*: `{spotifylocation}`
+ *Folders*: `{}`
 
 ** **
  - **Spicetify Uninstall**: 
 
- *Version*: `{spicetify}`
+ *Version*: `{}`
 
- *Folders*: `{spicetifylocation}`
+ *Folders*: `{}`
 """.strip()
 )
 
 UPDATE_APP_RUNDOWN_MD = (
     """
 *Updates Your Spicetify-EasyInstall To Latest Release*
-- **Version**: `{oldver}>>{newver}`
+- **Version**: `{}>>{}`
 ** **
 - **Patch Notes**:
 
-
-{notes}
-
-
+{}
 
 """.strip()
 )
