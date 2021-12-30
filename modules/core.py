@@ -115,9 +115,9 @@ async def install(launch=False):
         else "spicetify"
     )
 
-    await utils.powershell(f"{environ_check} config current_theme SpicetifyDefault")
+    await utils.powershell(f"{environ_check} config current_theme SpicetifyDefault -n")
 
-    await utils.powershell(f"{environ_check} backup apply enable-devtool")
+    await utils.powershell(f"{environ_check} backup apply enable-devtool -n")
 
     print("Finished installing Spicetify!\n")
 
