@@ -33,12 +33,10 @@ def find_config_entry(
             if entry in line:
                 break
 
-        if replacement:
+        if replacement is not None:
             found_line_str = line
             found_line_int = count - 1
             a = found_line_str.split(" = ")[0]
-            if replacement is None:
-                replacement = ""
             final_write_data = f"{a} = {replacement}"
             return config, found_line_int, final_write_data
 
@@ -51,7 +49,7 @@ def find_config_entry(
 
 def set_config_entry(entry, replacement):  # set_config_entry("current_theme", "themename") <- Example Usage | Sets specific parts of the config. [replacement = None to empty the value]
 
-    data = find_config_entry(entry, replacement)
+    data = find_config_entry(entry, replacement if replacement is not None else "")
     replace_config_line(data[0], data[1], data[2])
 
 
