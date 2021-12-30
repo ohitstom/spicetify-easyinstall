@@ -2,13 +2,13 @@ import os
 import sys
 import traceback
 
-from PyQt5 import QtWidgets
-from aiohttp.tracing import TraceRequestChunkSentParams
 from qasync import asyncSlot
+from PyQt5 import QtWidgets, QtCore
 
-from modules import core, globals, utils
-from modules.gui import *
-class LicenseScreen(SlidingScreen):
+from modules import core, globals, gui, utils
+
+
+class LicenseScreen(gui.SlidingScreen):
     screen_name = "license_screen"
     def __init__(self, parent):
         super().__init__(parent=parent, icon="󰊛", title="License Agreement")
@@ -32,7 +32,7 @@ class LicenseScreen(SlidingScreen):
         self.accept_license = QtWidgets.QCheckBox(
             parent=self, text="I accept the license agreement"
         )
-        clickable(self.accept_license)
+        gui.clickable(self.accept_license)
         self.layout().addWidget(self.accept_license)
 
     @asyncSlot()
@@ -46,7 +46,7 @@ class LicenseScreen(SlidingScreen):
         await slider.waitForAnimations()
 
         # Toggle the next buttom when accept checkbox is toggled
-        connect(
+        gui.connect(
             signal=self.accept_license.stateChanged,
             callback=lambda *_: bottom_bar.next.setEnabled(
                 self.accept_license.isChecked()
@@ -54,11 +54,11 @@ class LicenseScreen(SlidingScreen):
         )
 
         # Setup quit button
-        connect(signal=bottom_bar.back.clicked, callback=globals.gui.close)
+        gui.connect(signal=bottom_bar.back.clicked, callback=globals.gui.close)
         bottom_bar.back.setText("Quit")
         bottom_bar.back.setEnabled(True)
         # Setup next button
-        connect(
+        gui.connect(
             signal=bottom_bar.next.clicked,
             callback=lambda *_: slider.slideTo(
                 slider.main_menu_screen, direction="next"
@@ -67,7 +67,7 @@ class LicenseScreen(SlidingScreen):
         bottom_bar.next.setEnabled(self.accept_license.isChecked())
 
 
-class MainMenuScreen(MenuScreen):
+class MainMenuScreen(gui.MenuScreen):
     screen_name = "main_menu_screen"
     def __init__(self, parent):
         super().__init__(
@@ -114,19 +114,18 @@ class MainMenuScreen(MenuScreen):
         self.debug_mode = QtWidgets.QCheckBox(
             parent=self, text="Enable Debug Mode (more verbose)"
         )
-        connect(
+        gui.connect(
             signal=self.debug_mode.stateChanged,
             callback=lambda *_: setattr(
                 globals, "verbose", self.debug_mode.isChecked()
             ),
         )
-        clickable(self.debug_mode)
+        gui.clickable(self.debug_mode)
         self.layout().addWidget(self.debug_mode)
-    
+
     @asyncSlot()
-    async def shownCallback(self):   
+    async def shownCallback(self):
         bottom_bar = self.parent().parent().bottom_bar
-        slider = self.parent().parent().slider
         bottom_bar.back.setEnabled(False)
         bottom_bar.next.setEnabled(False)
 
@@ -136,7 +135,7 @@ class MainMenuScreen(MenuScreen):
         self.toggleButton("update", is_installed)
         super().shownCallback()
 
-class InstallConfirmScreen(ConfirmScreen):
+class InstallConfirmScreen(gui.ConfirmScreen):
     screen_name = "install_confirm_screen"
 
     def __init__(self, parent):
@@ -152,11 +151,11 @@ class InstallConfirmScreen(ConfirmScreen):
         )
 
         self.launch_after = QtWidgets.QCheckBox(parent=self, text="Launch when ready")
-        clickable(self.launch_after)
+        gui.clickable(self.launch_after)
         self.layout().addWidget(self.launch_after)
 
     @asyncSlot()
-    async def shownCallback(self): 
+    async def shownCallback(self):
         bottom_bar = self.parent().parent().bottom_bar
         slider = self.parent().parent().slider
         bottom_bar.back.setEnabled(False)
@@ -176,7 +175,7 @@ class InstallConfirmScreen(ConfirmScreen):
         super().shownCallback()
 
 
-class InstallLogScreen(ConsoleLogScreen):
+class InstallLogScreen(gui.ConsoleLogScreen):
     screen_name = "install_log_screen"
 
     def __init__(self, parent):
@@ -203,7 +202,7 @@ class InstallLogScreen(ConsoleLogScreen):
         await self.cleanup()
 
 
-class ConfigThemeMenuScreen(MenuScreen):
+class ConfigThemeMenuScreen(gui.MenuScreen):
     screen_name = "config_theme_menu_screen"
 
     def __init__(self, parent):
@@ -225,7 +224,6 @@ class ConfigThemeMenuScreen(MenuScreen):
     @asyncSlot()
     async def shownCallback(self):
         bottom_bar = self.parent().parent().bottom_bar
-        slider = self.parent().parent().slider
         bottom_bar.back.setEnabled(False)
         bottom_bar.next.setEnabled(False)
 
@@ -253,7 +251,7 @@ class ConfigThemeMenuScreen(MenuScreen):
         super().shownCallback()
 
 
-class ConfigColorschemeMenuScreen(MenuScreen):
+class ConfigColorschemeMenuScreen(gui.MenuScreen):
     screen_name = "config_colorscheme_menu_screen"
 
     def __init__(self, parent):
@@ -299,14 +297,14 @@ class ConfigColorschemeMenuScreen(MenuScreen):
                 self.buttons["nope"], 1, 0, QtCore.Qt.AlignTop | QtCore.Qt.AlignHCenter
             )
             await slider.waitForAnimations()
-            connect(
+            gui.connect(
                 signal=bottom_bar.back.clicked,
                 callback=lambda *_: slider.slideTo(
                     slider.config_theme_menu_screen, direction="back"
                 ),
             )
             bottom_bar.back.setEnabled(True)
-            connect(
+            gui.connect(
                 signal=bottom_bar.next.clicked,
                 callback=lambda *_: slider.slideTo(
                     slider.config_extensions_menu_screen, direction="next"
@@ -338,7 +336,7 @@ class ConfigColorschemeMenuScreen(MenuScreen):
         super().shownCallback()
 
 
-class ConfigExtensionsMenuScreen(MenuScreen):
+class ConfigExtensionsMenuScreen(gui.MenuScreen):
     screen_name = "config_extensions_menu_screen"
 
     def __init__(self, parent):
@@ -362,7 +360,6 @@ class ConfigExtensionsMenuScreen(MenuScreen):
     @asyncSlot()
     async def shownCallback(self):
         bottom_bar = self.parent().parent().bottom_bar
-        slider = self.parent().parent().slider
         bottom_bar.back.setEnabled(False)
         bottom_bar.next.setEnabled(False)
 
@@ -398,7 +395,7 @@ class ConfigExtensionsMenuScreen(MenuScreen):
         super().shownCallback()
 
 
-class ConfigCustomappsMenuScreen(MenuScreen):
+class ConfigCustomappsMenuScreen(gui.MenuScreen):
     screen_name = "config_customapps_menu_screen"
 
     def __init__(self, parent):
@@ -422,7 +419,6 @@ class ConfigCustomappsMenuScreen(MenuScreen):
     @asyncSlot()
     async def shownCallback(self):
         bottom_bar = self.parent().parent().bottom_bar
-        slider = self.parent().parent().slider
         bottom_bar.back.setEnabled(False)
         bottom_bar.next.setEnabled(False)
 
@@ -451,7 +447,7 @@ class ConfigCustomappsMenuScreen(MenuScreen):
                 self.buttons[selection].setChecked(True)
         super().shownCallback()
 
-class ConfigConfirmScreen(ConfirmScreen):
+class ConfigConfirmScreen(gui.ConfirmScreen):
     screen_name = "config_confirm_screen"
 
     def __init__(self, parent):
@@ -484,7 +480,7 @@ class ConfigConfirmScreen(ConfirmScreen):
         super().shownCallback()
 
 
-class ConfigLogScreen(ConsoleLogScreen):
+class ConfigLogScreen(gui.ConsoleLogScreen):
     screen_name = "config_log_screen"
 
     def __init__(self, parent):
@@ -513,7 +509,7 @@ class ConfigLogScreen(ConsoleLogScreen):
         await self.cleanup()
 
 
-class UninstallConfirmScreen(ConfirmScreen):
+class UninstallConfirmScreen(gui.ConfirmScreen):
     screen_name = "uninstall_confirm_screen"
 
     def __init__(self, parent):
@@ -537,7 +533,7 @@ class UninstallConfirmScreen(ConfirmScreen):
 
         # Wait for animations to finish before enabling buttons again
         await slider.waitForAnimations()
-        
+
         formatted = globals.UNINSTALL_RUNDOWN_MD.format(
             globals.SPOTIFY_VERSION[18:-4],
             "Not Implemented",
@@ -548,7 +544,7 @@ class UninstallConfirmScreen(ConfirmScreen):
         super().shownCallback()
 
 
-class UninstallLogScreen(ConsoleLogScreen):
+class UninstallLogScreen(gui.ConsoleLogScreen):
     screen_name = "uninstall_log_screen"
 
     def __init__(self, parent):
@@ -571,7 +567,7 @@ class UninstallLogScreen(ConsoleLogScreen):
         await self.cleanup()
 
 
-class UpdateMenuScreen(MenuScreen):
+class UpdateMenuScreen(gui.MenuScreen):
     screen_name = "update_menu_screen"
 
     def __init__(self, parent):
@@ -603,13 +599,12 @@ class UpdateMenuScreen(MenuScreen):
     @asyncSlot()
     async def shownCallback(self):
         bottom_bar = self.parent().parent().bottom_bar
-        slider = self.parent().parent().slider
         bottom_bar.back.setEnabled(False)
         bottom_bar.next.setEnabled(False)
         super().shownCallback()
 
 
-class UpdateAppConfirmScreen(ConfirmScreen):
+class UpdateAppConfirmScreen(gui.ConfirmScreen):
     screen_name = "update_app_confirm_screen"
 
     def __init__(self, parent):
@@ -644,7 +639,7 @@ class UpdateAppConfirmScreen(ConfirmScreen):
         super().shownCallback()
 
 
-class UpdateAppLogScreen(ConsoleLogScreen):
+class UpdateAppLogScreen(gui.ConsoleLogScreen):
     screen_name = "update_app_log_screen"
 
     def __init__(self, parent):
@@ -653,7 +648,6 @@ class UpdateAppLogScreen(ConsoleLogScreen):
     @asyncSlot()
     async def shownCallback(self):
         bottom_bar = self.parent().parent().bottom_bar
-        slider = self.parent().parent().slider
 
         # Configure output widget
         await self.setup()
@@ -691,7 +685,7 @@ class UpdateAppLogScreen(ConsoleLogScreen):
                         )
                         globals.gui.close()
 
-                    connect(
+                    gui.connect(
                         signal=bottom_bar.next.clicked, callback=restart_app_callback
                     )
                     bottom_bar.next.setText("Restart")
@@ -709,7 +703,7 @@ class UpdateAppLogScreen(ConsoleLogScreen):
         await self.cleanup()
 
 
-class UpdateLatestConfirmScreen(ConfirmScreen):
+class UpdateLatestConfirmScreen(gui.ConfirmScreen):
     screen_name = "update_latest_confirm_screen"
 
     def __init__(self, parent):
@@ -727,13 +721,12 @@ class UpdateLatestConfirmScreen(ConfirmScreen):
     @asyncSlot()
     async def shownCallback(self):
         bottom_bar = self.parent().parent().bottom_bar
-        slider = self.parent().parent().slider
         bottom_bar.back.setEnabled(False)
         bottom_bar.next.setEnabled(False)
         super().shownCallback()
 
 
-class UpdateLatestLogScreen(ConsoleLogScreen):
+class UpdateLatestLogScreen(gui.ConsoleLogScreen):
     screen_name = "update_latest_log_screen"
 
     def __init__(self, parent):

@@ -26,7 +26,7 @@ INDETERMINATE_INTERVAL = 0.5
 LABEL_INTERVAL = 0.2
 
 
-class Bar(object):
+class Bar:
     def __enter__(self):
         return self
 
@@ -72,6 +72,7 @@ class Bar(object):
                 self.hide = not STREAM.isatty()
             except AttributeError:  # output does not support isatty()
                 self.hide = True
+        self.elapsed = 0
         self.empty_char = empty_char
         self.filled_char = filled_char
         self.expected_size = expected_size

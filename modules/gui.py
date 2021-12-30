@@ -478,8 +478,8 @@ class MenuScreen(SlidingScreen):
 
     def addMenuButton(self, btn_id, row, column, **kwargs):
         self.buttons[btn_id] = QtWidgets.QRadioButton(parent=self.button_grid, text="")
-        for key in kwargs:
-            setattr(self.buttons[btn_id], f"_{key}", kwargs[key])
+        for key, value in kwargs.items():
+            setattr(self.buttons[btn_id], f"_{key}", value)
         if self.multichoice:
             self.buttons[btn_id].setAutoExclusive(False)
         self.buttons[btn_id].setLayout(QtWidgets.QGridLayout())
@@ -558,15 +558,15 @@ class MenuScreen(SlidingScreen):
             if self.multichoice and self.allow_no_selection:
                 bottom_bar.next.setEnabled(True)
                 return
-            for btn_id in self.buttons:
-                if self.buttons[btn_id].isChecked():
+            for btn in self.buttons.values():
+                if btn.isChecked():
                     bottom_bar.next.setEnabled(True)
                     return
             bottom_bar.next.setEnabled(False)
 
-        for btn_id in self.buttons:
+        for btn in self.buttons.values():
             connect(
-                signal=self.buttons[btn_id].toggled, callback=set_next_button_enabled
+                signal=btn.toggled, callback=set_next_button_enabled
             )
 
         # Setup back button
@@ -581,16 +581,16 @@ class MenuScreen(SlidingScreen):
 
         # Setup next button
         def next_button_callback(*_):
-            for btn_id in self.buttons:
-                if self.buttons[btn_id].isChecked():
+            for btn in self.buttons.values():
+                if btn.isChecked():
                     slider.slideTo(
-                        getattr(slider, self.buttons[btn_id]._next_screen),
+                        getattr(slider, btn._next_screen),
                         direction="next",
                     )
                     return
-            for btn_id in self.buttons:
+            for btn in self.buttons.values():
                 slider.slideTo(
-                    getattr(slider, self.buttons[btn_id]._next_screen),
+                    getattr(slider, btn._next_screen),
                     direction="next",
                 )
                 return
@@ -601,10 +601,10 @@ class MenuScreen(SlidingScreen):
 
     def getSelection(self):
         selected = []
-        for btn_id in self.buttons:
+        for btn_id, btn in self.buttons.items():
             if (
-                hasattr(self.buttons[btn_id], "isChecked")
-                and self.buttons[btn_id].isChecked()
+                hasattr(btn, "isChecked")
+                and btn.isChecked()
             ):
                 selected.append(btn_id)
         if not self.multichoice:
@@ -685,6 +685,7 @@ class ConsoleLogScreen(SlidingScreen):
         super().__init__(parent=parent, icon=icon, title=title)
 
         self.reset_last_line = False
+        self.original_file_write = None
 
         self.log = QtWidgets.QPlainTextEdit(parent=self)
         self.log.setReadOnly(True)
@@ -716,8 +717,8 @@ class ConsoleLogScreen(SlidingScreen):
             prev_scroll = self.log.verticalScrollBar().value()
             prev_max = self.log.verticalScrollBar().maximum()
             # Remove color codes
-            msg = re.sub("\\x1b\[38;2;\d\d?\d?;\d\d?\d?;\d\d?\d?m", "", msg)
-            msg = re.sub("\\x1b\[\d\d?\d?m", "", msg)
+            msg = re.sub("\\x1b\\[38;2;\\d\\d?\\d?;\\d\\d?\\d?;\\d\\d?\\d?m", "", msg)
+            msg = re.sub("\\x1b\\[\\d\\d?\\d?m", "", msg)
             # Update log widget
             text = self.log.toPlainText()
             if self.reset_last_line and len(msg) > 0 and msg[-1] == "\n":

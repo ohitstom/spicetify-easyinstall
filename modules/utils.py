@@ -27,6 +27,7 @@ def find_config_entry(
     config = f"{globals.user_profile}\\.spicetify\\config-xpui.ini"
     with open(config, "r") as file:
         count = 0
+        line = ""
         for line in file:
             count += 1
             if entry in line:
@@ -36,7 +37,7 @@ def find_config_entry(
             found_line_str = line
             found_line_int = count - 1
             a = found_line_str.split(" = ")[0]
-            final_write_data = f"{a} = {replacement}"     
+            final_write_data = f"{a} = {replacement}"
             if replacement != "wipe":
                 return (config, found_line_int, final_write_data)
             else:
@@ -62,7 +63,8 @@ def list_config_available(
         raise Exception("Not Installed")
     if selection == "themes":  # List Themes
         themes = os.listdir(f"{globals.user_profile}\\spicetify-cli\\Themes")
-        themes.remove("_Extra") if ("_Extra" in themes) == True else None
+        if "_Extra" in themes:
+            themes.remove("_Extra")
         return themes
 
     elif selection == "colorschemes" and theme:  # List Color schemes
@@ -90,6 +92,7 @@ def list_config_available(
 
 async def simultaneous_chunked_download(urls_paths, label):
     async with aiohttp.ClientSession() as cs:
+
         async def _fetch(r, path):
             async with sem:
                 async with aiofiles.open(path, "wb") as f:
@@ -201,7 +204,7 @@ async def powershell(
                 line = str(proc.stdout.readline(), encoding="utf-8")
                 if line.strip() != "":
                     verbose_print(line, end="")
-                elif proc.poll() != None:
+                elif proc.poll() is not None:
                     break
                 globals.app.processEvents()
         else:
@@ -258,9 +261,9 @@ def process_pid_running(pid):
 async def spicetify_version():
     if is_installed():
         environ_check = (
-            (f"{globals.user_profile}\spicetify-cli\spicetify.exe")
-            if os.path.isdir(f"{globals.user_profile}\spicetify-cli")
-            else ("spicetify")
+            f"{globals.user_profile}\\spicetify-cli\\spicetify.exe"
+            if os.path.isdir(f"{globals.user_profile}\\spicetify-cli")
+            else "spicetify"
         )
         return (
             str(
@@ -285,11 +288,11 @@ async def latest_release_GET():
             "https://api.github.com/repos/OhItsTom/Spicetify-EasyInstall/releases/latest"
         ) as r:
             json = await r.json()
-            return(json)
+            return json
 
 def is_installed():  # Checks if spicetify is installed
     return (
-        os.path.exists(f"{globals.user_profile}\\.spicetify\\config-xpui.ini") == True
+        os.path.exists(f"{globals.user_profile}\\.spicetify\\config-xpui.ini") is True
     )
 
 async def heads_value(url):
@@ -297,7 +300,6 @@ async def heads_value(url):
         async with cs.get(url + "main") as r:
             headers = r.headers.get("Content-Disposition")
             if headers:
-                return("main")
+                return "main"
             else:
-                return("master")
-
+                return "master"

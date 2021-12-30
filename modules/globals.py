@@ -1,4 +1,4 @@
-import os 
+import os
 import tempfile
 from pathlib import Path
 
@@ -27,11 +27,12 @@ app = None
 gui = None
 singleton = None
 verbose = None
+json = None
 
 # Custom Addons
 CUSTOM_EXTENSIONS = {
-    "https://codeload.github.com/fatihkaan22/focus-mode-spicetify/zip/1e2b978593fc10a7ebf5e9e689281782403b9c71": f"{user_profile}\\spicetify-cli\\Extensions\Focus Mode.zip",
-    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/edf885fd858286fa04d00f184edeeac00c1a7b30": f"{user_profile}\\spicetify-cli\\Extensions\Charlie Repo.zip"
+    "https://codeload.github.com/fatihkaan22/focus-mode-spicetify/zip/1e2b978593fc10a7ebf5e9e689281782403b9c71": f"{user_profile}\\spicetify-cli\\Extensions\\Focus Mode.zip",
+    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/edf885fd858286fa04d00f184edeeac00c1a7b30": f"{user_profile}\\spicetify-cli\\Extensions\\Charlie Repo.zip"
 }
 
 CUSTOM_APPS = {
@@ -56,14 +57,14 @@ INSTALL_RUNDOWN_MD = (
 
 UNINSTALL_RUNDOWN_MD = (
     """
- - **Spotify Uninstall**: 
+ - **Spotify Uninstall**:
 
  *Version*: `{}`
 
  *Folders*: `{}`
 
 ** **
- - **Spicetify Uninstall**: 
+ - **Spicetify Uninstall**:
 
  *Version*: `{}`
 

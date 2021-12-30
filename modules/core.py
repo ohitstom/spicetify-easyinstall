@@ -21,7 +21,10 @@ async def install(launch=False):
     if os.path.isdir(f"{globals.appdata}\\Spotify\\Users") and os.path.isfile(
         f"{globals.appdata}\\Spotify\\prefs"
     ):
-        shutil.rmtree(f"{globals.cwd}\\Backup_Credentials") if os.path.isdir(f"{globals.cwd}\\Backup_Credentials") else os.mkdir(f"{globals.cwd}\\Backup_Credentials")
+        if os.path.isdir(f"{globals.cwd}\\Backup_Credentials"):
+            shutil.rmtree(f"{globals.cwd}\\Backup_Credentials")
+        else:
+            os.mkdir(f"{globals.cwd}\\Backup_Credentials")
         shutil.move(
             f"{globals.appdata}\\Spotify\\Users",
             f"{globals.cwd}\\Backup_Credentials\\Users",
@@ -105,9 +108,9 @@ async def install(launch=False):
     )
 
     environ_check = (
-        (f"{globals.user_profile}\spicetify-cli\spicetify.exe")
-        if os.path.isdir(f"{globals.user_profile}\spicetify-cli")
-        else ("spicetify")
+        f"{globals.user_profile}\\spicetify-cli\\spicetify.exe"
+        if os.path.isdir(f"{globals.user_profile}\\spicetify-cli")
+        else "spicetify"
     )
 
     await utils.powershell(f"{environ_check} config current_theme SpicetifyDefault")
@@ -178,8 +181,8 @@ async def install(launch=False):
     print(f"(9/{steps_count}) Downloading 'custom' addons...")
     await utils.simultaneous_chunked_download(
         {
-            **globals.CUSTOM_THEMES, 
-            **globals.CUSTOM_APPS, 
+            **globals.CUSTOM_THEMES,
+            **globals.CUSTOM_APPS,
             **globals.CUSTOM_EXTENSIONS
 
          }, "Custom Addons.zip")
@@ -189,30 +192,30 @@ async def install(launch=False):
             captured = Path(download)
             directory = captured.parent
             unpacked_name = captured.with_suffix("").name
-            unpacked_path = f"{directory}\{unpacked_name}"
+            unpacked_path = f"{directory}\\{unpacked_name}"
 
             if os.path.exists(unpacked_path):
                 shutil.rmtree(unpacked_path)
 
             shutil.unpack_archive(download, unpacked_path)
-            os.remove(download)  
+            os.remove(download)
 
             for item in os.listdir(unpacked_path):
-                if os.path.isdir(f"{unpacked_path}\{item}") and "assets" not in item:
-                    for src in Path(f"{unpacked_path}\{item}").glob("*"):
-                        if url not in utils.globals.CUSTOM_EXTENSIONS:  
+                if os.path.isdir(f"{unpacked_path}\\{item}") and "assets" not in item:
+                    for src in Path(f"{unpacked_path}\\{item}").glob("*"):
+                        if url not in utils.globals.CUSTOM_EXTENSIONS:
                             shutil.move(src, unpacked_path)
 
                         elif ".js" in str(src):
                             persistent_src = str(src.with_suffix(".js").name)
-                            if os.path.exists(f"{directory}\{persistent_src}"):
-                                os.remove(f"{directory}\{persistent_src}")
+                            if os.path.exists(f"{directory}\\{persistent_src}"):
+                                os.remove(f"{directory}\\{persistent_src}")
 
                             shutil.move(src, directory)
 
                     try:
-                        os.rmdir(f"{unpacked_path}\{item}")
-                    except:
+                        os.rmdir(f"{unpacked_path}\\{item}")
+                    except Exception:
                         shutil.rmtree(unpacked_path)
 
             for item in list(Path(f"{globals.user_profile}\\spicetify-cli\\Themes").glob("**/*.js")):
@@ -223,7 +226,7 @@ async def install(launch=False):
                 )
                 if os.path.exists(destpath):
                     os.remove(destpath)
-                shutil.move(fullpath, destpath)  
+                shutil.move(fullpath, destpath)
 
         else:
             print(f"{url} was not downloaded")
@@ -262,19 +265,19 @@ async def install(launch=False):
 async def apply_config(theme, colorscheme, extensions, customapps):
     steps_count = 2
     environ_check = (
-        (f"{globals.user_profile}\spicetify-cli\spicetify.exe")
-        if os.path.isdir(f"{globals.user_profile}\spicetify-cli")
-        else ("spicetify")
+        f"{globals.user_profile}\\spicetify-cli\\spicetify.exe"
+        if os.path.isdir(f"{globals.user_profile}\\spicetify-cli")
+        else "spicetify"
     )
     print(theme, colorscheme, extensions, customapps)
     # >[Section 1]<
     print(f"(1/{steps_count}) Setting options...")
     if theme:
         utils.set_config_entry("current_theme", theme)
-    
+
     if colorscheme != "":
         utils.set_config_entry("color_scheme", colorscheme)
-    
+
     utils.set_config_entry(
         "extensions", "|".join(extension + ".js" for extension in extensions)
     )
@@ -300,7 +303,8 @@ async def uninstall():
     ]
     print(f"(1/{steps_count}) Uninstalling Spotify...")  # Section 1
     if os.path.isdir(f"{globals.appdata}\\Spotify"):
-        utils.kill_processes("spicetify.exe") and utils.kill_processes("Spotify.exe")
+        utils.kill_processes("spicetify.exe")
+        utils.kill_processes("Spotify.exe")
         await utils.powershell(
             'cmd /c "%USERPROFILE%\\AppData\\Roaming\\Spotify\\Spotify.exe" /UNINSTALL /SILENT\ncmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:D\ncmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:R',
             verbose=False,
@@ -412,43 +416,43 @@ async def update_addons():
             final[newval + await utils.heads_value(newval)] = directory
         else:
             final[url] = directory
-    
+
     if globals.verbose:
         for item in final.items():
-            utils.verbose_print(f"{item}\n") 
+            utils.verbose_print(f"{item}\n")
 
     await utils.simultaneous_chunked_download(final, "Custom Addons.zip")
-    
-    for url, download in ({final}).items():
+
+    for url, download in final.items():
         if os.path.exists(download):
             utils.verbose_print(f"{url} was downloaded successfully!")
             captured = Path(download)
             directory = captured.parent
             unpacked_name = captured.with_suffix("").name
-            unpacked_path = f"{directory}\{unpacked_name}"
+            unpacked_path = f"{directory}\\{unpacked_name}"
 
             if os.path.exists(unpacked_path):
                 shutil.rmtree(unpacked_path)
 
             shutil.unpack_archive(download, unpacked_path)
-            os.remove(download)  
+            os.remove(download)
 
             for item in os.listdir(unpacked_path):
-                if os.path.isdir(f"{unpacked_path}\{item}") and "assets" not in item:
-                    for src in Path(f"{unpacked_path}\{item}").glob("*"):
-                        if url not in utils.globals.CUSTOM_EXTENSIONS:  
+                if os.path.isdir(f"{unpacked_path}\\{item}") and "assets" not in item:
+                    for src in Path(f"{unpacked_path}\\{item}").glob("*"):
+                        if url not in utils.globals.CUSTOM_EXTENSIONS:
                             shutil.move(src, unpacked_path)
 
                         elif ".js" in str(src):
                             persistent_src = str(src.with_suffix(".js").name)
-                            if os.path.exists(f"{directory}\{persistent_src}"):
-                                os.remove(f"{directory}\{persistent_src}")
+                            if os.path.exists(f"{directory}\\{persistent_src}"):
+                                os.remove(f"{directory}\\{persistent_src}")
 
                             shutil.move(src, directory)
 
                     try:
-                        os.rmdir(f"{unpacked_path}\{item}")
-                    except:
+                        os.rmdir(f"{unpacked_path}\\{item}")
+                    except Exception:
                         shutil.rmtree(unpacked_path)
 
             for item in list(Path(f"{globals.user_profile}\\spicetify-cli\\Themes").glob("**/*.js")):
@@ -459,7 +463,7 @@ async def update_addons():
                 )
                 if os.path.exists(destpath):
                     os.remove(destpath)
-                shutil.move(fullpath, destpath)  
+                shutil.move(fullpath, destpath)
 
         else:
             utils.verbose_print(f"\n{url} was not downloaded...")
