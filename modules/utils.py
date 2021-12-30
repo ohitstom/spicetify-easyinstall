@@ -240,13 +240,10 @@ def process_running(name):
 
 
 def process_pid_running(pid):
-    for proc in psutil.process_iter():
-        try:
-            if proc.pid == pid:
-                return True
-        except Exception:
-            pass
-    return False
+    try:
+        return psutil.pid_exists(pid)
+    except Exception:
+        return False
 
 
 # >[Value Returns]<
