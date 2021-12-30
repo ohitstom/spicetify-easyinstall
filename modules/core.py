@@ -82,8 +82,10 @@ async def install(launch=False):
 
     print(f"(5/{steps_count}) Installing Spotify...")
     utils.kill_processes("Spotify.exe")
-    spotify_install_pid = utils.start_process(
-        globals.temp + "\\" + globals.SPOTIFY_VERSION, silent=True
+    spotify_install_pid = (
+        await utils.start_process(
+            globals.temp + "\\" + globals.SPOTIFY_VERSION, silent=True
+        )
     ).pid
     while utils.process_pid_running(spotify_install_pid):
         await asyncio.sleep(0.25)
@@ -259,7 +261,7 @@ async def install(launch=False):
         shutil.rmtree(f"{globals.cwd}\\Backup_Credentials")
 
     if launch:
-        utils.start_process(f"{globals.appdata}\\spotify\\spotify.exe", silent=False)
+        await utils.start_process(f"{globals.appdata}\\spotify\\spotify.exe", silent=False)
 
 
 async def apply_config(theme, colorscheme, extensions, customapps):

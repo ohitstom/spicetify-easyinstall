@@ -180,7 +180,7 @@ def verbose_print(
 
 
 async def powershell(
-    cmd, verbose=None, wait=True, cwd=None, shell="powershell", **kwargs
+    *args, verbose=None, wait=True, cwd=None, shell="powershell", **kwargs
 ):
     if verbose is None:
         verbose = globals.verbose
@@ -188,40 +188,35 @@ async def powershell(
     if cwd and os.path.isdir(cwd) is False:
         cwd = None
 
-    proc = subprocess.Popen(
-        [
-            shell,
-            cmd,
-        ],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
+    proc = await asyncio.create_subprocess_exec(
+        shell,
+        *args,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.STDOUT,
         creationflags=subprocess.CREATE_NO_WINDOW,
         **kwargs,
     )
     if wait:
         if verbose:
-            while True:
-                line = str(proc.stdout.readline(), encoding="utf-8")
+            # while proc.returncode is None:  # for some reason this can break...? sometimes after the process exits the loop continues and the pc fans spin up...
+            while process_pid_running(proc.pid):
+                line = str(await proc.stdout.readline(), encoding="utf-8")
                 if line.strip() != "":
                     verbose_print(line, end="")
-                elif proc.poll() is not None:
-                    break
-                globals.app.processEvents()
         else:
-            while process_pid_running(proc.pid):
-                await asyncio.sleep(0.25)
+            await proc.wait()
     return proc
 
 
-def start_process(path, silent=True):
+async def start_process(program, *args, silent=True):
     if not silent:
-        return subprocess.Popen(path)
+        return await asyncio.create_subprocess_exec(program, *args)
 
     SW_HIDE = 0
     info = subprocess.STARTUPINFO()
     info.dwFlags = subprocess.STARTF_USESHOWWINDOW
     info.wShowWindow = SW_HIDE
-    return subprocess.Popen(path, startupinfo=info)
+    return await asyncio.create_subprocess_exec(program, *args, startupinfo=info)
 
 
 def kill_processes(name):
@@ -267,7 +262,7 @@ async def spicetify_version():
         )
         return (
             str(
-                (
+                await (
                     await powershell(
                         "%s -v" % environ_check,
                         verbose=False,
