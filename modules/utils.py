@@ -37,11 +37,10 @@ def find_config_entry(
             found_line_str = line
             found_line_int = count - 1
             a = found_line_str.split(" = ")[0]
+            if replacement is None:
+                replacement = ""
             final_write_data = f"{a} = {replacement}"
-            if replacement != "wipe":
-                return (config, found_line_int, final_write_data)
-            else:
-                return(config, found_line_int, "")
+            return config, found_line_int, final_write_data
 
         else:
             found_line_str = line.strip("\n")
@@ -50,7 +49,7 @@ def find_config_entry(
             return final_write_data
 
 
-def set_config_entry(entry, replacement):  # set_config_entry("current_theme", "themename") <- Example Usage | Sets specific parts of the config. [replacement = "wipe" to empty line]
+def set_config_entry(entry, replacement):  # set_config_entry("current_theme", "themename") <- Example Usage | Sets specific parts of the config. [replacement = None to empty the value]
 
     data = find_config_entry(entry, replacement)
     replace_config_line(data[0], data[1], data[2])

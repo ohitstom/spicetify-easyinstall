@@ -495,9 +495,9 @@ class ConfigLogScreen(gui.ConsoleLogScreen):
 
         # Actual config
         theme = slider.config_theme_menu_screen.getSelection()
-        colorscheme = slider.config_colorscheme_menu_screen.getSelection() or "wipe"
-        extensions = slider.config_extensions_menu_screen.getSelection() or "wipe"
-        customapps = slider.config_customapps_menu_screen.getSelection() or "wipe"
+        colorscheme = slider.config_colorscheme_menu_screen.getSelection()
+        extensions = slider.config_extensions_menu_screen.getSelection()
+        customapps = slider.config_customapps_menu_screen.getSelection()
         try:
             await core.apply_config(theme, colorscheme, extensions, customapps)
         except Exception:

@@ -271,14 +271,12 @@ async def apply_config(theme, colorscheme, extensions, customapps):
         if os.path.isdir(f"{globals.user_profile}\\spicetify-cli")
         else "spicetify"
     )
+
     # >[Section 1]<
+
     print(f"(1/{steps_count}) Setting options...")
-    if theme:
-        utils.set_config_entry("current_theme", theme)
-
-    if colorscheme != "":
-        utils.set_config_entry("color_scheme", colorscheme)
-
+    utils.set_config_entry("current_theme", theme)
+    utils.set_config_entry("color_scheme", colorscheme)
     utils.set_config_entry(
         "extensions", "|".join(extension + ".js" for extension in extensions)
     )
