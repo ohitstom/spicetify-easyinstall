@@ -78,8 +78,6 @@ jobs:
           move /y dist\windows\Spicetify-Easyinstall\MSVCP140_1.dll     dist\windows\Spicetify-Easyinstall\lib
           move /y dist\windows\Spicetify-Easyinstall\MSVCP140.dll       dist\windows\Spicetify-Easyinstall\lib
           move /y dist\windows\Spicetify-Easyinstall\ucrtbase.dll       dist\windows\Spicetify-Easyinstall\lib
-          move /y dist\windows\Spicetify-Easyinstall\VCRUNTIME140_1.dll dist\windows\Spicetify-Easyinstall\lib
-          move /y dist\windows\Spicetify-Easyinstall\VCRUNTIME140.dll   dist\windows\Spicetify-Easyinstall\lib
           mkdir   dist\windows\Spicetify-Easyinstall\modules
           copy /y Spicetify-Easyinstall.py                              dist\windows\Spicetify-Easyinstall
           copy /y requirements.txt                                      dist\windows\Spicetify-Easyinstall
