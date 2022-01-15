@@ -703,6 +703,7 @@ class UpdateAppLogScreen(gui.ConsoleLogScreen):
             print(exc)
             print("\n\n^^ SOMETHING WENT WRONG! ^^")
             await self.cleanup()
+        
         # Restore original console output
         logger._file_write = self.original_file_write
 
