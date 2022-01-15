@@ -689,7 +689,7 @@ class UpdateAppLogScreen(gui.ConsoleLogScreen):
                             cwd=os.getcwd(),
                             start_new_session=True,
                         )
-                        globals.gui.close()
+                        sys.exit()
 
                     gui.connect(
                         signal=bottom_bar.next.clicked, 

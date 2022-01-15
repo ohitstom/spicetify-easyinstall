@@ -499,8 +499,7 @@ async def update_app():
         return None
     shutil.unpack_archive(f"{globals.cwd}\\Update.zip", f"{globals.cwd}\\Update")
     os.remove(f"{globals.cwd}\\Update.zip")
+    print("Finished Extraction And Cleanup!")
 
     if os.path.isdir(f"{globals.cwd}\\Update"):
         return True
-
-    print("Finished Extraction And Cleanup!")
