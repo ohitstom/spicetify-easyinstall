@@ -691,15 +691,12 @@ class UpdateAppLogScreen(gui.ConsoleLogScreen):
                         )
                         globals.gui.close()
 
-                    print("after slot definition")
                     gui.connect(
                         signal=bottom_bar.next.clicked, 
                         callback=restart_app_callback
                     )   
-                    print("after connect")
                     bottom_bar.next.setText("Restart")
                     bottom_bar.next.setEnabled(True)
-                    print("after bottombar")
 
         except Exception:
             exc = "".join(traceback.format_exception(*sys.exc_info()))
