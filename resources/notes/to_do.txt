@@ -1,5 +1,5 @@
 Needed:
-    -Stop using -v, check config instead [you piece of shit you literally made a text editor from scratch for a fucking reason you dumb dumb bubblegum looking headass python using dumbass looking ass suck my ass looking ass].
+    -Fix downloading of apps.
 
 Optional:
     -Create a latest variant.
