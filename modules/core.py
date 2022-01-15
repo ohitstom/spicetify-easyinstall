@@ -495,10 +495,12 @@ async def update_app():
     # >[Section 2]<
 
     print(f"\n(2/{steps_count}) Extraction And Cleanup...")
+    
     if not os.path.exists(f"{globals.cwd}\\Update.zip"):
         return None
     shutil.unpack_archive(f"{globals.cwd}\\Update.zip", f"{globals.cwd}\\Update")
     os.remove(f"{globals.cwd}\\Update.zip")
+    
     print("Finished Extraction And Cleanup!")
 
     if os.path.isdir(f"{globals.cwd}\\Update"):
