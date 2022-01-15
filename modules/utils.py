@@ -1,10 +1,10 @@
 import asyncio
 import os
 import subprocess
-
 import aiofiles
 import aiohttp
 import psutil
+from aiohttp import ClientSession, ClientTimeout
 
 from modules import globals, logger, progress
 
@@ -88,8 +88,11 @@ def list_config_available(
 
 
 async def simultaneous_chunked_download(urls_paths, label):
-    async with aiohttp.ClientSession() as cs:
+    timeout = ClientTimeout(total=60000)
+    sem = asyncio.Semaphore(5)    
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
+    async with aiohttp.ClientSession(timeout=timeout) as cs:
         async def _fetch(r, path):
             async with sem:
                 async with aiofiles.open(path, "wb") as f:
@@ -115,8 +118,8 @@ async def simultaneous_chunked_download(urls_paths, label):
                 except Exception:
                     indeterminate = True
             tasks.append(_fetch(r, path))
+            print(f"fetch: {_fetch(r, path)},\nurl: {url},\npath: {path},\nitems: {urls_paths.items()}\n\n\n")
 
-        sem = asyncio.Semaphore(5)
         if not indeterminate:
             bar = progress.Bar(
                 expected_size=total_length, label=label, width=28, hide=False
@@ -134,19 +137,23 @@ async def simultaneous_chunked_download(urls_paths, label):
         bar.done()
 
 
-async def chunked_download(
-    url, path, label
-):  # chunked_download("urltodownload.com/download.zip", f"{userprofile}\\file.zip", "file.zip") <- Example Usage.
+async def chunked_download(url, path, label):  # chunked_download("urltodownload.com/download.zip", f"{userprofile}\\file.zip", "file.zip") <- Example Usage.
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     async with aiohttp.ClientSession() as cs:
         async with cs.get(url, headers={"Accept-Encoding": "null"}) as r:
             async with aiofiles.open(path, "wb") as f:
                 logger._pause_file_output = True
-                try:
-                    total_length = int(r.headers.get("content-length"))
-                    indeterminate = False
-                except Exception:
-                    total_length = 0
-                    indeterminate = True
+                for buffer in range(25):
+                    try:
+                        r = await cs.get(url)
+                        total_length = int(r.headers.get("content-length"))
+                        indeterminate = False
+                    except Exception:
+                        total_length = 0
+                        indeterminate = True
+                    if not indeterminate:
+                        break
+                    
                 bar = progress.Bar(
                     expected_size=total_length,
                     indeterminate=indeterminate,

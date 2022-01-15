@@ -1,5 +1,5 @@
 Needed:
-    -Dictionary Broken In Core(update_addons) [step 3]
+    -Stop using -v, check config instead [you piece of shit you literally made a text editor from scratch for a fucking reason you dumb dumb bubblegum looking headass python using dumbass looking ass suck my ass looking ass].
 
 Optional:
     -Create a latest variant.
@@ -8,5 +8,4 @@ Fix:
     -Normalize Function Usage
     -Debug
     -Cleanup Core *(if possible)
-    
 + Black

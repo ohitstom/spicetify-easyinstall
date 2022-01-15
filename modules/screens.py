@@ -166,7 +166,7 @@ class InstallConfirmScreen(gui.ConfirmScreen):
 
         # Format rundown message
         formatted = globals.INSTALL_RUNDOWN_MD.format(
-            await utils.spicetify_version(),
+            utils.find_config_entry("with") + ">>" if utils.is_installed() else "",
             globals.SPICETIFY_VERSION,
             globals.SPOTIFY_VERSION[18:-4],
             globals.THEMES_VERSION[17:]
@@ -535,9 +535,9 @@ class UninstallConfirmScreen(gui.ConfirmScreen):
         await slider.waitForAnimations()
 
         formatted = globals.UNINSTALL_RUNDOWN_MD.format(
-            globals.SPOTIFY_VERSION[18:-4],
+            utils.find_config_entry("version"),
             "Not Implemented",
-            str(await utils.spicetify_version())[:-2],
+            utils.find_config_entry("with"),
             "Not Implemented"
         )
         self.rundown.setMarkdown(formatted)
