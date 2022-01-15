@@ -198,7 +198,6 @@ async def powershell(
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.STDOUT,
         creationflags=subprocess.CREATE_NO_WINDOW,
-        start_new_session=True,
         **kwargs,
     )
     if wait:

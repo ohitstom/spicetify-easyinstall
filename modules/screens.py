@@ -705,7 +705,7 @@ class UpdateAppLogScreen(gui.ConsoleLogScreen):
             exc = "".join(traceback.format_exception(*sys.exc_info()))
             print(exc)
             print("\n\n^^ SOMETHING WENT WRONG! ^^")
-
+            await self.cleanup()
         # Restore original console output
         logger._file_write = self.original_file_write
 
