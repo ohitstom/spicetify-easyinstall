@@ -2,10 +2,10 @@ import os
 import sys
 import traceback
 
+from PyQt5 import QtCore, QtWidgets
 from qasync import asyncSlot
-from PyQt5 import QtWidgets, QtCore
 
-from modules import core, globals, gui, utils
+from modules import core, globals, gui, logger, utils
 
 
 class LicenseScreen(gui.SlidingScreen):
@@ -657,11 +657,13 @@ class UpdateAppLogScreen(gui.ConsoleLogScreen):
             json = await utils.latest_release_GET()
             if json["tag_name"] == globals.RELEASE:
                 print("No updates available!")
+                await self.cleanup()
            
             else:   
                 download = await core.update_app()
                 if not download:
                     print("Download Was Not Completed Properly, Please Retry!")
+                    await self.cleanup()
                 
                 else:
                     @asyncSlot()
@@ -705,7 +707,7 @@ class UpdateAppLogScreen(gui.ConsoleLogScreen):
             print("\n\n^^ SOMETHING WENT WRONG! ^^")
 
         # Restore original console output
-        await self.cleanup()
+        logger._file_write = self.original_file_write
 
 
 class UpdateLatestConfirmScreen(gui.ConfirmScreen):
