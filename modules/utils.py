@@ -198,6 +198,7 @@ async def powershell(
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.STDOUT,
         creationflags=subprocess.CREATE_NO_WINDOW,
+        start_new_session=True,
         **kwargs,
     )
     if wait:
@@ -295,7 +296,4 @@ async def heads_value(url):
     async with aiohttp.ClientSession() as cs:
         async with cs.get(url + "main") as r:
             headers = r.headers.get("Content-Disposition")
-            if headers:
-                return "main"
-            else:
-                return "master"
+            return "main" if headers else "master"

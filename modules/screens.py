@@ -654,23 +654,27 @@ class UpdateAppLogScreen(gui.ConsoleLogScreen):
 
         # Actual update
         try:
-            latest_release = globals.json["tag_name"]
-
-            if latest_release != globals.RELEASE:
-                download_exception = await core.update_app()
-
-                if download_exception:
-                    # Setup next button + Callback function
+            json = await utils.latest_release_GET()
+            if json["tag_name"] == globals.RELEASE:
+                print("No updates available!")
+           
+            else:   
+                download = await core.update_app()
+                if not download:
+                    print("Download Was Not Completed Properly, Please Retry!")
+                
+                else:
                     @asyncSlot()
                     async def restart_app_callback(*_):
                         if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
                             exec_type = "exe"
                         else:
                             exec_type = "py"
+
                         await utils.powershell(
                             "Wait-Process -Id %s\n(Get-ChildItem '%s' -recurse | select -ExpandProperty fullname) -notlike '%s' | sort length -descending | remove-item\nGet-ChildItem -Path '%s' -Recurse | Move-Item -Destination '%s'\nRemove-Item '%s'\n./spicetify-easyinstall.%s"
                             % (
-                                os.getpid(),
+                                os.getpid(),    
                                 os.getcwd(),
                                 os.getcwd() + "\\Update*",
                                 os.getcwd() + "\\Update",
@@ -678,22 +682,23 @@ class UpdateAppLogScreen(gui.ConsoleLogScreen):
                                 os.getcwd() + "\\Update",
                                 exec_type,
                             ),
-                            verbose=False,
+                            verbose=None,
                             wait=False,
-                            start_new_session=True,
                             cwd=os.getcwd(),
+                            start_new_session=True,
                         )
                         globals.gui.close()
 
+                    print("after slot definition")
                     gui.connect(
-                        signal=bottom_bar.next.clicked, callback=restart_app_callback
-                    )
+                        signal=bottom_bar.next.clicked, 
+                        callback=restart_app_callback
+                    )   
+                    print("after connect")
                     bottom_bar.next.setText("Restart")
                     bottom_bar.next.setEnabled(True)
-                else:
-                    print("Download Was Not Completed Properly, Please Retry!")
-            else:
-                print("No updates available!")
+                    print("after bottombar")
+
         except Exception:
             exc = "".join(traceback.format_exception(*sys.exc_info()))
             print(exc)

@@ -471,18 +471,22 @@ async def update_addons():
 
 async def update_app():
     steps_count = 2
-    latest_release = globals.json["tag_name"]
+    json = await utils.latest_release_GET()
+    latest_release = json["tag_name"]
 
     # >[Section 1]<
 
     if os.path.exists(f"{globals.cwd}\\Update.zip"):
         os.remove(f"{globals.cwd}\\Update.zip")
+    
+    if os.path.isdir(f"{globals.cwd}\\Update"):
+        shutil.rmtree(f"{globals.cwd}\\Update")
 
     print(
         f"(1/{steps_count}) Downloading Update from {globals.RELEASE} to {latest_release}..."
     )
     await utils.chunked_download(
-        url=globals.json["assets"][0]["browser_download_url"],
+        url=json["assets"][0]["browser_download_url"],
         path=(f"{globals.cwd}\\Update.zip"),
         label=(f"{globals.cwd}\\Update.zip") if globals.verbose else "Update.zip",
     )
@@ -490,11 +494,13 @@ async def update_app():
 
     # >[Section 2]<
 
-    print(f"(2/{steps_count}) Extraction And Cleanup...")
+    print(f"\n(2/{steps_count}) Extraction And Cleanup...")
     if not os.path.exists(f"{globals.cwd}\\Update.zip"):
         return None
-
     shutil.unpack_archive(f"{globals.cwd}\\Update.zip", f"{globals.cwd}\\Update")
     os.remove(f"{globals.cwd}\\Update.zip")
+
+    if os.path.isdir(f"{globals.cwd}\\Update"):
+        return True
 
     print("Finished Extraction And Cleanup!")
