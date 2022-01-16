@@ -1,28 +1,25 @@
 import asyncio
 import os
 import subprocess
+
 import aiofiles
 import aiohttp
 import psutil
-from aiohttp import ClientSession, ClientTimeout
+from aiohttp import ClientTimeout
 
 from modules import globals, logger, progress
 
 # >[Config Management]<
 
 
-def replace_config_line(
-    file_name, line_num, text
-):  # replace_config_line("pathto\\config.txt", 5, "new text") <- Example Usage | Last stage of set_config_entry.
+def replace_config_line(file_name, line_num, text):  # replace_config_line("pathto\\config.txt", 5, "new text") <- Example Usage | Last stage of set_config_entry.
     lines = open(file_name, "r").readlines()
     lines[line_num] = f"{text}\n"
     with open(file_name, "w") as out:
         out.writelines(lines)
 
 
-def find_config_entry(
-    entry, replacement=None
-):  # find_config_entry("extensions") <- Example usage | Optional var: "replacement" [Used for set_config_entry].
+def find_config_entry(entry, replacement=None):  # find_config_entry("extensions") <- Example usage | Optional var: "replacement" [Used for set_config_entry].
 
     config = f"{globals.user_profile}\\.spicetify\\config-xpui.ini"
     with open(config, "r") as file:
@@ -48,16 +45,14 @@ def find_config_entry(
 
 
 def set_config_entry(entry, replacement):  # set_config_entry("current_theme", "themename") <- Example Usage | Sets specific parts of the config. [replacement = None to empty the value]
-
     data = find_config_entry(entry, replacement if replacement is not None else "")
     replace_config_line(data[0], data[1], data[2])
 
 
-def list_config_available(
-    selection, theme=None
-):  # selection: themes, colorschemes, extensions, custom_apps | Lists out available configurations.
+def list_config_available(selection, theme=None):  # selection: themes, colorschemes, extensions, custom_apps | Lists out available configurations.
     if not is_installed():
         raise Exception("Not Installed")
+    
     if selection == "themes":  # List Themes
         themes = os.listdir(f"{globals.user_profile}\\spicetify-cli\\Themes")
         if "_Extra" in themes:
@@ -173,9 +168,7 @@ async def chunked_download(url, path, label):  # chunked_download("urltodownload
                 bar.done()
 
 
-def verbose_print(
-    *args, **kwargs
-):  # checks if verbose is set before printing args and kwargs
+def verbose_print(*args, **kwargs):  # checks if verbose is set before printing args and kwargs
     if globals.verbose:
         print(*args, **kwargs)
 
@@ -183,9 +176,7 @@ def verbose_print(
 # >[Process Management]<
 
 
-async def powershell(
-    *args, verbose=None, wait=True, cwd=None, shell="powershell", **kwargs
-):
+async def powershell(*args, verbose=None, wait=True, cwd=None, shell="powershell", **kwargs):
     if verbose is None:
         verbose = globals.verbose
 
@@ -200,6 +191,7 @@ async def powershell(
         creationflags=subprocess.CREATE_NO_WINDOW,
         **kwargs,
     )
+
     if wait:
         if verbose:
             # while proc.returncode is None:  # for some reason this can break...? sometimes after the process exits the loop continues and the pc fans spin up...
@@ -252,30 +244,6 @@ def process_pid_running(pid):
 
 
 # >[Value Returns]<
-
-
-async def spicetify_version():
-    if is_installed():
-        environ_check = (
-            f"{globals.user_profile}\\spicetify-cli\\spicetify.exe"
-            if os.path.isdir(f"{globals.user_profile}\\spicetify-cli")
-            else "spicetify"
-        )
-        return (
-            str(
-                await (
-                    await powershell(
-                        "%s -v" % environ_check,
-                        verbose=False,
-                        wait=True,
-                        start_new_session=False,
-                    )
-                ).stdout.read(),
-                encoding="utf-8",
-            ).strip()
-            + ">>"
-        )
-    return ""
 
 
 async def latest_release_GET():

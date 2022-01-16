@@ -672,21 +672,18 @@ class UpdateAppLogScreen(gui.ConsoleLogScreen):
                             exec_type = "exe"
                         else:
                             exec_type = "py"
-
+                            
+                        cwd = os.getcwd()
                         await utils.powershell(
-                            "Wait-Process -Id %s\n(Get-ChildItem '%s' -recurse | select -ExpandProperty fullname) -notlike '%s' | sort length -descending | remove-item\nGet-ChildItem -Path '%s' -Recurse | Move-Item -Destination '%s'\nRemove-Item '%s'\n./spicetify-easyinstall.%s"
-                            % (
-                                os.getpid(),    
-                                os.getcwd(),
-                                os.getcwd() + "\\Update*",
-                                os.getcwd() + "\\Update",
-                                os.getcwd(),
-                                os.getcwd() + "\\Update",
-                                exec_type,
-                            ),
-                            verbose=None,
+                            '\n'.join([
+                                f"Wait-Process -Id {os.getpid()}",
+                                f"(Get-ChildItem '{cwd}' -recurse | select -ExpandProperty fullname) -notlike '{cwd}\\Update*' | sort length -descending | remove-item",
+                                f"Get-ChildItem -Path '{cwd}\\Update' -Recurse | Move-Item -Destination '{cwd}'",
+                                f"Remove-Item '{cwd}\\Update'",
+                                f"./spicetify-easyinstall.{exec_type}",
+                            ]),
                             wait=False,
-                            cwd=os.getcwd(),
+                            cwd=cwd,
                             start_new_session=True,
                         )
                         sys.exit()
