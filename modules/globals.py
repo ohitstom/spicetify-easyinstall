@@ -5,7 +5,7 @@ from pathlib import Path
 # Github Update Variables
 RELEASE = "1.0"
 HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
-WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL"
+WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL" 
 
 SPICETIFY_VERSION = "2.8.3"
 SPOTIFY_VERSION = "spotify_installer-1.1.72.439.gc253025e-33.exe"
@@ -31,7 +31,7 @@ json = None
 
 # Custom Addons
 CUSTOM_EXTENSIONS = {
-    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/edf885fd858286fa04d00f184edeeac00c1a7b30": f"{user_profile}\\spicetify-cli\\Extensions\\Charlie Repo.zip", 
+    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/edf885fd858286fa04d00f184edeeac00c1a7b30": f"{user_profile}\\spicetify-cli\\Extensions\\Charlie Repo.zip",
 }
 
 CUSTOM_APPS = {

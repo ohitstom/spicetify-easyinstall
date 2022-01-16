@@ -113,7 +113,7 @@ async def simultaneous_chunked_download(urls_paths, label):
                 except Exception:
                     indeterminate = True
             tasks.append(_fetch(r, path))
-            print(f"fetch: {_fetch(r, path)},\nurl: {url},\npath: {path},\nitems: {urls_paths.items()}\n\n\n")
+            verbose_print(f"url: {url},\npath: {path},\nitems: {urls_paths.items()}\n\n\n")
 
         if not indeterminate:
             bar = progress.Bar(
