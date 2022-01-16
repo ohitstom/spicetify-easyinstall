@@ -6,10 +6,13 @@
 
 import asyncio
 import sys
-
+import logging
 
 # Only start if running as main and not import
 if __name__ == "__main__":
+    
+    # Setup logging preferences
+    logging.getLogger('aiohttp.server').setLevel(logging.CRITICAL)
 
     # Setup logging console to file output
     from modules import logger
@@ -40,7 +43,6 @@ if __name__ == "__main__":
     # Setup GUI
     globals.gui = gui.MainWindow()
     globals.gui.show()
-
     # Set off loop
     with loop:
         sys.exit(loop.run_forever())

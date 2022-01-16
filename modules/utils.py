@@ -87,7 +87,7 @@ async def simultaneous_chunked_download(urls_paths, label):
     sem = asyncio.Semaphore(5)    
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-    async with aiohttp.ClientSession(timeout=timeout) as cs:
+    async with aiohttp.ClientSession(timeout=timeout, connector=aiohttp.TCPConnector(verify_ssl=False)) as cs:
         async def _fetch(r, path):
             async with sem:
                 async with aiofiles.open(path, "wb") as f:
