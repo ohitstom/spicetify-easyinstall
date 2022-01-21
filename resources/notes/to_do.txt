@@ -1,11 +1,8 @@
 Needed:
-    -Multi chunked download socket errors
+
 Optional:
     -Create a latest variant.
     -Work out why theres a limit to github downloads.
 
 Fix:
-    -Normalize Function Usage
-    -Debug
-    -Cleanup Core *(if possible)
-+ Black
+    -Multi chunked download socket errors (Can be left for a bugfix update, will not be patched for the next feature update 3.0)

@@ -85,7 +85,6 @@ def list_config_available(selection, theme=None):  # selection: themes, colorsch
 async def simultaneous_chunked_download(urls_paths, label):
     timeout = ClientTimeout(total=60000)
     sem = asyncio.Semaphore(5)    
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
     async with aiohttp.ClientSession(timeout=timeout, connector=aiohttp.TCPConnector(verify_ssl=False)) as cs:
         async def _fetch(r, path):

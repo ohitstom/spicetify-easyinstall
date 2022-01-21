@@ -401,7 +401,7 @@ async def update_addons():
         
         except Exception as e:
             utils.verbose_print(f'"{folder}" was not deleted: {e}.')
-    print("Finished wiping old themes!\n")
+    print("Finished wiping old addons!\n")
 
     # >[Section 2]<
 
