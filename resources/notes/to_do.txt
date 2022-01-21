@@ -1,8 +1,8 @@
 Needed:
-    -Fix downloading of apps.
-
+    -Multi chunked download socket errors
 Optional:
     -Create a latest variant.
+    -Work out why theres a limit to github downloads.
 
 Fix:
     -Normalize Function Usage
