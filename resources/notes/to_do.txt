@@ -1,4 +1,5 @@
 Needed:
+    -Fill out MOTD's
 
 Optional:
     -Create a latest variant.

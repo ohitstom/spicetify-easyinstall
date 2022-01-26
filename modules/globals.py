@@ -61,14 +61,14 @@ UNINSTALL_RUNDOWN_MD = (
 
  *Version*: `{}`
 
- *Folders*: `{}`
+ *Effects*: `{}`
 
 ** **
  - **Spicetify Uninstall**:
 
  *Version*: `{}`
 
- *Folders*: `{}`
+ *Effects*: `{}`
 """.strip()
 )
 
