@@ -17,6 +17,9 @@ async def install(launch=False):
     ]
 
     # >[Section 1]<
+    # 1. Checks if the Spotify directory exists.
+    # 2. If it does, check if the backup directory exists.
+    # 3. Moves the Spotify directory and the prefs file to the backup directory.
 
     print(f"\n(1/{steps_count}) Backing Up Credentials...")
     if os.path.isdir(f"{globals.appdata}\\Spotify\\Users") and os.path.isfile(f"{globals.appdata}\\Spotify\\prefs"):
@@ -38,6 +41,9 @@ async def install(launch=False):
         print("No credentials found!\n")
 
     # >[Section 2]<
+    # 1. Checks if Spotify is installed.
+    # 2. If it is, kill Spotify processes and remove Spotify files.
+    # 3. If it isn't, print that Spotify is not installed.
 
     print(f"(2/{steps_count}) Uninstalling Spotify...")
     if os.path.isdir(f"{globals.appdata}\\Spotify"):
@@ -58,6 +64,9 @@ async def install(launch=False):
         print("Spotify is not installed!\n")
 
     # >[Section 3]<
+    # 1. For each folder in the list of folders, 
+    # 2. try to delete the folder if it exists and is not empty. 
+    # 3. If the folder does not exist or is empty, print a message saying so.
 
     print(f"(3/{steps_count}) Wiping folders...")
     for folder in folders:
@@ -72,7 +81,8 @@ async def install(launch=False):
     print("Finished wiping folders!\n")
 
     # >[Section 4]<
-
+    # Download the Spotify setup file from the Spotify website.
+    
     print(f"(4/{steps_count}) Downloading correct Spotify version...")
     if not os.path.isdir(globals.temp):
         os.mkdir(globals.temp)
@@ -87,6 +97,11 @@ async def install(launch=False):
     print("Finished downloading Spotify!\n")
 
     # >[Section 5]<
+    # 1. Kill all Spotify processes.
+    # 2. Deletes the Spotify installation folder.
+    # 3. Installs Spotify.
+    # 5. Deletes the installation file.
+    # 6. Kill all Spotify processes once preference file are found.
 
     print(f"(5/{steps_count}) Installing Spotify...")
     utils.kill_processes("Spotify.exe")
@@ -113,6 +128,7 @@ async def install(launch=False):
     print("Finished installing Spotify!\n")
 
     # >[Section 6]<
+    # Installs Spicetify and Applies Spicetify default theme
 
     print(f"(6/{steps_count}) Installing Spicetify...")
     await utils.powershell(
@@ -137,6 +153,9 @@ async def install(launch=False):
     print("Finished installing Spicetify!\n")
 
     # >[Section 7]<
+    # 1. Creates a directory in the Spotify folder to prevent Spotify from updating.
+    # 2. Prevents Spotify from updating by killing the Spotify process.
+    # 3. Prevents the user from reading and writing to the Spotify folder.
 
     print(f"(7/{steps_count}) Preventing Spotify from updating...")
     utils.kill_processes("Spotify.exe")
@@ -152,7 +171,8 @@ async def install(launch=False):
     print("Finished blocking Spotify updates!\n")
 
     # >[Section 8]<
-
+    # Downloads the themes from the official Spicetify repository, and move them to the correct location.
+    
     print(f"(8/{steps_count}) Downloading 'official' themes...")
     shutil.rmtree(f"{globals.user_profile}\\spicetify-cli\\Themes", ignore_errors=True)
     
@@ -203,7 +223,9 @@ async def install(launch=False):
     print("Finished downloading 'official' themes!\n")
 
     # >[Section 9]<
-
+    # Download all the custom addons and themes, unpack them, move them to the correct location, and
+    # deletes the zip files.
+    
     print(f"(9/{steps_count}) Downloading 'custom' addons...")
     await utils.simultaneous_chunked_download(
         {
@@ -259,6 +281,10 @@ async def install(launch=False):
     print("Finished downloading 'custom' themes!\n")
 
     # >[Section 10]<
+    # 1. The code below is a function that will restore the Spotify user data and credentials.
+    # 2. The function will first check if the backup exists. If it does, it will move the backup to the
+    # 3. Spotify directory.
+    # 4. The function will then check if the user data and credentials were successfully restored.
 
     print(f"(10/{steps_count}) Restoring Credentials...")
     if os.path.isdir(f"{globals.appdata}\\Spotify\\Users") is True:
@@ -300,6 +326,7 @@ async def apply_config(theme, colorscheme, extensions, customapps):
     )
 
     # >[Section 1]<
+    # Sets the config as per the users choices.
 
     print(f"(1/{steps_count}) Setting options...")
     utils.set_config_entry("current_theme", theme)
@@ -309,7 +336,8 @@ async def apply_config(theme, colorscheme, extensions, customapps):
     print("Finished setting options!\n")
 
     # >[Section 2]<
-
+    # Applying the changes to the config.
+    
     print(f"(2/{steps_count}) Applying config...")
     await utils.powershell(f"{environ_check} apply -n", start_new_session=False, verbose=True)
     await utils.powershell(f"{environ_check} restart", wait=False, verbose=False)
@@ -325,8 +353,11 @@ async def uninstall():
         f"{user_profile}\\.spicetify",
         temp,
     ]
-
-    print(f"(1/{steps_count}) Uninstalling Spotify...")  # Section 1
+    
+    # >[Section 1]<
+    # The code below is a function that will uninstall Spotify.
+    
+    print(f"(1/{steps_count}) Uninstalling Spotify...")
     if os.path.isdir(f"{globals.appdata}\\Spotify"):
         utils.kill_processes("spicetify.exe")
         utils.kill_processes("Spotify.exe")
@@ -345,7 +376,10 @@ async def uninstall():
     else:
         print("Spotify is not installed!\n")
 
-    print(f"(2/{steps_count}) Wiping folders...")  # Section 2
+    # >[Section 2]<
+    # Delete all folders in the `folders` list.
+
+    print(f"(2/{steps_count}) Wiping folders...")
     for folder in folders:
         try:
             if not os.path.exists(folder) or len(os.listdir(folder)) == 0:
@@ -358,7 +392,10 @@ async def uninstall():
             utils.verbose_print(f'"{folder}" was not deleted: {e}.')
     print("Finished wiping folders!\n")
 
-    print(f"(3/{steps_count}) Removing environment variables...")  # Section 3
+    # >[Section 3]<
+    # If the spicetify-cli directory is in the user's PATH, remove it.
+
+    print(f"(3/{steps_count}) Removing environment variables...")  
     await utils.powershell(
         '\n'.join([
             '$path = [System.Environment]::GetEnvironmentVariable("PATH", "User")',
@@ -514,17 +551,19 @@ async def update_addons():
             print("Download Errored, Please retry with verbose enabled for full error info!")
     print("Finished downloading 'custom' themes!\n")
 
+
 async def update_app():
     steps_count = 2
     json = await utils.latest_release_GET()
     latest_release = json["tag_name"]
 
-    # >[Section 1]<
-
     if os.path.exists(f"{globals.cwd}\\Update.zip"):
         os.remove(f"{globals.cwd}\\Update.zip") 
     if os.path.isdir(f"{globals.cwd}\\Update"):
         shutil.rmtree(f"{globals.cwd}\\Update")
+
+    # >[Section 1]<
+    # Download the latest release from GitHub and extract it to the current directory.
 
     print(f"(1/{steps_count}) Downloading Update from {globals.RELEASE} to {latest_release}...")
     await utils.chunked_download(
@@ -535,6 +574,9 @@ async def update_app():
     print("Finished Downloading Update!")
 
     # >[Section 2]<
+    # 1. Check if there's an update.zip in the current working directory.
+    # 2. If there is, unpack it and remove it.
+    # 3. If there is an extracted folder, trigger the restart by returning True.
 
     print(f"\n(2/{steps_count}) Extraction And Cleanup...")
     if not os.path.exists(f"{globals.cwd}\\Update.zip"):

@@ -166,11 +166,11 @@ class InstallConfirmScreen(gui.ConfirmScreen):
 
         # Format rundown message
         formatted = globals.INSTALL_RUNDOWN_MD.format(
-            utils.find_config_entry("with") + " >> " if not globals.SPICETIFY_VERSION and utils.is_installed() else "",
+            utils.find_config_entry("with") + " -> " if not globals.SPICETIFY_VERSION and utils.is_installed() else "",
             globals.SPICETIFY_VERSION,
-            utils.find_config_entry("BundleVersion", config=f'{globals.appdata}\\Spotify\\Apps\\login\\manifest.json', json=True).strip('",') + " >> " if not ".".join(globals.SPOTIFY_VERSION[18:-4].split(".")[:3]) and os.path.isdir(f"{globals.appdata}\\Spotify") else "",
+            utils.find_config_entry("BundleVersion", config=f'{globals.appdata}\\Spotify\\Apps\\login\\manifest.json', json=True).strip('",') + " -> " if not ".".join(globals.SPOTIFY_VERSION[18:-4].split(".")[:3]) and os.path.isdir(f"{globals.appdata}\\Spotify") else "",
             ".".join(globals.SPOTIFY_VERSION[18:-4].split(".")[:3]),
-            globals.THEMES_VERSION[17:]
+            globals.THEMES_VERSION[17:-33]
         )
         self.rundown.setMarkdown(formatted)
         super().shownCallback()
@@ -536,7 +536,7 @@ class UninstallConfirmScreen(gui.ConfirmScreen):
         await slider.waitForAnimations()
 
         formatted = globals.UNINSTALL_RUNDOWN_MD.format(
-            utils.find_config_entry("version"),
+            ".".join( utils.find_config_entry("version").split(".")[:3]),
             "Not Implemented",
             utils.find_config_entry("with"),
             "Not Implemented"
@@ -632,7 +632,7 @@ class UpdateAppConfirmScreen(gui.ConfirmScreen):
 
         json = await utils.latest_release_GET()
         formatted = globals.UPDATE_APP_RUNDOWN_MD.format(
-            globals.RELEASE,
+            globals.RELEASE + " -> " if float(globals.RELEASE) < float(json["tag_name"]) else "",
             json["tag_name"],
             json["body"].strip().replace("\n", "\n\n")
         )

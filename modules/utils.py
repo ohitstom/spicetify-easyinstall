@@ -13,6 +13,13 @@ from modules import globals, logger, progress
 
 
 def replace_config_line(file_name, line_num, text):  # replace_config_line("pathto\\config.txt", 5, "new text") <- Example Usage | Last stage of set_config_entry.
+    '''
+    Replace a line in a text file
+    
+    :param file_name: The path to the file you want to edit
+    :param line_num: The line number you want to replace
+    :param text: The text that you want to replace the line with
+    '''
     lines = open(file_name, "r").readlines()
     lines[line_num] = f"{text}\n"
     with open(file_name, "w") as out:
@@ -20,6 +27,15 @@ def replace_config_line(file_name, line_num, text):  # replace_config_line("path
 
 
 def find_config_entry(entry, replacement=None, config=None, json=None):  # find_config_entry("extensions") <- Example usage | Optional var: "replacement" [Used for set_config_entry].
+    '''
+    Finds a config entry and returns the value of it
+    
+    :param entry: The entry you want to find
+    :param replacement: If you want to change the value of a config entry, you can use this parameter
+    :param config: The config file to be used
+    :param json: If you want to use the json format, set this to True
+    :return: a tuple of three values.
+    '''
     if config is None:
         config = f"{globals.user_profile}\\.spicetify\\config-xpui.ini"
 
@@ -46,11 +62,24 @@ def find_config_entry(entry, replacement=None, config=None, json=None):  # find_
 
 
 def set_config_entry(entry, replacement):  # set_config_entry("current_theme", "themename") <- Example Usage | Sets specific parts of the config. [replacement = None to empty the value]
+    '''
+    This function is used to set specific parts of the config.
+    
+    :param entry: The entry you want to change
+    :param replacement: The value you want to replace the current value with
+    '''
     data = find_config_entry(entry, replacement if replacement is not None else "")
     replace_config_line(data[0], data[1], data[2])
 
 
 def list_config_available(selection, theme=None):  # selection: themes, colorschemes, extensions, custom_apps | Lists out available configurations.
+    '''
+    It lists out all the available configurations
+    
+    :param selection: themes, colorschemes, extensions, custom_apps
+    :param theme: The theme you want to use
+    :return: A list of available configurations.
+    '''
     if not is_installed():
         raise Exception("Not Installed")
     
@@ -83,7 +112,13 @@ def list_config_available(selection, theme=None):  # selection: themes, colorsch
 # >[TUI Management]<
 
 
-async def simultaneous_chunked_download(urls_paths, label):
+async def simultaneous_chunked_download(urls_paths, label):  # utils.simultaneous_chunked_download({globals.CUSTOM_THEMES}, "Custom Addons.zip")| Chunked download except for dictionaries of downloads.
+    '''
+    It downloads a bunch of files in parallel.
+    
+    :param urls_paths: A dictionary of URLs and paths to save the files to
+    :param label: The label to display above the bar
+    '''
     timeout = ClientTimeout(total=60000)
     sem = asyncio.Semaphore(5)    
 
@@ -133,12 +168,19 @@ async def simultaneous_chunked_download(urls_paths, label):
 
 
 async def chunked_download(url, path, label):  # chunked_download("urltodownload.com/download.zip", f"{userprofile}\\file.zip", "file.zip") <- Example Usage.
+    '''
+    It downloads a file in chunks.
+    
+    :param url: The url of the file you want to download
+    :param path: The path to where the file will be downloaded
+    :param label: The label of the bar
+    '''
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     async with aiohttp.ClientSession() as cs:
         async with cs.get(url, headers={"Accept-Encoding": "null"}) as r:
             async with aiofiles.open(path, "wb") as f:
                 logger._pause_file_output = True
-                for buffer in range(25):
+                for _ in range(25):
                     try:
                         r = await cs.get(url)
                         total_length = int(r.headers.get("content-length"))
@@ -148,7 +190,7 @@ async def chunked_download(url, path, label):  # chunked_download("urltodownload
                         indeterminate = True
                     if not indeterminate:
                         break
-                    
+
                 bar = progress.Bar(
                     expected_size=total_length,
                     indeterminate=indeterminate,
@@ -168,7 +210,10 @@ async def chunked_download(url, path, label):  # chunked_download("urltodownload
                 bar.done()
 
 
-def verbose_print(*args, **kwargs):  # checks if verbose is set before printing args and kwargs
+def verbose_print(*args, **kwargs):
+    '''
+    If verbose is set, print the arguments and keyword arguments
+    '''
     if globals.verbose:
         print(*args, **kwargs)
 
@@ -177,6 +222,16 @@ def verbose_print(*args, **kwargs):  # checks if verbose is set before printing 
 
 
 async def powershell(*args, verbose=None, wait=True, cwd=None, shell="powershell", **kwargs):
+    '''
+    It runs a powershell command and returns the process object.
+    
+    :param verbose: If True, print the output of the command
+    :param wait: If True, wait for the process to finish. If False, return immediately, defaults to True
+    (optional)
+    :param cwd: The current working directory to run the command in
+    :param shell: The shell to use, defaults to powershell (optional)
+    :return: The return value is a Process object.
+    '''
     if verbose is None:
         verbose = globals.verbose
 
@@ -205,6 +260,14 @@ async def powershell(*args, verbose=None, wait=True, cwd=None, shell="powershell
 
 
 async def start_process(program, *args, silent=True):
+    '''
+    It starts a process in the background and hides the console window.
+    
+    :param program: The name of the program to run
+    :param silent: If True, the process will be started with the `SW_HIDE` flag, defaults to True
+    (optional)
+    :return: The subprocess object.
+    '''
     if not silent:
         return await asyncio.create_subprocess_exec(program, *args)
 
@@ -216,6 +279,11 @@ async def start_process(program, *args, silent=True):
 
 
 def kill_processes(name):
+    '''
+    It kills all processes with the given name.
+    
+    :param name: The name of the process to kill
+    '''
     name = name.lower()
     for proc in psutil.process_iter():
         try:
@@ -225,7 +293,13 @@ def kill_processes(name):
             pass
 
 
-def process_running(name):
+def process_running(name): # Boolean operator for running application names.
+    '''
+    Check if a process is running by name
+    
+    :param name: The name of the process to look for
+    :return: A boolean value.
+    '''
     name = name.lower()
     for proc in psutil.process_iter():
         try:
@@ -236,7 +310,13 @@ def process_running(name):
     return False
 
 
-def process_pid_running(pid):
+def process_pid_running(pid): # Boolean operator for running pids.
+    '''
+    Check if a process is running by process id
+    
+    :param pid: The process ID you want to check
+    :return: A boolean value.
+    '''
     try:
         return psutil.pid_exists(pid)
     except Exception:
@@ -246,7 +326,11 @@ def process_pid_running(pid):
 # >[Value Returns]<
 
 
-async def latest_release_GET():
+async def latest_release_GET(): # Checks the latest release for a github repo.
+    '''
+    It gets the latest release from the github api.
+    :return: The latest release of Spicetify-EasyInstall.
+    '''
     async with aiohttp.ClientSession() as cs:
         async with cs.get(
             "https://api.github.com/repos/OhItsTom/Spicetify-EasyInstall/releases/latest"
@@ -254,12 +338,23 @@ async def latest_release_GET():
             json = await r.json()
             return json
 
-def is_installed():  # Checks if spicetify is installed
-    return (
-        os.path.exists(f"{globals.user_profile}\\.spicetify\\config-xpui.ini") is True
-    )
 
-async def heads_value(url):
+def is_installed():  # Checks if spicetify is installed.
+    '''
+    Checks if spicetify is installed
+    :return: A boolean value.
+    '''
+    return (
+        os.path.exists(f"{globals.user_profile}\\.spicetify\\config-xpui.ini") is True)
+
+
+async def heads_value(url): # Checks the heads of urls to see what branch is default.
+    '''
+    It returns the value of the Content-Disposition header.
+    
+    :param url: The URL of the repository
+    :return: the value of the Content-Disposition header.
+    '''
     async with aiohttp.ClientSession() as cs:
         async with cs.get(url + "main") as r:
             headers = r.headers.get("Content-Disposition")

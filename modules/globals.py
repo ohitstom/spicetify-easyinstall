@@ -3,7 +3,7 @@ import tempfile
 from pathlib import Path
 
 # Github Update Variables
-RELEASE = "1.0"
+RELEASE = "2.5"
 HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
 WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL" 
 
@@ -50,7 +50,7 @@ INSTALL_RUNDOWN_MD = (
     """
  - **Spicetify Version**: `{}{}`
  - **Spotify Version**: `{}{}`
- - **Theme Version**: `{}`
+ - **Official Theme Version**: `{}`
 """.strip()
 )
 
@@ -74,7 +74,7 @@ UNINSTALL_RUNDOWN_MD = (
 UPDATE_APP_RUNDOWN_MD = (
     """
 *Updates Your Spicetify-EasyInstall To Latest Release*
-- **Version**: `{}>>{}`
+- **Version**: `{}{}`
 ** **
 - **Patch Notes**:
 
