@@ -166,9 +166,10 @@ class InstallConfirmScreen(gui.ConfirmScreen):
 
         # Format rundown message
         formatted = globals.INSTALL_RUNDOWN_MD.format(
-            utils.find_config_entry("with") + ">>" if utils.is_installed() else "",
+            utils.find_config_entry("with") + " >> " if not globals.SPICETIFY_VERSION and utils.is_installed() else "",
             globals.SPICETIFY_VERSION,
-            globals.SPOTIFY_VERSION[18:-4],
+            utils.find_config_entry("BundleVersion", config=f'{globals.appdata}\\Spotify\\Apps\\login\\manifest.json', json=True).strip('",') + " >> " if not ".".join(globals.SPOTIFY_VERSION[18:-4].split(".")[:3]) and os.path.isdir(f"{globals.appdata}\\Spotify") else "",
+            ".".join(globals.SPOTIFY_VERSION[18:-4].split(".")[:3]),
             globals.THEMES_VERSION[17:]
         )
         self.rundown.setMarkdown(formatted)

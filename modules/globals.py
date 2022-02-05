@@ -7,12 +7,12 @@ RELEASE = "1.0"
 HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
 WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL" 
 
-SPICETIFY_VERSION = "2.8.3"
-SPOTIFY_VERSION = "spotify_installer-1.1.72.439.gc253025e-33.exe"
-THEMES_VERSION = "spicetify-themes-25498bc0783b8d024421a9265b8bd462106d0fc7"
+SPICETIFY_VERSION = "2.9.0"
+SPOTIFY_VERSION = "spotify_installer-1.1.78.765.g5ea20b00-15.exe"
+THEMES_VERSION = "spicetify-themes-d909924391d9572ca15658c1d78ee97a43d4c914"
 
-SPOTIFY_SETUP_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.72.439.gc253025e-33.exe"
-THEMES_URL = "https://codeload.github.com/morpheusthewhite/spicetify-themes/zip/25498bc0783b8d024421a9265b8bd462106d0fc7"
+SPOTIFY_SETUP_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.78.765.g5ea20b00-15.exe"
+THEMES_URL = "https://codeload.github.com/morpheusthewhite/spicetify-themes/zip/d909924391d9572ca15658c1d78ee97a43d4c914"
 
 # Directory Constants
 user_profile = os.path.expanduser("~")
@@ -31,26 +31,25 @@ json = None
 
 # Custom Addons
 CUSTOM_EXTENSIONS = {
-    #"https://codeload.github.com/fatihkaan22/focus-mode-spicetify/zip/1e2b978593fc10a7ebf5e9e689281782403b9c71": f"{user_profile}\\spicetify-cli\\Extensions\\Focus Mode.zip", < Removed to fix possible rate limit issue
-    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/edf885fd858286fa04d00f184edeeac00c1a7b30": f"{user_profile}\\spicetify-cli\\Extensions\\Charlie Repo.zip"
+    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/8c52e1b75a69dbd1f60b63779ad84cc8a073a50b": f"{user_profile}\\spicetify-cli\\Extensions\\Charlie Repo.zip",
+    "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/62690adcc843ebd69aeb476462abd717c4b14186": f"{user_profile}\\spicetify-cli\\Extensions\\Power Bar.zip",
 }
 
 CUSTOM_APPS = {
-    "https://codeload.github.com/CharlieS1103/spicetify-marketplace/zip/545463f8d01e47a6d76a9b1e0162c797a9b203b7": f"{user_profile}\\spicetify-cli\\CustomApps\\Marketplace.zip",
+    "https://codeload.github.com/CharlieS1103/spicetify-marketplace/zip/cdf763affe2e6b398836fb04e86a6b49ed0889be": f"{user_profile}\\spicetify-cli\\CustomApps\\Marketplace.zip",
 }
 
 CUSTOM_THEMES = {
-    "https://github.com/JulienMaille/dribbblish-dynamic-theme/releases/download/4.0.0/DribbblishDynamic_v4.0.0.zip": f"{user_profile}\\spicetify-cli\\Themes\\Dribbblish-Dynamic.zip",
-    "https://codeload.github.com/hahagu/SpicetifySpectra/zip/210df65050a8eba86a76e9fa0bcac78ffb3c97ad": f"{user_profile}\\spicetify-cli\\Themes\\Spectra.zip",
-    "https://codeload.github.com/NYRI4/Comfy-spicetify/zip/d27f32c3d6e2c7d0a6ebc7cfd04aa954af3e888c": f"{user_profile}\\spicetify-cli\\Themes\\Comfy.zip",
-    "https://codeload.github.com/grasonchan/spotify-spice/zip/dd77d8606302ba64a22137bcd424cb184f836291": f"{user_profile}\\spicetify-cli\\Themes\\Spice.zip",
+    "https://github.com/JulienMaille/dribbblish-dynamic-theme/releases/download/4.1.1/DribbblishDynamic_v4.1.1.zip": f"{user_profile}\\spicetify-cli\\Themes\\Dribbblish-Dynamic.zip",
+    "https://codeload.github.com/NYRI4/Comfy-spicetify/zip/60c258e12b085e2e94c6d026439ff0ddff462939": f"{user_profile}\\spicetify-cli\\Themes\\Comfy.zip",
+    "https://codeload.github.com/ohitstom/comfy-shadow/zip/300eb3139c36618c9f0982d0e9bf90c9e91032fa": f"{user_profile}\\spicetify-cli\\Themes\\Comfy_Shadow.zip",
 }
 
 # Text Pages For GUI
 INSTALL_RUNDOWN_MD = (
     """
  - **Spicetify Version**: `{}{}`
- - **Spotify Version**: `{}`
+ - **Spotify Version**: `{}{}`
  - **Theme Version**: `{}`
 """.strip()
 )

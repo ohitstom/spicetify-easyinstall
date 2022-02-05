@@ -232,11 +232,11 @@ async def install(launch=False):
                         if url not in utils.globals.CUSTOM_EXTENSIONS:
                             shutil.move(src, unpacked_path)
 
-                        elif ".js" in str(src):
+                        elif ".js" in str(src) and ".json" not in str(src):
                             persistent_src = str(src.with_suffix(".js").name)
                             if os.path.exists(f"{directory}\\{persistent_src}"):
                                 os.remove(f"{directory}\\{persistent_src}")
-
+                            
                             shutil.move(src, directory)
 
                     try:

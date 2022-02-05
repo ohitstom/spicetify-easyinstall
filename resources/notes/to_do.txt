@@ -6,4 +6,4 @@ Optional:
     -Work out why theres a limit to github downloads.
 
 Fix:
-    -Multi chunked download socket errors (Can be left for a bugfix update, will not be patched for the next feature update 3.0)
+    -Multi chunked download socket errors (Can be left for a bugfix update, will not be patched for the next feature update 2.5)
