@@ -16,13 +16,9 @@ class LicenseScreen(gui.SlidingScreen):
         self.license = QtWidgets.QPlainTextEdit(parent=self)
         # License text has weird width, compensate with left padding
         self.license.setStyleSheet(
-            f"""
-            QPlainTextEdit {{
-                padding: 0px 0px 0px 24px;
-                font-size: 7.5pt;
-            }}
-        """
+            '\x1f            QPlainTextEdit {\x1f                padding: 0px 0px 0px 24px;\x1f                font-size: 7.5pt;\x1f            }\x1f        '
         )
+
 
         self.license.setPlainText(globals.LICENSE_AGREEMENT)
         self.license.setReadOnly(True)
@@ -637,10 +633,13 @@ class UpdateAppConfirmScreen(gui.ConfirmScreen):
 
         json = await utils.latest_release_GET()
         formatted = globals.UPDATE_APP_RUNDOWN_MD.format(
-            globals.RELEASE + " -> " if float(globals.RELEASE) < float(json["tag_name"]) else "",
+            f'{globals.RELEASE} -> '
+            if float(globals.RELEASE) < float(json["tag_name"])
+            else "",
             json["tag_name"],
-            json["body"].strip().replace("\n", "\n\n")
+            json["body"].strip().replace("\n", "\n\n"),
         )
+
         self.rundown.setMarkdown(formatted)
         super().shownCallback()
 

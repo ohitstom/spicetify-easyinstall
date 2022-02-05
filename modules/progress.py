@@ -56,9 +56,9 @@ class Bar:
                         self.shortlabel.replace("\\", "/").rfind("/") + 1 :
                     ]
                 if len(self.shortlabel) > 24:
-                    self.shortlabel = self.shortlabel[: 24 - len(ext) - 2] + f"..{ext}"
+                    self.shortlabel = f'{self.shortlabel[: 24 - len(ext) - 2]}..{ext}'
             else:
-                self.shortlabel = self.shortlabel[:21] + "..."
+                self.shortlabel = f'{self.shortlabel[:21]}...'
             self.fulllabel = self.fulllabel + " " * 6
         else:
             self.scrolling_label = False

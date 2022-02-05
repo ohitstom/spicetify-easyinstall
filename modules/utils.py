@@ -72,7 +72,7 @@ def set_config_entry(entry, replacement):  # set_config_entry("current_theme", "
     replace_config_line(data[0], data[1], data[2])
 
 
-def list_config_available(selection, theme=None):  # selection: themes, colorschemes, extensions, custom_apps | Lists out available configurations.
+def list_config_available(selection, theme=None):    # selection: themes, colorschemes, extensions, custom_apps | Lists out available configurations.
     '''
     It lists out all the available configurations
     
@@ -82,7 +82,7 @@ def list_config_available(selection, theme=None):  # selection: themes, colorsch
     '''
     if not is_installed():
         raise Exception("Not Installed")
-    
+
     if selection == "themes":  # List Themes
         themes = os.listdir(f"{globals.user_profile}\\spicetify-cli\\Themes")
         if "_Extra" in themes:
@@ -94,9 +94,12 @@ def list_config_available(selection, theme=None):  # selection: themes, colorsch
         color_ini = f"{globals.user_profile}\\spicetify-cli\\Themes\\{theme}\\color.ini"
         if os.path.exists(color_ini):
             with open(color_ini) as f:
-                for line in f.readlines():
-                    if line[0] == "[" and line[-2] == "]":
-                        colorschemes.append(line[1:-2])
+                colorschemes.extend(
+                    line[1:-2]
+                    for line in f.readlines()
+                    if line[0] == "[" and line[-2] == "]"
+                )
+
         return colorschemes
 
     elif selection == "extensions":  # List Extensions
@@ -348,7 +351,7 @@ def is_installed():  # Checks if spicetify is installed.
         os.path.exists(f"{globals.user_profile}\\.spicetify\\config-xpui.ini") is True)
 
 
-async def heads_value(url): # Checks the heads of urls to see what branch is default.
+async def heads_value(url):    # Checks the heads of urls to see what branch is default.
     '''
     It returns the value of the Content-Disposition header.
     
@@ -356,6 +359,6 @@ async def heads_value(url): # Checks the heads of urls to see what branch is def
     :return: the value of the Content-Disposition header.
     '''
     async with aiohttp.ClientSession() as cs:
-        async with cs.get(url + "main") as r:
+        async with cs.get(f'{url}main') as r:
             headers = r.headers.get("Content-Disposition")
             return "main" if headers else "master"
