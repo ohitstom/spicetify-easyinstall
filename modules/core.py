@@ -143,6 +143,16 @@ async def install(launch=False):
         if os.path.isdir(f"{globals.user_profile}\\spicetify-cli")
         else "spicetify"
     )
+    
+    await utils.powershell(
+        '\n'.join([
+            f'{environ_check}',
+        ])
+    )
+
+    prefs_check = utils.find_config_entry("prefs_path")
+    if not prefs_check:
+        utils.set_config_entry("prefs_path", f'{globals.appdata}\Spotify\prefs')
 
     await utils.powershell(
         '\n'.join([
