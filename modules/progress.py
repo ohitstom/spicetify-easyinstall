@@ -23,10 +23,10 @@ ETA_SMA_WINDOW = 9
 INDETERMINATE_INTERVAL = 0.5
 
 # How long to wait before shifting the scrolling label
-LABEL_INTERVAL = 0.25
+LABEL_INTERVAL = 0.2
 
 
-class Bar(object):
+class Bar:
     def __enter__(self):
         return self
 
@@ -52,9 +52,11 @@ class Bar(object):
             if "." in self.shortlabel:
                 ext = self.shortlabel[self.shortlabel.rfind(".") :]
                 if "/" in self.shortlabel.replace("\\", "/"):
-                    self.shortlabel = self.shortlabel[self.shortlabel.replace("\\", "/").rfind("/")+1:]
+                    self.shortlabel = self.shortlabel[
+                        self.shortlabel.replace("\\", "/").rfind("/") + 1 :
+                    ]
                 if len(self.shortlabel) > 24:
-                    self.shortlabel = self.shortlabel[: 24 - len(ext) - 2] + ".." + ext
+                    self.shortlabel = self.shortlabel[: 24 - len(ext) - 2] + f"..{ext}"
             else:
                 self.shortlabel = self.shortlabel[:21] + "..."
             self.fulllabel = self.fulllabel + " " * 6
@@ -70,6 +72,7 @@ class Bar(object):
                 self.hide = not STREAM.isatty()
             except AttributeError:  # output does not support isatty()
                 self.hide = True
+        self.elapsed = 0
         self.empty_char = empty_char
         self.filled_char = filled_char
         self.expected_size = expected_size
@@ -101,9 +104,11 @@ class Bar(object):
                 self.labeloffset += 1
             if self.labeloffset == len(self.fulllabel):
                 self.labeloffset = 0
-            labeldisp = self.fulllabel[self.labeloffset:24+self.labeloffset]
-            if 24+self.labeloffset > len(self.fulllabel):
-                labeldisp += self.fulllabel[:(24+self.labeloffset)-len(self.fulllabel)]
+            labeldisp = self.fulllabel[self.labeloffset : 24 + self.labeloffset]
+            if 24 + self.labeloffset > len(self.fulllabel):
+                labeldisp += self.fulllabel[
+                    : (24 + self.labeloffset) - len(self.fulllabel)
+                ]
         else:
             labeldisp = self.shortlabel
         if self.indeterminate:

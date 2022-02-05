@@ -1,7 +1,8 @@
+Needed:
+    -Fill out MOTD's (Mostly Redundant ones).
+
 Optional:
-    -Backup and restore spotify settings and login
-    -Create a v1 and latest variant.
+    -Work out why theres a limit to github downloads (8).
 
 Fix:
-    -Provide option for latest themes, or shipped themes.
-    -Weirdly not adding spicetify to env.
+    -Multi chunked download socket errors (Can be left for a bugfix update, likely to be 3.0).

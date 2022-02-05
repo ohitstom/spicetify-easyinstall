@@ -1,44 +1,94 @@
-# Constants
-SPICETIFY_VERSION = "2.7.1"
-INSTALLER_NAME = "\\spotify_installer-1.1.69.612.gb7409abc-16.exe"
-THEMES_EXTRACTED = "\\spicetify-themes-59f274fedbec29993afc51658c8b369fa4d25e26"
+import os
+import tempfile
+from pathlib import Path
 
-FULL_SETUP_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.69.612.gb7409abc-16.exe"
-DOWNLOAD_THEME_URL = "https://github.com/morpheusthewhite/spicetify-themes/archive/59f274fedbec29993afc51658c8b369fa4d25e26.zip"
-
+# Github Update Variables
+RELEASE = "2.5"
 HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
-WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL"
+WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL" 
 
-# Variables, will be assigned later
+SPICETIFY_VERSION = "2.9.0"
+SPOTIFY_VERSION = "spotify_installer-1.1.78.765.g5ea20b00-15.exe"
+THEMES_VERSION = "spicetify-themes-d909924391d9572ca15658c1d78ee97a43d4c914"
+
+SPOTIFY_SETUP_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.78.765.g5ea20b00-15.exe"
+THEMES_URL = "https://codeload.github.com/morpheusthewhite/spicetify-themes/zip/d909924391d9572ca15658c1d78ee97a43d4c914"
+
+# Directory Constants
+user_profile = os.path.expanduser("~")
+appdata_local = os.environ["LOCALAPPDATA"]
+appdata = os.environ["APPDATA"]
+temp = tempfile.gettempdir()
+cwd = os.getcwd()
+spotify_prefs = Path(f"{appdata}\\Spotify\\prefs")
+
+# Temporary Variables + MD Vars
 app = None
 gui = None
 singleton = None
 verbose = None
+json = None
 
-# Text to show in different confirm prompts, all support GitHub flavored markdown
-INSTALL_RUNDOWN_MD = """
- - **Spicetify Version**: `2.7.1`
- - **Spotify Version**: `1.1.69.612.gb7409abc-16`
- - **Theme Version**: `59f274fedbec29993afc51658c8b369fa4d25e26`
- - **Replaced Deprecated Files**: `None`
+# Custom Addons
+CUSTOM_EXTENSIONS = {
+    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/8c52e1b75a69dbd1f60b63779ad84cc8a073a50b": f"{user_profile}\\spicetify-cli\\Extensions\\Charlie Repo.zip",
+    "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/62690adcc843ebd69aeb476462abd717c4b14186": f"{user_profile}\\spicetify-cli\\Extensions\\Power Bar.zip",
+}
+
+CUSTOM_APPS = {
+    "https://codeload.github.com/CharlieS1103/spicetify-marketplace/zip/cdf763affe2e6b398836fb04e86a6b49ed0889be": f"{user_profile}\\spicetify-cli\\CustomApps\\Marketplace.zip",
+}
+
+CUSTOM_THEMES = {
+    "https://github.com/JulienMaille/dribbblish-dynamic-theme/releases/download/4.1.1/DribbblishDynamic_v4.1.1.zip": f"{user_profile}\\spicetify-cli\\Themes\\Dribbblish-Dynamic.zip",
+    "https://codeload.github.com/NYRI4/Comfy-spicetify/zip/60c258e12b085e2e94c6d026439ff0ddff462939": f"{user_profile}\\spicetify-cli\\Themes\\Comfy.zip",
+    "https://codeload.github.com/ohitstom/comfy-shadow/zip/300eb3139c36618c9f0982d0e9bf90c9e91032fa": f"{user_profile}\\spicetify-cli\\Themes\\Comfy_Shadow.zip",
+}
+
+# Text Pages For GUI
+INSTALL_RUNDOWN_MD = (
+    """
+ - **Spicetify Version**: `{}{}`
+ - **Spotify Version**: `{}{}`
+ - **Official Theme Version**: `{}`
 """.strip()
-UNINSTALL_RUNDOWN_MD = """
- - **Spicetify Version**: `2.7.1`
- - **Spotify Version**: `1.1.69.612.gb7409abc-16`
- - **Theme Version**: `59f274fedbec29993afc51658c8b369fa4d25e26`
- - **Replaced Deprecated Files**: `None`
+)
+
+UNINSTALL_RUNDOWN_MD = (
+    """
+ - **Spotify Uninstall**:
+
+ *Version*: `{}`
+
+ *Effects*: `{}`
+
+** **
+ - **Spicetify Uninstall**:
+
+ *Version*: `{}`
+
+ *Effects*: `{}`
 """.strip()
-UPDATE_SHIPPED_RUNDOWN_MD = """
- - **Spicetify Version**: `2.7.1`
- - **Spotify Version**: `1.1.69.612.gb7409abc-16`
- - **Theme Version**: `59f274fedbec29993afc51658c8b369fa4d25e26`
- - **Replaced Deprecated Files**: `None`
+)
+
+UPDATE_APP_RUNDOWN_MD = (
+    """
+*Updates Your Spicetify-EasyInstall To Latest Release*
+- **Version**: `{}{}`
+** **
+- **Patch Notes**:
+
+{}
+
 """.strip()
+)
+
 UPDATE_LATEST_RUNDOWN_MD = """
- - **Spicetify Version**: `2.7.1`
- - **Spotify Version**: `1.1.69.612.gb7409abc-16`
- - **Theme Version**: `59f274fedbec29993afc51658c8b369fa4d25e26`
- - **Replaced Deprecated Files**: `None`
+*Downloads Latest Themes [Which May Not Work]*
+** **
+ - **Theme Version**: `master [Latest Commit]`
+ - **Extension Version**: `Not Implemented`
+ - **Custom Addons**: `Not Implemented`
 """.strip()
 
 # Project license agreement

@@ -1,8 +1,9 @@
-import re
 import asyncio
+import re
 import webbrowser
-from qasync import asyncSlot
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+from qasync import asyncSlot
 
 from modules import globals, logger
 
@@ -196,6 +197,10 @@ class SlidingFrame(QuickWidget):
             spacing=0,
         )
 
+        # Animation timings
+        self.old_anim_done = True
+        self.new_anim_done = True
+
         # Dynamically import and setup all screens from screens.py
         from modules import screens
 
@@ -208,6 +213,11 @@ class SlidingFrame(QuickWidget):
                 else:
                     getattr(self, item.screen_name).setVisible(False)
         self.current_screen.shownCallback()
+
+    async def waitForAnimations(self):
+        while not self.old_anim_done or not self.new_anim_done:
+            # Returning while animation is still running will cause it to stop midway!
+            await asyncio.sleep(0.1)
 
     @asyncSlot()
     async def slideTo(self, new_screen, direction):
@@ -222,30 +232,25 @@ class SlidingFrame(QuickWidget):
         new_anim = QtCore.QPropertyAnimation(new_screen, b"pos")
         new_anim.setDuration(ANIM_DURATION)
         new_anim.setEasingCurve(ANIM_TYPE)
+        old_anim.setStartValue(QtCore.QPoint(0, 0))
+        new_anim.setEndValue(QtCore.QPoint(0, 0))
         if direction == "next":
-            old_anim.setStartValue(QtCore.QPoint(0, 0))
             old_anim.setEndValue(QtCore.QPoint(0 - WIDTH, 0))
             new_anim.setStartValue(QtCore.QPoint(WIDTH, 0))
-            new_anim.setEndValue(QtCore.QPoint(0, 0))
         if direction == "back":
-            old_anim.setStartValue(QtCore.QPoint(0, 0))
             old_anim.setEndValue(QtCore.QPoint(WIDTH, 0))
             new_anim.setStartValue(QtCore.QPoint(0 - WIDTH, 0))
-            new_anim.setEndValue(QtCore.QPoint(0, 0))
         old_anim.start()
         new_anim.start()
         self.current_screen = new_screen
-        old_anim.done = False
-        new_anim.done = False
+        self.old_anim_done = False
+        self.new_anim_done = False
         old_anim.finished.connect(
-            lambda *_: [setattr(old_anim, "done", True), old_screen.setVisible(False)]
+            lambda *_: [setattr(self, "old_anim_done", True), old_screen.setVisible(False)]
         )
-        new_anim.finished.connect(lambda *_: setattr(new_anim, "done", True))
+        new_anim.finished.connect(lambda *_: setattr(self, "new_anim_done", True))
         await new_screen.shownCallback()
-        while not old_anim.done or not new_anim.done:
-            # Returning while animation is still running will cause it to stop midway!
-            await asyncio.sleep(0.1)
-
+        await self.waitForAnimations()
 
 class BottomBar(QuickWidget):
     """Bottom bar widget with icon, watermark and back / next buttons"""
@@ -332,9 +337,14 @@ class Title(QuickWidget):
         self.text = QtWidgets.QLabel(parent=self, text=text)
         # Change font type and size
         self.text.setStyleSheet(
-            '\x1f            QLabel {\x1f                font-family: Poppins;\x1f                font-size: 13pt;\x1f                font-weight: 400;\x1f            }\x1f        '
+            f"""
+            QLabel {{
+                font-family: Poppins;
+                font-size: 13pt;
+                font-weight: 400;
+            }}
+        """
         )
-
         self.layout().addWidget(self.text, alignment=QtCore.Qt.AlignBottom)
 
         # Make sure title aligns to left
@@ -468,8 +478,8 @@ class MenuScreen(SlidingScreen):
 
     def addMenuButton(self, btn_id, row, column, **kwargs):
         self.buttons[btn_id] = QtWidgets.QRadioButton(parent=self.button_grid, text="")
-        for key in kwargs:
-            setattr(self.buttons[btn_id], f"_{key}", kwargs[key])
+        for key, value in kwargs.items():
+            setattr(self.buttons[btn_id], f"_{key}", value)
         if self.multichoice:
             self.buttons[btn_id].setAutoExclusive(False)
         self.buttons[btn_id].setLayout(QtWidgets.QGridLayout())
@@ -540,20 +550,23 @@ class MenuScreen(SlidingScreen):
         bottom_bar = self.parent().parent().bottom_bar
         slider = self.parent().parent().slider
 
+        # Wait for animations to finish before enabling buttons again
+        await slider.waitForAnimations()
+
         # Enable next button when atleast one of the options is selected
         def set_next_button_enabled(*_):
             if self.multichoice and self.allow_no_selection:
                 bottom_bar.next.setEnabled(True)
                 return
-            for btn_id in self.buttons:
-                if self.buttons[btn_id].isChecked():
+            for btn in self.buttons.values():
+                if btn.isChecked():
                     bottom_bar.next.setEnabled(True)
                     return
             bottom_bar.next.setEnabled(False)
 
-        for btn_id in self.buttons:
+        for btn in self.buttons.values():
             connect(
-                signal=self.buttons[btn_id].toggled, callback=set_next_button_enabled
+                signal=btn.toggled, callback=set_next_button_enabled
             )
 
         # Setup back button
@@ -568,16 +581,16 @@ class MenuScreen(SlidingScreen):
 
         # Setup next button
         def next_button_callback(*_):
-            for btn_id in self.buttons:
-                if self.buttons[btn_id].isChecked():
+            for btn in self.buttons.values():
+                if btn.isChecked():
                     slider.slideTo(
-                        getattr(slider, self.buttons[btn_id]._next_screen),
+                        getattr(slider, btn._next_screen),
                         direction="next",
                     )
                     return
-            for btn_id in self.buttons:
+            for btn in self.buttons.values():
                 slider.slideTo(
-                    getattr(slider, self.buttons[btn_id]._next_screen),
+                    getattr(slider, btn._next_screen),
                     direction="next",
                 )
                 return
@@ -587,10 +600,13 @@ class MenuScreen(SlidingScreen):
         set_next_button_enabled()
 
     def getSelection(self):
-        selected = [btn_id for btn_id in self.buttons if (
-                hasattr(self.buttons[btn_id], "isChecked")
-                and self.buttons[btn_id].isChecked()
-            )]
+        selected = []
+        for btn_id, btn in self.buttons.items():
+            if (
+                hasattr(btn, "isChecked")
+                and btn.isChecked()
+            ):
+                selected.append(btn_id)
         if not self.multichoice:
             selected.append(None)
             selected = selected[0]
@@ -640,6 +656,9 @@ class ConfirmScreen(SlidingScreen):
         bottom_bar = self.parent().parent().bottom_bar
         slider = self.parent().parent().slider
 
+        # Wait for animations to finish before enabling buttons again
+        await slider.waitForAnimations()
+
         # Setup back button
         connect(
             signal=bottom_bar.back.clicked,
@@ -666,6 +685,7 @@ class ConsoleLogScreen(SlidingScreen):
         super().__init__(parent=parent, icon=icon, title=title)
 
         self.reset_last_line = False
+        self.original_file_write = None
 
         self.log = QtWidgets.QPlainTextEdit(parent=self)
         self.log.setReadOnly(True)
@@ -674,6 +694,7 @@ class ConsoleLogScreen(SlidingScreen):
 
     async def setup(self):
         bottom_bar = self.parent().parent().bottom_bar
+        slider = self.parent().parent().slider
 
         # Setup back button
         connect(signal=bottom_bar.back.clicked, callback=None)
@@ -683,17 +704,21 @@ class ConsoleLogScreen(SlidingScreen):
         bottom_bar.next.setText("Next")
         bottom_bar.next.setEnabled(False)
 
+        self.log.setPlainText("")
+
+        # Wait for animations to finish before enabling buttons again
+        await slider.waitForAnimations()
+
         # Setup console output redirection
         self.original_file_write = logger._file_write
-        self.log.setPlainText("")
 
         def override_file_write(msg):
             # Save scroll data
             prev_scroll = self.log.verticalScrollBar().value()
             prev_max = self.log.verticalScrollBar().maximum()
             # Remove color codes
-            msg = re.sub("\\x1b\[38;2;\d\d?\d?;\d\d?\d?;\d\d?\d?m", "", msg)
-            msg = re.sub("\\x1b\[\d\d?\d?m", "", msg)
+            msg = re.sub("\\x1b\\[38;2;\\d\\d?\\d?;\\d\\d?\\d?;\\d\\d?\\d?m", "", msg)
+            msg = re.sub("\\x1b\\[\\d\\d?\\d?m", "", msg)
             # Update log widget
             text = self.log.toPlainText()
             if self.reset_last_line and len(msg) > 0 and msg[-1] == "\n":
@@ -715,8 +740,6 @@ class ConsoleLogScreen(SlidingScreen):
             self.original_file_write(msg)
 
         logger._file_write = override_file_write
-
-        await asyncio.sleep(0.5)
 
     async def cleanup(self):
         bottom_bar = self.parent().parent().bottom_bar
