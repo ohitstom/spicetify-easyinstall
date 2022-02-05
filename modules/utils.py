@@ -192,7 +192,7 @@ async def chunked_download(url, path, label):  # chunked_download("urltodownload
     :param label: The label of the bar
     '''
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    async with aiohttp.ClientSession() as cs:
+    async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False)) as cs:
         async with cs.get(url, headers={"Accept-Encoding": "null"}) as r:
             async with aiofiles.open(path, "wb") as f:
                 logger._pause_file_output = True
