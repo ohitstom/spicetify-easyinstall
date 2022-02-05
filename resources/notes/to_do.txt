@@ -2,9 +2,7 @@ Needed:
     -Fill out MOTD's (Mostly Redundant ones).
 
 Optional:
-    -Create a latest variant (Github Branch or Revamp The Update Addons Page).
     -Work out why theres a limit to github downloads (8).
-    -Grey out update app if theres no update.
 
 Fix:
-    -Multi chunked download socket errors (Can be left for a bugfix update, likely to be 3.0 to 3.5).
+    -Multi chunked download socket errors (Can be left for a bugfix update, likely to be 3.0).

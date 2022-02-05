@@ -604,6 +604,11 @@ class UpdateMenuScreen(gui.MenuScreen):
         bottom_bar.next.setEnabled(False)
         super().shownCallback()
 
+        json = await utils.latest_release_GET()
+        enable = float(globals.RELEASE) < float(json["tag_name"])
+        self.toggleButton("app", enable)
+        super().shownCallback()
+
 
 class UpdateAppConfirmScreen(gui.ConfirmScreen):
     screen_name = "update_app_confirm_screen"
