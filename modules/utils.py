@@ -29,7 +29,7 @@ def replace_config_line(file_name, line_num, text):  # replace_config_line("path
         out.writelines(lines)
 
 
-def find_config_entry(entry, replacement=None, config=None, json=None, encoding=None):  # find_config_entry("extensions") <- Example usage | Optional var: "replacement" [Used for set_config_entry].
+def find_config_entry(entry, replacement=None, config=None, encoding=None, splitchar=" = "):  # find_config_entry("extensions") <- Example usage | Optional var: "replacement" [Used for set_config_entry].
     '''
     Finds a config entry and returns the value of it
     
@@ -41,6 +41,12 @@ def find_config_entry(entry, replacement=None, config=None, json=None, encoding=
     '''
     if config is None:
         config = f"{globals.user_profile}\\.spicetify\\config-xpui.ini"
+
+    elif not os.path.isfile(config):
+        if "prefs" in config:
+            return "???"
+        else:
+            return "Path NULL"
     
     if encoding is None:
         with open(config, 'rb') as filetemp: #Sanity
@@ -58,13 +64,14 @@ def find_config_entry(entry, replacement=None, config=None, json=None, encoding=
         if replacement is not None:
             found_line_str = line
             found_line_int = count - 1
-            a = found_line_str.split(" = ")[0] if json is None else found_line_str.split(": ")[0]
+            a = found_line_str.split(splitchar)[0]
+
             final_write_data = f"{a} = {replacement}"
             return config, found_line_int, final_write_data
 
         else:
             found_line_str = line.strip("\n")
-            a, b = found_line_str.split(" = ") if json is None else found_line_str.split(": ")
+            a, b = found_line_str.split(splitchar)
             final_write_data = b
             return final_write_data
 

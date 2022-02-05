@@ -166,14 +166,14 @@ class InstallConfirmScreen(gui.ConfirmScreen):
         await slider.waitForAnimations()
 
         # Format rundown message
-        SPOTIFY_VERSION_OLD = ".".join(utils.find_config_entry("Project-Id-Version", config=f'{globals.appdata}\\Spotify\\locales\\en.mo', json=True, encoding="latin-1").strip('Spotify ').split(".")[:3])
+        SPOTIFY_VERSION_OLD = ".".join(utils.find_config_entry("app.last-launched-version", config=f'{globals.appdata}\\Spotify\\prefs', splitchar="=").strip('"').split(".")[:3])
         SPOTIFY_VERSION_UPDATE = ".".join(globals.SPOTIFY_VERSION[18:-4].split(".")[:3])
 
         formatted = globals.INSTALL_RUNDOWN_MD.format(
             utils.find_config_entry("with") + " -> " if not globals.SPICETIFY_VERSION and utils.is_installed() else "",
             globals.SPICETIFY_VERSION,
             
-            SPOTIFY_VERSION_OLD + " -> " if SPOTIFY_VERSION_OLD != SPOTIFY_VERSION_UPDATE and os.path.isdir(f"{globals.appdata}\\Spotify") else "",
+            SPOTIFY_VERSION_OLD + " -> " if SPOTIFY_VERSION_OLD != SPOTIFY_VERSION_UPDATE and SPOTIFY_VERSION_OLD != "???" and os.path.isdir(f"{globals.appdata}\\Spotify") else "",
             SPOTIFY_VERSION_UPDATE,
             
             globals.THEMES_VERSION[17:-33]
