@@ -9,10 +9,10 @@ WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL"
 
 SPICETIFY_VERSION = "2.9.0"
 SPOTIFY_VERSION = "spotify_installer-1.1.78.765.g5ea20b00-15.exe"
-THEMES_VERSION = "spicetify-themes-d909924391d9572ca15658c1d78ee97a43d4c914"
+THEMES_VERSION = "spicetify-themes-cab870eba282a509a34f2f107185c52188891c7f"
 
 SPOTIFY_SETUP_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.78.765.g5ea20b00-15.exe"
-THEMES_URL = "https://codeload.github.com/morpheusthewhite/spicetify-themes/zip/d909924391d9572ca15658c1d78ee97a43d4c914"
+THEMES_URL = "https://codeload.github.com/morpheusthewhite/spicetify-themes/zip/cab870eba282a509a34f2f107185c52188891c7f"
 
 # Directory Constants
 user_profile = os.path.expanduser("~")
