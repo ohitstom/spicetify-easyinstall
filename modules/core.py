@@ -331,13 +331,16 @@ async def apply_config(theme, colorscheme, extensions, customapps):
     print(f"(1/{steps_count}) Setting options...")
     utils.set_config_entry("current_theme", theme)
     utils.set_config_entry("color_scheme", colorscheme)
-    utils.set_config_entry("extensions", "|".join(extension + ".js" for extension in extensions))
+    utils.set_config_entry(
+        "extensions", "|".join(f'{extension}.js' for extension in extensions)
+    )
+
     utils.set_config_entry("custom_apps", "|".join(customapps))
     print("Finished setting options!\n")
 
     # >[Section 2]<
     # Applying the changes to the config.
-    
+
     print(f"(2/{steps_count}) Applying config...")
     await utils.powershell(f"{environ_check} apply -n", start_new_session=False, verbose=True)
     await utils.powershell(f"{environ_check} restart", wait=False, verbose=False)
