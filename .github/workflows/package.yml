@@ -2,7 +2,7 @@ name: Package
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ Spicetify-v2 ]
 
 jobs:
 
