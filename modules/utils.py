@@ -1,11 +1,14 @@
 import asyncio
 import os
 import subprocess
+import sys
+from io import StringIO
 
 import aiofiles
 import aiohttp
 import psutil
 from aiohttp import ClientTimeout
+from bs4 import UnicodeDammit
 
 from modules import globals, logger, progress
 
@@ -26,7 +29,7 @@ def replace_config_line(file_name, line_num, text):  # replace_config_line("path
         out.writelines(lines)
 
 
-def find_config_entry(entry, replacement=None, config=None, json=None):  # find_config_entry("extensions") <- Example usage | Optional var: "replacement" [Used for set_config_entry].
+def find_config_entry(entry, replacement=None, config=None, json=None, encoding=None):  # find_config_entry("extensions") <- Example usage | Optional var: "replacement" [Used for set_config_entry].
     '''
     Finds a config entry and returns the value of it
     
@@ -38,8 +41,13 @@ def find_config_entry(entry, replacement=None, config=None, json=None):  # find_
     '''
     if config is None:
         config = f"{globals.user_profile}\\.spicetify\\config-xpui.ini"
+    
+    if encoding is None:
+        with open(config, 'rb') as filetemp: #Sanity
+            content = filetemp.read()
+        encoding = UnicodeDammit(content).original_encoding
 
-    with open(config, "r") as file:
+    with open(config, "r", encoding=encoding) as file:
         count = 0
         line = ""
         for line in file:
@@ -119,6 +127,7 @@ async def simultaneous_chunked_download(urls_paths, label):  # utils.simultaneou
     :param urls_paths: A dictionary of URLs and paths to save the files to
     :param label: The label to display above the bar
     '''
+    sys.stderr = StringIO()
     timeout = ClientTimeout(total=60000)
     sem = asyncio.Semaphore(5)    
 
@@ -180,7 +189,7 @@ async def chunked_download(url, path, label):  # chunked_download("urltodownload
         async with cs.get(url, headers={"Accept-Encoding": "null"}) as r:
             async with aiofiles.open(path, "wb") as f:
                 logger._pause_file_output = True
-                for _ in range(25):
+                for buffer in range(25):
                     try:
                         r = await cs.get(url)
                         total_length = int(r.headers.get("content-length"))

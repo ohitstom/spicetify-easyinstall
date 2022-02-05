@@ -5,4 +5,3 @@ Optional:
     -Work out why theres a limit to github downloads (8).
 
 Fix:
-    -Multi chunked download socket errors (Can be left for a bugfix update, likely to be 3.0).
