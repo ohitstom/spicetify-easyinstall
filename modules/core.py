@@ -139,7 +139,7 @@ async def install(launch=False):
     )
 
     environ_check = (
-        f"'{globals.user_profile}\\spicetify-cli\\spicetify.exe'"
+        f"`{globals.user_profile}`\\spicetify-cli\\spicetify.exe"
         if os.path.isdir(f"{globals.user_profile}\\spicetify-cli")
         else "spicetify"
     )
@@ -330,7 +330,7 @@ async def install(launch=False):
 async def apply_config(theme, colorscheme, extensions, customapps):
     steps_count = 2
     environ_check = (
-        f"'{globals.user_profile}\\spicetify-cli\\spicetify.exe'"
+        f"`{globals.user_profile}`\\spicetify-cli\\spicetify.exe"
         if os.path.isdir(f"{globals.user_profile}\\spicetify-cli")
         else "spicetify"
     )

@@ -7,8 +7,8 @@ from qasync import asyncSlot
 
 from modules import globals, logger
 
-WIDTH = 550
-HEIGHT = 350
+WIDTH = 650
+HEIGHT = 450
 BOTTOM_BAR_HEIGHT = 60
 
 BACKGROUND = "#050607"
@@ -27,7 +27,7 @@ ANIM_DURATION = 300
 QSS = f"""
 * {{
     font-family: Inter;
-    font-size: 10pt;
+    font-size: 10.85pt;
     color: {TEXT_COLOR};
     selection-background-color: {ACCENT};
     selection-color: {TEXT_COLOR};
@@ -328,7 +328,7 @@ class Title(QuickWidget):
             QLabel {{
                 color: {ACCENT};
                 font-family: Material Design Icons;
-                font-size: 19.5pt;
+                font-size: 24.4pt;
             }}
         """
         )
@@ -340,7 +340,7 @@ class Title(QuickWidget):
             f"""
             QLabel {{
                 font-family: Poppins;
-                font-size: 13pt;
+                font-size: 14.5pt;
                 font-weight: 400;
             }}
         """
@@ -388,11 +388,11 @@ class MenuScreen(SlidingScreen):
         allow_no_selection=True,
         scrollable=False,
         buttons={},
-        font_size_ratio=1,
-        min_height=80,
-        max_height=136,
-        min_width=226,
-        max_width=226,
+        font_size_ratio=1.25,
+        min_height=130,
+        max_height=186,
+        min_width=276,
+        max_width=276,
     ):
         super().__init__(parent=parent, icon=icon, title=title)
 
@@ -408,6 +408,7 @@ class MenuScreen(SlidingScreen):
             self.button_scroll_area.setFrameShape(QtWidgets.QFrame.NoFrame)
             self.button_scroll_area.setWidgetResizable(True)
             self.button_scroll_area.verticalScrollBar().setSingleStep(10)
+            
         # Radio buttons that look like push buttons
         qss = f"""
             QRadioButton {{
@@ -600,13 +601,10 @@ class MenuScreen(SlidingScreen):
         set_next_button_enabled()
 
     def getSelection(self):
-        selected = []
-        for btn_id, btn in self.buttons.items():
-            if (
+        selected = [btn_id for btn_id, btn in self.buttons.items() if (
                 hasattr(btn, "isChecked")
                 and btn.isChecked()
-            ):
-                selected.append(btn_id)
+            )]
         if not self.multichoice:
             selected.append(None)
             selected = selected[0]

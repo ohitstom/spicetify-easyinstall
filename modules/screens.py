@@ -18,12 +18,10 @@ class LicenseScreen(gui.SlidingScreen):
         self.license.setStyleSheet(
             f"""
             QPlainTextEdit {{
-                padding: 0px 0px 0px 24px;
-                font-size: 7.5pt;
+                font-size: 8.75pt;
             }}
         """
         )
-
         self.license.setPlainText(globals.LICENSE_AGREEMENT)
         self.license.setReadOnly(True)
         self.license.children()[3].children()[0].setDocumentMargin(12)
@@ -170,14 +168,19 @@ class InstallConfirmScreen(gui.ConfirmScreen):
         SPOTIFY_VERSION_UPDATE = ".".join(globals.SPOTIFY_VERSION[18:-4].split(".")[:3])
 
         formatted = globals.INSTALL_RUNDOWN_MD.format(
-            utils.find_config_entry("with") + " -> " if not globals.SPICETIFY_VERSION and utils.is_installed() else "",
+            utils.find_config_entry("with") + " -> "
+            if not globals.SPICETIFY_VERSION and utils.is_installed()
+            else "",
             globals.SPICETIFY_VERSION,
-            
-            SPOTIFY_VERSION_OLD + " -> " if SPOTIFY_VERSION_OLD != SPOTIFY_VERSION_UPDATE and SPOTIFY_VERSION_OLD != "???" and os.path.isdir(f"{globals.appdata}\\Spotify") else "",
+            f'{SPOTIFY_VERSION_OLD} -> '
+            if SPOTIFY_VERSION_OLD != SPOTIFY_VERSION_UPDATE
+            and SPOTIFY_VERSION_OLD != "???"
+            and os.path.isdir(f"{globals.appdata}\\Spotify")
+            else "",
             SPOTIFY_VERSION_UPDATE,
-            
-            globals.THEMES_VERSION[17:-33]
+            globals.THEMES_VERSION[17:-33],
         )
+
         self.rundown.setMarkdown(formatted)
         super().shownCallback()
 
@@ -221,11 +224,11 @@ class ConfigThemeMenuScreen(gui.MenuScreen):
             scrollable=True,
             multichoice=False,
             buttons={},
-            font_size_ratio=0.69,
-            min_height=69,
-            max_height=69,
-            min_width=212,
-            max_width=226,
+            font_size_ratio=0.75,
+            min_height=100,
+            max_height=100,
+            min_width=262,
+            max_width=262,
         )
 
     @asyncSlot()
@@ -270,11 +273,11 @@ class ConfigColorschemeMenuScreen(gui.MenuScreen):
             scrollable=True,
             multichoice=False,
             buttons={},
-            font_size_ratio=0.69,
-            min_height=69,
-            max_height=69,
-            min_width=212,
-            max_width=226,
+            font_size_ratio=0.75,
+            min_height=100,
+            max_height=100,
+            min_width=262,
+            max_width=262,
         )
 
     @asyncSlot()
@@ -286,7 +289,7 @@ class ConfigColorschemeMenuScreen(gui.MenuScreen):
 
         theme = slider.config_theme_menu_screen.getSelection()
         colorschemes = utils.list_config_available("colorschemes", theme)
-        if not colorschemes:
+        if not colorschemes or len(colorschemes) == 1:
             self.clearCurrentButtons()
             self.buttons["none"] = QtWidgets.QLabel(
                 parent=self.button_grid, text="This theme has no colorschemes."
@@ -318,6 +321,7 @@ class ConfigColorschemeMenuScreen(gui.MenuScreen):
                 ),
             )
             bottom_bar.next.setEnabled(True)
+            bottom_bar.next.setText("Skip")
             # super().shownCallback()
             return
         selected = self.getSelection()
@@ -356,11 +360,11 @@ class ConfigExtensionsMenuScreen(gui.MenuScreen):
             multichoice=True,
             allow_no_selection=True,
             buttons={},
-            font_size_ratio=0.69,
-            min_height=69,
-            max_height=69,
-            min_width=212,
-            max_width=226,
+            font_size_ratio=0.75,
+            min_height=100,
+            max_height=100,
+            min_width=262,
+            max_width=262,
         )
         self.first_run = True
 
@@ -415,11 +419,11 @@ class ConfigCustomappsMenuScreen(gui.MenuScreen):
             multichoice=True,
             allow_no_selection=True,
             buttons={},
-            font_size_ratio=0.69,
-            min_height=69,
-            max_height=69,
-            min_width=212,
-            max_width=226,
+            font_size_ratio=0.75,
+            min_height=100,
+            max_height=100,
+            min_width=262,
+            max_width=262,
         )
         self.first_run = True
 
@@ -468,6 +472,10 @@ class ConfigConfirmScreen(gui.ConfirmScreen):
             back_screen="config_customapps_menu_screen",
             next_screen="config_log_screen",
         )
+        self.overwrite_assets = QtWidgets.QCheckBox(parent=self, text="Overwrite Assets")
+        self.overwrite_assets.setChecked(True) if utils.is_installed() and utils.find_config_entry("overwrite_assets") == "1" else self.overwrite_assets.setChecked(False)
+        gui.clickable(self.overwrite_assets)
+        self.layout().addWidget(self.overwrite_assets)
 
     @asyncSlot()
     async def shownCallback(self):
@@ -496,7 +504,7 @@ class ConfigLogScreen(gui.ConsoleLogScreen):
     @asyncSlot()
     async def shownCallback(self):
         slider = self.parent().parent().slider
-
+    
         # Configure output widget
         await self.setup()
 
@@ -505,7 +513,9 @@ class ConfigLogScreen(gui.ConsoleLogScreen):
         colorscheme = slider.config_colorscheme_menu_screen.getSelection()
         extensions = slider.config_extensions_menu_screen.getSelection()
         customapps = slider.config_customapps_menu_screen.getSelection()
+        overwrite_assets = "1" if slider.config_confirm_screen.overwrite_assets.isChecked() else "0"
         try:
+            utils.set_config_entry("overwrite_assets", overwrite_assets)
             await core.apply_config(theme, colorscheme, extensions, customapps)
         except Exception:
             exc = "".join(traceback.format_exception(*sys.exc_info()))
@@ -643,10 +653,13 @@ class UpdateAppConfirmScreen(gui.ConfirmScreen):
 
         json = await utils.latest_release_GET()
         formatted = globals.UPDATE_APP_RUNDOWN_MD.format(
-            globals.RELEASE + " -> " if float(globals.RELEASE) < float(json["tag_name"]) else "",
+            f'{globals.RELEASE} -> '
+            if float(globals.RELEASE) < float(json["tag_name"])
+            else "",
             json["tag_name"],
-            json["body"].strip().replace("\n", "\n\n")
+            json["body"].strip().replace("\n", "\n\n").strip("`#"),
         )
+
         self.rundown.setMarkdown(formatted)
         super().shownCallback()
 
@@ -666,46 +679,40 @@ class UpdateAppLogScreen(gui.ConsoleLogScreen):
 
         # Actual update
         try:
-            json = await utils.latest_release_GET()
-            if json["tag_name"] == globals.RELEASE:
-                print("No updates available!")
+            download = await core.update_app()
+            if not download:
+                print("Download Was Not Completed Properly, Please Retry!")
                 await self.cleanup()
-           
-            else:   
-                download = await core.update_app()
-                if not download:
-                    print("Download Was Not Completed Properly, Please Retry!")
-                    await self.cleanup()
-                
-                else:
-                    @asyncSlot()
-                    async def restart_app_callback(*_):
-                        if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
-                            exec_type = "exe"
-                        else:
-                            exec_type = "py"
-                            
-                        cwd = os.getcwd()
-                        await utils.powershell(
-                            '\n'.join([
-                                f"Wait-Process -Id {os.getpid()}",
-                                f"(Get-ChildItem '{cwd}' -recurse | select -ExpandProperty fullname) -notlike '{cwd}\\Update*' | sort length -descending | remove-item",
-                                f"Get-ChildItem -Path '{cwd}\\Update' -Recurse | Move-Item -Destination '{cwd}'",
-                                f"Remove-Item '{cwd}\\Update'",
-                                f"./spicetify-easyinstall.{exec_type}",
-                            ]),
-                            wait=False,
-                            cwd=cwd,
-                            start_new_session=True,
-                        )
-                        sys.exit()
+            
+            else:
+                @asyncSlot()
+                async def restart_app_callback(*_):
+                    if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+                        exec_type = "exe"
+                    else:
+                        exec_type = "py"
+                        
+                    cwd = os.getcwd()
+                    await utils.powershell(
+                        '\n'.join([
+                            f"Wait-Process -Id {os.getpid()}",
+                            f"(Get-ChildItem '{cwd}' -recurse | select -ExpandProperty fullname) -notlike '{cwd}\\Update*' | sort length -descending | remove-item",
+                            f"Get-ChildItem -Path '{cwd}\\Update' -Recurse | Move-Item -Destination '{cwd}'",
+                            f"Remove-Item '{cwd}\\Update'",
+                            f"./spicetify-easyinstall.{exec_type}",
+                        ]),
+                        wait=False,
+                        cwd=cwd,
+                        start_new_session=True,
+                    )
+                    sys.exit()
 
-                    gui.connect(
-                        signal=bottom_bar.next.clicked, 
-                        callback=restart_app_callback
-                    )   
-                    bottom_bar.next.setText("Restart")
-                    bottom_bar.next.setEnabled(True)
+                gui.connect(
+                    signal=bottom_bar.next.clicked, 
+                    callback=restart_app_callback
+                )   
+                bottom_bar.next.setText("Restart")
+                bottom_bar.next.setEnabled(True)
 
         except Exception:
             exc = "".join(traceback.format_exception(*sys.exc_info()))
