@@ -3,7 +3,7 @@ import tempfile
 from pathlib import Path
 
 # Github Update Variables
-RELEASE = "2.0"
+RELEASE = "3.0"
 HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
 WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL" 
 
@@ -31,12 +31,12 @@ json = None
 
 # Custom Addons
 CUSTOM_EXTENSIONS = {
-    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/8c52e1b75a69dbd1f60b63779ad84cc8a073a50b": f"{user_profile}\\spicetify-cli\\Extensions\\Charlie Repo.zip",
+    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/47f1aac0a1026e03342996036289442a18dd7af4": f"{user_profile}\\spicetify-cli\\Extensions\\Charlie Repo.zip",
     "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/62690adcc843ebd69aeb476462abd717c4b14186": f"{user_profile}\\spicetify-cli\\Extensions\\Power Bar.zip",
 }
 
 CUSTOM_APPS = {
-    "https://codeload.github.com/CharlieS1103/spicetify-marketplace/zip/cdf763affe2e6b398836fb04e86a6b49ed0889be": f"{user_profile}\\spicetify-cli\\CustomApps\\Marketplace.zip",
+    "https://codeload.github.com/CharlieS1103/spicetify-marketplace/zip/ebca4ac34351d3abcfd9cc92f1bba53e569b5d4f": f"{user_profile}\\spicetify-cli\\CustomApps\\Marketplace.zip",
 }
 
 CUSTOM_THEMES = {

@@ -249,8 +249,11 @@ async def install(launch=False):
         if os.path.exists(download):
             captured = Path(download)
             directory = captured.parent
+            
+            global unpacked_name
             unpacked_name = captured.with_suffix("").name
             unpacked_path = f"{directory}\\{unpacked_name}"
+            utils.verbose_print(f"{unpacked_name} was downloaded successfully!")
 
             if os.path.exists(unpacked_path):
                 shutil.rmtree(unpacked_path)
@@ -258,24 +261,22 @@ async def install(launch=False):
             shutil.unpack_archive(download, unpacked_path)
             os.remove(download)
 
+            # Unzipped download dupe folder removal + Extension extraction + cleanup
             for item in os.listdir(unpacked_path):
-                if os.path.isdir(f"{unpacked_path}\\{item}") and "assets" not in item:
-                    for src in Path(f"{unpacked_path}\\{item}").glob("*"):
-                        if url not in utils.globals.CUSTOM_EXTENSIONS:
-                            shutil.move(src, unpacked_path)
+                # Moving all files/folders from ./extractedzip/duplicate-extracted-zip to just ./extractedzip
+                for src in Path(f"{unpacked_path}\\{item}").glob("*"): # for files and folders in {PARENT}\{ADDON-DUPE}\{ACTUAL-ADDON}.glob(*) - * meanys any non zero file
+                    shutil.move(src, unpacked_path)      
+                if os.path.exists(f"{unpacked_path}\\{item}") and os.path.isdir(f"{unpacked_path}\\{item}"): # Cleanup
+                    os.rmdir(f"{unpacked_path}\\{item}")
 
-                        elif ".js" in str(src) and ".json" not in str(src):
-                            persistent_src = str(src.with_suffix(".js").name)
-                            if os.path.exists(f"{directory}\\{persistent_src}"):
-                                os.remove(f"{directory}\\{persistent_src}")
-                            
-                            shutil.move(src, directory)
+                # Moving all files with the js extension to {extensions}
+                for src in Path(f"{unpacked_path}").glob("**/*.js"): # for files in {PARENT}\{ADDON-DUPE}\**\*.js where ** means any segment, null or otherwise.
+                    if "Extensions" in str(src):
+                        shutil.move(src, directory)
+                if os.path.exists(unpacked_path) and os.path.isdir(unpacked_path) and "Extensions" in unpacked_path: # Cleanup
+                    shutil.rmtree(unpacked_path)
 
-                    try:
-                        os.rmdir(f"{unpacked_path}\\{item}")
-                    except Exception:
-                        shutil.rmtree(unpacked_path)
-
+            # Moving all theme extensions to the extensions folder
             for item in list(Path(f"{globals.user_profile}\\spicetify-cli\\Themes").glob("**/*.js")):
                 fullpath = str(item)
                 destpath = (f"{globals.user_profile}\\spicetify-cli\\Extensions"
@@ -287,8 +288,8 @@ async def install(launch=False):
                 shutil.move(fullpath, destpath)
 
         else:
-            print(f"{url} was not downloaded")
-    print("Finished downloading 'custom' themes!\n")
+            utils.verbose_print(f"{unpacked_name} wasnt downloaded successfully...")
+    print("\nFinished downloading 'custom' addons!\n")
 
     # >[Section 10]<
     # 1. The code below is a function that will restore the Spotify user data and credentials.
@@ -297,13 +298,13 @@ async def install(launch=False):
     # 4. The function will then check if the user data and credentials were successfully restored.
 
     print(f"(10/{steps_count}) Restoring Credentials...")
-    if os.path.isdir(f"{globals.appdata}\\Spotify\\Users") is True:
-        shutil.rmtree(f"{globals.appdata}\\Spotify\\Users")
-    
-    elif os.path.isfile(f"{globals.appdata}\\Spotify\\prefs") is True:
-        os.remove(f"{globals.appdata}\\Spotify\\prefs")
-
     if os.path.isdir(f"{globals.cwd}\\Backup_Credentials\\Users"):
+        if os.path.isdir(f"{globals.appdata}\\Spotify\\Users") is True:
+            shutil.rmtree(f"{globals.appdata}\\Spotify\\Users")
+        
+        elif os.path.isfile(f"{globals.appdata}\\Spotify\\prefs") is True:
+            os.remove(f"{globals.appdata}\\Spotify\\prefs")
+        
         shutil.move(
             f"{globals.cwd}\\Backup_Credentials\\Users",
             f"{globals.appdata}\\Spotify"
@@ -452,7 +453,7 @@ async def update_addons():
 
     # >[Section 2]<
 
-    print(f"(2/{steps_count}) Downloading 'official' addons...")
+    print(f"(2/{steps_count}) Downloading 'official' themes...")
     await utils.chunked_download(
         url=globals.THEMES_URL.replace(globals.THEMES_VERSION[17:], 'refs/heads/master'),
         path=(f"{globals.user_profile}\\spicetify-cli\\Themes.zip"),
@@ -508,19 +509,17 @@ async def update_addons():
             final[newval + await utils.heads_value(newval)] = directory
         else:
             final[url] = directory
-
-    if globals.verbose:
-        for item in final.items():
-            utils.verbose_print(f"{item}\n")
-
+    
     await utils.simultaneous_chunked_download(final, "Custom Addons.zip")
     for url, download in final.items():
         if os.path.exists(download):
-            utils.verbose_print(f"{url} was downloaded successfully!")
             captured = Path(download)
             directory = captured.parent
+            
+            global unpacked_name
             unpacked_name = captured.with_suffix("").name
             unpacked_path = f"{directory}\\{unpacked_name}"
+            utils.verbose_print(f"{unpacked_name} was downloaded successfully!")
 
             if os.path.exists(unpacked_path):
                 shutil.rmtree(unpacked_path)
@@ -528,24 +527,22 @@ async def update_addons():
             shutil.unpack_archive(download, unpacked_path)
             os.remove(download)
 
+            # Unzipped download dupe folder removal + Extension extraction + cleanup
             for item in os.listdir(unpacked_path):
-                if os.path.isdir(f"{unpacked_path}\\{item}") and "assets" not in item:
-                    for src in Path(f"{unpacked_path}\\{item}").glob("*"):
-                        if url not in utils.globals.CUSTOM_EXTENSIONS:
-                            shutil.move(src, unpacked_path)
+                # Moving all files/folders from ./extractedzip/duplicate-extracted-zip to just ./extractedzip
+                for src in Path(f"{unpacked_path}\\{item}").glob("*"): # for files and folders in {PARENT}\{ADDON-DUPE}\{ACTUAL-ADDON}.glob(*) - * meanys any non zero file
+                    shutil.move(src, unpacked_path)      
+                if os.path.exists(f"{unpacked_path}\\{item}") and os.path.isdir(f"{unpacked_path}\\{item}"): # Cleanup
+                    os.rmdir(f"{unpacked_path}\\{item}")
 
-                        elif ".js" in str(src):
-                            persistent_src = str(src.with_suffix(".js").name)
-                            if os.path.exists(f"{directory}\\{persistent_src}"):
-                                os.remove(f"{directory}\\{persistent_src}")
+                # Moving all files with the js extension to {extensions}
+                for src in Path(f"{unpacked_path}").glob("**/*.js"): # for files in {PARENT}\{ADDON-DUPE}\**\*.js where ** means any segment, null or otherwise.
+                    if "Extensions" in str(src):
+                        shutil.move(src, directory)
+                if os.path.exists(unpacked_path) and os.path.isdir(unpacked_path) and "Extensions" in unpacked_path: # Cleanup
+                    shutil.rmtree(unpacked_path)
 
-                            shutil.move(src, directory)
-
-                    try:
-                        os.rmdir(f"{unpacked_path}\\{item}")
-                    except Exception:
-                        shutil.rmtree(unpacked_path)
-
+            # Moving all theme extensions to the extensions folder
             for item in list(Path(f"{globals.user_profile}\\spicetify-cli\\Themes").glob("**/*.js")):
                 fullpath = str(item)
                 destpath = (f"{globals.user_profile}\\spicetify-cli\\Extensions"
@@ -557,9 +554,8 @@ async def update_addons():
                 shutil.move(fullpath, destpath)
 
         else:
-            utils.verbose_print(f"\n{url} was not downloaded...")
-            print("Download Errored, Please retry with verbose enabled for full error info!")
-    print("Finished downloading 'custom' themes!\n")
+            utils.verbose_print(f"{unpacked_name} wasnt downloaded successfully...")
+    print("\nFinished downloading 'custom' themes!")
 
 
 async def update_app():

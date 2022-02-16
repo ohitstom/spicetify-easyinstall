@@ -1,7 +1,20 @@
 Needed:
     -Fill out MOTD's (Mostly Redundant ones).
+    -Download Addons from spicetify repo (Themes is already done)
 
 Optional:
-    -Work out why theres a limit to github downloads (8).
+    -Toggle Box For Friends Feed
+    -Create prefs file as an end of the road fix for when its missing. Easily done as all the info prefs contains is in this installer.
 
 Fix:
+    -Deadspace in update app
+
+
+Finished:
+    Fix for names with spaces
+    Fix for rate limited downloads/stupid broken library (New client session per GET)
+    Fix for improper download handling/extracting (Charlies fault for having multiple extensions in one repo smh my head)
+    Fix GUI to be a more acceptable size
+    Fix for prefs being accidentally deleted
+    Fix to some verbose/verbose changes
+    Fix improperly formatted License Agreement

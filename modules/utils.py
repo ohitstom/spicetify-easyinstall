@@ -138,52 +138,53 @@ async def simultaneous_chunked_download(urls_paths, label):  # utils.simultaneou
     :param label: The label to display above the bar
     '''
     sys.stderr = StringIO()
-    timeout = ClientTimeout(total=60000)
     sem = asyncio.Semaphore(5)    
-
-    async with aiohttp.ClientSession(timeout=timeout, connector=aiohttp.TCPConnector(verify_ssl=False)) as cs:
-        async def _fetch(r, path):
-            async with sem:
-                async with aiofiles.open(path, "wb") as f:
-                    async for chunk in r.content.iter_any():
-                        if not chunk:
-                            break
-                        size = await f.write(chunk)
-                        if not indeterminate:
-                            bar._done += size
-                            bar.show(bar._done)
-                    if indeterminate:
-                        bar._done += 1
+    
+    async def _fetch(r, path):
+        async with sem:
+            async with aiofiles.open(path, "wb") as f:
+                async for chunk in r.content.iter_any():
+                    if not chunk:
+                        break
+                    size = await f.write(chunk)
+                    if not indeterminate:
+                        bar._done += size
                         bar.show(bar._done)
+                if indeterminate:
+                    bar._done += 1
+                    bar.show(bar._done)
 
-        indeterminate = False
-        total_length = 0
-        tasks = []
-        for url, path in urls_paths.items():
-            r = await cs.get(url)
-            if not indeterminate:
-                try:
-                    total_length += r.content_length
-                except Exception:
-                    indeterminate = True
-            tasks.append(_fetch(r, path))
-            verbose_print(f"url: {url},\npath: {path}\n\n")
-
+    indeterminate = False
+    total_length = 0
+    tasks = []
+    for url, path in urls_paths.items():
+        verbose_print(f"\n{url}\nPENDING")
+        r = await aiohttp.ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False)).get(url)
+        
         if not indeterminate:
-            bar = progress.Bar(
-                expected_size=total_length, label=label, width=28, hide=False
-            )
-        else:
-            bar = progress.Bar(
-                expected_size=len(tasks), label=label, width=28, hide=False
-            )
+            try:
+                total_length += r.content_length
+            except Exception:
+                indeterminate = True
+                
+        tasks.append(_fetch(r, path))
+        verbose_print("PASS\n")
 
-        logger._pause_file_output = True
-        bar.show(0)
-        bar._done = 0
-        await asyncio.gather(*tasks)
-        logger._pause_file_output = False
-        bar.done()
+    if not indeterminate:
+        bar = progress.Bar(
+            expected_size=total_length, label=label, width=28, hide=False
+        )
+    else:
+        bar = progress.Bar(
+            expected_size=len(tasks), label=label, width=28, hide=False
+        )
+
+    logger._pause_file_output = True
+    bar.show(0)
+    bar._done = 0
+    await asyncio.gather(*tasks)
+    logger._pause_file_output = False
+    bar.done()
 
 
 async def chunked_download(url, path, label):  # chunked_download("urltodownload.com/download.zip", f"{userprofile}\\file.zip", "file.zip") <- Example Usage.
