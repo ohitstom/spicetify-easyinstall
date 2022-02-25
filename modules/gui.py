@@ -640,7 +640,7 @@ class ConfirmScreen(SlidingScreen):
 
         # Make sure alignment is ok
         self.spacer = QtWidgets.QSpacerItem(
-            0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding
+            0, 0, vPolicy=QtWidgets.QSizePolicy.Maximum
         )
         self.layout().addItem(self.spacer)
 

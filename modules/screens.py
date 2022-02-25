@@ -174,7 +174,7 @@ class InstallConfirmScreen(gui.ConfirmScreen):
             globals.SPICETIFY_VERSION,
             f'{SPOTIFY_VERSION_OLD} -> '
             if SPOTIFY_VERSION_OLD != SPOTIFY_VERSION_UPDATE
-            and SPOTIFY_VERSION_OLD != "???"
+            and SPOTIFY_VERSION_OLD != "Path NULL"
             and os.path.isdir(f"{globals.appdata}\\Spotify")
             else "",
             SPOTIFY_VERSION_UPDATE,
@@ -604,9 +604,9 @@ class UpdateMenuScreen(gui.MenuScreen):
                 },
                 "latest": {
                     "icon": "󰚰",
-                    "text": "Latest",
+                    "text": "Addons",
                     "desc": "Most Recent Addons",
-                    "next_screen": "update_latest_confirm_screen",
+                    "next_screen": "update_addons_confirm_screen",
                     "row": 0,
                     "column": 1,
                 },
@@ -659,7 +659,6 @@ class UpdateAppConfirmScreen(gui.ConfirmScreen):
             json["tag_name"],
             json["body"].strip().replace("\n", "\n\n").strip("`#"),
         )
-
         self.rundown.setMarkdown(formatted)
         super().shownCallback()
 
@@ -724,8 +723,8 @@ class UpdateAppLogScreen(gui.ConsoleLogScreen):
         logger._file_write = self.original_file_write
 
 
-class UpdateLatestConfirmScreen(gui.ConfirmScreen):
-    screen_name = "update_latest_confirm_screen"
+class UpdateAddonsConfirmScreen(gui.ConfirmScreen):
+    screen_name = "update_addons_confirm_screen"
 
     def __init__(self, parent):
         super().__init__(
@@ -736,31 +735,34 @@ class UpdateLatestConfirmScreen(gui.ConfirmScreen):
             rundown=globals.UPDATE_LATEST_RUNDOWN_MD,
             action_name="Update",
             back_screen="update_menu_screen",
-            next_screen="update_latest_log_screen",
+            next_screen="update_addons_log_screen",
         )
+        self.version = QtWidgets.QCheckBox(parent=self, text="Re-install Stock Addons")
+        gui.clickable(self.version)
+        self.layout().addWidget(self.version)
 
     @asyncSlot()
     async def shownCallback(self):
         bottom_bar = self.parent().parent().bottom_bar
-        bottom_bar.back.setEnabled(False)
         bottom_bar.next.setEnabled(False)
         super().shownCallback()
 
 
-class UpdateLatestLogScreen(gui.ConsoleLogScreen):
-    screen_name = "update_latest_log_screen"
+class UpdateAddonsLogScreen(gui.ConsoleLogScreen):
+    screen_name = "update_addons_log_screen"
 
     def __init__(self, parent):
         super().__init__(parent=parent, icon="󰉺", title="Update Log")
 
     @asyncSlot()
     async def shownCallback(self):
+        slider = self.parent().parent().slider
         # Configure output widget
         await self.setup()
 
         # Actual update
         try:
-            await core.update_addons()
+            await core.update_addons(shipped=slider.update_addons_confirm_screen.version.isChecked())
         except Exception:
             exc = "".join(traceback.format_exception(*sys.exc_info()))
             print(exc)

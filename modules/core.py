@@ -302,9 +302,9 @@ async def install(launch=False):
         if os.path.isdir(f"{globals.appdata}\\Spotify\\Users") is True:
             shutil.rmtree(f"{globals.appdata}\\Spotify\\Users")
         
-        elif os.path.isfile(f"{globals.appdata}\\Spotify\\prefs") is True:
+        if os.path.isfile(f"{globals.appdata}\\Spotify\\prefs") is True:
             os.remove(f"{globals.appdata}\\Spotify\\prefs")
-        
+
         shutil.move(
             f"{globals.cwd}\\Backup_Credentials\\Users",
             f"{globals.appdata}\\Spotify"
@@ -420,7 +420,7 @@ async def uninstall():
     print("Finished removing environment variables!")
 
 
-async def update_addons():
+async def update_addons(shipped=False):
     steps_count = 3
     folders = [
         f"{globals.user_profile}\\spicetify-cli\\Themes",
@@ -454,8 +454,9 @@ async def update_addons():
     # >[Section 2]<
 
     print(f"(2/{steps_count}) Downloading 'official' themes...")
+    
     await utils.chunked_download(
-        url=globals.THEMES_URL.replace(globals.THEMES_VERSION[17:], 'refs/heads/master'),
+        url=globals.THEMES_URL if shipped else globals.THEMES_URL.replace(globals.THEMES_VERSION[17:], 'refs/heads/master'),
         path=(f"{globals.user_profile}\\spicetify-cli\\Themes.zip"),
         label=(f"{globals.user_profile}\\spicetify-cli\\Themes.zip")
         if globals.verbose
@@ -470,7 +471,7 @@ async def update_addons():
         f"{globals.user_profile}\\spicetify-cli\\Themes.zip"
     )
     os.rename(
-        f"{globals.user_profile}\\spicetify-cli\\spicetify-themes-master",
+        f"{globals.user_profile}\\spicetify-cli\\{globals.THEMES_VERSION if shipped else 'spicetify-themes-master'}",
         f"{globals.user_profile}\\spicetify-cli\\Themes",
     )
     os.rename(
@@ -503,15 +504,16 @@ async def update_addons():
     print(f"(3/{steps_count}) Downloading 'custom' addons...")
     base = {**globals.CUSTOM_THEMES, **globals.CUSTOM_APPS, **globals.CUSTOM_EXTENSIONS}
     final = {}
-    for url, directory in base.items():
-        if "releases" not in url:
-            newval = f"{url[:-40]}refs/heads/"
-            final[newval + await utils.heads_value(newval)] = directory
-        else:
-            final[url] = directory
+    if not shipped:
+        for url, directory in base.items():
+            if "releases" not in url:
+                newval = f"{url[:-40]}refs/heads/"
+                final[newval + await utils.heads_value(newval)] = directory
+            else:
+                final[url] = directory
     
-    await utils.simultaneous_chunked_download(final, "Custom Addons.zip")
-    for url, download in final.items():
+    await utils.simultaneous_chunked_download(base if shipped else final, "Stock Custom Addons.zip" if shipped else "Custom Addons.zip")
+    for url, download in base.items() if shipped else final.items():
         if os.path.exists(download):
             captured = Path(download)
             directory = captured.parent

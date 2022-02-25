@@ -1,13 +1,16 @@
 Needed:
     -Fill out MOTD's (Mostly Redundant ones).
     -Download Addons from spicetify repo (Themes is already done)
-
+    -Try updating globals to latest and see how they work together
+    
 Optional:
-    -Toggle Box For Friends Feed
     -Create prefs file as an end of the road fix for when its missing. Easily done as all the info prefs contains is in this installer.
+    -When updating to latest addons, do the same for dribbblish release.
+    -Trim down patch notes to a bare minimum as not to clutter/find a way to add a dropdown
+    -Uninstall winstore version of spotify
 
 Fix:
-    -Deadspace in update app
+    -Prefs restore hang
 
 
 Finished:
@@ -16,5 +19,9 @@ Finished:
     Fix for improper download handling/extracting (Charlies fault for having multiple extensions in one repo smh my head)
     Fix GUI to be a more acceptable size
     Fix for prefs being accidentally deleted
-    Fix to some verbose/verbose changes
     Fix improperly formatted License Agreement
+    Fix for out of sync prefs information when restoring
+    Fix Deadspace in update app page
+    + Some verbose/verbose changes
+    + Better hidden processes
+    + Additional buttons for update and config

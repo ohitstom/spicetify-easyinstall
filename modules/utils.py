@@ -43,10 +43,7 @@ def find_config_entry(entry, replacement=None, config=None, encoding=None, split
         config = f"{globals.user_profile}\\.spicetify\\config-xpui.ini"
 
     elif not os.path.isfile(config):
-        if "prefs" in config:
-            return "???"
-        else:
-            return "Path NULL"
+        return "Path NULL"
     
     if encoding is None:
         with open(config, 'rb') as filetemp: #Sanity
@@ -291,10 +288,9 @@ async def start_process(program, *args, silent=True):
     if not silent:
         return await asyncio.create_subprocess_exec(program, *args)
 
-    SW_HIDE = 0
     info = subprocess.STARTUPINFO()
     info.dwFlags = subprocess.STARTF_USESHOWWINDOW
-    info.wShowWindow = SW_HIDE
+    info.wShowWindow = subprocess.SW_HIDE
     return await asyncio.create_subprocess_exec(program, *args, startupinfo=info)
 
 

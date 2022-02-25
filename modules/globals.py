@@ -3,7 +3,7 @@ import tempfile
 from pathlib import Path
 
 # Github Update Variables
-RELEASE = "3.0"
+RELEASE = "2.8"
 HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
 WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL" 
 
@@ -36,13 +36,13 @@ CUSTOM_EXTENSIONS = {
 }
 
 CUSTOM_APPS = {
-    "https://codeload.github.com/CharlieS1103/spicetify-marketplace/zip/ebca4ac34351d3abcfd9cc92f1bba53e569b5d4f": f"{user_profile}\\spicetify-cli\\CustomApps\\Marketplace.zip",
+    "https://codeload.github.com/CharlieS1103/spicetify-marketplace/zip/081b9cbac7a7bdbb160b98be06fdcfbd59fda5dc": f"{user_profile}\\spicetify-cli\\CustomApps\\Marketplace.zip",
 }
 
 CUSTOM_THEMES = {
     "https://github.com/JulienMaille/dribbblish-dynamic-theme/releases/download/4.1.1/DribbblishDynamic_v4.1.1.zip": f"{user_profile}\\spicetify-cli\\Themes\\Dribbblish-Dynamic.zip",
     "https://codeload.github.com/NYRI4/Comfy-spicetify/zip/60c258e12b085e2e94c6d026439ff0ddff462939": f"{user_profile}\\spicetify-cli\\Themes\\Comfy.zip",
-    "https://codeload.github.com/ohitstom/comfy-shadow/zip/300eb3139c36618c9f0982d0e9bf90c9e91032fa": f"{user_profile}\\spicetify-cli\\Themes\\Comfy_Shadow.zip",
+    "https://codeload.github.com/ohitstom/comfy-shadow/zip/43663a1c17a816cb44083092101760e81e3ce8d1": f"{user_profile}\\spicetify-cli\\Themes\\Comfy_Shadow.zip",
 }
 
 # Text Pages For GUI
@@ -83,7 +83,7 @@ UPDATE_APP_RUNDOWN_MD = (
 )
 
 UPDATE_LATEST_RUNDOWN_MD = """
-*Downloads Latest Themes [Which May Not Work]*
+*Downloads Latest Addons [Which May Not Work]*
 ** **
  - **Theme Version**: `master [Latest Commit]`
  - **Extension Version**: `Not Implemented`
