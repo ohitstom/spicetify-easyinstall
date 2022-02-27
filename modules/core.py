@@ -315,6 +315,31 @@ async def install(launch=False):
             f"{globals.appdata}\\Spotify"
         )
         shutil.rmtree(f"{globals.cwd}\\Backup_Credentials")
+
+        if utils.find_config_entry("app.last-launched-version", config=globals.spotify_prefs, splitchar="=").strip('"') != ".".join(globals.SPOTIFY_VERSION[18:-7].split(".")[:5]): 
+            original_prefs = utils.find_config_entry("app.last-launched-version", config=globals.spotify_prefs, splitchar="=")
+
+            spotify_prefscheck_pid = (
+                await utils.start_process(
+                    globals.appdata + "\\spotify\\spotify.exe" ,
+                    silent=True
+                )
+            ).pid
+
+            while utils.process_pid_running(spotify_prefscheck_pid):
+                await asyncio.sleep(0.25)
+        
+            i = 0
+            while utils.find_config_entry("app.last-launched-version", config=globals.spotify_prefs, splitchar="=") == original_prefs:
+                i += 1
+                if i > 40:
+                    raise FileNotFoundError(
+                        "Spotify preferences were not updated."
+                    )
+                await asyncio.sleep(0.25)
+
+            utils.kill_processes("Spotify.exe")
+
         print("Finished restoring!\n")
 
     elif os.path.isdir(f"{globals.cwd}\\Backup_Credentials") is False:

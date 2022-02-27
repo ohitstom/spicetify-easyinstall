@@ -10,7 +10,7 @@ Optional:
     -Uninstall winstore version of spotify
 
 Fix:
-    -Prefs restore hang
+    -Prefs restore hang (After restoring prefs it needs to open spotify to resync the last opened version) [could possibly just hardset it instead]
 
 
 Finished:
