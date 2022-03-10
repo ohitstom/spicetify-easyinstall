@@ -46,7 +46,14 @@ async def install(launch=False):
     # 3. If it isn't, print that Spotify is not installed.
 
     print(f"(2/{steps_count}) Uninstalling Spotify...")
-    if os.path.isdir(f"{globals.appdata}\\Spotify"):
+    process = await utils.powershell('Get-AppxPackage SpotifyAB.SpotifyMusic', wait=True, verbose=False)
+    winstore_spotify = str(await process.stdout.read()).strip
+
+    if 'Version' in winstore_spotify:
+        await utils.powershell('Get-AppxPackage SpotifyAB.SpotifyMusic | Remove-AppxPackage', wait=True)
+        print("Finished uninstalling Spotify!\n")
+    
+    elif os.path.isdir(f"{globals.appdata}\\Spotify"):
         utils.kill_processes("spicetify.exe")
         utils.kill_processes("Spotify.exe")
         
@@ -62,6 +69,7 @@ async def install(launch=False):
     
     else:
         print("Spotify is not installed!\n")
+    
 
     # >[Section 3]<
     # 1. For each folder in the list of folders, 
@@ -139,7 +147,7 @@ async def install(launch=False):
     )
 
     environ_check = (
-        f"`{globals.user_profile}`\\spicetify-cli\\spicetify.exe"
+        f'& "{globals.user_profile}\\spicetify-cli\\spicetify exe.exe"'
         if os.path.isdir(f"{globals.user_profile}\\spicetify-cli")
         else "spicetify"
     )
@@ -150,9 +158,12 @@ async def install(launch=False):
         ])
     )
 
-    prefs_check = utils.find_config_entry("prefs_path")
-    if not prefs_check:
-        utils.set_config_entry("prefs_path", f'{globals.appdata}\Spotify\prefs')
+    if os.path.isdir(f"{globals.user_profile}\\.spicetify"):
+        prefs_check = utils.find_config_entry("prefs_path")
+        if not prefs_check:
+            utils.set_config_entry("prefs_path", f'{globals.appdata}\Spotify\prefs')
+    else:
+        print("Config wasnt created, Spicetify might not have installed correctly. Please retry with verbose if it doesnt work.")
 
     await utils.powershell(
         '\n'.join([
@@ -356,7 +367,7 @@ async def install(launch=False):
 async def apply_config(theme, colorscheme, extensions, customapps):
     steps_count = 2
     environ_check = (
-        f"`{globals.user_profile}`\\spicetify-cli\\spicetify.exe"
+        f'& "{globals.user_profile}\\spicetify-cli\\spicetify exe.exe"'
         if os.path.isdir(f"{globals.user_profile}\\spicetify-cli")
         else "spicetify"
     )

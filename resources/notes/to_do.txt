@@ -1,13 +1,13 @@
 Needed:
     -Fill out MOTD's (Mostly Redundant ones).
     -Download Addons from spicetify repo (Themes is already done)
-    -Try updating globals to latest and see how they work together
+    -Globals need desperate updating
+    -Actually test the new uninstall spotify (core.install)
     
 Optional:
     -Create prefs file as an end of the road fix for when its missing. Easily done as all the info prefs contains is in this installer.
     -When updating to latest addons, do the same for dribbblish release.
     -Trim down patch notes to a bare minimum as not to clutter/find a way to add a dropdown
-    -Uninstall winstore version of spotify
 
 Fix:
     -Prefs restore hang (After restoring prefs it needs to open spotify to resync the last opened version) [could possibly just hardset it instead]
@@ -23,5 +23,6 @@ Finished:
     Fix for out of sync prefs information when restoring
     Fix Deadspace in update app page
     + Some verbose/verbose changes
+    + Uninstall winstore spotify
     + Better hidden processes
     + Additional buttons for update and config
