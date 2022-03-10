@@ -1,4 +1,5 @@
 import asyncio
+import os
 import re
 import webbrowser
 
@@ -113,6 +114,12 @@ QScrollArea, QScrollArea > QWidget > QWidget {{
 }}
 """
 
+os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
+if hasattr(QtCore.Qt, 'AA_EnableHighDpiScaling'):
+    QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+
+if hasattr(QtCore.Qt, 'AA_UseHighDpiPixmaps'):
+    QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
 
 def connect(signal, callback):
     """Disconnect all callbacks from a given signal and assign a new one"""
