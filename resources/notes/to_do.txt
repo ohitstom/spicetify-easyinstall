@@ -1,4 +1,7 @@
 Needed:
+    -SCALE THE ENTIRE GUI CONSISTANTLY ./gui.py check top for notes
+
+
     -Fill out MOTD's (Mostly Redundant ones).
     -Download Addons from spicetify repo (Themes is already done)
     -Globals need desperate updating
