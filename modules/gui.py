@@ -9,23 +9,18 @@ from qasync import asyncSlot
 
 from modules import globals, logger
 
-os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
 if hasattr(QtCore.Qt, 'AA_EnableHighDpiScaling'):
     QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
 
 if hasattr(QtCore.Qt, 'AA_UseHighDpiPixmaps'):
     QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
 
+os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
 APP = QtWidgets.QApplication(sys.argv)
 SCREEN = APP.primaryScreen().size()
-
-WIDTH = round(33.85416666666666 * SCREEN.width() / 100)
-HEIGHT = round(41.666666666666664 * SCREEN.height() / 100)
+WIDTH = 750
+HEIGHT = 475
 BOTTOM_BAR_HEIGHT = 60
-
-# Start by finding the difference in percentage of two pairs of integers; 1920x1080 (screen size base) to 650x450 (Application size).
-# The output numbers (33.85416666666666 for 1920 to 650, and 41.666666666666664 for 1080 to 450) are then used to scale up the final applications width and height.
-# This means that larger displays, eg 3840x1440, scale up the applications x and y as if it was still being viewed on a 1920x1080 display.
 
 BACKGROUND = "#050607"
 ALT_BACKGROUND = "#191A1B"

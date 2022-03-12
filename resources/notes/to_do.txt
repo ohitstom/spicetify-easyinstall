@@ -1,7 +1,4 @@
 Needed:
-    -SCALE THE ENTIRE GUI CONSISTANTLY ./gui.py check top for notes
-
-
     -Fill out MOTD's (Mostly Redundant ones).
     -Download Addons from spicetify repo (Themes is already done)
     -Globals need desperate updating
@@ -14,6 +11,12 @@ Optional:
 
 Fix:
     -Prefs restore hang (After restoring prefs it needs to open spotify to resync the last opened version) [could possibly just hardset it instead]
+   - # WIDTH = round(33.85416666666666 * SCREEN.width() / 100)
+    -# HEIGHT = round(41.666666666666664 * SCREEN.height() / 100)
+    -# Start by finding the difference in percentage of two pairs of integers; 1920x1080 (screen size base) to 650x450 (Application size).
+    -# The output numbers (33.85416666666666 for 1920 to 650, and 41.666666666666664 for 1080 to 450) are then used to scale up the final applications width and height.
+    -# This means that larger displays, eg 3840x1440, scale up the applications x and y as if it was still being viewed on a 1920x1080 display.
+
 
 
 Finished:

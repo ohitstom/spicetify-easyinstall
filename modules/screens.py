@@ -73,6 +73,9 @@ class MainMenuScreen(gui.MenuScreen):
             icon="󰙪",
             title="What do you want to do?",
             back_screen="license_screen",
+            max_height = 140,
+            min_height = 100,
+            max_width = 302,
             buttons={
                 "install": {
                     "icon": "󰄠",
@@ -225,10 +228,10 @@ class ConfigThemeMenuScreen(gui.MenuScreen):
             multichoice=False,
             buttons={},
             font_size_ratio=0.75,
-            min_height=100,
-            max_height=100,
-            min_width=262,
-            max_width=262,
+            min_height=150,
+            max_height=150,
+            min_width=302,
+            max_width=302,
         )
 
     @asyncSlot()
@@ -274,10 +277,10 @@ class ConfigColorschemeMenuScreen(gui.MenuScreen):
             multichoice=False,
             buttons={},
             font_size_ratio=0.75,
-            min_height=100,
-            max_height=100,
-            min_width=262,
-            max_width=262,
+            min_height=150,
+            max_height=150,
+            min_width=302,
+            max_width=302,
         )
 
     @asyncSlot()
@@ -361,10 +364,10 @@ class ConfigExtensionsMenuScreen(gui.MenuScreen):
             allow_no_selection=True,
             buttons={},
             font_size_ratio=0.75,
-            min_height=100,
-            max_height=100,
-            min_width=262,
-            max_width=262,
+            min_height=150,
+            max_height=150,
+            min_width=302,
+            max_width=302,
         )
         self.first_run = True
 
@@ -420,10 +423,10 @@ class ConfigCustomappsMenuScreen(gui.MenuScreen):
             allow_no_selection=True,
             buttons={},
             font_size_ratio=0.75,
-            min_height=100,
-            max_height=100,
-            min_width=262,
-            max_width=262,
+            min_height=150,
+            max_height=150,
+            min_width=302,
+            max_width=302,
         )
         self.first_run = True
 

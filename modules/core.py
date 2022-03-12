@@ -276,14 +276,14 @@ async def install(launch=False):
             for item in os.listdir(unpacked_path):
                 # Moving all files/folders from ./extractedzip/duplicate-extracted-zip to just ./extractedzip
                 for src in Path(f"{unpacked_path}\\{item}").glob("*"): # for files and folders in {PARENT}\{ADDON-DUPE}\{ACTUAL-ADDON}.glob(*) - * meanys any non zero file
-                    shutil.move(src, unpacked_path)      
+                    shutil.move(str(src), str(unpacked_path))      
                 if os.path.exists(f"{unpacked_path}\\{item}") and os.path.isdir(f"{unpacked_path}\\{item}"): # Cleanup
                     os.rmdir(f"{unpacked_path}\\{item}")
 
                 # Moving all files with the js extension to {extensions}
                 for src in Path(f"{unpacked_path}").glob("**/*.js"): # for files in {PARENT}\{ADDON-DUPE}\**\*.js where ** means any segment, null or otherwise.
                     if "Extensions" in str(src):
-                        shutil.move(src, directory)
+                        shutil.move(str(src), str(directory))
                 if os.path.exists(unpacked_path) and os.path.isdir(unpacked_path) and "Extensions" in unpacked_path: # Cleanup
                     shutil.rmtree(unpacked_path)
 
@@ -569,14 +569,14 @@ async def update_addons(shipped=False):
             for item in os.listdir(unpacked_path):
                 # Moving all files/folders from ./extractedzip/duplicate-extracted-zip to just ./extractedzip
                 for src in Path(f"{unpacked_path}\\{item}").glob("*"): # for files and folders in {PARENT}\{ADDON-DUPE}\{ACTUAL-ADDON}.glob(*) - * meanys any non zero file
-                    shutil.move(src, unpacked_path)      
+                    shutil.move(str(src), str(unpacked_path))      
                 if os.path.exists(f"{unpacked_path}\\{item}") and os.path.isdir(f"{unpacked_path}\\{item}"): # Cleanup
                     os.rmdir(f"{unpacked_path}\\{item}")
 
                 # Moving all files with the js extension to {extensions}
                 for src in Path(f"{unpacked_path}").glob("**/*.js"): # for files in {PARENT}\{ADDON-DUPE}\**\*.js where ** means any segment, null or otherwise.
                     if "Extensions" in str(src):
-                        shutil.move(src, directory)
+                        shutil.move(str(src), str(directory))
                 if os.path.exists(unpacked_path) and os.path.isdir(unpacked_path) and "Extensions" in unpacked_path: # Cleanup
                     shutil.rmtree(unpacked_path)
 
