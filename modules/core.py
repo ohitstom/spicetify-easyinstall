@@ -47,7 +47,7 @@ async def install(launch=False):
 
     print(f"(2/{steps_count}) Uninstalling Spotify...")
     process = await utils.powershell('Get-AppxPackage SpotifyAB.SpotifyMusic', wait=True, verbose=False)
-    winstore_spotify = str(await process.stdout.read()).strip
+    winstore_spotify = str(await process.stdout.read()).strip()
 
     if 'Version' in winstore_spotify:
         await utils.powershell('Get-AppxPackage SpotifyAB.SpotifyMusic | Remove-AppxPackage', wait=True)
