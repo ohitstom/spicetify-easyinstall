@@ -236,8 +236,10 @@ class ConfigThemeMenuScreen(gui.MenuScreen):
         bottom_bar = self.parent().parent().bottom_bar
         bottom_bar.back.setEnabled(False)
         bottom_bar.next.setEnabled(False)
+        
         themes = utils.list_config_available("themes")
         selected = self.getSelection()
+        self.clearCurrentButtons()
         row = 0
         column = 0
         for theme in themes:

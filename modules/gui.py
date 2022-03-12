@@ -425,6 +425,7 @@ class MenuScreen(SlidingScreen):
                 margin: 0px;
                 padding: 5px 10px 5px 10px;
                 background: {BACKGROUND};
+                border-radius: 4px;
                 border: 1px solid {BORDER};
                 min-height: {min_height}px;
                 max-height: {max_height}px;
@@ -488,7 +489,6 @@ class MenuScreen(SlidingScreen):
 
     def addMenuButton(self, btn_id, row, column, **kwargs):
         self.buttons[btn_id] = QtWidgets.QRadioButton(parent=self.button_grid, text="")
-        
         for key, value in kwargs.items():
             setattr(self.buttons[btn_id], f"_{key}", value)
         if self.multichoice:
