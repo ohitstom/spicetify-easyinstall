@@ -399,10 +399,10 @@ class MenuScreen(SlidingScreen):
         scrollable=False,
         buttons={},
         font_size_ratio=1.25,
-        min_height=130,
+        min_height=140,
         max_height=186,
         min_width=276,
-        max_width=276,
+        max_width=302,
     ):
         super().__init__(parent=parent, icon=icon, title=title)
 
@@ -425,7 +425,6 @@ class MenuScreen(SlidingScreen):
                 margin: 0px;
                 padding: 5px 10px 5px 10px;
                 background: {BACKGROUND};
-                border-radius: 4px;
                 border: 1px solid {BORDER};
                 min-height: {min_height}px;
                 max-height: {max_height}px;
@@ -489,6 +488,7 @@ class MenuScreen(SlidingScreen):
 
     def addMenuButton(self, btn_id, row, column, **kwargs):
         self.buttons[btn_id] = QtWidgets.QRadioButton(parent=self.button_grid, text="")
+        
         for key, value in kwargs.items():
             setattr(self.buttons[btn_id], f"_{key}", value)
         if self.multichoice:
@@ -533,7 +533,19 @@ class MenuScreen(SlidingScreen):
                 4,
                 QtCore.Qt.AlignCenter,
             )
+
             self.buttons[btn_id].children()[-1].setObjectName("description")
+        if kwargs.get("background"):
+            from PyQt5.QtGui import QPixmap
+            pixmap = QPixmap(kwargs["background"])
+            self.buttons[btn_id].layout().addWidget(
+                QtWidgets.QLabel(parent=self.buttons[btn_id], pixmap=pixmap),
+                0,
+                0,
+                0,
+                0,
+            )
+        
         self.buttons[btn_id].layout().addItem(
             QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding),
             3,

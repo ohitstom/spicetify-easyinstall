@@ -73,9 +73,6 @@ class MainMenuScreen(gui.MenuScreen):
             icon="󰙪",
             title="What do you want to do?",
             back_screen="license_screen",
-            max_height = 140,
-            min_height = 100,
-            max_width = 302,
             buttons={
                 "install": {
                     "icon": "󰄠",
@@ -228,8 +225,8 @@ class ConfigThemeMenuScreen(gui.MenuScreen):
             multichoice=False,
             buttons={},
             font_size_ratio=0.75,
-            min_height=150,
-            max_height=150,
+            min_height=170,
+            max_height=170,
             min_width=302,
             max_width=302,
         )
@@ -239,10 +236,8 @@ class ConfigThemeMenuScreen(gui.MenuScreen):
         bottom_bar = self.parent().parent().bottom_bar
         bottom_bar.back.setEnabled(False)
         bottom_bar.next.setEnabled(False)
-
         themes = utils.list_config_available("themes")
         selected = self.getSelection()
-        self.clearCurrentButtons()
         row = 0
         column = 0
         for theme in themes:
@@ -252,6 +247,7 @@ class ConfigThemeMenuScreen(gui.MenuScreen):
             self.addMenuButton(
                 theme,
                 text=theme,
+                background='C:/Users/adam-/spicetify-cli/Themes/screenshot.png',
                 row=row,
                 column=column,
                 next_screen="config_colorscheme_menu_screen",
@@ -277,8 +273,8 @@ class ConfigColorschemeMenuScreen(gui.MenuScreen):
             multichoice=False,
             buttons={},
             font_size_ratio=0.75,
-            min_height=150,
-            max_height=150,
+            min_height=170,
+            max_height=170,
             min_width=302,
             max_width=302,
         )
@@ -364,8 +360,8 @@ class ConfigExtensionsMenuScreen(gui.MenuScreen):
             allow_no_selection=True,
             buttons={},
             font_size_ratio=0.75,
-            min_height=150,
-            max_height=150,
+            min_height=170,
+            max_height=170,
             min_width=302,
             max_width=302,
         )
@@ -423,8 +419,8 @@ class ConfigCustomappsMenuScreen(gui.MenuScreen):
             allow_no_selection=True,
             buttons={},
             font_size_ratio=0.75,
-            min_height=150,
-            max_height=150,
+            min_height=170,
+            max_height=170,
             min_width=302,
             max_width=302,
         )

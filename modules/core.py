@@ -562,7 +562,7 @@ async def update_addons(shipped=False):
             if os.path.exists(unpacked_path):
                 shutil.rmtree(unpacked_path)
 
-            shutil.unpack_archive(download, unpacked_path)
+            shutil.unpack_archive(download, u55npacked_path)
             os.remove(download)
 
             # Unzipped download dupe folder removal + Extension extraction + cleanup

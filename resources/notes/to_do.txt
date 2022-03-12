@@ -3,6 +3,7 @@ Needed:
     -Download Addons from spicetify repo (Themes is already done)
     -Globals need desperate updating
     -Actually test the new uninstall spotify (core.install)
+    -Background images and descriptions for addons ['DESCRIPTION:' in extensions]
     
 Optional:
     -Create prefs file as an end of the road fix for when its missing. Easily done as all the info prefs contains is in this installer.
@@ -11,7 +12,7 @@ Optional:
 
 Fix:
     -Prefs restore hang (After restoring prefs it needs to open spotify to resync the last opened version) [could possibly just hardset it instead]
-   - # WIDTH = round(33.85416666666666 * SCREEN.width() / 100)
+    -# WIDTH = round(33.85416666666666 * SCREEN.width() / 100)
     -# HEIGHT = round(41.666666666666664 * SCREEN.height() / 100)
     -# Start by finding the difference in percentage of two pairs of integers; 1920x1080 (screen size base) to 650x450 (Application size).
     -# The output numbers (33.85416666666666 for 1920 to 650, and 41.666666666666664 for 1080 to 450) are then used to scale up the final applications width and height.
