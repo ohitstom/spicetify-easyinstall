@@ -225,10 +225,10 @@ class ConfigThemeMenuScreen(gui.MenuScreen):
             multichoice=False,
             buttons={},
             font_size_ratio=0.75,
-            min_height=170,
-            max_height=170,
-            min_width=302,
-            max_width=302,
+            min_height=141,
+            max_height=141,
+            min_width=250,
+            max_width=250,
         )
 
     @asyncSlot()
@@ -275,10 +275,10 @@ class ConfigColorschemeMenuScreen(gui.MenuScreen):
             multichoice=False,
             buttons={},
             font_size_ratio=0.75,
-            min_height=170,
-            max_height=170,
-            min_width=302,
-            max_width=302,
+            min_height=141,
+            max_height=141,
+            min_width=250,
+            max_width=250,
         )
 
     @asyncSlot()
@@ -362,10 +362,10 @@ class ConfigExtensionsMenuScreen(gui.MenuScreen):
             allow_no_selection=True,
             buttons={},
             font_size_ratio=0.75,
-            min_height=170,
-            max_height=170,
-            min_width=302,
-            max_width=302,
+            min_height=141,
+            max_height=141,
+            min_width=250,
+            max_width=250,
         )
         self.first_run = True
 
@@ -421,10 +421,10 @@ class ConfigCustomappsMenuScreen(gui.MenuScreen):
             allow_no_selection=True,
             buttons={},
             font_size_ratio=0.75,
-            min_height=170,
-            max_height=170,
-            min_width=302,
-            max_width=302,
+            min_height=141,
+            max_height=141,
+            min_width=250,
+            max_width=250,
         )
         self.first_run = True
 

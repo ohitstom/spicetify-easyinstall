@@ -16,9 +16,7 @@ if hasattr(QtCore.Qt, 'AA_UseHighDpiPixmaps'):
     QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
 
 os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
-APP = QtWidgets.QApplication(sys.argv)
-SCREEN = APP.primaryScreen().size()
-WIDTH = 750
+WIDTH = 650
 HEIGHT = 475
 BOTTOM_BAR_HEIGHT = 60
 
@@ -399,10 +397,10 @@ class MenuScreen(SlidingScreen):
         scrollable=False,
         buttons={},
         font_size_ratio=1.25,
-        min_height=140,
-        max_height=186,
-        min_width=276,
-        max_width=302,
+        min_height=0,
+        max_height=225,
+        min_width=0,
+        max_width=325,
     ):
         super().__init__(parent=parent, icon=icon, title=title)
 
