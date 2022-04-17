@@ -6,6 +6,7 @@ from io import StringIO
 
 import aiofiles
 import aiohttp
+import contextlib
 import psutil
 from aiohttp import ClientTimeout
 from bs4 import UnicodeDammit
@@ -13,7 +14,6 @@ from bs4 import UnicodeDammit
 from modules import globals, logger, progress
 
 # >[Config Management]<
-
 
 def replace_config_line(file_name, line_num, text):  # replace_config_line("pathto\\config.txt", 5, "new text") <- Example Usage | Last stage of set_config_entry.
     '''
@@ -136,7 +136,8 @@ async def simultaneous_chunked_download(urls_paths, label):  # utils.simultaneou
     '''
     sys.stderr = StringIO()
     sem = asyncio.Semaphore(5)    
-    
+    timeout = ClientTimeout(total=60 * 60) #One hour timeout
+
     async def _fetch(r, path):
         async with sem:
             async with aiofiles.open(path, "wb") as f:
@@ -156,7 +157,7 @@ async def simultaneous_chunked_download(urls_paths, label):  # utils.simultaneou
     tasks = []
     for url, path in urls_paths.items():
         verbose_print(f"\n{url}\nPENDING")
-        r = await aiohttp.ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False)).get(url)
+        r = await aiohttp.ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False), timeout=timeout).get(url)
         
         if not indeterminate:
             try:
@@ -193,7 +194,8 @@ async def chunked_download(url, path, label):  # chunked_download("urltodownload
     :param label: The label of the bar
     '''
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False)) as cs:
+    timeout = ClientTimeout(total=60 * 60) #One hour timeout
+    async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False), timeout=timeout) as cs:
         async with cs.get(url, headers={"Accept-Encoding": "null"}) as r:
             async with aiofiles.open(path, "wb") as f:
                 logger._pause_file_output = True
@@ -236,7 +238,6 @@ def verbose_print(*args, **kwargs):
 
 
 # >[Process Management]<
-
 
 async def powershell(*args, verbose=None, wait=True, cwd=None, shell="powershell", **kwargs):
     '''
@@ -302,14 +303,12 @@ def kill_processes(name):
     '''
     name = name.lower()
     for proc in psutil.process_iter():
-        try:
+        with contextlib.suppress(Exception):
             if proc.name().lower() == name:
                 proc.kill()
-        except Exception:
-            pass
 
 
-def process_running(name): # Boolean operator for running application names.
+def process_running(name):    # Boolean operator for running application names.
     '''
     Check if a process is running by name
     
@@ -318,11 +317,9 @@ def process_running(name): # Boolean operator for running application names.
     '''
     name = name.lower()
     for proc in psutil.process_iter():
-        try:
+        with contextlib.suppress(Exception):
             if proc.name().lower() == name:
                 return True
-        except Exception:
-            pass
     return False
 
 
