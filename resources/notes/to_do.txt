@@ -1,9 +1,10 @@
 Needed:
     -Fill out MOTD's (Mostly Redundant ones).
     -Download Addons from spicetify repo (Themes is already done)
-    -Globals need desperate updating
+    -Globals need desperate updating [on hold until spicetify sorts out its shit, just update comfy dark for now]
     -Actually test the new uninstall spotify (core.install)
     -Background images and descriptions for addons ['DESCRIPTION:' in extensions]
+    -[Net.ServicePointManager]::SecurityProtocol =[Net.SecurityProtocolType]::Tls12
     
 Optional:
     -Create prefs file as an end of the road fix for when its missing. Easily done as all the info prefs contains is in this installer.
@@ -29,3 +30,4 @@ Finished:
     + Better hidden processes
     + Additional buttons for update and config
     + Better 4k/DPI support
+    + Removal of download timeouts

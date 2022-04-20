@@ -158,7 +158,7 @@ async def install(launch=False):
         ])
     )
 
-    if os.path.isdir(f"{globals.user_profile}\\.spicetify"):
+    if os.path.isfile(f"{globals.user_profile}\\.spicetify\\config-xpui.ini"):
         prefs_check = utils.find_config_entry("prefs_path")
         if not prefs_check:
             utils.set_config_entry("prefs_path", f'{globals.appdata}\Spotify\prefs')
