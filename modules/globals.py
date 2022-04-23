@@ -2,6 +2,7 @@ import os
 import tempfile
 from pathlib import Path
 
+
 # Github Update Variables
 RELEASE = "2.8"
 HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
