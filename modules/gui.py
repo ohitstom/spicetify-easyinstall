@@ -415,6 +415,7 @@ class MenuScreen(SlidingScreen):
 
         self.button_grid = QuickWidget(parent=self, margins=(0, 0, 0, 0), spacing=20)
         if scrollable:
+            self.scroll_pos = 0
             self.button_scroll_area = QtWidgets.QScrollArea(parent=parent)
             self.button_scroll_area.setFrameShape(QtWidgets.QFrame.NoFrame)
             self.button_scroll_area.setWidgetResizable(True)
@@ -595,17 +596,22 @@ class MenuScreen(SlidingScreen):
             )
 
         # Setup back button
-        connect(
-            signal=bottom_bar.back.clicked,
-            callback=lambda *_: slider.slideTo(
-                getattr(slider, self.back_screen), direction="back"
-            ),
-        )
+        def back_button_callback(*_):
+            slider.slideTo(
+                getattr(slider, self.back_screen),
+                direction="back"
+            )
+            if self.scrollable:
+                self.scroll_pos = self.button_scroll_area.verticalScrollBar().value()
+
+        connect(signal=bottom_bar.back.clicked, callback=back_button_callback)
         bottom_bar.back.setText("Back")
         bottom_bar.back.setEnabled(True)
 
         # Setup next button
         def next_button_callback(*_):
+            if self.scrollable:
+                self.scroll_pos = self.button_scroll_area.verticalScrollBar().value()
             for btn in self.buttons.values():
                 if btn.isChecked():
                     slider.slideTo(
@@ -633,6 +639,22 @@ class MenuScreen(SlidingScreen):
             selected.append(None)
             selected = selected[0]
         return selected
+
+    @asyncSlot()
+    async def selectButtons(self, selected):
+        did_select = False
+        if not isinstance(selected, list):
+            selected = [selected]
+        for selection in selected:
+            if selection in self.buttons:
+                self.buttons[selection].setChecked(True)
+                did_select = True
+                if self.scrollable:
+                    while self.buttons[selection].pos().isNull():
+                        await asyncio.sleep(0.1)
+                    self.button_scroll_area.ensureWidgetVisible(self.buttons[selection])
+        if not did_select and self.scrollable:
+            self.button_scroll_area.verticalScrollBar().setValue(self.scroll_pos)
 
 
 class ConfirmScreen(SlidingScreen):

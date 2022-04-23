@@ -257,8 +257,7 @@ class ConfigThemeMenuScreen(gui.MenuScreen):
             column += 1
         if not selected:
             selected = utils.find_config_entry("current_theme")
-        if selected in self.buttons:
-            self.buttons[selected].setChecked(True)
+        self.selectButtons(selected)
         super().shownCallback()
 
 
@@ -343,8 +342,7 @@ class ConfigColorschemeMenuScreen(gui.MenuScreen):
             column += 1
         if not selected:
             selected = utils.find_config_entry("color_scheme")
-        if selected in self.buttons:
-            self.buttons[selected].setChecked(True)
+        self.selectButtons(selected)
         super().shownCallback()
 
 
@@ -402,9 +400,7 @@ class ConfigExtensionsMenuScreen(gui.MenuScreen):
                 extension[:-3]
                 for extension in utils.find_config_entry("extensions").split("|")
             ]
-        for selection in selected:
-            if selection in self.buttons:
-                self.buttons[selection].setChecked(True)
+        self.selectButtons(selected)
         super().shownCallback()
 
 
@@ -456,9 +452,7 @@ class ConfigCustomappsMenuScreen(gui.MenuScreen):
         if self.first_run:
             self.first_run = False
             selected = utils.find_config_entry("custom_apps").split("|")
-        for selection in selected:
-            if selection in self.buttons:
-                self.buttons[selection].setChecked(True)
+        self.selectButtons(selected)
         super().shownCallback()
 
 class ConfigConfirmScreen(gui.ConfirmScreen):
