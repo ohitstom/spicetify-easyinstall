@@ -5,6 +5,7 @@ import sys
 import webbrowser
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QPixmap
 from qasync import asyncSlot
 
 from modules import globals, logger
@@ -121,6 +122,8 @@ QScrollArea, QScrollArea > QWidget > QWidget {{
     background: transparent;
 }}
 """
+
+# PUT ROUNDED FUNCTION HERE
 
 def connect(signal, callback):
     """Disconnect all callbacks from a given signal and assign a new one"""
@@ -504,6 +507,17 @@ class MenuScreen(SlidingScreen):
             1,
             0,
         )
+
+        if kwargs.get("background"):
+            pixmap = QPixmap(kwargs["background"]).scaled(260, 146, QtCore.Qt.KeepAspectRatio)
+            self.buttons[btn_id].layout().addWidget(
+                QtWidgets.QLabel(parent=self.buttons[btn_id], pixmap=pixmap),
+                0,
+                0,
+                0,
+                0,
+                QtCore.Qt.AlignCenter,
+            )     
         if kwargs.get("icon"):
             self.buttons[btn_id].layout().addWidget(
                 QtWidgets.QLabel(parent=self.buttons[btn_id], text=kwargs["icon"]),
@@ -531,19 +545,8 @@ class MenuScreen(SlidingScreen):
                 4,
                 QtCore.Qt.AlignCenter,
             )
-
             self.buttons[btn_id].children()[-1].setObjectName("description")
-        if kwargs.get("background"):
-            from PyQt5.QtGui import QPixmap
-            pixmap = QPixmap(kwargs["background"])
-            self.buttons[btn_id].layout().addWidget(
-                QtWidgets.QLabel(parent=self.buttons[btn_id], pixmap=pixmap),
-                0,
-                0,
-                0,
-                0,
-            )
-        
+
         self.buttons[btn_id].layout().addItem(
             QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding),
             3,
@@ -551,6 +554,7 @@ class MenuScreen(SlidingScreen):
             1,
             4,
         )
+
         clickable(self.buttons[btn_id])
         if self.scrollable:
             self.button_grid.layout().addWidget(self.buttons[btn_id], row, column, QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)

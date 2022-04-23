@@ -2,9 +2,10 @@ Needed:
     -Fill out MOTD's (Mostly Redundant ones).
     -Download Addons from spicetify repo (Themes is already done)
     -Globals need desperate updating [on hold until spicetify sorts out its shit, just update comfy dark for now]
-    -Actually test the new uninstall spotify (core.install)
-    -Background images and descriptions for addons ['DESCRIPTION:' in extensions]
-    -[Net.ServicePointManager]::SecurityProtocol =[Net.SecurityProtocolType]::Tls12
+    -Actually test the new uninstall winstore spotify (core.install)
+    -Background images and descriptions for addons ['DESCRIPTION:' in extensions.js] https://github.com/ohitstom/spicetify-easyinstall/commit/aeef0ca94ff8bf32a5587e3c1563b71343790a7b <- reference
+    -Create function for above ^: utils.screenshots(type="themes" | "colorschemes") [returns list of paths to the images]
+    -[Net.ServicePointManager]::SecurityProtocol =[Net.SecurityProtocolType]::Tls12 <- add to the spicetify install [powershell bug on older versions]
     
 Optional:
     -Create prefs file as an end of the road fix for when its missing. Easily done as all the info prefs contains is in this installer.

@@ -249,7 +249,7 @@ class ConfigThemeMenuScreen(gui.MenuScreen):
             self.addMenuButton(
                 theme,
                 text=theme,
-                background='C:/Users/adam-/spicetify-cli/Themes/screenshot.png',
+                background='C:/Users/tomfi/spicetify-cli/Themes/BurntSienna/screenshot.png',
                 row=row,
                 column=column,
                 next_screen="config_colorscheme_menu_screen",
@@ -390,6 +390,7 @@ class ConfigExtensionsMenuScreen(gui.MenuScreen):
             self.addMenuButton(
                 extension,
                 text=extension,
+                desc="test desc",
                 row=row,
                 column=column,
                 next_screen="config_customapps_menu_screen",
@@ -446,6 +447,7 @@ class ConfigCustomappsMenuScreen(gui.MenuScreen):
             self.addMenuButton(
                 customapp,
                 text=customapp,
+                desc="Test Description",
                 row=row,
                 column=column,
                 next_screen="config_confirm_screen",
