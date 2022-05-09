@@ -1,15 +1,21 @@
 import asyncio
+import contextlib
+import glob
 import os
+import random
+import re
 import subprocess
 import sys
 from io import StringIO
+from pathlib import Path
 
 import aiofiles
 import aiohttp
-import contextlib
+import PIL
 import psutil
 from aiohttp import ClientTimeout
 from bs4 import UnicodeDammit
+from PIL import Image, ImageStat
 
 from modules import globals, logger, progress
 
@@ -123,6 +129,35 @@ def list_config_available(selection, theme=None):    # selection: themes, colors
     else:
         raise Exception("Bad arguments")
 
+
+
+def screenshots(selection): # selection: themes, colorschemes | returns list of screenshots for the selected folder
+    ss_List = []
+    available = list_config_available(selection)
+    identifiers = ["preview","screenshot","base", "dark"]
+
+    if selection == "themes":
+        for theme in available:
+            imgs = list(Path(f"{globals.user_profile}\\spicetify-cli\\Themes\\{theme}").glob(f"**/*.png")) + list(Path(f"{globals.user_profile}\\spicetify-cli\\Themes\\{theme}").glob(f"**/*.jpg"))
+            if not imgs:
+                ss_List.append(None)
+                continue
+            
+            count = 0
+            for i in range(len(imgs)):
+                stem = imgs[i].stem
+                if stem in identifiers:
+                    ss_List.append(imgs[i])
+                    break
+                else:
+                    count += 1
+                    if count == len(imgs):
+                        ss_List.append(imgs[count-1])
+                        break
+        return(ss_List)
+    
+    else:
+        print("placeholder for colorschemes")
 
 # >[TUI Management]<
 

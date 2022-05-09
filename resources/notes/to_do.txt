@@ -3,7 +3,7 @@ Needed:
     -Download Addons from spicetify repo (Themes is already done)
     -Globals need desperate updating [on hold until spicetify sorts out its shit, just update comfy dark for now]
     -Actually test the new uninstall winstore spotify (core.install)
-    -Background images and descriptions for addons ['DESCRIPTION:' in extensions.js] https://github.com/ohitstom/spicetify-easyinstall/commit/aeef0ca94ff8bf32a5587e3c1563b71343790a7b <- reference
+    -And descriptions for addons ['DESCRIPTION:' in extensions.js] https://github.com/ohitstom/spicetify-easyinstall/commit/aeef0ca94ff8bf32a5587e3c1563b71343790a7b <- reference
     -Create function for above ^: utils.screenshots(type="themes" | "colorschemes") [returns list of paths to the images]
     -[Net.ServicePointManager]::SecurityProtocol =[Net.SecurityProtocolType]::Tls12 <- add to the spicetify install [powershell bug on older versions]
     
@@ -16,6 +16,7 @@ Fix:
     -Prefs restore hang (After restoring prefs it needs to open spotify to resync the last opened version) [could possibly just hardset it instead]
     -Prefs file needs updating after restore
 
+MAYBE PUT A BOX BEHIND THE TEXT WITH IMAGES? would undo all my pixel checking but would be better
 
 Finished:
     Fix for names with spaces
@@ -32,3 +33,4 @@ Finished:
     + Additional buttons for update and config
     + Better 4k/DPI support
     + Removal of download timeouts
+    + Background images to themes

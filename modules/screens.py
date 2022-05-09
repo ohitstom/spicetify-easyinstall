@@ -238,6 +238,7 @@ class ConfigThemeMenuScreen(gui.MenuScreen):
         bottom_bar.next.setEnabled(False)
         
         themes = utils.list_config_available("themes")
+        backgrounds = utils.screenshots("themes")
         selected = self.getSelection()
         self.clearCurrentButtons()
         row = 0
@@ -249,7 +250,7 @@ class ConfigThemeMenuScreen(gui.MenuScreen):
             self.addMenuButton(
                 theme,
                 text=theme,
-                background='C:/Users/tomfi/spicetify-cli/Themes/BurntSienna/screenshot.png',
+                background=str(backgrounds[themes.index(theme)]),
                 row=row,
                 column=column,
                 next_screen="config_colorscheme_menu_screen",

@@ -4,7 +4,9 @@ import re
 import sys
 import webbrowser
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+import PIL
+from PIL import Image, ImageStat
+from PyQt5 import Qt, QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QPixmap
 from qasync import asyncSlot
 
@@ -17,6 +19,7 @@ if hasattr(QtCore.Qt, 'AA_UseHighDpiPixmaps'):
     QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
 
 os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
+
 WIDTH = 650
 HEIGHT = 475
 BOTTOM_BAR_HEIGHT = 60
@@ -123,21 +126,75 @@ QScrollArea, QScrollArea > QWidget > QWidget {{
 }}
 """
 
-# PUT ROUNDED FUNCTION HERE
+def roundedPixmap(pixmap, btnwidth, btnheight, radius):
+        pxm_width = pixmap.size().width()
+        pxm_height = pixmap.size().height()
+        pixmap = pixmap.copy(round((pxm_width - btnwidth) / 2), round((pxm_height - btnheight) / 2), btnwidth, btnheight)
+        rounded = QPixmap(pixmap.size())
+        rounded.fill(QtGui.QColor("transparent"))
+        painter = QtGui.QPainter(rounded)
+        painter.setRenderHint(QtGui.QPainter.Antialiasing)
+        painter.setBrush(QtGui.QBrush(pixmap))
+        painter.setPen(QtCore.Qt.NoPen)
+        painter.drawRoundedRect(pixmap.rect(), radius, radius)
+        painter.end()
+        return rounded
 
-def connect(signal, callback):
-    """Disconnect all callbacks from a given signal and assign a new one"""
-    try:
-        signal.disconnect()
-    except Exception:
-        pass
+def connect(signal, callback, disconnect=True):
+    """Disconnect all callbacks from a given signal and assign a new one, when disconnect is True"""
+    
+    if disconnect:
+        try:
+            signal.disconnect() 
+        except Exception:
+            pass
+
     if callback:
         signal.connect(callback)
 
 
 def clickable(qobj):
-    """Apply a pointinh hand cursor type to a given qobj"""
+    """Apply a pointing hand cursor type to a given qobj"""
     qobj.setCursor(QtCore.Qt.PointingHandCursor)
+
+def brightness(file):
+    im = Image.open(file).convert('L')
+    stat = ImageStat.Stat(im)
+    return stat.mean[0]
+
+class BlurLabel(QtWidgets.QLabel):
+    """Helper class for controlling the blurRadius of a QLabel through the use of a QGraphicsBlurEffect"""
+
+    def __init__(self, blur_amount, *args, **kwargs):
+        self.blur_amount = blur_amount
+        super().__init__(*args, **kwargs)
+        self.applyBlur()
+        connect(
+            signal=self.parent().toggled,
+            callback=lambda: self.removeBlur()
+            if self.parent().isChecked()
+            else self.applyBlur(),
+        )
+
+    def applyBlur(self):
+        self.setGraphicsEffect(
+            QtWidgets.QGraphicsBlurEffect(blurRadius=self.blur_amount)
+        )
+
+    def removeBlur(self):
+        self.setGraphicsEffect(None)
+
+    def enterEvent(self, *args):
+        self.removeBlur()
+        return super().enterEvent(*args)
+
+    def leaveEvent(self, *args):
+        if self.parent().isChecked():
+            self.removeBlur()
+        else:
+            self.applyBlur()
+        return super().leaveEvent(*args)
+
 
 
 class QuickWidget(QtWidgets.QWidget):
@@ -150,7 +207,7 @@ class QuickWidget(QtWidgets.QWidget):
         width=None,
         height=None,
         layout=QtWidgets.QGridLayout,
-        margins=(9, 9, 9, 9),
+        margins=(0, 0, 0, 0),
         spacing=6,
     ):
         super().__init__(parent)
@@ -262,6 +319,7 @@ class SlidingFrame(QuickWidget):
         new_anim.finished.connect(lambda *_: setattr(self, "new_anim_done", True))
         await new_screen.shownCallback()
         await self.waitForAnimations()
+
 
 class BottomBar(QuickWidget):
     """Bottom bar widget with icon, watermark and back / next buttons"""
@@ -496,6 +554,7 @@ class MenuScreen(SlidingScreen):
         if self.multichoice:
             self.buttons[btn_id].setAutoExclusive(False)
         self.buttons[btn_id].setLayout(QtWidgets.QGridLayout())
+        
         self.buttons[btn_id].layout().addItem(
             QtWidgets.QSpacerItem(0, 0, vPolicy=QtWidgets.QSizePolicy.Expanding),
             0,
@@ -509,16 +568,40 @@ class MenuScreen(SlidingScreen):
             0,
         )
 
-        if kwargs.get("background"):
-            pixmap = QPixmap(kwargs["background"]).scaled(260, 146, QtCore.Qt.KeepAspectRatio)
-            self.buttons[btn_id].layout().addWidget(
-                QtWidgets.QLabel(parent=self.buttons[btn_id], pixmap=pixmap),
+        if kwargs.get("background") and kwargs["background"] != "None":
+            
+            if kwargs["background"] not in globals.cache:
+                Brightness = brightness(kwargs["background"])
+                pixmap = QPixmap(kwargs["background"]).scaled(
+                    284,
+                    160,
+                    QtCore.Qt.IgnoreAspectRatio,
+                    QtCore.Qt.SmoothTransformation,
+                )
+                rounded = roundedPixmap(
+                    pixmap,
+                    280,
+                    156,
+                    2.75,
+                )
+                globals.cache[kwargs["background"]] = [rounded, Brightness]
+            
+            label = BlurLabel(
+                blur_amount=2,
+                parent=self.buttons[btn_id], 
+                pixmap=globals.cache[kwargs["background"]][0]
+            )
+            
+            self.buttons[btn_id].layout().addWidget(label,
                 0,
                 0,
                 0,
                 0,
                 QtCore.Qt.AlignCenter,
-            )     
+            )
+            self.buttons[btn_id].layout().setContentsMargins(0,0,0,0) 
+            
+            
         if kwargs.get("icon"):
             self.buttons[btn_id].layout().addWidget(
                 QtWidgets.QLabel(parent=self.buttons[btn_id], text=kwargs["icon"]),
@@ -527,11 +610,19 @@ class MenuScreen(SlidingScreen):
             )
             self.buttons[btn_id].children()[-1].setObjectName("icon")
         if kwargs.get("text"):
+            label = QtWidgets.QLabel(parent=self.buttons[btn_id], text=kwargs["text"])
+            label.setAttribute(QtCore.Qt.WA_TransparentForMouseEvents)
+            
+            if kwargs.get("background") and kwargs["background"] != "None":
+                if globals.cache[kwargs["background"]][1] > 150:
+                    label.setStyleSheet("color: #111111")
+
             self.buttons[btn_id].layout().addWidget(
-                QtWidgets.QLabel(parent=self.buttons[btn_id], text=kwargs["text"]),
+                label,
                 1,
                 2,
             )
+        
         self.buttons[btn_id].layout().addItem(
             QtWidgets.QSpacerItem(0, 0, hPolicy=QtWidgets.QSizePolicy.Expanding),
             1,
@@ -592,7 +683,7 @@ class MenuScreen(SlidingScreen):
 
         for btn in self.buttons.values():
             connect(
-                signal=btn.toggled, callback=set_next_button_enabled
+                signal=btn.toggled, callback=set_next_button_enabled, disconnect=False
             )
 
         # Setup back button

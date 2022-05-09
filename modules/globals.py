@@ -29,6 +29,7 @@ gui = None
 singleton = None
 verbose = None
 json = None
+cache = {}
 
 # Custom Addons
 CUSTOM_EXTENSIONS = {
