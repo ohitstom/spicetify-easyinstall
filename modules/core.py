@@ -236,7 +236,7 @@ async def install(launch=False):
         fullpath = str(item)
         destpath = (f"{globals.user_profile}\\spicetify-cli\\Extensions"
         + fullpath[fullpath.rfind('\\') : fullpath.rfind('.')]
-        + "Theme.js"
+        + ".js"
         )
         if os.path.exists(destpath):
             os.remove(destpath)
@@ -292,7 +292,7 @@ async def install(launch=False):
                 fullpath = str(item)
                 destpath = (f"{globals.user_profile}\\spicetify-cli\\Extensions"
                 + fullpath[fullpath.rfind('\\') : fullpath.rfind('.')]
-                + "Theme.js"
+                + ".js"
                 )
                 if os.path.exists(destpath):
                     os.remove(destpath)
@@ -489,23 +489,31 @@ async def update_addons(shipped=False):
 
     # >[Section 2]<
 
-    print(f"(2/{steps_count}) Downloading 'official' themes...")
+    print(f"(2/{steps_count}) Downloading 'official' addons...")
     
-    await utils.chunked_download(
-        url=globals.THEMES_URL if shipped else globals.THEMES_URL.replace(globals.THEMES_VERSION[17:], 'refs/heads/master'),
-        path=(f"{globals.user_profile}\\spicetify-cli\\Themes.zip"),
-        label=(f"{globals.user_profile}\\spicetify-cli\\Themes.zip")
-        if globals.verbose
-        else "Themes.zip",
+    Addons = {
+        globals.THEMES_URL if shipped 
+        else globals.THEMES_URL.replace(globals.THEMES_VERSION[17:], 'refs/heads/master'): f"{globals.user_profile}\\spicetify-cli\\Themes.zip",
+        
+        globals.ADDONS_URL if shipped 
+        else globals.ADDONS_URL.replace(globals.ADDONS_VERSION[14:], 'refs/heads/master'): f"{globals.user_profile}\\spicetify-cli\\Addons.zip",
+    }
+
+    await utils.simultaneous_chunked_download(
+        Addons,
+        "Shipped Official Addons.zip" if shipped 
+        else "Newest Official Addons.zip",
     )
 
     shutil.unpack_archive(
         f"{globals.user_profile}\\spicetify-cli\\Themes.zip",
         f"{globals.user_profile}\\spicetify-cli",
     )
+
     os.remove(
         f"{globals.user_profile}\\spicetify-cli\\Themes.zip"
     )
+
     os.rename(
         f"{globals.user_profile}\\spicetify-cli\\{globals.THEMES_VERSION if shipped else 'spicetify-themes-master'}",
         f"{globals.user_profile}\\spicetify-cli\\Themes",
@@ -533,6 +541,31 @@ async def update_addons(shipped=False):
         if os.path.exists(destpath):
             os.remove(destpath)
         shutil.move(fullpath, destpath)
+
+    if os.path.exists(f"{globals.user_profile}\\spicetify-cli\\Addons"):
+        shutil.rmtree(f"{globals.user_profile}\\spicetify-cli\\Addons")
+
+    shutil.unpack_archive(
+        f"{globals.user_profile}\\spicetify-cli\\Addons.zip",
+        f"{globals.user_profile}\\spicetify-cli",
+    )
+
+    os.remove(
+        f"{globals.user_profile}\\spicetify-cli\\Addons.zip"
+    )
+
+    os.rename(
+        f"{globals.user_profile}\\spicetify-cli\\{globals.ADDONS_VERSION if shipped else 'spicetify-cli-master'}",
+        f"{globals.user_profile}\\spicetify-cli\\Addons",
+    )
+
+    for item in os.listdir(f"{globals.user_profile}\\spicetify-cli\\Addons\\Extensions"):
+        shutil.move(f"{globals.user_profile}\\spicetify-cli\\Addons\\Extensions\\{item}", f"{globals.user_profile}\\spicetify-cli\\Extensions")
+    
+    for item in os.listdir(f"{globals.user_profile}\\spicetify-cli\\Addons\\Customapps"):
+        shutil.move(f"{globals.user_profile}\\spicetify-cli\\Addons\\Customapps\\{item}", f"{globals.user_profile}\\spicetify-cli\\Customapps")
+    
+    shutil.rmtree(f"{globals.user_profile}\\spicetify-cli\\Addons")
     print("Finished downloading 'official' themes!\n")
 
     # >[Section 3]<
@@ -548,7 +581,8 @@ async def update_addons(shipped=False):
             else:
                 final[url] = directory
     
-    await utils.simultaneous_chunked_download(base if shipped else final, "Stock Custom Addons.zip" if shipped else "Custom Addons.zip")
+    await utils.simultaneous_chunked_download(base if shipped else final, "Shipped Custom Addons.zip" if shipped else "Newest Custom Addons.zip")
+    utils.verbose_print("")
     for url, download in base.items() if shipped else final.items():
         if os.path.exists(download):
             captured = Path(download)
@@ -593,7 +627,7 @@ async def update_addons(shipped=False):
 
         else:
             utils.verbose_print(f"{unpacked_name} wasnt downloaded successfully...")
-    print("\nFinished downloading 'custom' themes!")
+    print("\nFinished downloading 'custom' addons!")
 
 
 async def update_app():

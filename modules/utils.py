@@ -49,7 +49,7 @@ def find_config_entry(entry, replacement=None, config=None, encoding=None, split
         config = f"{globals.user_profile}\\.spicetify\\config-xpui.ini"
 
     elif not os.path.isfile(config):
-        return "Path NULL"
+        return "config NULL"
     
     if encoding is None:
         with open(config, 'rb') as filetemp: #Sanity
@@ -191,7 +191,7 @@ async def simultaneous_chunked_download(urls_paths, label):  # utils.simultaneou
     total_length = 0
     tasks = []
     for url, path in urls_paths.items():
-        verbose_print(f"\n{url}\nPENDING")
+        verbose_print(f"{url}\nPENDING")
         r = await aiohttp.ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False), timeout=timeout).get(url)
         
         if not indeterminate:

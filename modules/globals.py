@@ -4,16 +4,18 @@ from pathlib import Path
 
 
 # Github Update Variables
-RELEASE = "2.8"
+RELEASE = "2.9"
 HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
 WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL" 
 
-SPICETIFY_VERSION = "2.9.0"
-SPOTIFY_VERSION = "spotify_installer-1.1.78.765.g5ea20b00-15.exe"
-THEMES_VERSION = "spicetify-themes-cab870eba282a509a34f2f107185c52188891c7f"
+SPICETIFY_VERSION = "2.9.8"
+SPOTIFY_VERSION = "spotify_installer-1.1.83.954.gd226dfe8-18.exe"
+THEMES_VERSION = "spicetify-themes-f39b627ad95e4cc318bd333ac177cfad59114fe2"
+ADDONS_VERSION = "spicetify-cli-0f958de1d5587dbe9d766ae718f56633a7eb4929"
 
-SPOTIFY_SETUP_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.78.765.g5ea20b00-15.exe"
-THEMES_URL = "https://codeload.github.com/morpheusthewhite/spicetify-themes/zip/cab870eba282a509a34f2f107185c52188891c7f"
+SPOTIFY_SETUP_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.83.954.gd226dfe8-18.exe"
+THEMES_URL = "https://codeload.github.com/morpheusthewhite/spicetify-themes/zip/f39b627ad95e4cc318bd333ac177cfad59114fe2"
+ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/0f958de1d5587dbe9d766ae718f56633a7eb4929"
 
 # Directory Constants
 user_profile = os.path.expanduser("~")
@@ -33,18 +35,17 @@ cache = {}
 
 # Custom Addons
 CUSTOM_EXTENSIONS = {
-    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/47f1aac0a1026e03342996036289442a18dd7af4": f"{user_profile}\\spicetify-cli\\Extensions\\Charlie Repo.zip",
-    "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/62690adcc843ebd69aeb476462abd717c4b14186": f"{user_profile}\\spicetify-cli\\Extensions\\Power Bar.zip",
+    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/3654a9298c1bef26bb7fb2144ab0c563cc322c79": f"{user_profile}\\spicetify-cli\\Extensions\\Charlie Repo.zip",
+    "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/f96379c968f2affae2fc28f7521371c7c4172f1f": f"{user_profile}\\spicetify-cli\\Extensions\\Power Bar.zip",
 }
 
 CUSTOM_APPS = {
-    "https://codeload.github.com/CharlieS1103/spicetify-marketplace/zip/081b9cbac7a7bdbb160b98be06fdcfbd59fda5dc": f"{user_profile}\\spicetify-cli\\CustomApps\\Marketplace.zip",
+    "https://codeload.github.com/spicetify/spicetify-marketplace/zip/cc97cfe014b84974c00e2ab69774fe785f52d4b3": f"{user_profile}\\spicetify-cli\\CustomApps\\Marketplace.zip",
 }
 
 CUSTOM_THEMES = {
-    "https://github.com/JulienMaille/dribbblish-dynamic-theme/releases/download/4.1.1/DribbblishDynamic_v4.1.1.zip": f"{user_profile}\\spicetify-cli\\Themes\\Dribbblish-Dynamic.zip",
-    "https://codeload.github.com/NYRI4/Comfy-spicetify/zip/60c258e12b085e2e94c6d026439ff0ddff462939": f"{user_profile}\\spicetify-cli\\Themes\\Comfy.zip",
-    "https://codeload.github.com/ohitstom/comfy-shadow/zip/43663a1c17a816cb44083092101760e81e3ce8d1": f"{user_profile}\\spicetify-cli\\Themes\\Comfy_Shadow.zip",
+    "https://github.com/JulienMaille/dribbblish-dynamic-theme/releases/download/4.2.2/DribbblishDynamic_v4.2.2.zip": f"{user_profile}\\spicetify-cli\\Themes\\Dribbblish-Dynamic.zip",
+    "https://codeload.github.com/Comfy-Themes/Spicetify/zip/a1d1053d465c4de722b312adb604f52210461c90": f"{user_profile}\\spicetify-cli\\Themes\\Comfy.zip",
 }
 
 # Text Pages For GUI

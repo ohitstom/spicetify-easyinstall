@@ -4,5 +4,6 @@ aiohttp
 pywin32
 aiofiles
 bs4
+pillow
 PyQt5==5.15.2
 PyQt5-sip==12.10.1

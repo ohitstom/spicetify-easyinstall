@@ -1,22 +1,22 @@
 Needed:
     -Fill out MOTD's (Mostly Redundant ones).
-    -Download Addons from spicetify repo (Themes is already done)
-    -Globals need desperate updating [on hold until spicetify sorts out its shit, just update comfy dark for now]
-    -Actually test the new uninstall winstore spotify (core.install)
-    -And descriptions for addons ['DESCRIPTION:' in extensions.js] https://github.com/ohitstom/spicetify-easyinstall/commit/aeef0ca94ff8bf32a5587e3c1563b71343790a7b <- reference
-    -Create function for above ^: utils.screenshots(type="themes" | "colorschemes") [returns list of paths to the images]
-    -[Net.ServicePointManager]::SecurityProtocol =[Net.SecurityProtocolType]::Tls12 <- add to the spicetify install [powershell bug on older versions]
-    
-Optional:
-    -Create prefs file as an end of the road fix for when its missing. Easily done as all the info prefs contains is in this installer.
+    -Actually test the new uninstall winstore spotify (core.install) ->> (Get-Item -Path 'C:\users\{YOUR USERNAME}\appdata\roaming\spotify\spotify.exe').VersionInfo | Format-List -Force ->> force set prefs to this value
+    -Add descriptions for addons ['DESCRIPTION:' in extensions.js] ->> need to rewrite functions to be faster
+    -Finish utils.screenshots(colorschemes)
+    -Fix powershell tsl11 errors ->> [Net.ServicePointManager]::SecurityProtocol =[Net.SecurityProtocolType]::Tls12
     -When updating to latest addons, do the same for dribbblish release.
+    -Overall refactoring of codespace, lots of redundancy and artifacts, comb through each line.
+
+Optional:
+    -Globals need desperate updating [on hold until spicetify sorts out its shit, just update comfy dark for now]
+    -Rework naming of functions and their examples/usage
+    -Make code easier to access for developers, explanations, formatting, splitting up long functions, etc.
+    -Create prefs file as an end of the road fix for when its missing. Easily done as all the info prefs contains is in this installer.
     -Trim down patch notes to a bare minimum as not to clutter/find a way to add a dropdown
-
+    
 Fix:
-    -Prefs restore hang (After restoring prefs it needs to open spotify to resync the last opened version) [could possibly just hardset it instead]
-    -Prefs file needs updating after restore
-
-MAYBE PUT A BOX BEHIND THE TEXT WITH IMAGES? would undo all my pixel checking but would be better
+    -Prefs restore hang ->> code rework in progress, manually setting prefs files spotversion entry
+    -Better image scanning for backgrounds to make text pop
 
 Finished:
     Fix for names with spaces
@@ -26,11 +26,12 @@ Finished:
     Fix for prefs being accidentally deleted
     Fix improperly formatted License Agreement
     Fix Deadspace in update app page
-    Fix for config buttons not being 16:9
+    Fix for config buttons not being 16:9   
     + Some verbose/verbose changes
     + Uninstall winstore spotify
     + Better hidden processes
     + Additional buttons for update and config
     + Better 4k/DPI support
     + Removal of download timeouts
-    + Background images to themes
+    + Background images for themes
+    + Updating addons includes spicetify-cli extensions + customapps
