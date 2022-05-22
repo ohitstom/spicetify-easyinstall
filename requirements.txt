@@ -3,6 +3,7 @@ qasync
 aiohttp
 pywin32
 aiofiles
+pillow
 bs4
 pillow
 PyQt5==5.15.2
