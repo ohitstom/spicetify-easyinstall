@@ -64,6 +64,83 @@ jobs:
           del  /f dist\windows\Spicetify-Easyinstall\Qt5Quick.dll
           del  /f dist\windows\Spicetify-Easyinstall\Qt5Svg.dll
           del  /f dist\windows\Spicetify-Easyinstall\Qt5WebSockets.dll
+          del  /f dist\windows\Spicetify-Easyinstall\libcrypto-1_1-x64.dll
+          del  /f dist\windows\Spicetify-Easyinstall\libeay32.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\LIBPQ.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\libssl-1_1-x64.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5Bluetooth.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5Designer.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5Help.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5Location.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5Multimedia.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5MultimediaWidgets.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5NetworkAuth.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5Nfc.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5OpenGL.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5Positioning.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5PrintSupport.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5QmlWorkerScript.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5Quick3D.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5Quick3DAssetImport.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5Quick3DRender.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5Quick3DRuntimeRender.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5Quick3DUtils.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5QuickControls2.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5QuickParticles.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5QuickShapes.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5QuickTemplates2.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5QuickTest.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5QuickWidgets.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5RemoteObjects.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5Sensors.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5SerialPort.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5Sql.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5Test.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5TextToSpeech.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5WebChannel.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5WinExtras.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5Xml.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5XmlPatterns.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\ssleay32.dll          
+          del  /f dist\windows\Spicetify-Easyinstall\Qt5PositioningQuick.dll      
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\Qt.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtBluetooth.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtDBus.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtDesigner.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtHelp.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtLocation.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtMultimedia.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtMultimediaWidgets.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtNetwork.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtNetworkAuth.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtNfc.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtOpenGL.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtPositioning.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtPrintSupport.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtQml.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtQuick.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtQuick3D.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtQuickWidgets.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtRemoteObjects.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtSensors.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtSerialPort.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtSql.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtSvg.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtTest.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtTextToSpeech.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtWebChannel.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtWebSockets.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtWinExtras.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtXml.pyd
+          del  /f dist\windows\Spicetify-Easyinstall\PyQt5\QtXmlPatterns.pyd
+          rmdir /S /Q dist\windows\Spicetify-Easyinstall\PyQt5\Qt\qml
+          rmdir /S /Q dist\windows\Spicetify-Easyinstall\PyQt5\Qt\plugins\bearer
+          rmdir /S /Q dist\windows\Spicetify-Easyinstall\PyQt5\Qt\plugins\mediaservice
+          rmdir /S /Q dist\windows\Spicetify-Easyinstall\PyQt5\Qt\plugins\playlistformats
+          rmdir /S /Q dist\windows\Spicetify-Easyinstall\PyQt5\Qt\plugins\printsupport
+          rmdir /S /Q dist\windows\Spicetify-Easyinstall\PyQt5\Qt\plugins\sensorgestures
+          rmdir /S /Q dist\windows\Spicetify-Easyinstall\PyQt5\Qt\plugins\sensors
+          rmdir /S /Q dist\windows\Spicetify-Easyinstall\PyQt5\Qt\plugins\sqldrivers
           mkdir   dist\windows\Spicetify-Easyinstall\lib
           move /y dist\windows\Spicetify-Easyinstall\aiohttp            dist\windows\Spicetify-Easyinstall\lib
           move /y dist\windows\Spicetify-Easyinstall\multidict          dist\windows\Spicetify-Easyinstall\lib
@@ -76,11 +153,13 @@ jobs:
           move /y dist\windows\Spicetify-Easyinstall\libffi-7.dll       dist\windows\Spicetify-Easyinstall\lib
           move /y dist\windows\Spicetify-Easyinstall\libGLESv2.dll      dist\windows\Spicetify-Easyinstall\lib
           move /y dist\windows\Spicetify-Easyinstall\libssl-1_1.dll     dist\windows\Spicetify-Easyinstall\lib
-          move /y dist\windows\Spicetify-Easyinstall\MSVCP140_1.dll     dist\windows\Spicetify-Easyinstall\lib
-          move /y dist\windows\Spicetify-Easyinstall\MSVCP140.dll       dist\windows\Spicetify-Easyinstall\lib
           move /y dist\windows\Spicetify-Easyinstall\ucrtbase.dll       dist\windows\Spicetify-Easyinstall\lib
           move /y dist\windows\Spicetify-Easyinstall\lib\VCRUNTIME140_1.dll dist\windows\Spicetify-Easyinstall
           move /y dist\windows\Spicetify-Easyinstall\lib\VCRUNTIME140.dll   dist\windows\Spicetify-Easyinstall
+          move /y dist\windows\Spicetify-Easyinstall\pywintypes39.dll dist\windows\Spicetify-Easyinstall\lib
+          move /y dist\windows\Spicetify-EasyinstallQt5Core.dll dist\windows\Spicetify-Easyinstall\lib
+          move /y dist\windows\Spicetify-Easyinstall\Qt5Gui.dll dist\windows\Spicetify-Easyinstall\lib
+          move /y dist\windows\Spicetify-Easyinstall\lQt5Widgets.dll dist\windows\Spicetify-Easyinstall\lib
           mkdir   dist\windows\Spicetify-Easyinstall\modules
           copy /y Spicetify-Easyinstall.py                              dist\windows\Spicetify-Easyinstall
           copy /y requirements.txt                                      dist\windows\Spicetify-Easyinstall
