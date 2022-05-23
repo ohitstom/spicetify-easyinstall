@@ -45,7 +45,7 @@ CUSTOM_APPS = {
 
 CUSTOM_THEMES = {
     "https://github.com/JulienMaille/dribbblish-dynamic-theme/releases/download/4.2.2/DribbblishDynamic_v4.2.2.zip": f"{user_profile}\\spicetify-cli\\Themes\\Dribbblish-Dynamic.zip",
-    "https://codeload.github.com/Comfy-Themes/Spicetify/zip/a1d1053d465c4de722b312adb604f52210461c90": f"{user_profile}\\spicetify-cli\\Themes\\Comfy.zip",
+    #"https://codeload.github.com/Comfy-Themes/Spicetify/zip/a1d1053d465c4de722b312adb604f52210461c90": f"{user_profile}\\spicetify-cli\\Themes\\Comfy.zip", update core
 }
 
 # Text Pages For GUI
