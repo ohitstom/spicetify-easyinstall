@@ -158,9 +158,9 @@ jobs:
           move /y dist\windows\Spicetify-Easyinstall\lib\VCRUNTIME140_1.dll dist\windows\Spicetify-Easyinstall
           move /y dist\windows\Spicetify-Easyinstall\lib\VCRUNTIME140.dll   dist\windows\Spicetify-Easyinstall
           move /y dist\windows\Spicetify-Easyinstall\pywintypes39.dll dist\windows\Spicetify-Easyinstall\lib
-          move /y dist\windows\Spicetify-EasyinstallQt5Core.dll dist\windows\Spicetify-Easyinstall\lib
+          move /y dist\windows\Spicetify-Easyinstall\Qt5Core.dll dist\windows\Spicetify-Easyinstall\lib
           move /y dist\windows\Spicetify-Easyinstall\Qt5Gui.dll dist\windows\Spicetify-Easyinstall\lib
-          move /y dist\windows\Spicetify-Easyinstall\lQt5Widgets.dll dist\windows\Spicetify-Easyinstall\lib
+          move /y dist\windows\Spicetify-Easyinstall\Qt5Widgets.dll dist\windows\Spicetify-Easyinstall\lib
           mkdir   dist\windows\Spicetify-Easyinstall\modules
           copy /y Spicetify-Easyinstall.py                              dist\windows\Spicetify-Easyinstall
           copy /y requirements.txt                                      dist\windows\Spicetify-Easyinstall
