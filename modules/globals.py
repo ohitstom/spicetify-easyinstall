@@ -2,20 +2,23 @@ import os
 import tempfile
 from pathlib import Path
 
+import PyQt5
+from PyQt5 import QtCore
 
 # Github Update Variables
 RELEASE = "2.9"
 HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
 WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL" 
 
-SPICETIFY_VERSION = "2.9.8"
-SPOTIFY_VERSION = "spotify_installer-1.1.83.954.gd226dfe8-18.exe"
-THEMES_VERSION = "spicetify-themes-f39b627ad95e4cc318bd333ac177cfad59114fe2"
-ADDONS_VERSION = "spicetify-cli-0f958de1d5587dbe9d766ae718f56633a7eb4929"
-
-SPOTIFY_SETUP_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.83.954.gd226dfe8-18.exe"
+# URL Update Variables
+SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.83.954.gd226dfe8-18.exe"
 THEMES_URL = "https://codeload.github.com/morpheusthewhite/spicetify-themes/zip/f39b627ad95e4cc318bd333ac177cfad59114fe2"
 ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/0f958de1d5587dbe9d766ae718f56633a7eb4929"
+
+SPICETIFY_VERSION = "2.9.8"
+SPOTIFY_VERSION = "/".join(SPOTIFY_URL.split("/")[-1:])
+THEMES_VERSION = f"spicetify-themes-{'/'.join(THEMES_URL.split('/')[-1:])}"
+ADDONS_VERSION = f"spicetify-cli-{'/'.join(ADDONS_URL.split('/')[-1:])}"
 
 # Directory Constants
 user_profile = os.path.expanduser("~")
@@ -31,12 +34,34 @@ gui = None
 singleton = None
 verbose = None
 json = None
-cache = {}
+pix_cache = {}
+desc_cache = {}
 
-# Custom Addons
+# Taking the stored base64'd class and converting it back to a QByteArray <- Turn into function? [add error checking?]
+if os.path.exists('pix_cache.txt'):
+    with open('pix_cache.txt', 'r') as f:
+      sections = f.readlines()
+      for count, line in enumerate(sections[:-1]):
+        (key, value) = sections[count].split(": ", 1)
+        (pix, bright) = value.rsplit(", ", 1)
+        pix_cache[key] = [QtCore.QByteArray.fromBase64(pix[2:-1].encode()), float(bright)]
+else:
+    open('pix_cache.txt', 'w').close()
+
+if os.path.exists('desc_cache.txt'):
+    with open('desc_cache.txt', 'r') as f:
+      sections = f.readlines()
+      for count, line in enumerate(sections[:-1]):
+        (key, value) = sections[count].split(": ", 1)
+        desc_cache[key] = value.strip()
+
+else:
+  open('desc_cache.txt', 'w').close()
+
+# Custom Addon URLs
 CUSTOM_EXTENSIONS = {
-    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/3654a9298c1bef26bb7fb2144ab0c563cc322c79": f"{user_profile}\\spicetify-cli\\Extensions\\Charlie Repo.zip",
-    "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/f96379c968f2affae2fc28f7521371c7c4172f1f": f"{user_profile}\\spicetify-cli\\Extensions\\Power Bar.zip",
+    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/3654a9298c1bef26bb7fb2144ab0c563cc322c79": f"{user_profile}\\spicetify-cli\\Extensions\\Charlie-Repo.zip",
+    "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/910794f85e75ded3e0b5e2fcb436d9ead0276b51": f"{user_profile}\\spicetify-cli\\Extensions\\Power-Bar.zip",
 }
 
 CUSTOM_APPS = {
@@ -45,7 +70,7 @@ CUSTOM_APPS = {
 
 CUSTOM_THEMES = {
     "https://github.com/JulienMaille/dribbblish-dynamic-theme/releases/download/4.2.2/DribbblishDynamic_v4.2.2.zip": f"{user_profile}\\spicetify-cli\\Themes\\Dribbblish-Dynamic.zip",
-    #"https://codeload.github.com/Comfy-Themes/Spicetify/zip/a1d1053d465c4de722b312adb604f52210461c90": f"{user_profile}\\spicetify-cli\\Themes\\Comfy.zip", update core
+    "https://codeload.github.com/Comfy-Themes/Spicetify/zip/a1d1053d465c4de722b312adb604f52210461c90": f"{user_profile}\\spicetify-cli\\Themes\\Comfy-Collection.zip",
 }
 
 # Text Pages For GUI

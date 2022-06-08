@@ -1,37 +1,38 @@
-Needed:
+Features:
     -Fill out MOTD's (Mostly Redundant ones).
-    -Actually test the new uninstall winstore spotify (core.install) ->> (Get-Item -Path 'C:\users\{YOUR USERNAME}\appdata\roaming\spotify\spotify.exe').VersionInfo | Format-List -Force ->> force set prefs to this value
-    -Add descriptions for addons ['DESCRIPTION:' in extensions.js] ->> need to rewrite functions to be faster
-    -Finish utils.screenshots(colorschemes)
-    -Fix powershell tsl11 errors ->> [Net.ServicePointManager]::SecurityProtocol =[Net.SecurityProtocolType]::Tls12
-    -When updating to latest addons, do the same for dribbblish release.
     -Overall refactoring of codespace, lots of redundancy and artifacts, comb through each line.
-
-Optional:
-    -Globals need desperate updating [on hold until spicetify sorts out its shit, just update comfy dark for now]
+    -Multiple selections in customapps not saving
     -Rework naming of functions and their examples/usage
     -Make code easier to access for developers, explanations, formatting, splitting up long functions, etc.
-    -Create prefs file as an end of the road fix for when its missing. Easily done as all the info prefs contains is in this installer.
-    -Trim down patch notes to a bare minimum as not to clutter/find a way to add a dropdown
-    
-Fix:
-    -Prefs restore hang ->> code rework in progress, manually setting prefs files spotversion entry
+    -Trim down patch notes to a bare minimum as not to clutter/find a way to add a dropdown.
+    -For colorschemes, pull 3 main colours from each variant, and showcase the colours instead of screenshots.
+    -Use update_addon function inside of core function (duplicate code)
+    -Add a latest option to install -> latest spotify etc (or make a seperate branch maybe??)
+
+Optional:
     -Better image scanning for backgrounds to make text pop
 
 Finished:
-    Fix for names with spaces
+    Fix for usernames with spaces
     Fix for rate limited downloads/stupid broken library (New client session per GET)
-    Fix for improper download handling/extracting (Charlies fault for having multiple extensions in one repo smh my head)
+    Fix for download of multi extension repos
     Fix GUI to be a more acceptable size
     Fix for prefs being accidentally deleted
     Fix improperly formatted License Agreement
     Fix Deadspace in update app page
     Fix for config buttons not being 16:9   
+    Fix for app.last-launched-version being outdated after prefs restore
     + Some verbose/verbose changes
     + Uninstall winstore spotify
     + Better hidden processes
     + Additional buttons for update and config
     + Better 4k/DPI support
     + Removal of download timeouts
-    + Background images for themes
     + Updating addons includes spicetify-cli extensions + customapps
+    + Bumped versions in globals
+    + Forced Tls12 for those with outdated powershell
+    + Download and handling of multi theme repos
+    + Theme images
+    + Extension descriptions
+    + Physical cache for theme images (pixmaps) + extension descriptions, created during install or when needed
+    + Theme extensions enabled automatically

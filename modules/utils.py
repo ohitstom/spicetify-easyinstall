@@ -63,30 +63,32 @@ def find_config_entry(entry, replacement=None, config=None, encoding=None, split
             count += 1
             if entry in line:
                 break
+        if entry not in line:
+            return None
 
-        if replacement is not None:
-            found_line_str = line
-            found_line_int = count - 1
-            a = found_line_str.split(splitchar)[0]
+    if replacement is not None:
+        found_line_str = line
+        found_line_int = count - 1
+        a = found_line_str.split(splitchar, 1)[0]
 
-            final_write_data = f"{a} = {replacement}"
-            return config, found_line_int, final_write_data
+        final_write_data = f"{a}{splitchar}{replacement}"
+        return config, found_line_int, final_write_data
 
-        else:
-            found_line_str = line.strip("\n")
-            a, b = found_line_str.split(splitchar)
-            final_write_data = b
-            return final_write_data
+    else:
+        found_line_str = line.strip("\n")
+        a, b = found_line_str.split(splitchar, 1)
+        final_write_data = b
+        return final_write_data
 
 
-def set_config_entry(entry, replacement):  # set_config_entry("current_theme", "themename") <- Example Usage | Sets specific parts of the config. [replacement = None to empty the value]
+def set_config_entry(entry, replacement, config=None, encoding=None, splitchar=" = "):  # set_config_entry("current_theme", "themename") <- Example Usage | Sets specific parts of the config. [replacement = None to empty the value]
     '''
     This function is used to set specific parts of the config.
     
     :param entry: The entry you want to change
     :param replacement: The value you want to replace the current value with
     '''
-    data = find_config_entry(entry, replacement if replacement is not None else "")
+    data = find_config_entry(entry, replacement if replacement is not None else "", config=config, encoding=encoding, splitchar=splitchar)
     replace_config_line(data[0], data[1], data[2])
 
 
@@ -121,7 +123,8 @@ def list_config_available(selection, theme=None):    # selection: themes, colors
         return colorschemes
 
     elif selection == "extensions":  # List Extensions
-        return os.listdir(f"{globals.user_profile}\\spicetify-cli\\Extensions")
+        extensions = os.listdir(f"{globals.user_profile}\\spicetify-cli\\Extensions")
+        return extensions
 
     elif selection == "customapps":  # List Custom apps
         return os.listdir(f"{globals.user_profile}\\spicetify-cli\\CustomApps")
@@ -129,42 +132,57 @@ def list_config_available(selection, theme=None):    # selection: themes, colors
     else:
         raise Exception("Bad arguments")
 
+# >[Config Tools]<
 
-
-def screenshots(selection): # selection: themes, colorschemes | returns list of screenshots for the selected folder
-    ss_List = []
-    available = list_config_available(selection)
+def theme_images(): # returns list of paths to screenshots
+    img_list = []
+    available = list_config_available("themes")
     identifiers = ["preview","screenshot","base", "dark"]
-
-    if selection == "themes":
-        for theme in available:
-            imgs = list(Path(f"{globals.user_profile}\\spicetify-cli\\Themes\\{theme}").glob(f"**/*.png")) + list(Path(f"{globals.user_profile}\\spicetify-cli\\Themes\\{theme}").glob(f"**/*.jpg"))
-            if not imgs:
-                ss_List.append(None)
-                continue
-            
-            count = 0
-            for i in range(len(imgs)):
-                stem = imgs[i].stem
-                if stem in identifiers:
-                    ss_List.append(imgs[i])
+    for theme in available:
+        imgs = list(Path(f"{globals.user_profile}\\spicetify-cli\\Themes\\{theme}").glob(f"**/*.png")) + list(Path(f"{globals.user_profile}\\spicetify-cli\\Themes\\{theme}").glob(f"**/*.jpg"))
+        if not imgs:
+            img_list.append(None)
+            continue
+        
+        count = 0
+        for i in range(len(imgs)):
+            stem = imgs[i].stem
+            if stem in identifiers:
+                img_list.append(imgs[i])
+                break
+            else:
+                count += 1
+                if count == len(imgs):
+                    img_list.append(imgs[count-1])
                     break
-                else:
-                    count += 1
-                    if count == len(imgs):
-                        ss_List.append(imgs[count-1])
-                        break
-        return(ss_List)
+    return(img_list)
+
+def colorscheme_average(theme): # returns list of 3 colors for each scheme in a dict
+    # using var(theme) get the list_config_available("colorschemes", theme), then split up the themes color.ini by the list of colorschemes
+    # then get the average color of each colorscheme lines 1-3 or something like that
+    colorschemes = []
+    available = list_config_available(selection="colorschemes", theme=theme)
+
+def extension_descriptions(): # returns a list of extension descriptions
+    descriptions = []
+    available = list_config_available("extensions")
+    for extension in available:
+        if extension.lower()[:-3] in [x.lower() for x in list_config_available("themes")]:
+            continue
+        elif extension[:-3] in globals.desc_cache:
+            descriptions.append(globals.desc_cache[extension[:-3]])
+        else:
+            descriptions.append(str(find_config_entry(entry="// DESCRIPTION", config=f"{globals.user_profile}\\spicetify-cli\\Extensions\\{extension}", splitchar=": ")))
     
-    else:
-        print("placeholder for colorschemes")
+    return descriptions
+
 
 # >[TUI Management]<
 
 
 async def simultaneous_chunked_download(urls_paths, label):  # utils.simultaneous_chunked_download({globals.CUSTOM_THEMES}, "Custom Addons.zip")| Chunked download except for dictionaries of downloads.
     '''
-    It downloads a bunch of files in parallel.
+    Downloads a bunch of files in parallel.
     
     :param urls_paths: A dictionary of URLs and paths to save the files to
     :param label: The label to display above the bar

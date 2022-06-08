@@ -1,6 +1,7 @@
 import os
 import sys
 import traceback
+from difflib import SequenceMatcher
 
 from PyQt5 import QtCore, QtWidgets
 from qasync import asyncSlot
@@ -238,7 +239,7 @@ class ConfigThemeMenuScreen(gui.MenuScreen):
         bottom_bar.next.setEnabled(False)
         
         themes = utils.list_config_available("themes")
-        backgrounds = utils.screenshots("themes")
+        backgrounds = utils.theme_images()
         selected = self.getSelection()
         self.clearCurrentButtons()
         row = 0
@@ -373,8 +374,15 @@ class ConfigExtensionsMenuScreen(gui.MenuScreen):
         bottom_bar = self.parent().parent().bottom_bar
         bottom_bar.back.setEnabled(False)
         bottom_bar.next.setEnabled(False)
+        slider = self.parent().parent().slider
 
-        extensions = utils.list_config_available("extensions")
+        # Removing theme extensions
+        extensions=[]
+        for extension in utils.list_config_available("extensions"):
+            if extension.lower()[:-3] not in [x.lower() for x in utils.list_config_available("themes")]:
+                extensions.append(extension)
+
+        descriptions = utils.extension_descriptions()
         selected = self.getSelection()
         self.clearCurrentButtons()
         row = 0
@@ -382,19 +390,19 @@ class ConfigExtensionsMenuScreen(gui.MenuScreen):
         for extension in extensions:
             if extension[-3:] != ".js":
                 continue
-            extension = extension[:-3]
             if column == 2:
                 column = 0
                 row += 1
             self.addMenuButton(
-                extension,
-                text=extension,
-                desc="test desc",
+                extension[:-3],
+                text=extension[:-3],
+                desc=descriptions[extensions.index(extension)],
                 row=row,
                 column=column,
                 next_screen="config_customapps_menu_screen",
             )
             column += 1
+
         if self.first_run:
             self.first_run = False
             selected = [
@@ -444,7 +452,7 @@ class ConfigCustomappsMenuScreen(gui.MenuScreen):
             self.addMenuButton(
                 customapp,
                 text=customapp,
-                desc="Test Description",
+                desc="",
                 row=row,
                 column=column,
                 next_screen="config_confirm_screen",
@@ -477,14 +485,23 @@ class ConfigConfirmScreen(gui.ConfirmScreen):
 
     @asyncSlot()
     async def shownCallback(self):
-        bottom_bar = self.parent().parent().bottom_bar
         slider = self.parent().parent().slider
+        bottom_bar = self.parent().parent().bottom_bar
         bottom_bar.back.setEnabled(False)
         bottom_bar.next.setEnabled(False)
-
+        
+        # Adding back theme extension based on choice
+        self.theme_extension = []
+        for extension in utils.list_config_available("extensions"):
+            extension = extension[:-3]
+            if extension.lower() == slider.config_theme_menu_screen.getSelection().lower():
+                self.theme_extension.append(extension)
+            elif SequenceMatcher(None, extension.lower(), slider.config_theme_menu_screen.getSelection().lower()).ratio() > 0.8:
+                self.theme_extension.append(extension)
+        
         self.rundown.setMarkdown(
             f"""
- - **Theme**: {slider.config_theme_menu_screen.getSelection()}
+ - **Theme**: {slider.config_theme_menu_screen.getSelection()}{(" + " + ", ".join(self.theme_extension)) + ".js" if len(self.theme_extension) > 0 else ""}
  - **Color Scheme**: {slider.config_colorscheme_menu_screen.getSelection() or "Default"}
  - **Extensions**: {", ".join(slider.config_extensions_menu_screen.getSelection()) or "None"}
  - **Custom Apps**: {", ".join(slider.config_customapps_menu_screen.getSelection()) or "None"}
@@ -509,7 +526,7 @@ class ConfigLogScreen(gui.ConsoleLogScreen):
         # Actual config
         theme = slider.config_theme_menu_screen.getSelection()
         colorscheme = slider.config_colorscheme_menu_screen.getSelection()
-        extensions = slider.config_extensions_menu_screen.getSelection()
+        extensions = slider.config_extensions_menu_screen.getSelection() + slider.config_confirm_screen.theme_extension
         customapps = slider.config_customapps_menu_screen.getSelection()
         overwrite_assets = "1" if slider.config_confirm_screen.overwrite_assets.isChecked() else "0"
         try:
