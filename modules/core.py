@@ -359,7 +359,7 @@ async def install(launch=False):
     globals.pix_cache.clear()
 
     themes = utils.list_config_available("themes")
-    backgrounds = utils.screenshots("themes")
+    backgrounds = utils.theme_images()
     for theme in themes:
         background=str(backgrounds[themes.index(theme)])
         if background != "None":
@@ -689,7 +689,7 @@ async def update_addons(shipped=False):
         globals.pix_cache.clear()
 
         themes = utils.list_config_available("themes")
-        backgrounds = utils.screenshots("themes")
+        backgrounds = utils.theme_images()
         for theme in themes:
             background=str(backgrounds[themes.index(theme)])
             if background != "None":
