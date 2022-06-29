@@ -800,19 +800,19 @@ class MenuScreen(SlidingScreen):
 
     @asyncSlot()
     async def selectButtons(self, selected):
-        did_select = False
         if not isinstance(selected, list):
             selected = [selected]
+        
+        did_select = False        
         for selection in selected:
             if selection in self.buttons:
                 self.buttons[selection].setChecked(True)
                 did_select = True
                 if self.scrollable:
-                    while self.buttons[selection].pos().isNull():
-                        await asyncio.sleep(0.1)
                     self.button_scroll_area.ensureWidgetVisible(self.buttons[selection])
+        
         if not did_select and self.scrollable:
-            self.button_scroll_area.verticalScrollBar().setValue(self.scroll_pos)
+            self.button_scroll_area.verticalScrollBar().setValue(0)
 
 
 class ConfirmScreen(SlidingScreen):

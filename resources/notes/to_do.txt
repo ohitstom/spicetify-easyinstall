@@ -11,6 +11,7 @@ Features:
 
 Optional:
     -Better image scanning for backgrounds to make text pop
+    -Move all downloads to a temp folder in cwd
 
 Finished:
     Fix for usernames with spaces
@@ -22,6 +23,7 @@ Finished:
     Fix Deadspace in update app page
     Fix for config buttons not being 16:9   
     Fix for app.last-launched-version being outdated after prefs restore
+    Fix default scroll position oddities (config tab)
     + Some verbose/verbose changes
     + Uninstall winstore spotify
     + Better hidden processes

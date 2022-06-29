@@ -88,7 +88,13 @@ def set_config_entry(entry, replacement, config=None, encoding=None, splitchar="
     :param entry: The entry you want to change
     :param replacement: The value you want to replace the current value with
     '''
-    data = find_config_entry(entry, replacement if replacement is not None else "", config=config, encoding=encoding, splitchar=splitchar)
+    data = find_config_entry(
+        entry, 
+        replacement if replacement is not None else "", 
+        config=config, 
+        encoding=encoding, 
+        splitchar=splitchar
+    )
     replace_config_line(data[0], data[1], data[2])
 
 
