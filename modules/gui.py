@@ -6,7 +6,7 @@ import webbrowser
 
 import PIL
 from PIL import Image, ImageStat
-from PyQt5 import Qt, QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QPixmap
 from qasync import asyncSlot
 
