@@ -9,41 +9,32 @@ from modules import globals, utils, gui
 async def install(launch=False):
     steps_count = 12
     folders = [
-        f"{globals.user_profile}\\spicetify-cli",
-        f"{globals.user_profile}\\.spicetify",
-        f"{globals.appdata_local}\\spotify",
+        globals.spice_config,
+        globals.spice_executable,
         f"{globals.appdata}\\spotify",
+        f"{globals.appdata_local}\\spotify",
         globals.temp,
     ]
 
     # >[Section 1]<
-    # 1. Checks if the Spotify directory exists.
-    # 2. If it does, check if the backup directory exists.
-    # 3. Moves the Spotify directory and the prefs file to the backup directory.
+    # The code below will backup a users spotify login and creds.
 
     print(f"\n(1/{steps_count}) Backing Up Credentials...")
     if os.path.isdir(f"{globals.appdata}\\Spotify\\Users") and os.path.isfile(f"{globals.appdata}\\Spotify\\prefs"):
-        if os.path.isdir(f"{globals.cwd}\\Backup_Credentials"):
-            shutil.rmtree(f"{globals.cwd}\\Backup_Credentials")
+        if os.path.isdir(f"{globals.cwd}\\backup"):
+            shutil.rmtree(f"{globals.cwd}\\backup")
         else:
-            os.mkdir(f"{globals.cwd}\\Backup_Credentials")
+            os.mkdir(f"{globals.cwd}\\backup")
         
-        shutil.move(
-            f"{globals.appdata}\\Spotify\\Users",
-            f"{globals.cwd}\\Backup_Credentials\\Users",
-        )
-        shutil.move(
-            f"{globals.appdata}\\Spotify\\prefs", f"{globals.cwd}\\Backup_Credentials"
-        )
+        shutil.move(f"{globals.appdata}\\Spotify\\Users", f"{globals.cwd}\\backup\\Users")
+        shutil.move(f"{globals.appdata}\\Spotify\\prefs", f"{globals.cwd}\\backup")
         print("Finished backing up!\n")
     
     else:
         print("No credentials found!\n")
 
     # >[Section 2]<
-    # 1. Checks if Spotify is installed.
-    # 2. If it is, kill Spotify processes and remove Spotify files.
-    # 3. If it isn't, print that Spotify is not installed.
+    # The code below will uninstall Spotify.
 
     print(f"(2/{steps_count}) Uninstalling Spotify...")
     process = await utils.powershell('Get-AppxPackage SpotifyAB.SpotifyMusic', wait=True, verbose=False)
@@ -72,9 +63,7 @@ async def install(launch=False):
     
 
     # >[Section 3]<
-    # 1. For each folder in the list of folders, 
-    # 2. try to delete the folder if it exists and is not empty. 
-    # 3. If the folder does not exist or is empty, print a message saying so.
+    # The code below will remove a list of spicetify dependant folders.
 
     print(f"(3/{steps_count}) Wiping folders...")
     for folder in folders:
@@ -89,7 +78,7 @@ async def install(launch=False):
     print("Finished wiping folders!\n")
 
     # >[Section 4]<
-    # Download the Spotify setup file from the Spotify website.
+    # The code below will download Spotify.
     
     print(f"(4/{steps_count}) Downloading correct Spotify version...")
     if not os.path.isdir(globals.temp):
@@ -97,25 +86,21 @@ async def install(launch=False):
     
     await utils.chunked_download(
         url=globals.SPOTIFY_URL,
-        path=(globals.temp + "\\" + globals.SPOTIFY_VERSION),
-        label=(globals.temp + "\\" + globals.SPOTIFY_VERSION)
+        path=(f"{globals.temp}\\{globals.SPOTIFY_VERSION}"),
+        label=(f"{globals.temp}\\{globals.SPOTIFY_VERSION}")
         if globals.verbose
         else globals.SPOTIFY_VERSION,
     )
     print("Finished downloading Spotify!\n")
 
     # >[Section 5]<
-    # 1. Kill all Spotify processes.
-    # 2. Deletes the Spotify installation folder.
-    # 3. Installs Spotify.
-    # 5. Deletes the installation file.
-    # 6. Kill all Spotify processes once preference file are found.
+    # The code below will install Spotify.
 
     print(f"(5/{steps_count}) Installing Spotify...")
     utils.kill_processes("Spotify.exe")
     spotify_install_pid = (
         await utils.start_process(
-            globals.temp + "\\" + globals.SPOTIFY_VERSION,
+            f"{globals.temp}\\{globals.SPOTIFY_VERSION}",
             silent=True
         )
     ).pid
@@ -132,34 +117,28 @@ async def install(launch=False):
         await asyncio.sleep(0.25)
 
     utils.kill_processes("Spotify.exe")
-    os.remove(globals.temp + "\\" + globals.SPOTIFY_VERSION)
+    os.remove(f"{globals.temp}\\{globals.SPOTIFY_VERSION}")
     print("Finished installing Spotify!\n")
 
     # >[Section 6]<
-    # Installs Spicetify and Applies Spicetify default theme
+    # The code below will install Spicetify and do error checking.
 
     print(f"(6/{steps_count}) Installing Spicetify...")
     await utils.powershell(
         '\n'.join([
             '[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12',
             '$ProgressPreference = "SilentlyContinue"',
-            f'$v="{globals.SPICETIFY_VERSION}"; Invoke-WebRequest -UseBasicParsing "https://raw.githubusercontent.com/khanhas/spicetify-cli/master/install.ps1" | Invoke-Expression',
+            f'$v="{globals.SPICETIFY_VERSION}"; Invoke-WebRequest -UseBasicParsing "https://raw.githubusercontent.com/spicetify/spicetify-cli/0824e1656dcfcf783c3fccfb19bf0418b7c06933/install.ps1" | Invoke-Expression',
         ])
-    )
-
-    environ_check = (
-        f'& "{globals.user_profile}\\spicetify-cli\\spicetify.exe"'
-        if os.path.isdir(f"{globals.user_profile}\\spicetify-cli")
-        else "spicetify"
     )
     
     await utils.powershell(
         '\n'.join([
-            f'{environ_check}',
+            f'{globals.environ_check}',
         ])
     )
 
-    if os.path.isfile(f"{globals.user_profile}\\.spicetify\\config-xpui.ini"):
+    if os.path.isfile(f"{globals.spice_config}\\config-xpui.ini"):
         prefs_check = utils.find_config_entry("prefs_path")
         if not prefs_check:
             utils.set_config_entry("prefs_path", f'{globals.appdata}\Spotify\prefs')
@@ -168,16 +147,14 @@ async def install(launch=False):
 
     await utils.powershell(
         '\n'.join([
-            f'{environ_check} config current_theme SpicetifyDefault -n',
-            f'{environ_check} backup apply enable-devtools -n',
+            f'{globals.environ_check} config current_theme SpicetifyDefault -n',
+            f'{globals.environ_check} backup apply enable-devtools -n',
         ])
     )
     print("Finished installing Spicetify!\n")
 
     # >[Section 7]<
-    # 1. Creates a directory in the Spotify folder to prevent Spotify from updating.
-    # 2. Prevents Spotify from updating by killing the Spotify process.
-    # 3. Prevents the user from reading and writing to the Spotify folder.
+    # The code below will remove Spotifys ability to update.
 
     print(f"(7/{steps_count}) Preventing Spotify from updating...")
     utils.kill_processes("Spotify.exe")
@@ -193,33 +170,23 @@ async def install(launch=False):
     print("Finished blocking Spotify updates!\n")
 
     # >[Section 8]<
-    # Downloads the themes from the official Spicetify repository, and move them to the correct location.
+    # The code below will download spicetify-cli themes.
     
     print(f"(8/{steps_count}) Downloading 'official' themes...")
-    shutil.rmtree(f"{globals.user_profile}\\spicetify-cli\\Themes", ignore_errors=True)
-    
     await utils.chunked_download(
         url=globals.THEMES_URL,
-        path=(f"{globals.user_profile}\\spicetify-cli\\Themes.zip"),
-        label=(f"{globals.user_profile}\\spicetify-cli\\Themes.zip")
+        path=(f"{globals.spice_config}\\Themes.zip"),
+        label=(f"{globals.spice_config}\\Themes.zip")
         if globals.verbose
         else "Themes.zip",
     )
 
-    shutil.unpack_archive(
-        f"{globals.user_profile}\\spicetify-cli\\Themes.zip",
-        f"{globals.user_profile}\\spicetify-cli",
-    )
+    shutil.rmtree(f"{globals.spice_config}\\Themes", ignore_errors=True)
+    shutil.unpack_archive(f"{globals.spice_config}\\Themes.zip", globals.spice_config)
+    os.remove(f"{globals.spice_config}\\Themes.zip")
+    os.rename(f"{globals.spice_config}\\{globals.THEMES_VERSION}", f"{globals.spice_config}\\Themes")
 
-    os.remove(
-        f"{globals.user_profile}\\spicetify-cli\\Themes.zip"
-    )
-    os.rename(
-        f"{globals.user_profile}\\spicetify-cli\\{globals.THEMES_VERSION}",
-        f"{globals.user_profile}\\spicetify-cli\\Themes",
-    )
-
-    for item in list(Path(f"{globals.user_profile}\\spicetify-cli\\Themes").glob("*")):
+    for item in list(Path(f"{globals.spice_config}\\Themes").glob("*")):
         fullpath = str(item)
         if os.path.isdir(fullpath):
             filename = str(item.name)
@@ -228,14 +195,11 @@ async def install(launch=False):
         else:
             os.remove(fullpath)
 
-    os.rename(
-        f"{globals.user_profile}\\spicetify-cli\\Themes\\Default",
-        f"{globals.user_profile}\\spicetify-cli\\Themes\\SpicetifyDefault",
-    )
+    os.rename(f"{globals.spice_config}\\Themes\\Default", f"{globals.spice_config}\\Themes\\SpicetifyDefault")
 
-    for item in list(Path(f"{globals.user_profile}\\spicetify-cli\\Themes").glob("**/*.js")):
+    for item in list(Path(f"{globals.spice_config}\\Themes").glob("**/*.js")):
         fullpath = str(item)
-        destpath = (f"{globals.user_profile}\\spicetify-cli\\Extensions"
+        destpath = (f"{globals.spice_config}\\Extensions"
         + fullpath[fullpath.rfind('\\') : fullpath.rfind('.')]
         + ".js"
         )
@@ -245,8 +209,7 @@ async def install(launch=False):
     print("Finished downloading 'official' themes!\n")
 
     # >[Section 9]<
-    # Download all the custom addons and themes, unpack them, move them to the correct location, and
-    # deletes the zip files.
+    # The code below will download a list of custom Spicetify addons, declared in globals.py.
     
     print(f"(9/{steps_count}) Downloading 'custom' addons...")
     await utils.simultaneous_chunked_download(
@@ -292,14 +255,14 @@ async def install(launch=False):
                 if not os.path.exists(f"{unpacked_path}\\user.css") and "Themes" in unpacked_path:
                     for src in Path(f"{unpacked_path}").glob("**/*"):
                         if os.path.isdir(str(src)) and ".github" not in str(src):
-                            shutil.move(str(src), f"{globals.user_profile}\\spicetify-cli\\Themes")
+                            shutil.move(str(src), f"{globals.spice_config}\\Themes")
                     if os.path.exists(unpacked_path) and os.path.isdir(unpacked_path):
                         shutil.rmtree(unpacked_path)
 
             # Moving all theme extensions to the extensions folder
-            for item in list(Path(f"{globals.user_profile}\\spicetify-cli\\Themes").glob("**/*.js")):
+            for item in list(Path(f"{globals.spice_config}\\Themes").glob("**/*.js")):
                 fullpath = str(item)
-                destpath = (f"{globals.user_profile}\\spicetify-cli\\Extensions"
+                destpath = (f"{globals.spice_config}\\Extensions"
                 + fullpath[fullpath.rfind('\\') : fullpath.rfind('.')]
                 + ".js"
                 )
@@ -312,13 +275,10 @@ async def install(launch=False):
     print("Finished downloading 'custom' addons!\n")
 
     # >[Section 10]<
-    # 1. The code below is a function that will restore the Spotify user data and credentials.
-    # 2. The function will first check if the backup exists. If it does, it will move the backup to the
-    # 3. Spotify directory.
-    # 4. The function will then check if the user data and credentials were successfully restored.
+    # The code below will restore the Spotify user data and credentials.
 
     print(f"(10/{steps_count}) Restoring Credentials...")
-    if os.path.isdir(f"{globals.cwd}\\Backup_Credentials\\Users"):
+    if os.path.isdir(f"{globals.cwd}\\backup\\Users"):
         if os.path.isdir(f"{globals.appdata}\\Spotify\\Users") is True:
             shutil.rmtree(f"{globals.appdata}\\Spotify\\Users")
         
@@ -326,15 +286,15 @@ async def install(launch=False):
             os.remove(f"{globals.appdata}\\Spotify\\prefs")
 
         shutil.move(
-            f"{globals.cwd}\\Backup_Credentials\\Users",
+            f"{globals.cwd}\\backup\\Users",
             f"{globals.appdata}\\Spotify"
         )
 
         shutil.move(
-            f"{globals.cwd}\\Backup_Credentials\\prefs",
+            f"{globals.cwd}\\backup\\prefs",
             f"{globals.appdata}\\Spotify"
         )
-        shutil.rmtree(f"{globals.cwd}\\Backup_Credentials")
+        shutil.rmtree(f"{globals.cwd}\\backup")
 
         utils.set_config_entry(
             entry="app.last-launched-version", 
@@ -345,12 +305,15 @@ async def install(launch=False):
 
         print("Finished restoring!\n")
 
-    elif os.path.isdir(f"{globals.cwd}\\Backup_Credentials") is False:
+    elif os.path.isdir(f"{globals.cwd}\\backup") is False:
         print("No credentials to restore!\n")
     
     else:
         print("Credentials were lost during install!\n")
-        shutil.rmtree(f"{globals.cwd}\\Backup_Credentials")
+        shutil.rmtree(f"{globals.cwd}\\backup")
+
+    # >[Section 11]<
+    # The code below will cache pixmaps of each themes showcase screenshots.
 
     print(f"(11/{steps_count}) Caching pixmaps...")
     if os.path.exists('pix_cache.txt'):
@@ -370,10 +333,14 @@ async def install(launch=False):
                 f.write(f'{background}: {str(pixmapByteArray.toBase64())}, {Brightness}\n') 
     print("Finished caching pixmaps!\n")
 
+    # >[Section 12]<
+    # The code below will cache descriptions of each extensions "//description" header.
+
     print(f"(12/{steps_count}) Caching descriptions...")
     if os.path.exists('desc_cache.txt'):
         os.remove('desc_cache.txt')
-    open('desc_cache.txt', 'w').close()
+    else:
+        open('desc_cache.txt', 'w').close()
     globals.desc_cache.clear()
 
     extensions=[]
@@ -397,11 +364,6 @@ async def install(launch=False):
 
 async def apply_config(theme, colorscheme, extensions, customapps):
     steps_count = 2
-    environ_check = (
-        f'& "{globals.user_profile}\\spicetify-cli\\spicetify.exe"'
-        if os.path.isdir(f"{globals.user_profile}\\spicetify-cli")
-        else "spicetify"
-    )
 
     # >[Section 1]<
     # Sets the config as per the users choices.
@@ -417,23 +379,21 @@ async def apply_config(theme, colorscheme, extensions, customapps):
     # Applying the changes to the config.
     
     print(f"(2/{steps_count}) Applying config...")
-    await utils.powershell(f"{environ_check} apply", start_new_session=False)
+    await utils.powershell(f"{globals.environ_check} apply", start_new_session=False)
     await utils.start_process(f"{globals.appdata}\\spotify\\spotify.exe", silent=False)
     print("Finished applying config!\n")
 
 
 async def uninstall():
     steps_count = 4
-    user_profile = os.path.expanduser("~")
-    temp = "C:\\Users\\WDAGUtilityAccount\\AppData\\Local\\temp"
     folders = [
-        f"{user_profile}\\spicetify-cli",
-        f"{user_profile}\\.spicetify",
-        temp,
+        globals.spice_executable,
+        globals.spice_config,
+        globals.temp,
     ]
     
     # >[Section 1]<
-    # The code below is a function that will uninstall Spotify.
+    # The code below will uninstall Spotify.
     
     print(f"(1/{steps_count}) Uninstalling Spotify...")
     process = await utils.powershell('Get-AppxPackage SpotifyAB.SpotifyMusic', wait=True, verbose=False)
@@ -479,7 +439,7 @@ async def uninstall():
     # >[Section 3]<
     # If the spicetify-cli directory is in the user's PATH, remove it.
 
-    print(f"(3/{steps_count}) Removing environment variables...")  
+    print(f"(3/{steps_count}) Removing environment variables...")
     await utils.powershell(
         '\n'.join([
             '$path = [System.Environment]::GetEnvironmentVariable("PATH", "User")',
@@ -490,23 +450,26 @@ async def uninstall():
         ]),
         wait=True,
     )
-    print("Finished removing environment variables!")
+    print("Finished removing environment variables!\n")
 
     print(f"(4/{steps_count}) Removing caches...")
     if os.path.exists('pix_cache.txt'):
         os.remove('pix_cache.txt')
     if os.path.exists('desc_cache.txt'):
         os.remove('desc_cache.txt')
-    print("Finished removing cached pixmaps!\n")
+    print("Finished removing cached caches!\n")
 
 
 
 async def update_addons(shipped=False):
     steps_count = 5
     folders = [
-        f"{globals.user_profile}\\spicetify-cli\\Themes",
-        f"{globals.user_profile}\\spicetify-cli\\Extensions",
-        f"{globals.user_profile}\\spicetify-cli\\Customapps",
+        f"{globals.spice_config}\\Themes",
+        f"{globals.spice_config}\\Extensions",
+        f"{globals.spice_config}\\Customapps",
+        f"{globals.spice_executable}\\Themes",
+        f"{globals.spice_executable}\\Extensions",
+        f"{globals.spice_executable}\\Customapps",
     ]
 
     # >[Section 1]<
@@ -538,10 +501,10 @@ async def update_addons(shipped=False):
     
     Addons = {
         globals.THEMES_URL if shipped 
-        else globals.THEMES_URL.replace(globals.THEMES_VERSION[17:], 'refs/heads/master'): f"{globals.user_profile}\\spicetify-cli\\Themes.zip",
+        else globals.THEMES_URL.replace(globals.THEMES_VERSION[17:], 'refs/heads/master'): f"{globals.spice_config}\\Themes.zip",
         
         globals.ADDONS_URL if shipped 
-        else globals.ADDONS_URL.replace(globals.ADDONS_VERSION[14:], 'refs/heads/master'): f"{globals.user_profile}\\spicetify-cli\\Addons.zip",
+        else globals.ADDONS_URL.replace(globals.ADDONS_VERSION[14:], 'refs/heads/master'): f"{globals.spice_executable}\\Addons.zip",
     }
 
     await utils.simultaneous_chunked_download(
@@ -551,24 +514,27 @@ async def update_addons(shipped=False):
     )
 
     shutil.unpack_archive(
-        f"{globals.user_profile}\\spicetify-cli\\Themes.zip",
-        f"{globals.user_profile}\\spicetify-cli",
+        f"{globals.spice_config}\\Themes.zip",
+        globals.spice_config
     )
 
     os.remove(
-        f"{globals.user_profile}\\spicetify-cli\\Themes.zip"
+        f"{globals.spice_config}\\Themes.zip"
     )
 
     os.rename(
-        f"{globals.user_profile}\\spicetify-cli\\{globals.THEMES_VERSION if shipped else 'spicetify-themes-master'}",
-        f"{globals.user_profile}\\spicetify-cli\\Themes",
+        f"{globals.spice_config}\\{globals.THEMES_VERSION if shipped else 'spicetify-themes-master'}",
+        f"{globals.spice_config}\\Themes",
     )
     os.rename(
-        f"{globals.user_profile}\\spicetify-cli\\Themes\\Default",
-        f"{globals.user_profile}\\spicetify-cli\\Themes\\SpicetifyDefault",
+        f"{globals.spice_config}\\Themes\\Default",
+        f"{globals.spice_config}\\Themes\\SpicetifyDefault",
+    )
+    shutil.move(
+        f"{globals.spice_config}\\Themes\\SpicetifyDefault", f"{globals.spice_executable}\\Themes\\SpicetifyDefault"
     )
 
-    for item in list(Path(f"{globals.user_profile}\\spicetify-cli\\Themes").glob("*")):
+    for item in list(Path(f"{globals.spice_config}\\Themes").glob("*")):
         fullpath = str(item)
         if os.path.isdir(fullpath):
             filename = str(item.name)
@@ -577,9 +543,9 @@ async def update_addons(shipped=False):
         else:
             os.remove(fullpath)
 
-    for item in list(Path(f"{globals.user_profile}\\spicetify-cli\\Themes").glob("**/*.js")):
+    for item in list(Path(f"{globals.spice_config}\\Themes").glob("**/*.js")):
         fullpath = str(item)
-        destpath = (f"{globals.user_profile}\\spicetify-cli\\Extensions"
+        destpath = (f"{globals.spice_config}\\Extensions"
         + fullpath[fullpath.rfind('\\') : fullpath.rfind('.')]
         + ".js"
         )
@@ -587,30 +553,33 @@ async def update_addons(shipped=False):
             os.remove(destpath)
         shutil.move(fullpath, destpath)
 
-    if os.path.exists(f"{globals.user_profile}\\spicetify-cli\\Addons"):
-        shutil.rmtree(f"{globals.user_profile}\\spicetify-cli\\Addons")
+    if os.path.exists(f"{globals.spice_executable}\\Addons"):
+        shutil.rmtree(f"{globals.spice_executable}\\Addons")
 
     shutil.unpack_archive(
-        f"{globals.user_profile}\\spicetify-cli\\Addons.zip",
-        f"{globals.user_profile}\\spicetify-cli",
+        f"{globals.spice_executable}\\Addons.zip",
+        globals.spice_executable,
     )
 
     os.remove(
-        f"{globals.user_profile}\\spicetify-cli\\Addons.zip"
+        f"{globals.spice_executable}\\Addons.zip"
     )
 
     os.rename(
-        f"{globals.user_profile}\\spicetify-cli\\{globals.ADDONS_VERSION if shipped else 'spicetify-cli-master'}",
-        f"{globals.user_profile}\\spicetify-cli\\Addons",
+        f"{globals.spice_executable}\\{globals.ADDONS_VERSION if shipped else 'spicetify-cli-master'}",
+        f"{globals.spice_executable}\\Addons",
     )
 
-    for item in os.listdir(f"{globals.user_profile}\\spicetify-cli\\Addons\\Extensions"):
-        shutil.move(f"{globals.user_profile}\\spicetify-cli\\Addons\\Extensions\\{item}", f"{globals.user_profile}\\spicetify-cli\\Extensions")
+    for item in os.listdir(f"{globals.spice_executable}\\Addons\\Extensions"):
+        shutil.move(f"{globals.spice_executable}\\Addons\\Extensions\\{item}", f"{globals.spice_executable}\\Extensions")
     
-    for item in os.listdir(f"{globals.user_profile}\\spicetify-cli\\Addons\\Customapps"):
-        shutil.move(f"{globals.user_profile}\\spicetify-cli\\Addons\\Customapps\\{item}", f"{globals.user_profile}\\spicetify-cli\\Customapps")
+    for item in os.listdir(f"{globals.spice_executable}\\Addons\\Customapps"):
+        shutil.move(f"{globals.spice_executable}\\Addons\\Customapps\\{item}", f"{globals.spice_executable}\\Customapps")
     
-    shutil.rmtree(f"{globals.user_profile}\\spicetify-cli\\Addons")
+    shutil.rmtree(f"{globals.spice_executable}\\Addons")
+    
+    if os.path.isfile(f"{globals.spice_config}\\Extensions\\eslintrc.js"):
+        os.remove(f"{globals.spice_config}\\Extensions\\eslintrc.js")
     print("Finished downloading 'official' addons!\n")
 
     # >[Section 3]<
@@ -663,14 +632,14 @@ async def update_addons(shipped=False):
                 if not os.path.exists(f"{unpacked_path}\\user.css") and "Themes" in unpacked_path:
                     for src in Path(f"{unpacked_path}").glob("**/*"):
                         if os.path.isdir(str(src)) and ".github" not in str(src):
-                            shutil.move(str(src), f"{globals.user_profile}\\spicetify-cli\\Themes")
+                            shutil.move(str(src), f"{globals.spice_config}\\Themes")
                     if os.path.exists(unpacked_path) and os.path.isdir(unpacked_path):
                         shutil.rmtree(unpacked_path)
 
             # Moving all theme extensions to the extensions folder
-            for item in list(Path(f"{globals.user_profile}\\spicetify-cli\\Themes").glob("**/*.js")):
+            for item in list(Path(f"{globals.spice_config}\\Themes").glob("**/*.js")):
                 fullpath = str(item)
-                destpath = (f"{globals.user_profile}\\spicetify-cli\\Extensions"
+                destpath = (f"{globals.spice_config}\\Extensions"
                 + fullpath[fullpath.rfind('\\') : fullpath.rfind('.')]
                 + ".js"
                 )
@@ -680,7 +649,7 @@ async def update_addons(shipped=False):
 
         else:
             utils.verbose_print(f"{unpacked_name} wasnt downloaded successfully...")
-        print("Finished downloading 'custom' addons!")
+        print("Finished downloading 'custom' addons!\n")
         
         print(f"(4/{steps_count}) Caching pixmaps...")
         if os.path.exists('pix_cache.txt'):
@@ -703,9 +672,10 @@ async def update_addons(shipped=False):
         print(f"(5/{steps_count}) Caching descriptions...")
         if os.path.exists('desc_cache.txt'):
             os.remove('desc_cache.txt')
-        open('desc_cache.txt', 'w').close()
+        else:
+            open('desc_cache.txt', 'w').close()
         globals.desc_cache.clear()
-        
+
         extensions=[]
         descriptions = utils.extension_descriptions()
         for extension in utils.list_config_available("extensions"):
@@ -744,9 +714,7 @@ async def update_app():
     print("Finished Downloading Update!")
 
     # >[Section 2]<
-    # 1. Check if there's an update.zip in the current working directory.
-    # 2. If there is, unpack it and remove it.
-    # 3. If there is an extracted folder, trigger the restart by returning True.
+    # Cleanup and restart.
 
     print(f"\n(2/{steps_count}) Extraction And Cleanup...")
     if not os.path.exists(f"{globals.cwd}\\Update.zip"):

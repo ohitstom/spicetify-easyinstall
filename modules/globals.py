@@ -1,21 +1,21 @@
 import os
-import tempfile
 from pathlib import Path
 
 import PyQt5
 from PyQt5 import QtCore
 
-# Github Update Variables
+# Github Variables
 RELEASE = "2.9"
 HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
 WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL" 
 
-# URL Update Variables
-SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.83.954.gd226dfe8-18.exe"
+# Download URLS
+SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.88.612.gcc529952-10.exe"
 THEMES_URL = "https://codeload.github.com/morpheusthewhite/spicetify-themes/zip/f39b627ad95e4cc318bd333ac177cfad59114fe2"
 ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/0f958de1d5587dbe9d766ae718f56633a7eb4929"
 
-SPICETIFY_VERSION = "2.9.8"
+# Version Variables
+SPICETIFY_VERSION = "2.10.2"
 SPOTIFY_VERSION = "/".join(SPOTIFY_URL.split("/")[-1:])
 THEMES_VERSION = f"spicetify-themes-{'/'.join(THEMES_URL.split('/')[-1:])}"
 ADDONS_VERSION = f"spicetify-cli-{'/'.join(ADDONS_URL.split('/')[-1:])}"
@@ -24,11 +24,14 @@ ADDONS_VERSION = f"spicetify-cli-{'/'.join(ADDONS_URL.split('/')[-1:])}"
 user_profile = os.path.expanduser("~")
 appdata_local = os.environ["LOCALAPPDATA"]
 appdata = os.environ["APPDATA"]
-temp = tempfile.gettempdir()
-cwd = os.getcwd()
 spotify_prefs = Path(f"{appdata}\\Spotify\\prefs")
+spice_executable =f"{user_profile}\\spicetify-cli"
+spice_config = f"{user_profile}\\.spicetify"
+cwd = os.getcwd()
+temp = f"{cwd}\\temp"
+environ_check = (f'& "{spice_executable}\\spicetify.exe"' if os.path.isdir(spice_executable) else "spicetify")
 
-# Temporary Variables + MD Vars
+# Temporary Variables + caches
 app = None
 gui = None
 singleton = None
@@ -37,7 +40,6 @@ json = None
 pix_cache = {}
 desc_cache = {}
 
-# Taking the stored base64'd class and converting it back to a QByteArray <- Turn into function? [add error checking?]
 if os.path.exists('pix_cache.txt'):
     with open('pix_cache.txt', 'r') as f:
       sections = f.readlines()
@@ -60,17 +62,17 @@ else:
 
 # Custom Addon URLs
 CUSTOM_EXTENSIONS = {
-    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/3654a9298c1bef26bb7fb2144ab0c563cc322c79": f"{user_profile}\\spicetify-cli\\Extensions\\Charlie-Repo.zip",
-    "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/910794f85e75ded3e0b5e2fcb436d9ead0276b51": f"{user_profile}\\spicetify-cli\\Extensions\\Power-Bar.zip",
+    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/3654a9298c1bef26bb7fb2144ab0c563cc322c79": f"{spice_config}\\Extensions\\Charlie-Repo.zip",
+    "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/910794f85e75ded3e0b5e2fcb436d9ead0276b51": f"{spice_config}\\Extensions\\Power-Bar.zip",
 }
 
 CUSTOM_APPS = {
-    "https://codeload.github.com/spicetify/spicetify-marketplace/zip/cc97cfe014b84974c00e2ab69774fe785f52d4b3": f"{user_profile}\\spicetify-cli\\CustomApps\\Marketplace.zip",
+    "https://codeload.github.com/spicetify/spicetify-marketplace/zip/cc97cfe014b84974c00e2ab69774fe785f52d4b3": f"{spice_config}\\CustomApps\\Marketplace.zip",
 }
 
 CUSTOM_THEMES = {
-    "https://github.com/JulienMaille/dribbblish-dynamic-theme/releases/download/4.2.2/DribbblishDynamic_v4.2.2.zip": f"{user_profile}\\spicetify-cli\\Themes\\Dribbblish-Dynamic.zip",
-    "https://codeload.github.com/Comfy-Themes/Spicetify/zip/a1d1053d465c4de722b312adb604f52210461c90": f"{user_profile}\\spicetify-cli\\Themes\\Comfy-Collection.zip",
+    "https://github.com/JulienMaille/dribbblish-dynamic-theme/releases/download/4.2.2/DribbblishDynamic_v4.2.2.zip": f"{spice_config}\\Themes\\Dribbblish-Dynamic.zip",
+    "https://codeload.github.com/Comfy-Themes/Spicetify/zip/a1d1053d465c4de722b312adb604f52210461c90": f"{spice_config}\\Themes\\Comfy-Collection.zip",
 }
 
 # Text Pages For GUI

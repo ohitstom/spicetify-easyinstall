@@ -110,14 +110,15 @@ def list_config_available(selection, theme=None):    # selection: themes, colors
         raise Exception("Not Installed")
 
     if selection == "themes":  # List Themes
-        themes = os.listdir(f"{globals.user_profile}\\spicetify-cli\\Themes")
+        themes = sorted(os.listdir(f"{globals.spice_config}\\Themes") + os.listdir(f"{globals.spice_executable}\\Themes"))
         if "_Extra" in themes:
             themes.remove("_Extra")
         return themes
 
     elif selection == "colorschemes" and theme:  # List Color schemes
         colorschemes = []
-        color_ini = f"{globals.user_profile}\\spicetify-cli\\Themes\\{theme}\\color.ini"
+        location = globals.spice_config if os.path.isdir(f"{globals.spice_config}\\Themes\\{theme}") else globals.spice_executable
+        color_ini = f"{location}\\Themes\\{theme}\\color.ini"
         if os.path.exists(color_ini):
             with open(color_ini) as f:
                 colorschemes.extend(
@@ -129,11 +130,12 @@ def list_config_available(selection, theme=None):    # selection: themes, colors
         return colorschemes
 
     elif selection == "extensions":  # List Extensions
-        extensions = os.listdir(f"{globals.user_profile}\\spicetify-cli\\Extensions")
+        extensions = sorted(os.listdir(f"{globals.spice_config}\\Extensions") + os.listdir(f"{globals.spice_executable}\\Extensions"))
         return extensions
 
     elif selection == "customapps":  # List Custom apps
-        return os.listdir(f"{globals.user_profile}\\spicetify-cli\\CustomApps")
+        customapps = sorted(os.listdir(f"{globals.spice_config}\\CustomApps") + os.listdir(f"{globals.spice_executable}\\CustomApps"))
+        return customapps
 
     else:
         raise Exception("Bad arguments")
@@ -145,7 +147,7 @@ def theme_images(): # returns list of paths to screenshots
     available = list_config_available("themes")
     identifiers = ["preview","screenshot","base", "dark"]
     for theme in available:
-        imgs = list(Path(f"{globals.user_profile}\\spicetify-cli\\Themes\\{theme}").glob(f"**/*.png")) + list(Path(f"{globals.user_profile}\\spicetify-cli\\Themes\\{theme}").glob(f"**/*.jpg"))
+        imgs = list(Path(f"{globals.spice_config}\\Themes\\{theme}").glob(f"**/*.png")) + list(Path(f"{globals.spice_config}\\Themes\\{theme}").glob(f"**/*.jpg")) + list(Path(f"{globals.spice_executable}\\Themes\\{theme}").glob(f"**/*.png")) + list(Path(f"{globals.spice_executable}\\Themes\\{theme}").glob(f"**/*.jpg"))
         if not imgs:
             img_list.append(None)
             continue
@@ -178,7 +180,11 @@ def extension_descriptions(): # returns a list of extension descriptions
         elif extension[:-3] in globals.desc_cache:
             descriptions.append(globals.desc_cache[extension[:-3]])
         else:
-            descriptions.append(str(find_config_entry(entry="// DESCRIPTION", config=f"{globals.user_profile}\\spicetify-cli\\Extensions\\{extension}", splitchar=": ")))
+            config = globals.spice_executable if os.path.isfile(f"{globals.spice_executable}\\Extensions\\{extension}") else globals.spice_config
+            try:
+                descriptions.append(str(find_config_entry(entry="// DESCRIPTION", config=f"{config}\\Extensions\\{extension}", splitchar=": ")))
+            except:
+                descriptions.append(None)
     
     return descriptions
 
@@ -417,7 +423,7 @@ def is_installed():  # Checks if spicetify is installed.
     :return: A boolean value.
     '''
     return (
-        os.path.exists(f"{globals.user_profile}\\.spicetify\\config-xpui.ini") is True)
+        os.path.exists(f"{globals.spice_config}\\config-xpui.ini") is True)
 
 
 async def heads_value(url): # Checks the heads of urls to see what branch is default.

@@ -1,7 +1,6 @@
 Features:
     -Fill out MOTD's (Mostly Redundant ones).
     -Overall refactoring of codespace, lots of redundancy and artifacts, comb through each line.
-    -Multiple selections in customapps not saving
     -Rework naming of functions and their examples/usage
     -Make code easier to access for developers, explanations, formatting, splitting up long functions, etc.
     -Trim down patch notes to a bare minimum as not to clutter/find a way to add a dropdown.
@@ -11,7 +10,6 @@ Features:
 
 Optional:
     -Better image scanning for backgrounds to make text pop
-    -Move all downloads to a temp folder in cwd
 
 Finished:
     Fix for usernames with spaces
@@ -24,6 +22,7 @@ Finished:
     Fix for config buttons not being 16:9   
     Fix for app.last-launched-version being outdated after prefs restore
     Fix default scroll position oddities (config tab)
+    Fix selection memory for multiple customapps (config tab)
     + Some verbose/verbose changes
     + Uninstall winstore spotify
     + Better hidden processes
@@ -38,3 +37,4 @@ Finished:
     + Extension descriptions
     + Physical cache for theme images (pixmaps) + extension descriptions, created during install or when needed
     + Theme extensions enabled automatically
+    + Moved from %temp% to cwd/temp
