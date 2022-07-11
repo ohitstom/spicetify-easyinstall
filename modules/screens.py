@@ -390,6 +390,8 @@ class ConfigExtensionsMenuScreen(gui.MenuScreen):
         for extension in extensions:
             if extension[-3:] != ".js":
                 continue
+            if ".script" in extension or "eslint" in extension:
+                continue
             if column == 2:
                 column = 0
                 row += 1

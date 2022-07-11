@@ -131,10 +131,16 @@ async def install(launch=False):
             f'$v="{globals.SPICETIFY_VERSION}"; Invoke-WebRequest -UseBasicParsing "https://raw.githubusercontent.com/spicetify/spicetify-cli/0824e1656dcfcf783c3fccfb19bf0418b7c06933/install.ps1" | Invoke-Expression',
         ])
     )
-    
+
+    environ_check = (
+    f'& "{globals.spice_executable}\\spicetify.exe"' 
+    if os.path.isdir(globals.spice_executable) 
+    else "spicetify"
+    )
+
     await utils.powershell(
         '\n'.join([
-            f'{globals.environ_check}',
+            f'{environ_check}',
         ])
     )
 
@@ -147,8 +153,8 @@ async def install(launch=False):
 
     await utils.powershell(
         '\n'.join([
-            f'{globals.environ_check} config current_theme SpicetifyDefault -n',
-            f'{globals.environ_check} backup apply enable-devtools -n',
+            f'{environ_check} config current_theme SpicetifyDefault -n',
+            f'{environ_check} backup apply enable-devtools -n',
         ])
     )
     print("Finished installing Spicetify!\n")
@@ -379,7 +385,8 @@ async def apply_config(theme, colorscheme, extensions, customapps):
     # Applying the changes to the config.
     
     print(f"(2/{steps_count}) Applying config...")
-    await utils.powershell(f"{globals.environ_check} apply", start_new_session=False)
+    environ_check = (f'& "{globals.spice_executable}\\spicetify.exe"' if os.path.isdir(globals.spice_executable)  else "spicetify")    
+    await utils.powershell(f"{environ_check} apply", start_new_session=False)
     await utils.start_process(f"{globals.appdata}\\spotify\\spotify.exe", silent=False)
     print("Finished applying config!\n")
 

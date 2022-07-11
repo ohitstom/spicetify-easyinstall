@@ -5,14 +5,14 @@ import PyQt5
 from PyQt5 import QtCore
 
 # Github Variables
-RELEASE = "2.9"
+RELEASE = "2.9.5"
 HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
 WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL" 
 
 # Download URLS
 SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.88.612.gcc529952-10.exe"
-THEMES_URL = "https://codeload.github.com/morpheusthewhite/spicetify-themes/zip/f39b627ad95e4cc318bd333ac177cfad59114fe2"
-ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/0f958de1d5587dbe9d766ae718f56633a7eb4929"
+THEMES_URL = "https://codeload.github.com/morpheusthewhite/spicetify-themes/zip/54e006038c28092aa8b2cc88fad139a8edb3ce6c"
+ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/e99786e480725d07ad8677601f407a1801ccd169"
 
 # Version Variables
 SPICETIFY_VERSION = "2.10.2"
@@ -25,11 +25,10 @@ user_profile = os.path.expanduser("~")
 appdata_local = os.environ["LOCALAPPDATA"]
 appdata = os.environ["APPDATA"]
 spotify_prefs = Path(f"{appdata}\\Spotify\\prefs")
-spice_executable =f"{user_profile}\\spicetify-cli"
+spice_executable = f"{user_profile}\\spicetify-cli"
 spice_config = f"{user_profile}\\.spicetify"
 cwd = os.getcwd()
 temp = f"{cwd}\\temp"
-environ_check = (f'& "{spice_executable}\\spicetify.exe"' if os.path.isdir(spice_executable) else "spicetify")
 
 # Temporary Variables + caches
 app = None
@@ -62,17 +61,17 @@ else:
 
 # Custom Addon URLs
 CUSTOM_EXTENSIONS = {
-    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/3654a9298c1bef26bb7fb2144ab0c563cc322c79": f"{spice_config}\\Extensions\\Charlie-Repo.zip",
-    "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/910794f85e75ded3e0b5e2fcb436d9ead0276b51": f"{spice_config}\\Extensions\\Power-Bar.zip",
+    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/b06caeaf174c08787b0a5c01bf28bada746ce82a": f"{spice_config}\\Extensions\\Charlie-Repo.zip",
+    "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/c5eb79f7c3251fc8a5f657fad1e4f9d6c6942353": f"{spice_config}\\Extensions\\Power-Bar.zip",
 }
 
 CUSTOM_APPS = {
-    "https://codeload.github.com/spicetify/spicetify-marketplace/zip/cc97cfe014b84974c00e2ab69774fe785f52d4b3": f"{spice_config}\\CustomApps\\Marketplace.zip",
+    "https://codeload.github.com/spicetify/spicetify-marketplace/zip/6c32264db8addc612362d7f22e63f9275e0653b0": f"{spice_config}\\CustomApps\\Marketplace.zip",
 }
 
 CUSTOM_THEMES = {
     "https://github.com/JulienMaille/dribbblish-dynamic-theme/releases/download/4.2.2/DribbblishDynamic_v4.2.2.zip": f"{spice_config}\\Themes\\Dribbblish-Dynamic.zip",
-    "https://codeload.github.com/Comfy-Themes/Spicetify/zip/a1d1053d465c4de722b312adb604f52210461c90": f"{spice_config}\\Themes\\Comfy-Collection.zip",
+    "https://codeload.github.com/Comfy-Themes/Spicetify/zip/6f5d26013f778e5230d44f58ae076ec502792177": f"{spice_config}\\Themes\\Comfy-Collection.zip",
 }
 
 # Text Pages For GUI
