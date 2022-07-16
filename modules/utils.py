@@ -13,6 +13,7 @@ import aiofiles
 import aiohttp
 import PIL
 import psutil
+import requests
 from aiohttp import ClientTimeout
 from bs4 import UnicodeDammit
 from PIL import Image, ImageStat
@@ -46,9 +47,9 @@ def find_config_entry(entry, replacement=None, config=None, encoding=None, split
     :return: a tuple of three values.
     '''
     if config is None:
-        config = f"{globals.user_profile}\\.spicetify\\config-xpui.ini"
+        config = f"{globals.spice_config}\\config-xpui.ini"
 
-    elif not os.path.isfile(config):
+    if not os.path.isfile(config):
         return "config NULL"
     
     if encoding is None:
@@ -404,17 +405,50 @@ def process_pid_running(pid): # Boolean operator for running pids.
 # >[Value Returns]<
 
 
-async def latest_release_GET(): # Checks the latest release for a github repo.
+async def latest_github_release(Spicetify=False): # Checks the latest release for a github repo.
     '''
     It gets the latest release from the github api.
     :return: The latest release of Spicetify-EasyInstall.
     '''
+    url = "Spicetify/spicetify-cli" if Spicetify else "OhItsTom/Spicetify-EasyInstall"
+        
     async with aiohttp.ClientSession() as cs:
-        async with cs.get(
-            "https://api.github.com/repos/OhItsTom/Spicetify-EasyInstall/releases/latest"
-        ) as r:
+        async with cs.get(f"https://api.github.com/repos/{url}/releases/latest") as r:
             json = await r.json()
             return json
+
+async def latest_github_commit(Spicetify=False):
+    url = "spicetify/spicetify-cli" if Spicetify else "spicetify/spicetify-themes"
+    async with aiohttp.ClientSession() as cs:
+        async with cs.get(f"https://api.github.com/repos/{url}/commits/master") as r:
+            json = await r.json()
+            return json   
+
+async def latest_spotify_release(name=False): # Checks the latest release for the spotify app.
+    async with aiohttp.ClientSession() as cs:
+        async with cs.get(f"https://www.spotify.com/us/opensource/") as r:
+            body = await r.content.read()
+            body = body.splitlines()
+            for line in body:
+                if "https://bitbucket.org/" in str(line):
+                    version = str(body[body.index(line) - 1].strip())[6:-6]
+                    if name:
+                        return version
+                    else:
+                        break
+
+    async def get(url, session):
+        async with session.get(url) as response:
+            if '200' in str(response.status):
+                return url
+
+    async def collector(urls):
+        async with aiohttp.ClientSession() as session:
+            ret = await asyncio.gather(*[get(url, session) for url in urls])
+            return next((item for item in ret if item is not None), "Not Found")
+                        
+    urls = [f"https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-{version}-{count+1}.exe" for count in range(99)]
+    return await collector(urls)
 
 
 def is_installed():  # Checks if spicetify is installed.
@@ -426,7 +460,7 @@ def is_installed():  # Checks if spicetify is installed.
         os.path.exists(f"{globals.spice_config}\\config-xpui.ini") is True)
 
 
-async def heads_value(url): # Checks the heads of urls to see what branch is default.
+async def heads_value(url): # Checks the heads of urls to see if a github branch is the default.
     '''
     It returns the value of the Content-Disposition header.
     

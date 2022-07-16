@@ -1,15 +1,13 @@
 Features:
     -Fill out MOTD's (Mostly Redundant ones).
-    -Overall refactoring of codespace, lots of redundancy and artifacts, comb through each line.
-    -Rework naming of functions and their examples/usage
-    -Make code easier to access for developers, explanations, formatting, splitting up long functions, etc.
-    -Trim down patch notes to a bare minimum as not to clutter/find a way to add a dropdown.
-    -For colorschemes, pull 3 main colours from each variant, and showcase the colours instead of screenshots.
-    -Use update_addon function inside of core function (duplicate code)
-    -Add a latest option to install -> latest spotify etc (or make a seperate branch maybe??)
-
+    -Colorschemes (3 accent colours from each variant shown as orbs).
+    -update_addon duplicate code.
+    -REDO THE utils.latest_spotify thingy to not freeze the fucking app
+    -see if theres a better way to do the variable shit in core
 Optional:
+    -Overall refactoring of codespace, lots of redundancy and artifacts, comb through each line.
     -Better image scanning for backgrounds to make text pop
+    -Future dropdown for patchnotes.
 
 Finished:
     Fix for usernames with spaces
@@ -38,3 +36,4 @@ Finished:
     + Physical cache for theme images (pixmaps) + extension descriptions, created during install or when needed
     + Theme extensions enabled automatically
     + Moved from %temp% to cwd/temp
+    ++++++ Option to install latest releases

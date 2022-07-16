@@ -149,42 +149,62 @@ class InstallConfirmScreen(gui.ConfirmScreen):
             next_screen="install_log_screen",
         )
 
-        self.launch_after = QtWidgets.QCheckBox(parent=self, text="Launch when ready")
+        self.launch_after = QtWidgets.QCheckBox(parent=self, text="Launch When Ready")
+        self.use_latest = QtWidgets.QCheckBox(parent=self, text="Install Latest Versions - Can Be Unstable!")
         gui.clickable(self.launch_after)
+        gui.clickable(self.use_latest)
         self.layout().addWidget(self.launch_after)
+        self.layout().addWidget(self.use_latest)
 
     @asyncSlot()
     async def shownCallback(self):
         bottom_bar = self.parent().parent().bottom_bar
         slider = self.parent().parent().slider
         bottom_bar.back.setEnabled(False)
-        bottom_bar.next.setEnabled(False)
-
+        bottom_bar.next.setEnabled(False)            
 
         # Wait for animations to finish before enabling buttons again
         await slider.waitForAnimations()
 
-        # Format rundown message
-        SPOTIFY_VERSION_OLD = ".".join(utils.find_config_entry("app.last-launched-version", config=f'{globals.appdata}\\Spotify\\prefs', splitchar="=").strip('"').split(".")[:3])
-        SPOTIFY_VERSION_UPDATE = ".".join(globals.SPOTIFY_VERSION[18:-4].split(".")[:3])
+        # Connect buttons to their respective functions
+        gui.connect(
+            signal=slider.install_confirm_screen.use_latest.clicked,
+            callback=lambda *_: slider.install_confirm_screen.shownCallback(),
+        )
 
+        # Variables
+        SPOTIFY_VERSION_OLD = ".".join(utils.find_config_entry("app.last-launched-version", config=f'{globals.appdata}\\Spotify\\prefs', splitchar="=").strip('"').split(".")[:3])
+        SPOTIFY_VERSION_UPDATE = ".".join(globals.SPOTIFY_VERSION[18:-4].split(".")[:3])     
+        SPICETIFY_VERSION = globals.SPICETIFY_VERSION
+        SPICETIFY_VERSION_OLD = utils.find_config_entry("with")
+        THEMES_VERSION = globals.THEMES_VERSION[17:-33]
+        if slider.install_confirm_screen.use_latest.isChecked():
+            spice_json = await utils.latest_github_release(Spicetify=True)
+            spotify_str = await utils.latest_spotify_release(name=True)
+            theme_json = await utils.latest_github_commit()
+
+            SPICETIFY_VERSION = spice_json["tag_name"][1:]
+            SPOTIFY_VERSION_UPDATE = ".".join(spotify_str.split(".")[:3])
+            THEMES_VERSION = theme_json["sha"][:-33]
+
+        # Format rundown message
         formatted = globals.INSTALL_RUNDOWN_MD.format(
-            utils.find_config_entry("with") + " -> "
-            if not globals.SPICETIFY_VERSION and utils.is_installed()
+            f"{SPICETIFY_VERSION_OLD} -> "
+            if SPICETIFY_VERSION_OLD != SPICETIFY_VERSION
+            and SPICETIFY_VERSION_OLD != "Path NULL"
+            and utils.is_installed()
             else "",
-            globals.SPICETIFY_VERSION,
-            f'{SPOTIFY_VERSION_OLD} -> '
+            SPICETIFY_VERSION,
+            f"{SPOTIFY_VERSION_OLD} -> "
             if SPOTIFY_VERSION_OLD != SPOTIFY_VERSION_UPDATE
             and SPOTIFY_VERSION_OLD != "Path NULL"
             and os.path.isdir(f"{globals.appdata}\\Spotify")
             else "",
             SPOTIFY_VERSION_UPDATE,
-            globals.THEMES_VERSION[17:-33],
-        )
-
+            THEMES_VERSION,
+        )     
         self.rundown.setMarkdown(formatted)
         super().shownCallback()
-
 
 class InstallLogScreen(gui.ConsoleLogScreen):
     screen_name = "install_log_screen"
@@ -202,7 +222,8 @@ class InstallLogScreen(gui.ConsoleLogScreen):
         # Actual install
         try:
             await core.install(
-                launch=slider.install_confirm_screen.launch_after.isChecked()
+                launch=slider.install_confirm_screen.launch_after.isChecked(),
+                latest=slider.install_confirm_screen.use_latest.isChecked()
             )
         except Exception:
             exc = "".join(traceback.format_exception(*sys.exc_info()))
@@ -637,7 +658,7 @@ class UpdateMenuScreen(gui.MenuScreen):
         bottom_bar.next.setEnabled(False)
         super().shownCallback()
 
-        json = await utils.latest_release_GET()
+        json = await utils.latest_github_release()()
         enable = float(globals.RELEASE) < float(json["tag_name"])
         self.toggleButton("app", enable)
         super().shownCallback()
@@ -668,7 +689,7 @@ class UpdateAppConfirmScreen(gui.ConfirmScreen):
         # Wait for animations to finish before enabling buttons again
         await slider.waitForAnimations()
 
-        json = await utils.latest_release_GET()
+        json = await utils.latest_github_release()
         formatted = globals.UPDATE_APP_RUNDOWN_MD.format(
             f'{globals.RELEASE} -> '
             if float(globals.RELEASE) < float(json["tag_name"])

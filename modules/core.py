@@ -5,9 +5,9 @@ from pathlib import Path
 
 from modules import globals, utils, gui
 
-
-async def install(launch=False):
+async def install(launch=False, latest=False):
     steps_count = 12
+
     folders = [
         globals.spice_config,
         globals.spice_executable,
@@ -15,6 +15,38 @@ async def install(launch=False):
         f"{globals.appdata_local}\\spotify",
         globals.temp,
     ]
+    
+    # >[Section 0]<
+    # The code below will re-assign variables if edition is True.
+       
+    if latest:
+        print(f"\n(0/{steps_count}) Preparing latest variables...")
+        try:
+            spice = await utils.latest_github_release(Spicetify=True)
+            spotify = await utils.latest_spotify_release(name=False)
+            theme = await utils.latest_github_commit()
+            addon = await utils.latest_github_commit(Spicetify=True)
+        
+        except Exception as e:
+            print(f"Failed to fetch variables, could be ratelimited.\n{e}")
+            return None       
+        
+        globals.__SPICETIFY_VERSION__ = spice["tag_name"][1:]
+        globals.__THEMES_VERSION__ = f"spicetify-themes-{theme['sha']}"
+        globals.__ADDONS_VERSION__ = f"spicetify-cli-{addon['sha']}"          
+        globals.__SPOTIFY_VERSION__ = "/".join(spotify.split("/")[-1:])      
+        globals.__THEMES_URL__ = f"https://codeload.github.com/spicetify/spicetify-themes/zip/{theme['sha']}"
+        globals.__ADDONS_URL__ = f"https://codeload.github.com/spicetify/spicetify-themes/zip/{theme['sha']}"
+        globals.__SPOTIFY_URL__ = spotify      
+        print("Finished preparing latest variables!")
+    else:
+        globals.__SPICETIFY_VERSION__ = globals.SPICETIFY_VERSION
+        globals.__THEMES_VERSION__ = globals.THEMES_VERSION
+        globals.__ADDONS_VERSION__ = globals.ADDONS_VERSION
+        globals.__SPOTIFY_VERSION__ = globals.SPOTIFY_VERSION
+        globals.__THEMES_URL__ = globals.THEMES_URL
+        globals.__ADDONS_URL__ = globals.ADDONS_URL
+        globals.__SPOTIFY_URL__ = globals.SPOTIFY_URL
 
     # >[Section 1]<
     # The code below will backup a users spotify login and creds.
@@ -85,11 +117,11 @@ async def install(launch=False):
         os.mkdir(globals.temp)
     
     await utils.chunked_download(
-        url=globals.SPOTIFY_URL,
-        path=(f"{globals.temp}\\{globals.SPOTIFY_VERSION}"),
-        label=(f"{globals.temp}\\{globals.SPOTIFY_VERSION}")
+        url=globals.__SPOTIFY_URL__,
+        path=(f"{globals.temp}\\{globals.__SPOTIFY_VERSION__}"),
+        label=(f"{globals.temp}\\{globals.__SPOTIFY_VERSION__}")
         if globals.verbose
-        else globals.SPOTIFY_VERSION,
+        else globals.__SPOTIFY_VERSION__,
     )
     print("Finished downloading Spotify!\n")
 
@@ -100,7 +132,7 @@ async def install(launch=False):
     utils.kill_processes("Spotify.exe")
     spotify_install_pid = (
         await utils.start_process(
-            f"{globals.temp}\\{globals.SPOTIFY_VERSION}",
+            f"{globals.temp}\\{globals.__SPOTIFY_VERSION__}",
             silent=True
         )
     ).pid
@@ -117,7 +149,7 @@ async def install(launch=False):
         await asyncio.sleep(0.25)
 
     utils.kill_processes("Spotify.exe")
-    os.remove(f"{globals.temp}\\{globals.SPOTIFY_VERSION}")
+    os.remove(f"{globals.temp}\\{globals.__SPOTIFY_VERSION__}")
     print("Finished installing Spotify!\n")
 
     # >[Section 6]<
@@ -128,7 +160,7 @@ async def install(launch=False):
         '\n'.join([
             '[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12',
             '$ProgressPreference = "SilentlyContinue"',
-            f'$v="{globals.SPICETIFY_VERSION}"; Invoke-WebRequest -UseBasicParsing "https://raw.githubusercontent.com/spicetify/spicetify-cli/0824e1656dcfcf783c3fccfb19bf0418b7c06933/install.ps1" | Invoke-Expression',
+            f'$v="{globals.__SPICETIFY_VERSION__}"; Invoke-WebRequest -UseBasicParsing "https://raw.githubusercontent.com/spicetify/spicetify-cli/0824e1656dcfcf783c3fccfb19bf0418b7c06933/install.ps1" | Invoke-Expression',
         ])
     )
 
@@ -180,7 +212,7 @@ async def install(launch=False):
     
     print(f"(8/{steps_count}) Downloading 'official' themes...")
     await utils.chunked_download(
-        url=globals.THEMES_URL,
+        url=globals.__THEMES_URL__,
         path=(f"{globals.spice_config}\\Themes.zip"),
         label=(f"{globals.spice_config}\\Themes.zip")
         if globals.verbose
@@ -190,7 +222,7 @@ async def install(launch=False):
     shutil.rmtree(f"{globals.spice_config}\\Themes", ignore_errors=True)
     shutil.unpack_archive(f"{globals.spice_config}\\Themes.zip", globals.spice_config)
     os.remove(f"{globals.spice_config}\\Themes.zip")
-    os.rename(f"{globals.spice_config}\\{globals.THEMES_VERSION}", f"{globals.spice_config}\\Themes")
+    os.rename(f"{globals.spice_config}\\{globals.__THEMES_VERSION__}", f"{globals.spice_config}\\Themes")
 
     for item in list(Path(f"{globals.spice_config}\\Themes").glob("*")):
         fullpath = str(item)
@@ -304,7 +336,7 @@ async def install(launch=False):
 
         utils.set_config_entry(
             entry="app.last-launched-version", 
-            replacement= ".".join(globals.SPOTIFY_VERSION[18:-4].split(".")[:5]).split("-")[0], 
+            replacement= ".".join(globals.__SPOTIFY_VERSION__[18:-4].split(".")[:5]).split("-")[0], 
             config=f"{globals.appdata}//Spotify//prefs", 
             splitchar="="
         )
@@ -507,11 +539,11 @@ async def update_addons(shipped=False):
     print(f"(2/{steps_count}) Downloading 'official' addons...")
     
     Addons = {
-        globals.THEMES_URL if shipped 
-        else globals.THEMES_URL.replace(globals.THEMES_VERSION[17:], 'refs/heads/master'): f"{globals.spice_config}\\Themes.zip",
+        globals.__THEMES_URL__ if shipped 
+        else globals.__THEMES_URL__.replace(globals.__THEMES_VERSION__[17:], 'refs/heads/master'): f"{globals.spice_config}\\Themes.zip",
         
-        globals.ADDONS_URL if shipped 
-        else globals.ADDONS_URL.replace(globals.ADDONS_VERSION[14:], 'refs/heads/master'): f"{globals.spice_executable}\\Addons.zip",
+        globals.__ADDONS_URL__ if shipped 
+        else globals.__ADDONS_URL__.replace(globals.__ADDONS_VERSION__[14:], 'refs/heads/master'): f"{globals.spice_executable}\\Addons.zip",
     }
 
     await utils.simultaneous_chunked_download(
@@ -530,7 +562,7 @@ async def update_addons(shipped=False):
     )
 
     os.rename(
-        f"{globals.spice_config}\\{globals.THEMES_VERSION if shipped else 'spicetify-themes-master'}",
+        f"{globals.spice_config}\\{globals.__THEMES_VERSION__ if shipped else 'spicetify-themes-master'}",
         f"{globals.spice_config}\\Themes",
     )
     os.rename(
@@ -573,7 +605,7 @@ async def update_addons(shipped=False):
     )
 
     os.rename(
-        f"{globals.spice_executable}\\{globals.ADDONS_VERSION if shipped else 'spicetify-cli-master'}",
+        f"{globals.spice_executable}\\{globals.__ADDONS_VERSION__ if shipped else 'spicetify-cli-master'}",
         f"{globals.spice_executable}\\Addons",
     )
 
@@ -701,7 +733,7 @@ async def update_addons(shipped=False):
 
 async def update_app():
     steps_count = 2
-    json = await utils.latest_release_GET()
+    json = await utils.latest_github_release()
     latest_release = json["tag_name"]
 
     if os.path.exists(f"{globals.cwd}\\Update.zip"):

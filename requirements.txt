@@ -7,3 +7,4 @@ pillow
 bs4
 PyQt5==5.15.7
 PyQt5-sip==12.11.0
+requests

@@ -5,17 +5,17 @@ import PyQt5
 from PyQt5 import QtCore
 
 # Github Variables
-RELEASE = "2.9.5"
+RELEASE = "3.0"
 HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
 WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL" 
 
 # Download URLS
 SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.88.612.gcc529952-10.exe"
-THEMES_URL = "https://codeload.github.com/morpheusthewhite/spicetify-themes/zip/54e006038c28092aa8b2cc88fad139a8edb3ce6c"
+THEMES_URL = "https://codeload.github.com/spicetify/spicetify-themes/zip/54e006038c28092aa8b2cc88fad139a8edb3ce6c"
 ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/e99786e480725d07ad8677601f407a1801ccd169"
 
 # Version Variables
-SPICETIFY_VERSION = "2.10.2"
+SPICETIFY_VERSION = "2.9.8"
 SPOTIFY_VERSION = "/".join(SPOTIFY_URL.split("/")[-1:])
 THEMES_VERSION = f"spicetify-themes-{'/'.join(THEMES_URL.split('/')[-1:])}"
 ADDONS_VERSION = f"spicetify-cli-{'/'.join(ADDONS_URL.split('/')[-1:])}"
@@ -66,7 +66,7 @@ CUSTOM_EXTENSIONS = {
 }
 
 CUSTOM_APPS = {
-    "https://codeload.github.com/spicetify/spicetify-marketplace/zip/6c32264db8addc612362d7f22e63f9275e0653b0": f"{spice_config}\\CustomApps\\Marketplace.zip",
+    "https://codeload.github.com/spicetify/spicetify-marketplace/zip/6c32264db8addc612362d7f22e63f9275e0653b0": f"{spice_config}\\CustomApps\\marketplace.zip",
 }
 
 CUSTOM_THEMES = {
@@ -79,7 +79,7 @@ INSTALL_RUNDOWN_MD = (
     """
  - **Spicetify Version**: `{}{}`
  - **Spotify Version**: `{}{}`
- - **Official Theme Version**: `{}`
+ - **Official Themes Version**: `{}`
 """.strip()
 )
 
@@ -114,7 +114,7 @@ UPDATE_APP_RUNDOWN_MD = (
 UPDATE_LATEST_RUNDOWN_MD = """
 *Downloads Latest Addons [Which May Not Work]*
 ** **
- - **Theme Version**: `master [Latest Commit]`
+ - **Themes Version**: `master [Latest Commit]`
  - **Extension Version**: `Not Implemented`
  - **Custom Addons**: `Not Implemented`
 """.strip()
