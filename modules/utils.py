@@ -425,6 +425,22 @@ async def latest_github_commit(Spicetify=False):
             return json   
 
 async def latest_spotify_release(name=False): # Checks the latest release for the spotify app.
+    
+    async def get(url, session):
+        async with session.get(url) as response:
+            if '200' in str(response.status):
+                return url
+
+    async def collector(urls):
+        async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(limit=10)) as session:
+            tasks = []
+            for url in urls:
+                task = asyncio.ensure_future(get(url=url,session=session))
+                tasks.append(task)
+            
+            ret = await asyncio.gather(*tasks,return_exceptions=True)
+            return next((item for item in ret if item is not None), "Not Found")
+
     async with aiohttp.ClientSession() as cs:
         async with cs.get(f"https://www.spotify.com/us/opensource/") as r:
             body = await r.content.read()
@@ -435,21 +451,9 @@ async def latest_spotify_release(name=False): # Checks the latest release for th
                     if name:
                         return version
                     else:
-                        break
-
-    async def get(url, session):
-        async with session.get(url) as response:
-            if '200' in str(response.status):
-                return url
-
-    async def collector(urls):
-        async with aiohttp.ClientSession() as session:
-            ret = await asyncio.gather(*[get(url, session) for url in urls])
-            return next((item for item in ret if item is not None), "Not Found")
-                        
-    urls = [f"https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-{version}-{count+1}.exe" for count in range(99)]
-    return await collector(urls)
-
+                        urls = [f"https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-{version}-{count+1}.exe" for count in range(99)]
+                        return await collector(urls)
+                    
 
 def is_installed():  # Checks if spicetify is installed.
     '''

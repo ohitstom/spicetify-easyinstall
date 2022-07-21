@@ -3,7 +3,7 @@ import sys
 import traceback
 from difflib import SequenceMatcher
 
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets, QtGui
 from qasync import asyncSlot
 
 from modules import core, globals, gui, logger, utils
@@ -133,7 +133,6 @@ class MainMenuScreen(gui.MenuScreen):
         self.toggleButton("uninstall", is_installed)
         self.toggleButton("update", is_installed)
         super().shownCallback()
-
 class InstallConfirmScreen(gui.ConfirmScreen):
     screen_name = "install_confirm_screen"
 
@@ -178,20 +177,35 @@ class InstallConfirmScreen(gui.ConfirmScreen):
         SPICETIFY_VERSION = globals.SPICETIFY_VERSION
         SPICETIFY_VERSION_OLD = utils.find_config_entry("with")
         THEMES_VERSION = globals.THEMES_VERSION[17:-33]
+        
         if slider.install_confirm_screen.use_latest.isChecked():
-            spice_json = await utils.latest_github_release(Spicetify=True)
-            spotify_str = await utils.latest_spotify_release(name=True)
-            theme_json = await utils.latest_github_commit()
+            try:
+                spice_json = await utils.latest_github_release(Spicetify=True)
+                spotify_str = await utils.latest_spotify_release(name=True)
+                theme_json = await utils.latest_github_commit()
+                SPICETIFY_VERSION = spice_json["tag_name"][1:]
+                SPOTIFY_VERSION_UPDATE = ".".join(spotify_str.split(".")[:3])
+                THEMES_VERSION = theme_json["sha"][:-33]
+            
+            except Exception as e:
+                msgBox = QtWidgets.QMessageBox(
+                    QtWidgets.QMessageBox.Warning, 
+                    "Error!", 
+                    "Rate Limited.", 
+                    detailedText = f'Rate limited, If you proceed with installing the latest versions its likely to fail.\n\nError: {e}.',
+                    buttons = QtWidgets.QMessageBox.Ignore | QtWidgets.QMessageBox.Cancel, 
+                    flags = QtCore.Qt.FramelessWindowHint
+                ).exec()
 
-            SPICETIFY_VERSION = spice_json["tag_name"][1:]
-            SPOTIFY_VERSION_UPDATE = ".".join(spotify_str.split(".")[:3])
-            THEMES_VERSION = theme_json["sha"][:-33]
+                if msgBox == QtWidgets.QMessageBox.Cancel:
+                    slider.install_confirm_screen.use_latest.setChecked(False)
 
         # Format rundown message
         formatted = globals.INSTALL_RUNDOWN_MD.format(
             f"{SPICETIFY_VERSION_OLD} -> "
             if SPICETIFY_VERSION_OLD != SPICETIFY_VERSION
             and SPICETIFY_VERSION_OLD != "Path NULL"
+            and SPICETIFY_VERSION_OLD != ""
             and utils.is_installed()
             else "",
             SPICETIFY_VERSION,

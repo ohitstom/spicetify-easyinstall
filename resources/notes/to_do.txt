@@ -2,8 +2,7 @@ Features:
     -Fill out MOTD's (Mostly Redundant ones).
     -Colorschemes (3 accent colours from each variant shown as orbs).
     -update_addon duplicate code.
-    -REDO THE utils.latest_spotify thingy to not freeze the fucking app
-    -see if theres a better way to do the variable shit in core
+
 Optional:
     -Overall refactoring of codespace, lots of redundancy and artifacts, comb through each line.
     -Better image scanning for backgrounds to make text pop
@@ -36,4 +35,4 @@ Finished:
     + Physical cache for theme images (pixmaps) + extension descriptions, created during install or when needed
     + Theme extensions enabled automatically
     + Moved from %temp% to cwd/temp
-    ++++++ Option to install latest releases
+    + Option to install latest releases [BETA]

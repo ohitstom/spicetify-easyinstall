@@ -4,29 +4,38 @@ from pathlib import Path
 import PyQt5
 from PyQt5 import QtCore
 
+## All '__xyz__' variables are temporary variables used for re-assigning.
+
 # Github Variables
 RELEASE = "3.0"
 HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
 WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL" 
 
 # Download URLS
-SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.88.612.gcc529952-10.exe"
+SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.90.859.gf1bb1e36-11.exe"
 THEMES_URL = "https://codeload.github.com/spicetify/spicetify-themes/zip/54e006038c28092aa8b2cc88fad139a8edb3ce6c"
 ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/e99786e480725d07ad8677601f407a1801ccd169"
+__SPOTIFY_URL__ = SPOTIFY_URL
+__THEMES_URL__ = THEMES_URL
+__ADDONS_URL__ = ADDONS_URL
 
 # Version Variables
-SPICETIFY_VERSION = "2.9.8"
+SPICETIFY_VERSION = "2.11.1"
 SPOTIFY_VERSION = "/".join(SPOTIFY_URL.split("/")[-1:])
 THEMES_VERSION = f"spicetify-themes-{'/'.join(THEMES_URL.split('/')[-1:])}"
 ADDONS_VERSION = f"spicetify-cli-{'/'.join(ADDONS_URL.split('/')[-1:])}"
+__SPICETIFY_VERSION__ = SPICETIFY_VERSION
+__SPOTIFY_VERSION__ = SPOTIFY_VERSION
+__THEMES_VERSION__ = THEMES_VERSION
+__ADDONS_VERSION__ = ADDONS_VERSION
 
 # Directory Constants
 user_profile = os.path.expanduser("~")
 appdata_local = os.environ["LOCALAPPDATA"]
 appdata = os.environ["APPDATA"]
 spotify_prefs = Path(f"{appdata}\\Spotify\\prefs")
-spice_executable = f"{user_profile}\\spicetify-cli"
-spice_config = f"{user_profile}\\.spicetify"
+spice_executable = f"{appdata_local}\\spicetify"
+spice_config = f"{appdata}\\spicetify"
 cwd = os.getcwd()
 temp = f"{cwd}\\temp"
 
