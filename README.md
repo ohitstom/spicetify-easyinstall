@@ -27,7 +27,7 @@ A fallback tool for installing spicetify. 100% open source, with an easy to use 
 ### Features
  - Downloads and installs spotify and spicetify.
  - Provides an easy way to uninstall spicetify.
- - Downloading of all currently available themes and extensions, including blockthespot.
+ - Downloading of many currently available themes and extensions, including adblock.
  - Simple config modifier, can be ran any time using the startup menu.
 
 <br />
