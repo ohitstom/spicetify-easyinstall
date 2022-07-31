@@ -2,11 +2,16 @@ Features:
     -Fill out MOTD's (Mostly Redundant ones).
     -Colorschemes (3 accent colours from each variant shown as orbs).
     -update_addon duplicate code.
+    -Move more downloads to temp
+    -Revamp the update/download process (using little conditionals)
+    -Move stuff to more functions, eg the genning of pixmaps and descriptions
 
 Optional:
     -Overall refactoring of codespace, lots of redundancy and artifacts, comb through each line.
     -Better image scanning for backgrounds to make text pop
     -Future dropdown for patchnotes.
+    -Custom Titlebar
+    -Benign Socket Errors
 
 Finished:
     Fix for usernames with spaces
@@ -20,6 +25,7 @@ Finished:
     Fix for app.last-launched-version being outdated after prefs restore
     Fix default scroll position oddities (config tab)
     Fix selection memory for multiple customapps (config tab)
+    Fix refined latest spotify release function (proper parsing of html)
     + Some verbose/verbose changes
     + Uninstall winstore spotify
     + Better hidden processes

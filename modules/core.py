@@ -16,16 +16,16 @@ async def install(launch=False, latest=False):
         print(f"\n(0/{steps_count}) Preparing latest variables...")
         try:
             spice = await utils.latest_github_release(Spicetify=True)
-            spotify = await utils.latest_spotify_release(name=False)
             theme = await utils.latest_github_commit()
-            addon = await utils.latest_github_commit(Spicetify=True)            
+            addon = await utils.latest_github_commit(Spicetify=True)  
+            spotify = await utils.latest_spotify_release(name=False)
             globals.SPICETIFY_VERSION = spice["tag_name"][1:]
             globals.THEMES_VERSION = f"spicetify-themes-{theme['sha']}"
             globals.ADDONS_VERSION = f"spicetify-cli-{addon['sha']}"          
             globals.SPOTIFY_VERSION = "/".join(spotify.split("/")[-1:])      
             globals.THEMES_URL = f"https://codeload.github.com/spicetify/spicetify-themes/zip/{theme['sha']}"
-            globals.ADDONS_URL = f"https://codeload.github.com/spicetify/spicetify-themes/zip/{theme['sha']}"
-            globals.SPOTIFY_URL= spotify      
+            globals.ADDONS_URL = f"https://codeload.github.com/spicetify/spicetify-cli/zip/{addon['sha']}"
+            globals.SPOTIFY_URL= "https://download.scdn.co/SpotifySetup.exe"   
         
         except Exception as e:
             print(f"\nFailed to fetch variables, likely to be ratelimited.\nPlease try again later or uncheck 'install latest'.\nError: {e}")
@@ -392,7 +392,7 @@ async def install(launch=False, latest=False):
     print("Finished caching extension descriptions!\n")
     
     if latest:
-        print(f"\n(13/{steps_count}) Reverting latest variables...")
+        print(f"(13/{steps_count}) Reverting latest variables...")
         globals.SPICETIFY_VERSION = globals.__SPICETIFY_VERSION__
         globals.THEMES_VERSION = globals.__THEMES_VERSION__
         globals.ADDONS_VERSION = globals.__ADDONS_VERSION__  
@@ -400,7 +400,8 @@ async def install(launch=False, latest=False):
         globals.THEMES_URL = globals.__THEMES_URL__
         globals.ADDONS_URL = globals.__ADDONS_URL__
         globals.SPOTIFY_URL = globals.__SPOTIFY_URL__
-
+        print("Finished reverting latest variables!")
+    
     if launch:
         await utils.start_process(f"{globals.appdata}\\spotify\\spotify.exe", silent=False)
 
@@ -487,7 +488,7 @@ async def uninstall():
     await utils.powershell(
         '\n'.join([
             '$path = [System.Environment]::GetEnvironmentVariable("PATH", "User")',
-            '$sp_dir = "${HOME}\\spicetify-cli"',
+            '$sp_dir = "${env:LOCALAPPDATA}\spicetify"',
             '$paths = ($path.Split(";") | Where-Object { $_.TrimEnd("") -ne $sp_dir }) -join ";"',
             '$is_in_path = "$path".Contains("$sp_dir") -or "$path".Contains("${sp_dir}")',
             'if ($is_in_path) {[Environment]::SetEnvironmentVariable("PATH", "${paths}", "User")}',
@@ -694,7 +695,7 @@ async def update_addons(shipped=False):
         else:
             utils.verbose_print(f"{unpacked_name} wasnt downloaded successfully...")
         print("Finished downloading 'custom' addons!\n")
-        
+
         print(f"(4/{steps_count}) Caching pixmaps...")
         if os.path.exists('pix_cache.txt'):
             os.remove('pix_cache.txt')

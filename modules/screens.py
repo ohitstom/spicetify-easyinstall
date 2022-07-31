@@ -195,9 +195,10 @@ class InstallConfirmScreen(gui.ConfirmScreen):
                     detailedText = f'Rate limited, If you proceed with installing the latest versions its likely to fail.\n\nError: {e}.',
                     buttons = QtWidgets.QMessageBox.Ignore | QtWidgets.QMessageBox.Cancel, 
                     flags = QtCore.Qt.FramelessWindowHint
-                ).exec()
-
-                if msgBox == QtWidgets.QMessageBox.Cancel:
+                )
+                msgBox.setStyleSheet("color:white;background:black")
+                
+                if msgBox.exec() == QtWidgets.QMessageBox.Cancel:
                     slider.install_confirm_screen.use_latest.setChecked(False)
 
         # Format rundown message
@@ -531,7 +532,9 @@ class ConfigConfirmScreen(gui.ConfirmScreen):
         self.theme_extension = []
         for extension in utils.list_config_available("extensions"):
             extension = extension[:-3]
-            if extension.lower() == slider.config_theme_menu_screen.getSelection().lower():
+            if ".script" in extension:
+                pass
+            elif extension.lower() == slider.config_theme_menu_screen.getSelection().lower():
                 self.theme_extension.append(extension)
             elif SequenceMatcher(None, extension.lower(), slider.config_theme_menu_screen.getSelection().lower()).ratio() > 0.8:
                 self.theme_extension.append(extension)
@@ -669,10 +672,9 @@ class UpdateMenuScreen(gui.MenuScreen):
     async def shownCallback(self):
         bottom_bar = self.parent().parent().bottom_bar
         bottom_bar.back.setEnabled(False)
-        bottom_bar.next.setEnabled(False)
         super().shownCallback()
 
-        json = await utils.latest_github_release()()
+        json = await utils.latest_github_release()
         enable = float(globals.RELEASE) < float(json["tag_name"])
         self.toggleButton("app", enable)
         super().shownCallback()

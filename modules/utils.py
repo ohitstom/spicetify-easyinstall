@@ -15,7 +15,7 @@ import PIL
 import psutil
 import requests
 from aiohttp import ClientTimeout
-from bs4 import UnicodeDammit
+from bs4 import UnicodeDammit, BeautifulSoup
 from PIL import Image, ImageStat
 
 from modules import globals, logger, progress
@@ -223,7 +223,7 @@ async def simultaneous_chunked_download(urls_paths, label):  # utils.simultaneou
     tasks = []
     for url, path in urls_paths.items():
         verbose_print(f"{url}\nPENDING")
-        r = await aiohttp.ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False), timeout=timeout).get(url)
+        r = await aiohttp.ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False), trust_env=True, timeout=timeout).get(url)
         
         if not indeterminate:
             try:
@@ -261,7 +261,7 @@ async def chunked_download(url, path, label):  # chunked_download("urltodownload
     '''
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     timeout = ClientTimeout(total=60 * 60) #One hour timeout
-    async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False), timeout=timeout) as cs:
+    async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False), trust_env=True, timeout=timeout) as cs:
         async with cs.get(url, headers={"Accept-Encoding": "null"}) as r:
             async with aiofiles.open(path, "wb") as f:
                 logger._pause_file_output = True
@@ -424,8 +424,7 @@ async def latest_github_commit(Spicetify=False):
             json = await r.json()
             return json   
 
-async def latest_spotify_release(name=False): # Checks the latest release for the spotify app.
-    
+async def latest_spotify_release(name=False): # Checks the latest release for the spotify app. 
     async def get(url, session):
         async with session.get(url) as response:
             if '200' in str(response.status):
@@ -443,16 +442,15 @@ async def latest_spotify_release(name=False): # Checks the latest release for th
 
     async with aiohttp.ClientSession() as cs:
         async with cs.get(f"https://www.spotify.com/us/opensource/") as r:
-            body = await r.content.read()
-            body = body.splitlines()
-            for line in body:
-                if "https://bitbucket.org/" in str(line):
-                    version = str(body[body.index(line) - 1].strip())[6:-6]
-                    if name:
-                        return version
-                    else:
-                        urls = [f"https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-{version}-{count+1}.exe" for count in range(99)]
-                        return await collector(urls)
+            html = BeautifulSoup(await r.content.read(), features="html.parser")
+            first_td = html.find('td')
+            text = first_td.renderContents()
+            version = str(text.strip())[2:-1]
+            if name:
+                return version
+            else:
+                urls = [f"https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-{version}-{count+1}.exe" for count in range(99)]
+                return await collector(urls)
                     
 
 def is_installed():  # Checks if spicetify is installed.
@@ -471,6 +469,9 @@ async def heads_value(url): # Checks the heads of urls to see if a github branch
     :param url: The URL of the repository
     :return: the value of the Content-Disposition header.
     '''
+    if "marketplace" in url:
+        return "dist"
+    
     async with aiohttp.ClientSession() as cs:
         async with cs.get(url + "main") as r:
             headers = r.headers.get("Content-Disposition")
