@@ -21,7 +21,7 @@
 
 <img align="top" height="40px" style="visibility: hidden;">
 
-<img src="https://user-images.githubusercontent.com/22730962/182428125-fee0adae-3e08-4855-885f-c7a1f78565e0.png" alt="img" align="right" width="375px">
+<img src="https://user-images.githubusercontent.com/22730962/182431968-517e42f6-078c-4c88-983a-7fd7601519d2.png" alt="img" align="right" width="375px">
 A fallback tool for installing spicetify. 100% open source, with an easy to use gui.
 
 ### Features
