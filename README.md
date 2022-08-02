@@ -21,14 +21,16 @@
 
 <img align="top" height="40px" style="visibility: hidden;">
 
-<img src="https://user-images.githubusercontent.com/26436809/118751529-d0abcf00-b8a4-11eb-9876-8b15f930a691.png" alt="img" align="right" width="375px">
+<img src="https://user-images.githubusercontent.com/22730962/182428125-fee0adae-3e08-4855-885f-c7a1f78565e0.png" alt="img" align="right" width="350px" height="230px">
 A fallback tool for installing spicetify. 100% open source, with an easy to use gui.
 
 ### Features
  - Downloads and installs spotify and spicetify.
  - Provides an easy way to uninstall spicetify.
+ - Ability to update themes and extensions.
  - Downloading of many currently available themes and extensions, including adblock.
  - Simple config modifier, can be ran any time using the startup menu.
+
 
 <br />
 
