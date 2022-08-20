@@ -12,4 +12,5 @@ Optional:
     -Future dropdown for patchnotes.
     -Custom Titlebar
     -Benign Socket Errors
+    -Crossplatform?
 

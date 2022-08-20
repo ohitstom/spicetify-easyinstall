@@ -84,8 +84,8 @@ class MainMenuScreen(gui.MenuScreen):
                     "column": 0,
                 },
                 "config": {
-                    "icon": "󰢻",
-                    "text": "Config",
+                    "icon": "󰸌",
+                    "text": "Customize",
                     "desc": "",
                     "next_screen": "config_theme_menu_screen",
                     "row": 0,
@@ -100,7 +100,7 @@ class MainMenuScreen(gui.MenuScreen):
                     "column": 0,
                 },
                 "update": {
-                    "icon": "󰓦",
+                    "icon": "󰚰",
                     "text": "Update",
                     "desc": "",
                     "next_screen": "update_menu_screen",
@@ -255,7 +255,7 @@ class ConfigThemeMenuScreen(gui.MenuScreen):
     def __init__(self, parent):
         super().__init__(
             parent=parent,
-            icon="󰠲",
+            icon="󰥶",
             title="What theme do you want to use?",
             back_screen="main_menu_screen",
             scrollable=True,
@@ -305,7 +305,7 @@ class ConfigColorschemeMenuScreen(gui.MenuScreen):
     def __init__(self, parent):
         super().__init__(
             parent=parent,
-            icon="󰸌",
+            icon="󰉦",
             title="What colorscheme do you want for your theme?",
             back_screen="config_theme_menu_screen",
             scrollable=True,
@@ -457,7 +457,7 @@ class ConfigCustomappsMenuScreen(gui.MenuScreen):
     def __init__(self, parent):
         super().__init__(
             parent=parent,
-            icon="󰲌",
+            icon="󰀻",
             title="What custom apps do you want to enable?",
             back_screen="config_extensions_menu_screen",
             scrollable=True,
