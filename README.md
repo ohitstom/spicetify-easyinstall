@@ -21,7 +21,7 @@
 
 <img align="top" height="40px" style="visibility: hidden;">
 
-<img src="https://user-images.githubusercontent.com/26436809/118751529-d0abcf00-b8a4-11eb-9876-8b15f930a691.png" alt="img" align="right" width="375px">
+<img src="https://user-images.githubusercontent.com/22730962/182431968-517e42f6-078c-4c88-983a-7fd7601519d2.png" alt="img" align="right" width="375px">
 A fallback tool for installing spicetify. 100% open source, with an easy to use gui.
 
 ### Features
@@ -29,6 +29,7 @@ A fallback tool for installing spicetify. 100% open source, with an easy to use 
  - Provides an easy way to uninstall spicetify.
  - Downloading of many currently available themes and extensions, including adblock.
  - Simple config modifier, can be ran any time using the startup menu.
+
 
 <br />
 
