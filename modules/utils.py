@@ -30,7 +30,7 @@ def replace_config_line(file_name, line_num, text):  # replace_config_line("path
     :param line_num: The line number you want to replace
     :param text: The text that you want to replace the line with
     '''
-    lines = open(file_name, "r").readlines()
+    lines = open(file_name, "r", encoding="utf-8").readlines()
     lines[line_num] = f"{text}\n"
     with open(file_name, "w") as out:
         out.writelines(lines)
