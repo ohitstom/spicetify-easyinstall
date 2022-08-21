@@ -36,27 +36,19 @@ def replace_config_line(file_name, line_num, text, encoding):  # replace_config_
         out.writelines(lines)
 
 
-def find_config_entry(entry, replacement=None, config=None, encoding=None, splitchar=" = "):  # find_config_entry("extensions") <- Example usage | Optional var: "replacement" [Used for set_config_entry].
+def find_config_data(entry, replacement=None, config=f"{globals.spice_config}\\config-xpui.ini", encoding="utf-8", splitchar=" = "):  # find_config_data("extensions") <- Example usage | Optional var: "replacement" [Used for set_config_entry].
     '''
-    Finds a config entry and returns the value of it
+    Finds a config entry and returns the data of it
     
     :param entry: The entry you want to find
     :param replacement: If you want to change the value of a config entry, you can use this parameter
     :param config: The config file to be used
-    :param json: If you want to use the json format, set this to True
+    :param encoding: If you want to use a different encoding, you can use this parameter
     :return: a tuple of three values.
     '''
-    if config is None:
-        config = f"{globals.spice_config}\\config-xpui.ini"
-
     if not os.path.isfile(config):
         return "config NULL"
-    
-    if encoding is None:
-        with open(config, 'rb') as filetemp: #Sanity
-            content = filetemp.read()
-            encoding = UnicodeDammit(content).original_encoding
-            verbose_print(encoding)
+
     with open(config, "r", encoding=encoding) as file:
         count = 0
         line = ""
@@ -82,19 +74,17 @@ def find_config_entry(entry, replacement=None, config=None, encoding=None, split
         return final_write_data
 
 
-def set_config_entry(entry, replacement, config=None, encoding=None, splitchar=" = "):  # set_config_entry("current_theme", "themename") <- Example Usage | Sets specific parts of the config. [replacement = None to empty the value]
+def set_config_entry(entry, replacement, **kwargs):  # set_config_entry("current_theme", "themename") <- Example Usage | Sets specific parts of the config. [replacement = None to empty the value]
     '''
     This function is used to set specific parts of the config.
     
     :param entry: The entry you want to change
     :param replacement: The value you want to replace the current value with
     '''
-    data = find_config_entry(
+    data = find_config_data(
         entry, 
-        replacement if replacement is not None else "", 
-        config=config, 
-        encoding=encoding, 
-        splitchar=splitchar
+        replacement if replacement is not None else "", # Checking for the need to empty the value
+        **kwargs,
     )
     replace_config_line(data[0], data[1], data[2], data[3])
 
@@ -183,7 +173,7 @@ def extension_descriptions(): # returns a list of extension descriptions
         else:
             config = globals.spice_executable if os.path.isfile(f"{globals.spice_executable}\\Extensions\\{extension}") else globals.spice_config
             try:
-                descriptions.append(str(find_config_entry(entry="// DESCRIPTION", config=f"{config}\\Extensions\\{extension}", splitchar=": ")))
+                descriptions.append(str(find_config_data(entry="// DESCRIPTION", config=f"{config}\\Extensions\\{extension}", splitchar=": ")))
             except:
                 descriptions.append(None)
     
