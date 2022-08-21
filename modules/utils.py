@@ -22,7 +22,7 @@ from modules import globals, logger, progress
 
 # >[Config Management]<
 
-def replace_config_line(file_name, line_num, text, encoding):  # replace_config_line("pathto\\config.txt", 5, "new text") <- Example Usage | Last stage of set_config_entry.
+def replace_config_line(file_name, line_num, text):  # replace_config_line("pathto\\config.txt", 5, "new text") <- Example Usage | Last stage of set_config_entry.
     '''
     Replace a line in a text file
     
@@ -30,26 +30,25 @@ def replace_config_line(file_name, line_num, text, encoding):  # replace_config_
     :param line_num: The line number you want to replace
     :param text: The text that you want to replace the line with
     '''
-    lines = open(file_name, "r", encoding=encoding).readlines()
+    lines = open(file_name, "r").readlines()
     lines[line_num] = f"{text}\n"
     with open(file_name, "w") as out:
         out.writelines(lines)
 
 
-def find_config_data(entry, replacement=None, config=f"{globals.spice_config}\\config-xpui.ini", encoding="utf-8", splitchar=" = "):  # find_config_data("extensions") <- Example usage | Optional var: "replacement" [Used for set_config_entry].
+def find_config_data(entry, replacement=None, config=f"{globals.spice_config}\\config-xpui.ini", splitchar=" = "):  # find_config_data("extensions") <- Example usage | Optional var: "replacement" [Used for set_config_entry].
     '''
     Finds a config entry and returns the data of it
     
     :param entry: The entry you want to find
     :param replacement: If you want to change the value of a config entry, you can use this parameter
     :param config: The config file to be used
-    :param encoding: If you want to use a different encoding, you can use this parameter
     :return: a tuple of three values.
     '''
     if not os.path.isfile(config):
         return "config NULL"
 
-    with open(config, "r", encoding=encoding) as file:
+    with open(config, "r") as file:
         count = 0
         line = ""
         for line in file:
@@ -65,7 +64,7 @@ def find_config_data(entry, replacement=None, config=f"{globals.spice_config}\\c
         a = found_line_str.split(splitchar, 1)[0]
 
         final_write_data = f"{a}{splitchar}{replacement}"
-        return config, found_line_int, final_write_data, encoding
+        return config, found_line_int, final_write_data
 
     else:
         found_line_str = line.strip("\n")
@@ -83,10 +82,10 @@ def set_config_entry(entry, replacement, **kwargs):  # set_config_entry("current
     '''
     data = find_config_data(
         entry, 
-        replacement if replacement is not None else "", # Checking for the need to empty the value
+        replacement if replacement is not None else "", # statement important for wiping entries ("" is the equivelant to nothing)
         **kwargs,
     )
-    replace_config_line(data[0], data[1], data[2], data[3])
+    replace_config_line(data[0], data[1], data[2])
 
 
 def list_config_available(selection, theme=None):    # selection: themes, colorschemes, extensions, custom_apps | Lists out available configurations.
