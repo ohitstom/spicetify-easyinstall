@@ -55,8 +55,8 @@ def find_config_entry(entry, replacement=None, config=None, encoding=None, split
     if encoding is None:
         with open(config, 'rb') as filetemp: #Sanity
             content = filetemp.read()
-        encoding = UnicodeDammit(content).original_encoding
-
+            encoding = UnicodeDammit(content).original_encoding
+            verbose_print(encoding)
     with open(config, "r", encoding=encoding) as file:
         count = 0
         line = ""
