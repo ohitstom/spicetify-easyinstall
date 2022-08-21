@@ -7,14 +7,14 @@ from PyQt5 import QtCore
 ## All '__xyz__' variables are temporary variables used for re-assigning.
 
 # Github Variables
-RELEASE = "3.0"
+RELEASE = "3.1"
 HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
 WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL" 
 
 # Download URLS
-SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.90.859.gf1bb1e36-11.exe"
-THEMES_URL = "https://codeload.github.com/spicetify/spicetify-themes/zip/54e006038c28092aa8b2cc88fad139a8edb3ce6c"
-ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/e99786e480725d07ad8677601f407a1801ccd169"
+SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.91.824.g07f1e963-9.exe"
+THEMES_URL = "https://codeload.github.com/spicetify/spicetify-themes/zip/dcf9a4d805ec6cdc9b6ee70d908b04879aea8207"
+ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/5a8a4ae048d1962a2c3663f26a161fec88ebcc49"
 __SPOTIFY_URL__ = SPOTIFY_URL
 __THEMES_URL__ = THEMES_URL
 __ADDONS_URL__ = ADDONS_URL
@@ -70,17 +70,16 @@ else:
 
 # Custom Addon URLs
 CUSTOM_EXTENSIONS = {
-    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/b06caeaf174c08787b0a5c01bf28bada746ce82a": f"{spice_config}\\Extensions\\Charlie-Repo.zip",
-    "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/c5eb79f7c3251fc8a5f657fad1e4f9d6c6942353": f"{spice_config}\\Extensions\\Power-Bar.zip",
+    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/40b8c13722ca92ce71ccbd27645e47da92ee25ec": f"{spice_config}\\Extensions\\Charlie-Repo.zip",
+    "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/98887281b70c2d45f69d188ba443f584af80a717": f"{spice_config}\\Extensions\\Power-Bar.zip",
 }
 
 CUSTOM_APPS = {
-    "https://codeload.github.com/spicetify/spicetify-marketplace/zip/6c32264db8addc612362d7f22e63f9275e0653b0": f"{spice_config}\\CustomApps\\marketplace.zip",
+    "https://codeload.github.com/spicetify/spicetify-marketplace/zip/cdc3e1dde8acc89237c65dc752c5f65ec7d422ed": f"{spice_config}\\CustomApps\\marketplace.zip",
 }
 
 CUSTOM_THEMES = {
-    "https://github.com/JulienMaille/dribbblish-dynamic-theme/releases/download/4.2.2/DribbblishDynamic_v4.2.2.zip": f"{spice_config}\\Themes\\Dribbblish-Dynamic.zip",
-    "https://codeload.github.com/Comfy-Themes/Spicetify/zip/6f5d26013f778e5230d44f58ae076ec502792177": f"{spice_config}\\Themes\\Comfy-Collection.zip",
+    "https://codeload.github.com/Comfy-Themes/Spicetify/zip/0d5bc648da0bc3e746dab47a4762039eda72d1fc": f"{spice_config}\\Themes\\Comfy-Collection.zip",
 }
 
 # Text Pages For GUI

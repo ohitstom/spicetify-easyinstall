@@ -172,7 +172,7 @@ async def install(launch=False, latest=False):
     )
 
     if os.path.isfile(f"{globals.spice_config}\\config-xpui.ini"):
-        prefs_check = utils.find_config_entry("prefs_path")
+        prefs_check = utils.find_config_data("prefs_path")
         if not prefs_check:
             utils.set_config_entry("prefs_path", f'{globals.appdata}\Spotify\prefs')
     else:

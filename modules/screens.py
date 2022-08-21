@@ -84,8 +84,8 @@ class MainMenuScreen(gui.MenuScreen):
                     "column": 0,
                 },
                 "config": {
-                    "icon": "󰢻",
-                    "text": "Config",
+                    "icon": "󰸌",
+                    "text": "Customize",
                     "desc": "",
                     "next_screen": "config_theme_menu_screen",
                     "row": 0,
@@ -100,7 +100,7 @@ class MainMenuScreen(gui.MenuScreen):
                     "column": 0,
                 },
                 "update": {
-                    "icon": "󰓦",
+                    "icon": "󰚰",
                     "text": "Update",
                     "desc": "",
                     "next_screen": "update_menu_screen",
@@ -172,10 +172,10 @@ class InstallConfirmScreen(gui.ConfirmScreen):
         )
 
         # Variables
-        SPOTIFY_VERSION_OLD = ".".join(utils.find_config_entry("app.last-launched-version", config=f'{globals.appdata}\\Spotify\\prefs', splitchar="=").strip('"').split(".")[:3])
+        SPOTIFY_VERSION_OLD = ".".join(utils.find_config_data("app.last-launched-version", config=f'{globals.appdata}\\Spotify\\prefs', splitchar="=").strip('"').split(".")[:3])
         SPOTIFY_VERSION_UPDATE = ".".join(globals.SPOTIFY_VERSION[18:-4].split(".")[:3])     
         SPICETIFY_VERSION = globals.SPICETIFY_VERSION
-        SPICETIFY_VERSION_OLD = utils.find_config_entry("with")
+        SPICETIFY_VERSION_OLD = utils.find_config_data("with")
         THEMES_VERSION = globals.THEMES_VERSION[17:-33]
         
         if slider.install_confirm_screen.use_latest.isChecked():
@@ -255,7 +255,7 @@ class ConfigThemeMenuScreen(gui.MenuScreen):
     def __init__(self, parent):
         super().__init__(
             parent=parent,
-            icon="󰠲",
+            icon="󰥶",
             title="What theme do you want to use?",
             back_screen="main_menu_screen",
             scrollable=True,
@@ -294,7 +294,7 @@ class ConfigThemeMenuScreen(gui.MenuScreen):
             )
             column += 1
         if not selected:
-            selected = utils.find_config_entry("current_theme")
+            selected = utils.find_config_data("current_theme")
         self.selectButtons(selected)
         super().shownCallback()
 
@@ -305,7 +305,7 @@ class ConfigColorschemeMenuScreen(gui.MenuScreen):
     def __init__(self, parent):
         super().__init__(
             parent=parent,
-            icon="󰸌",
+            icon="󰉦",
             title="What colorscheme do you want for your theme?",
             back_screen="config_theme_menu_screen",
             scrollable=True,
@@ -379,7 +379,7 @@ class ConfigColorschemeMenuScreen(gui.MenuScreen):
             )
             column += 1
         if not selected:
-            selected = utils.find_config_entry("color_scheme")
+            selected = utils.find_config_data("color_scheme")
         self.selectButtons(selected)
         super().shownCallback()
 
@@ -445,7 +445,7 @@ class ConfigExtensionsMenuScreen(gui.MenuScreen):
             self.first_run = False
             selected = [
                 extension[:-3]
-                for extension in utils.find_config_entry("extensions").split("|")
+                for extension in utils.find_config_data("extensions").split("|")
             ]
         self.selectButtons(selected)
         super().shownCallback()
@@ -457,7 +457,7 @@ class ConfigCustomappsMenuScreen(gui.MenuScreen):
     def __init__(self, parent):
         super().__init__(
             parent=parent,
-            icon="󰲌",
+            icon="󰀻",
             title="What custom apps do you want to enable?",
             back_screen="config_extensions_menu_screen",
             scrollable=True,
@@ -498,7 +498,7 @@ class ConfigCustomappsMenuScreen(gui.MenuScreen):
             column += 1
         if self.first_run:
             self.first_run = False
-            selected = utils.find_config_entry("custom_apps").split("|")
+            selected = utils.find_config_data("custom_apps").split("|")
         self.selectButtons(selected)
         super().shownCallback()
 
@@ -517,7 +517,7 @@ class ConfigConfirmScreen(gui.ConfirmScreen):
             next_screen="config_log_screen",
         )
         self.overwrite_assets = QtWidgets.QCheckBox(parent=self, text="Overwrite Assets")
-        self.overwrite_assets.setChecked(True) if utils.is_installed() and utils.find_config_entry("overwrite_assets") == "1" else self.overwrite_assets.setChecked(False)
+        self.overwrite_assets.setChecked(True) if utils.is_installed() and utils.find_config_data("overwrite_assets") == "1" else self.overwrite_assets.setChecked(False)
         gui.clickable(self.overwrite_assets)
         self.layout().addWidget(self.overwrite_assets)
 
@@ -607,9 +607,9 @@ class UninstallConfirmScreen(gui.ConfirmScreen):
         await slider.waitForAnimations()
 
         formatted = globals.UNINSTALL_RUNDOWN_MD.format(
-            ".".join( utils.find_config_entry("version").split(".")[:3]),
+            ".".join( utils.find_config_data("version").split(".")[:3]),
             "Not Implemented",
-            utils.find_config_entry("with"),
+            utils.find_config_data("with"),
             "Not Implemented"
         )
         self.rundown.setMarkdown(formatted)
