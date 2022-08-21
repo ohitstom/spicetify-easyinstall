@@ -36,7 +36,7 @@ def replace_config_line(file_name, line_num, text, encoding):  # replace_config_
         out.writelines(lines)
 
 
-def find_config_data(entry, replacement=None, config=f"{globals.spice_config}\\config-xpui.ini", encoding="utf-8", splitchar=" = "):  # find_config_data("extensions") <- Example usage | Optional var: "replacement" [Used for set_config_entry].
+def find_config_data(entry, replacement=None, config=f"{globals.spice_config}\\config-xpui.ini", encoding="utf-16", splitchar=" = "):  # find_config_data("extensions") <- Example usage | Optional var: "replacement" [Used for set_config_entry].
     '''
     Finds a config entry and returns the data of it
     
