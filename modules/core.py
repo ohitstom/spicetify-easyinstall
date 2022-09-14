@@ -349,46 +349,52 @@ async def install(launch=False, latest=False):
     # The code below will cache pixmaps of each themes showcase screenshots.
 
     print(f"(11/{steps_count}) Caching pixmaps...")
-    if os.path.exists('pix_cache.txt'):
-        os.remove('pix_cache.txt')
-    open('pix_cache.txt', 'w').close()
-    globals.pix_cache.clear()
+    try:
+        if os.path.exists('pix_cache.txt'):
+            os.remove('pix_cache.txt')
+        open('pix_cache.txt', 'w').close()
+        globals.pix_cache.clear()
 
-    themes = utils.list_config_available("themes")
-    backgrounds = utils.theme_images()
-    for theme in themes:
-        background=str(backgrounds[themes.index(theme)])
-        if background != "None":
-            Brightness = gui.brightness(background)   
-            pixmapByteArray = gui.buttonPixmap(bg=background, rounded=True, width=284, height=160, typing="ByteArray")
-            globals.pix_cache[background] = [pixmapByteArray, Brightness]                
-            with open('pix_cache.txt', 'a') as f:
-                f.write(f'{background}: {str(pixmapByteArray.toBase64())}, {Brightness}\n') 
+        themes = utils.list_config_available("themes")
+        backgrounds = utils.theme_images()
+        for theme in themes:
+            background=str(backgrounds[themes.index(theme)])
+            if background != "None":
+                Brightness = gui.brightness(background)   
+                pixmapByteArray = gui.buttonPixmap(bg=background, rounded=True, width=284, height=160, typing="ByteArray")
+                globals.pix_cache[background] = [pixmapByteArray, Brightness]                
+                with open('pix_cache.txt', 'a') as f:
+                    f.write(f'{background}: {str(pixmapByteArray.toBase64())}, {Brightness}\n') 
+    except:
+        print("Pixmaps could not be cached, this does not hinder your install.\nHowever customization page might take a second to load.")
     print("Finished caching pixmaps!\n")
 
     # >[Section 12]<
     # The code below will cache descriptions of each extensions "//description" header.
 
     print(f"(12/{steps_count}) Caching descriptions...")
-    if os.path.exists('desc_cache.txt'):
-        os.remove('desc_cache.txt')
-    else:
-        open('desc_cache.txt', 'w').close()
-    globals.desc_cache.clear()
+    try:
+        if os.path.exists('desc_cache.txt'):
+            os.remove('desc_cache.txt')
+        else:
+            open('desc_cache.txt', 'w').close()
+        globals.desc_cache.clear()
 
-    extensions=[]
-    descriptions = utils.extension_descriptions()
-    for extension in utils.list_config_available("extensions"):
-        if extension.lower()[:-3] not in [x.lower() for x in utils.list_config_available("themes")]:
-            extensions.append(extension)
+        extensions=[]
+        descriptions = utils.extension_descriptions()
+        for extension in utils.list_config_available("extensions"):
+            if extension.lower()[:-3] not in [x.lower() for x in utils.list_config_available("themes")]:
+                extensions.append(extension)
 
-    for extension in extensions:
-        if extension[:-3] not in globals.desc_cache:
-            globals.desc_cache[extension[:-3]] = descriptions[extensions.index(extension)]
-            with open("desc_cache.txt", "a") as f:
-                f.write(
-                    f'{extension[:-3]}: {descriptions[extensions.index(extension)]}\n'
+        for extension in extensions:
+            if extension[:-3] not in globals.desc_cache:
+                globals.desc_cache[extension[:-3]] = descriptions[extensions.index(extension)]
+                with open("desc_cache.txt", "a") as f:
+                    f.write(
+                        f'{extension[:-3]}: {descriptions[extensions.index(extension)]}\n'
                 )
+    except:
+        print("Descriptions could not be cached, this does not hinder your install.\nHowever the extensions page may take a second to load.")
     print("Finished caching extension descriptions!\n")
     
     if latest:
@@ -694,47 +700,49 @@ async def update_addons(shipped=False):
 
         else:
             utils.verbose_print(f"{unpacked_name} wasnt downloaded successfully...")
-        print("Finished downloading 'custom' addons!\n")
+    print("Finished downloading 'custom' addons!\n")
 
-        print(f"(4/{steps_count}) Caching pixmaps...")
-        if os.path.exists('pix_cache.txt'):
-            os.remove('pix_cache.txt')
-        open('pix_cache.txt', 'w').close()
-        globals.pix_cache.clear()
 
-        themes = utils.list_config_available("themes")
-        backgrounds = utils.theme_images()
-        for theme in themes:
-            background=str(backgrounds[themes.index(theme)])
-            if background != "None":
-                Brightness = gui.brightness(background)   
-                pixmapByteArray = gui.buttonPixmap(bg=background, rounded=True, width=284, height=160, typing="ByteArray")
-                globals.pix_cache[background] = [pixmapByteArray, Brightness]                
-                with open('pix_cache.txt', 'a') as f:
-                    f.write(f'{background}: {str(pixmapByteArray.toBase64())}, {Brightness}\n') 
-        print("Finished caching pixmaps!\n")
+    print(f"(4/{steps_count}) Caching pixmaps...")
+    if os.path.exists('pix_cache.txt'):
+        os.remove('pix_cache.txt')
+    open('pix_cache.txt', 'w').close()
+    globals.pix_cache.clear()
 
-        print(f"(5/{steps_count}) Caching descriptions...")
-        if os.path.exists('desc_cache.txt'):
-            os.remove('desc_cache.txt')
-        else:
-            open('desc_cache.txt', 'w').close()
-        globals.desc_cache.clear()
+    themes = utils.list_config_available("themes")
+    backgrounds = utils.theme_images()
+    for theme in themes:
+        background=str(backgrounds[themes.index(theme)])
+        if background != "None":
+            Brightness = gui.brightness(background)   
+            pixmapByteArray = gui.buttonPixmap(bg=background, rounded=True, width=284, height=160, typing="ByteArray")
+            globals.pix_cache[background] = [pixmapByteArray, Brightness]                
+            with open('pix_cache.txt', 'a') as f:
+                f.write(f'{background}: {str(pixmapByteArray.toBase64())}, {Brightness}\n') 
+    print("Finished caching pixmaps!\n")
 
-        extensions=[]
-        descriptions = utils.extension_descriptions()
-        for extension in utils.list_config_available("extensions"):
-            if extension.lower()[:-3] not in [x.lower() for x in utils.list_config_available("themes")]:
-                extensions.append(extension)
+    
+    print(f"(5/{steps_count}) Caching descriptions...")
+    if os.path.exists('desc_cache.txt'):
+        os.remove('desc_cache.txt')
+    else:
+        open('desc_cache.txt', 'w').close()
+    globals.desc_cache.clear()
 
-        for extension in extensions:
-            if extension[:-3] not in globals.desc_cache:
-                globals.desc_cache[extension[:-3]] = descriptions[extensions.index(extension)]
-                with open("desc_cache.txt", "a") as f:
-                    f.write(
-                        f'{extension[:-3]}: {descriptions[extensions.index(extension)]}\n'
-                    )
-        print("Finished caching extension descriptions!\n")
+    extensions=[]
+    descriptions = utils.extension_descriptions()
+    for extension in utils.list_config_available("extensions"):
+        if extension.lower()[:-3] not in [x.lower() for x in utils.list_config_available("themes")]:
+            extensions.append(extension)
+
+    for extension in extensions:
+        if extension[:-3] not in globals.desc_cache:
+            globals.desc_cache[extension[:-3]] = descriptions[extensions.index(extension)]
+            with open("desc_cache.txt", "a") as f:
+                f.write(
+                    f'{extension[:-3]}: {descriptions[extensions.index(extension)]}\n'
+                )
+    print("Finished caching extension descriptions!\n")
 
 
 async def update_app():

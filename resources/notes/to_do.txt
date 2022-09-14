@@ -11,6 +11,6 @@ Optional:
     -Better image scanning for backgrounds to make text pop
     -Future dropdown for patchnotes.
     -Custom Titlebar
-    -Benign Socket Errors
     -Crossplatform?
+    -Smoother screen slide
 

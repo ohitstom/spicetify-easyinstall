@@ -34,7 +34,7 @@ DISABLED_BORDER = "#111111"
 TEXT_COLOR = "#EDEDED"
 DISABLED_TEXT_COLOR = "#222222"
 
-ANIM_TYPE = QtCore.QEasingCurve.InBack
+ANIM_TYPE = QtCore.QEasingCurve.InOutQuart
 ANIM_DURATION = 300
 
 QSS = f"""
@@ -281,6 +281,8 @@ class MainWindow(QuickWidget):
             spacing=0,
         )
 
+        self.exit_request = asyncio.Event()
+        
         self.setWindowTitle("Spicetify EasyInstall")
         self.setWindowIcon(QtGui.QIcon("resources/icons/icon.png"))
 
@@ -296,6 +298,9 @@ class MainWindow(QuickWidget):
 
         self.bottom_bar = BottomBar(parent=self)
         self.layout().addWidget(self.bottom_bar)
+    
+    def closeEvent(self, *args):
+        self.exit_request.set()    
 
 
 class SlidingFrame(QuickWidget):

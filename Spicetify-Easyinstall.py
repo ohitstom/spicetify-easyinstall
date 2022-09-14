@@ -6,14 +6,9 @@
 
 import asyncio
 import sys
-import logging
 
 # Only start if running as main and not import
 if __name__ == "__main__":
-    
-    # Setup logging preferences
-    logging.getLogger('aiohttp.server').setLevel(logging.CRITICAL)
-
     # Setup logging console to file output
     from modules import logger
 
@@ -36,13 +31,14 @@ if __name__ == "__main__":
     globals.app.setStyleSheet(gui.QSS)
 
     # Configure asyncio loop to work with PyQt5
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     loop = QEventLoop(globals.app)
     asyncio.set_event_loop(loop)
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
     # Setup GUI
     globals.gui = gui.MainWindow()
     globals.gui.show()
+    
     # Set off loop
     with loop:
-        sys.exit(loop.run_forever())
+        sys.exit(loop.run_until_complete(globals.gui.exit_request.wait()))
