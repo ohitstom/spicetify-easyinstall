@@ -12,7 +12,7 @@ HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
 WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL" 
 
 # Download URLS
-SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.94.864.g540a4cc6-12.exe"
+SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.93.896.g3ae3b4f3-10.exe"
 THEMES_URL = "https://codeload.github.com/spicetify/spicetify-themes/zip/0f7a687e76c525e4013a7f82ccb15e11cc30475a"
 ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/1bda2cffa39bb71d8bad6ff58c9712d1d60aef0a"
 __SPOTIFY_URL__ = SPOTIFY_URL
