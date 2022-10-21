@@ -20,7 +20,7 @@ __THEMES_URL__ = THEMES_URL
 __ADDONS_URL__ = ADDONS_URL
 
 # Version Variables
-SPICETIFY_VERSION = "2.13.1"
+SPICETIFY_VERSION = "2.14.0"
 SPOTIFY_VERSION = "/".join(SPOTIFY_URL.split("/")[-1:])
 THEMES_VERSION = f"spicetify-themes-{'/'.join(THEMES_URL.split('/')[-1:])}"
 ADDONS_VERSION = f"spicetify-cli-{'/'.join(ADDONS_URL.split('/')[-1:])}"
