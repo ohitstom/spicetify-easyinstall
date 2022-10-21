@@ -7,14 +7,14 @@ from PyQt5 import QtCore
 ## All '__xyz__' variables are temporary variables used for re-assigning.
 
 # Github Variables
-RELEASE = "3.2"
+RELEASE = "3.3"
 HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
 WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL" 
 
 # Download URLS
-SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.93.896.g3ae3b4f3-10.exe"
-THEMES_URL = "https://codeload.github.com/spicetify/spicetify-themes/zip/0f7a687e76c525e4013a7f82ccb15e11cc30475a"
-ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/1bda2cffa39bb71d8bad6ff58c9712d1d60aef0a"
+SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.96.785.g464c973a-1287.exe"
+THEMES_URL = "https://codeload.github.com/spicetify/spicetify-themes/zip/eb6b818368d9c01ef92522623b37aa29200d0bc0"
+ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/e4c86aa43124d1a05559c8538eef8795598afde9"
 __SPOTIFY_URL__ = SPOTIFY_URL
 __THEMES_URL__ = THEMES_URL
 __ADDONS_URL__ = ADDONS_URL
@@ -70,16 +70,16 @@ else:
 
 # Custom Addon URLs
 CUSTOM_EXTENSIONS = {
-    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/40b8c13722ca92ce71ccbd27645e47da92ee25ec": f"{spice_config}\\Extensions\\Charlie-Repo.zip",
-    "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/98887281b70c2d45f69d188ba443f584af80a717": f"{spice_config}\\Extensions\\Power-Bar.zip",
+    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/038a81042d7690fb41c79e8c5820bc37e12cab79": f"{spice_config}\\Extensions\\Charlie-Repo.zip",
+    "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/b8bd10e30d94f3942839a0c1e79bcecf295ff567": f"{spice_config}\\Extensions\\Power-Bar.zip",
 }
 
 CUSTOM_APPS = {
-    "https://codeload.github.com/spicetify/spicetify-marketplace/zip/160209c0527c8785784f67199fbe5b91732d1436": f"{spice_config}\\CustomApps\\marketplace.zip",
+    "https://codeload.github.com/spicetify/spicetify-marketplace/zip/286745dace201dacd7f19285414ab20766e80496": f"{spice_config}\\CustomApps\\marketplace.zip",
 }
 
 CUSTOM_THEMES = {
-    "https://codeload.github.com/Comfy-Themes/Spicetify/zip/b80a46f012d2e3b9f49b42d76d3f4df634f367c1": f"{spice_config}\\Themes\\Comfy-Collection.zip",
+    "https://codeload.github.com/Comfy-Themes/Spicetify/zip/d8d2693209e8476957a68d08744e881324c36b14": f"{spice_config}\\Themes\\Comfy-Collection.zip",
 }
 
 # Text Pages For GUI
