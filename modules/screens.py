@@ -516,6 +516,10 @@ class ConfigConfirmScreen(gui.ConfirmScreen):
             back_screen="config_customapps_menu_screen",
             next_screen="config_log_screen",
         )
+        self.inject_theme_js = QtWidgets.QCheckBox(parent=self, text="Inject Theme JS")
+        self.inject_theme_js.setChecked(True) if utils.is_installed() and utils.find_config_data("inject_theme_js") == "1" else self.inject_theme_js.setChecked(False)
+        gui.clickable(self.inject_theme_js)
+        self.layout().addWidget(self.inject_theme_js)
         self.overwrite_assets = QtWidgets.QCheckBox(parent=self, text="Overwrite Assets")
         self.overwrite_assets.setChecked(True) if utils.is_installed() and utils.find_config_data("overwrite_assets") == "1" else self.overwrite_assets.setChecked(False)
         gui.clickable(self.overwrite_assets)
@@ -569,8 +573,10 @@ class ConfigLogScreen(gui.ConsoleLogScreen):
         extensions = slider.config_extensions_menu_screen.getSelection() + slider.config_confirm_screen.theme_extension
         customapps = slider.config_customapps_menu_screen.getSelection()
         overwrite_assets = "1" if slider.config_confirm_screen.overwrite_assets.isChecked() else "0"
+        inject_theme_js = "1" if slider.config_confirm_screen.inject_theme_js.isChecked() else "0"
         try:
             utils.set_config_entry("overwrite_assets", overwrite_assets)
+            utils.set_config_entry("inject_theme_js", inject_theme_js)
             await core.apply_config(theme, colorscheme, extensions, customapps)
         except Exception:
             exc = "".join(traceback.format_exception(*sys.exc_info()))
