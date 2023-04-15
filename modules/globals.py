@@ -7,20 +7,20 @@ from PyQt5 import QtCore
 ## All '__xyz__' variables are temporary variables used for re-assigning.
 
 # Github Variables
-RELEASE = "3.3"
+RELEASE = "3.4"
 HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
 WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL" 
 
 # Download URLS
-SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.1.96.785.g464c973a-1287.exe"
-THEMES_URL = "https://codeload.github.com/spicetify/spicetify-themes/zip/eb6b818368d9c01ef92522623b37aa29200d0bc0"
-ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/e4c86aa43124d1a05559c8538eef8795598afde9"
+SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.2.9.743.g85d9593d-295.exe"
+THEMES_URL = "https://codeload.github.com/spicetify/spicetify-themes/zip/7d2e48bcfbf6105a8f21840e6dfbbbea8b55c907"
+ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/c9ca314115ee6457118698159a449d8b4f4de320"
 __SPOTIFY_URL__ = SPOTIFY_URL
 __THEMES_URL__ = THEMES_URL
 __ADDONS_URL__ = ADDONS_URL
 
 # Version Variables
-SPICETIFY_VERSION = "2.14.0"
+SPICETIFY_VERSION = "2.17.2"
 SPOTIFY_VERSION = "/".join(SPOTIFY_URL.split("/")[-1:])
 THEMES_VERSION = f"spicetify-themes-{'/'.join(THEMES_URL.split('/')[-1:])}"
 ADDONS_VERSION = f"spicetify-cli-{'/'.join(ADDONS_URL.split('/')[-1:])}"
@@ -70,16 +70,16 @@ else:
 
 # Custom Addon URLs
 CUSTOM_EXTENSIONS = {
-    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/038a81042d7690fb41c79e8c5820bc37e12cab79": f"{spice_config}\\Extensions\\Charlie-Repo.zip",
-    "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/b8bd10e30d94f3942839a0c1e79bcecf295ff567": f"{spice_config}\\Extensions\\Power-Bar.zip",
+    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/edaec2f43c7fcf61ca30fa7eff500cfd70aa8e6f": f"{spice_config}\\Extensions\\Charlie-Repo.zip",
+    "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/63a8b90538e90dd6d5ea9170fc1df087faacb2c7": f"{spice_config}\\Extensions\\Power-Bar.zip",
 }
 
 CUSTOM_APPS = {
-    "https://codeload.github.com/spicetify/spicetify-marketplace/zip/286745dace201dacd7f19285414ab20766e80496": f"{spice_config}\\CustomApps\\marketplace.zip",
+    "https://codeload.github.com/spicetify/spicetify-marketplace/zip/9a9cd575584aaa5ba16bb28e7c7ccecf41027a37": f"{spice_config}\\CustomApps\\marketplace.zip",
 }
 
 CUSTOM_THEMES = {
-    "https://codeload.github.com/Comfy-Themes/Spicetify/zip/d8d2693209e8476957a68d08744e881324c36b14": f"{spice_config}\\Themes\\Comfy-Collection.zip",
+    "https://codeload.github.com/Comfy-Themes/Spicetify/zip/591bea92bb7d9bfe24ccd6859f1354a72b317d39": f"{spice_config}\\Themes\\Comfy-Collection.zip",
 }
 
 # Text Pages For GUI
