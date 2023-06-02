@@ -147,13 +147,18 @@ class InstallConfirmScreen(gui.ConfirmScreen):
             back_screen="main_menu_screen",
             next_screen="install_log_screen",
         )
-
+        
         self.launch_after = QtWidgets.QCheckBox(parent=self, text="Launch When Ready")
+        self.leaveSpotify = QtWidgets.QCheckBox(parent=self, text="Dont Uninstall Spotify - Can Be Unstable!")
         self.use_latest = QtWidgets.QCheckBox(parent=self, text="Install Latest Versions - Can Be Unstable!")
+        self.warning = QtWidgets.QLabel(parent=self, text="<b>WARNING</b>: This process will uninstall and reinstall Spotify and Spicetify.")
         gui.clickable(self.launch_after)
+        gui.clickable(self.leaveSpotify)
         gui.clickable(self.use_latest)
         self.layout().addWidget(self.launch_after)
+        self.layout().addWidget(self.leaveSpotify)
         self.layout().addWidget(self.use_latest)
+        self.layout().addWidget(self.warning)
 
     @asyncSlot()
     async def shownCallback(self):
@@ -238,6 +243,7 @@ class InstallLogScreen(gui.ConsoleLogScreen):
         try:
             await core.install(
                 launch=slider.install_confirm_screen.launch_after.isChecked(),
+                leaveSpotify=slider.install_confirm_screen.leaveSpotify.isChecked(),
                 latest=slider.install_confirm_screen.use_latest.isChecked()
             )
         except Exception:
@@ -602,6 +608,9 @@ class UninstallConfirmScreen(gui.ConfirmScreen):
             next_screen="uninstall_log_screen",
         )
 
+        self.uninstall_spotify = QtWidgets.QCheckBox(parent=self, text="Uninstall Spotify")
+        self.layout().addWidget(self.uninstall_spotify)
+
     @asyncSlot()
     async def shownCallback(self):
         bottom_bar = self.parent().parent().bottom_bar
@@ -630,12 +639,14 @@ class UninstallLogScreen(gui.ConsoleLogScreen):
 
     @asyncSlot()
     async def shownCallback(self):
+        slider = self.parent().parent().slider
+
         # Configure output widget
         await self.setup()
 
         # Actual uninstall
         try:
-            await core.uninstall()
+            await core.uninstall(spotify=slider.uninstall_confirm_screen.uninstall_spotify.isChecked())
         except Exception:
             exc = "".join(traceback.format_exception(*sys.exc_info()))
             print(exc)

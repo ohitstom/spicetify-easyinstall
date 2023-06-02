@@ -2,18 +2,27 @@ import asyncio
 import os
 import shutil
 from pathlib import Path
+import re
 
 from modules import globals, utils, gui
 
-async def install(launch=False, latest=False):
+environ_check = (f'& "{globals.spice_executable}\\spicetify.exe"' if os.path.isdir(globals.spice_executable)  else "spicetify") 
 
+async def install(launch=False, leaveSpotify=False, latest=False):
+
+    current_step = 0
+    steps_count = 12
+    if leaveSpotify:
+        steps_count -= 3
+    if latest:
+        steps_count += 2
+    
     # >[Section 0]<
     # The code below will re-assign variables if edition is True.
-       
+
     if latest:
-        steps_count = 13
-        
-        print(f"\n(0/{steps_count}) Preparing latest variables...")
+        current_step += 1
+        print(f"\n({current_step}/{steps_count}) Preparing latest variables...")
         try:
             spice = await utils.latest_github_release(Spicetify=True)
             theme = await utils.latest_github_commit()
@@ -31,14 +40,12 @@ async def install(launch=False, latest=False):
             print(f"\nFailed to fetch variables, likely to be ratelimited.\nPlease try again later or uncheck 'install latest'.\nError: {e}")
             return None   
         print("Finished preparing latest variables!")
-    
-    else:
-        steps_count = 12
 
     # >[Section 1]<
     # The code below will backup a users spotify login and creds.
 
-    print(f"\n(1/{steps_count}) Backing Up Credentials...")
+    current_step += 1
+    print(f"\n({current_step}/{steps_count}) Backing Up Credentials...")
     if os.path.isdir(f"{globals.appdata}\\Spotify\\Users") and os.path.isfile(f"{globals.appdata}\\Spotify\\prefs"):
         if os.path.isdir(f"{globals.cwd}\\backup"):
             shutil.rmtree(f"{globals.cwd}\\backup")
@@ -55,31 +62,32 @@ async def install(launch=False, latest=False):
     # >[Section 2]<
     # The code below will uninstall Spotify.
 
-    print(f"(2/{steps_count}) Uninstalling Spotify...")
-    process = await utils.powershell('Get-AppxPackage SpotifyAB.SpotifyMusic', wait=True, verbose=False)
-    winstore_spotify = str(await process.stdout.read()).strip()
+    if not leaveSpotify:
+        current_step += 1
+        print(f"({current_step}/{steps_count}) Uninstalling Spotify...")
+        process = await utils.powershell('Get-AppxPackage SpotifyAB.SpotifyMusic', wait=True, verbose=False)
+        winstore_spotify = str(await process.stdout.read()).strip()
 
-    if 'Version' in winstore_spotify:
-        await utils.powershell('Get-AppxPackage SpotifyAB.SpotifyMusic | Remove-AppxPackage', wait=True)
-        print("Finished uninstalling Spotify!\n")
-    
-    elif os.path.isdir(f"{globals.appdata}\\Spotify"):
-        utils.kill_processes("spicetify.exe")
-        utils.kill_processes("Spotify.exe")
+        if 'Version' in winstore_spotify:
+            await utils.powershell('Get-AppxPackage SpotifyAB.SpotifyMusic | Remove-AppxPackage', wait=True)
+            print("Finished uninstalling Spotify!\n")
         
-        await utils.powershell(
-            '\n'.join([
-                'cmd /c "%USERPROFILE%\\AppData\\Roaming\\Spotify\\Spotify.exe" /UNINSTALL /SILENT',
-                'cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:D',
-                'cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:R'
-            ]),
-            verbose=False,
-        )
-        print("Finished uninstalling Spotify!\n")
-    
-    else:
-        print("Spotify is not installed!\n")
-    
+        elif os.path.isdir(f"{globals.appdata}\\Spotify"):
+            utils.kill_processes("spicetify.exe")
+            utils.kill_processes("Spotify.exe")
+            
+            await utils.powershell(
+                '\n'.join([
+                    'cmd /c "%USERPROFILE%\\AppData\\Roaming\\Spotify\\Spotify.exe" /UNINSTALL /SILENT',
+                    'cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:D',
+                    'cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:R'
+                ]),
+                verbose=False,
+            )
+            print("Finished uninstalling Spotify!\n")
+        
+        else:
+            print("Spotify is not installed!\n")
 
     # >[Section 3]<
     # The code below will remove a list of spicetify dependant folders.
@@ -88,11 +96,15 @@ async def install(launch=False, latest=False):
         globals.spice_config,
         globals.spice_executable,
         f"{globals.appdata}\\spotify",
-        f"{globals.appdata_local}\\spotify",
-        globals.temp,
+        f"{globals.appdata_local}\\spotify"
+    ] if not leaveSpotify else [
+        globals.spice_config,
+        globals.spice_executable,
+        globals.temp
     ]
 
-    print(f"(3/{steps_count}) Wiping folders...")
+    current_step += 1
+    print(f"({current_step}/{steps_count}) Wiping folders...")
     for folder in folders:
         try:
             if not os.path.exists(folder) or len(os.listdir(folder)) == 0:
@@ -104,65 +116,63 @@ async def install(launch=False, latest=False):
             utils.verbose_print(f'"{folder}" was not deleted: {e}.')
     print("Finished wiping folders!\n")
 
-    # >[Section 4]<
-    # The code below will download Spotify.
-    
-    print(f"(4/{steps_count}) Downloading correct Spotify version...")
-    if not os.path.isdir(globals.temp):
-        os.mkdir(globals.temp)
-    
-    await utils.chunked_download(
-        url=globals.SPOTIFY_URL,
-        path=(f"{globals.temp}\\{globals.SPOTIFY_VERSION}"),
-        label=(f"{globals.temp}\\{globals.SPOTIFY_VERSION}")
-        if globals.verbose
-        else globals.SPOTIFY_VERSION,
-    )
-    print("Finished downloading Spotify!\n")
-
-    # >[Section 5]<
-    # The code below will install Spotify.
-
-    print(f"(5/{steps_count}) Installing Spotify...")
-    utils.kill_processes("Spotify.exe")
-    spotify_install_pid = (
-        await utils.start_process(
-            f"{globals.temp}\\{globals.SPOTIFY_VERSION}",
-            silent=True
+    if not leaveSpotify:
+        # >[Section 4]<
+        # The code below will download Spotify.
+        
+        current_step += 1
+        print(f"({current_step}/{steps_count}) Downloading correct Spotify version...")
+        if not os.path.isdir(globals.temp):
+            os.mkdir(globals.temp)
+        
+        await utils.chunked_download(
+            url=globals.SPOTIFY_URL,
+            path=(f"{globals.temp}\\{globals.SPOTIFY_VERSION}"),
+            label=(f"{globals.temp}\\{globals.SPOTIFY_VERSION}")
+            if globals.verbose
+            else globals.SPOTIFY_VERSION,
         )
-    ).pid
+        print("Finished downloading Spotify!\n")
 
-    while utils.process_pid_running(spotify_install_pid):
-        await asyncio.sleep(0.25)
-    i = 0
-    while not globals.spotify_prefs.is_file():
-        i += 1
-        if i > 40:
-            raise FileNotFoundError(
-                "Spotify preferences were not created, something went wrong installing."
+        # >[Section 5]<
+        # The code below will install Spotify.
+        
+        current_step += 1
+        print(f"({current_step}/{steps_count}) Installing Spotify...")
+        utils.kill_processes("Spotify.exe")
+        spotify_install_pid = (
+            await utils.start_process(
+                f"{globals.temp}\\{globals.SPOTIFY_VERSION}",
+                silent=True
             )
-        await asyncio.sleep(0.25)
+        ).pid
 
-    utils.kill_processes("Spotify.exe")
-    os.remove(f"{globals.temp}\\{globals.SPOTIFY_VERSION}")
-    print("Finished installing Spotify!\n")
+        while utils.process_pid_running(spotify_install_pid):
+            await asyncio.sleep(0.25)
+        i = 0
+        while not globals.spotify_prefs.is_file():
+            i += 1
+            if i > 40:
+                raise FileNotFoundError(
+                    "Spotify preferences were not created, something went wrong installing."
+                )
+            await asyncio.sleep(0.25)
+
+        utils.kill_processes("Spotify.exe")
+        os.remove(f"{globals.temp}\\{globals.SPOTIFY_VERSION}")
+        print("Finished installing Spotify!\n")
 
     # >[Section 6]<
     # The code below will install Spicetify and do error checking.
 
-    print(f"(6/{steps_count}) Installing Spicetify...")
+    current_step += 1
+    print(f"({current_step}/{steps_count}) Installing Spicetify...")
     await utils.powershell(
         '\n'.join([
             '[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12',
             '$ProgressPreference = "SilentlyContinue"',
             f'$v="{globals.SPICETIFY_VERSION}"; Invoke-WebRequest -UseBasicParsing "https://raw.githubusercontent.com/spicetify/spicetify-cli/master/install.ps1" | Invoke-Expression',
         ])
-    )
-
-    environ_check = (
-    f'& "{globals.spice_executable}\\spicetify.exe"' 
-    if os.path.isdir(globals.spice_executable) 
-    else "spicetify"
     )
 
     await utils.powershell(
@@ -189,7 +199,8 @@ async def install(launch=False, latest=False):
     # >[Section 7]<
     # The code below will remove Spotifys ability to update.
 
-    print(f"(7/{steps_count}) Preventing Spotify from updating...")
+    current_step += 1
+    print(f"({current_step}/{steps_count}) Preventing Spotify from updating...")
     utils.kill_processes("Spotify.exe")
     if not os.path.isdir(f"{globals.appdata_local}\\Spotify\\Update"):
         os.mkdir(f"{globals.appdata_local}\\Spotify\\Update")
@@ -205,7 +216,8 @@ async def install(launch=False, latest=False):
     # >[Section 8]<
     # The code below will download spicetify-cli themes.
     
-    print(f"(8/{steps_count}) Downloading 'official' themes...")
+    current_step += 1
+    print(f"({current_step}/{steps_count}) Downloading 'official' themes...")
     await utils.chunked_download(
         url=globals.THEMES_URL,
         path=(f"{globals.spice_config}\\Themes.zip"),
@@ -232,6 +244,8 @@ async def install(launch=False, latest=False):
 
     for item in list(Path(f"{globals.spice_config}\\Themes").glob("**/*.js")):
         fullpath = str(item)
+        if re.search(r'theme(?:\.|\.js)', fullpath):
+            continue 
         destpath = (f"{globals.spice_config}\\Extensions"
         + fullpath[fullpath.rfind('\\') : fullpath.rfind('.')]
         + ".js"
@@ -244,7 +258,8 @@ async def install(launch=False, latest=False):
     # >[Section 9]<
     # The code below will download a list of custom Spicetify addons, declared in globals.py.
     
-    print(f"(9/{steps_count}) Downloading 'custom' addons...")
+    current_step += 1
+    print(f"({current_step}/{steps_count}) Downloading 'custom' addons...")
     await utils.simultaneous_chunked_download(
         {
             **globals.CUSTOM_THEMES,
@@ -295,6 +310,8 @@ async def install(launch=False, latest=False):
             # Moving all theme extensions to the extensions folder
             for item in list(Path(f"{globals.spice_config}\\Themes").glob("**/*.js")):
                 fullpath = str(item)
+                if re.search(r'theme(?:\.|\.js)', fullpath):
+                    continue 
                 destpath = (f"{globals.spice_config}\\Extensions"
                 + fullpath[fullpath.rfind('\\') : fullpath.rfind('.')]
                 + ".js"
@@ -310,7 +327,8 @@ async def install(launch=False, latest=False):
     # >[Section 10]<
     # The code below will restore the Spotify user data and credentials.
 
-    print(f"(10/{steps_count}) Restoring Credentials...")
+    current_step += 1
+    print(f"({current_step}/{steps_count}) Restoring Credentials...")
     if os.path.isdir(f"{globals.cwd}\\backup\\Users"):
         if os.path.isdir(f"{globals.appdata}\\Spotify\\Users") is True:
             shutil.rmtree(f"{globals.appdata}\\Spotify\\Users")
@@ -348,7 +366,8 @@ async def install(launch=False, latest=False):
     # >[Section 11]<
     # The code below will cache pixmaps of each themes showcase screenshots.
 
-    print(f"(11/{steps_count}) Caching pixmaps...")
+    current_step += 1
+    print(f"({current_step}/{steps_count}) Caching pixmaps...")
     try:
         if os.path.exists('pix_cache.txt'):
             os.remove('pix_cache.txt')
@@ -372,7 +391,8 @@ async def install(launch=False, latest=False):
     # >[Section 12]<
     # The code below will cache descriptions of each extensions "//description" header.
 
-    print(f"(12/{steps_count}) Caching descriptions...")
+    current_step += 1
+    print(f"({current_step}/{steps_count}) Caching descriptions...")
     try:
         if os.path.exists('desc_cache.txt'):
             os.remove('desc_cache.txt')
@@ -398,7 +418,8 @@ async def install(launch=False, latest=False):
     print("Finished caching extension descriptions!\n")
     
     if latest:
-        print(f"(13/{steps_count}) Reverting latest variables...")
+        current_step += 1
+        print(f"({current_step}/{steps_count}) Reverting latest variables...")
         globals.SPICETIFY_VERSION = globals.__SPICETIFY_VERSION__
         globals.THEMES_VERSION = globals.__THEMES_VERSION__
         globals.ADDONS_VERSION = globals.__ADDONS_VERSION__  
@@ -428,15 +449,17 @@ async def apply_config(theme, colorscheme, extensions, customapps):
     # >[Section 2]<
     # Applying the changes to the config.
     
-    print(f"(2/{steps_count}) Applying config...")
-    environ_check = (f'& "{globals.spice_executable}\\spicetify.exe"' if os.path.isdir(globals.spice_executable)  else "spicetify")    
+    print(f"(2/{steps_count}) Applying config...")   
     await utils.powershell(f"{environ_check} apply", start_new_session=False)
     await utils.start_process(f"{globals.appdata}\\spotify\\spotify.exe", silent=False)
     print("Finished applying config!\n")
 
 
-async def uninstall():
+async def uninstall(spotify=False):
+    current_step = 0
     steps_count = 4
+    if spotify:
+        steps_count += 1
     folders = [
         globals.spice_executable,
         globals.spice_config,
@@ -444,37 +467,47 @@ async def uninstall():
     ]
     
     # >[Section 1]<
-    # The code below will uninstall Spotify.
+    # The code below will restore Spotify.
     
-    print(f"(1/{steps_count}) Uninstalling Spotify...")
-    process = await utils.powershell('Get-AppxPackage SpotifyAB.SpotifyMusic', wait=True, verbose=False)
-    winstore_spotify = str(await process.stdout.read()).strip()
-
-    if 'Version' in winstore_spotify:
-        await utils.powershell('Get-AppxPackage SpotifyAB.SpotifyMusic | Remove-AppxPackage', wait=True)
-        print("Finished uninstalling Spotify!\n")
+    current_step += 1
+    print(f"({current_step}/{steps_count}) Restoring Spotify...")  
+    await utils.powershell(f"{environ_check} restore -q", start_new_session=False)
+    print("Finished Restoring Spotify!\n")
     
-    elif os.path.isdir(f"{globals.appdata}\\Spotify"):
-        utils.kill_processes("spicetify.exe")
-        utils.kill_processes("Spotify.exe")
-        
-        await utils.powershell(
-            '\n'.join([
-                'cmd /c "%USERPROFILE%\\AppData\\Roaming\\Spotify\\Spotify.exe" /UNINSTALL /SILENT',
-                'cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:D',
-                'cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:R'
-            ]),
-            verbose=False,
-        )
-        print("Finished uninstalling Spotify!\n")
-    
-    else:
-        print("Spotify is not installed!\n")
-        
     # >[Section 2]<
+    # The code below will uninstall Spotify.
+    if spotify:
+        current_step += 1
+        print(f"({current_step}/{steps_count}) Uninstalling Spotify...")
+        process = await utils.powershell('Get-AppxPackage SpotifyAB.SpotifyMusic', wait=True, verbose=False)
+        winstore_spotify = str(await process.stdout.read()).strip()
+
+        if 'Version' in winstore_spotify:
+            await utils.powershell('Get-AppxPackage SpotifyAB.SpotifyMusic | Remove-AppxPackage', wait=True)
+            print("Finished uninstalling Spotify!\n")
+        
+        elif os.path.isdir(f"{globals.appdata}\\Spotify"):
+            utils.kill_processes("spicetify.exe")
+            utils.kill_processes("Spotify.exe")
+            
+            await utils.powershell(
+                '\n'.join([
+                    'cmd /c "%USERPROFILE%\\AppData\\Roaming\\Spotify\\Spotify.exe" /UNINSTALL /SILENT',
+                    'cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:D',
+                    'cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:R'
+                ]),
+                verbose=False,
+            )
+            print("Finished uninstalling Spotify!\n")
+        
+        else:
+            print("Spotify is not installed!\n")
+
+    # >[Section 3]<
     # Delete all folders in the `folders` list.
 
-    print(f"(2/{steps_count}) Wiping folders...")
+    current_step += 1
+    print(f"({current_step}/{steps_count}) Wiping folders...")
     for folder in folders:
         try:
             if not os.path.exists(folder) or len(os.listdir(folder)) == 0:
@@ -487,10 +520,11 @@ async def uninstall():
             utils.verbose_print(f'"{folder}" was not deleted: {e}.')
     print("Finished wiping folders!\n")
 
-    # >[Section 3]<
+    # >[Section 4]<
     # If the spicetify-cli directory is in the user's PATH, remove it.
 
-    print(f"(3/{steps_count}) Removing environment variables...")
+    current_step += 1
+    print(f"({current_step}/{steps_count}) Removing environment variables...")
     await utils.powershell(
         '\n'.join([
             '$path = [System.Environment]::GetEnvironmentVariable("PATH", "User")',
@@ -503,7 +537,10 @@ async def uninstall():
     )
     print("Finished removing environment variables!\n")
 
-    print(f"(4/{steps_count}) Removing caches...")
+    # >[Section 5]<
+
+    current_step += 1
+    print(f"({current_step}/{steps_count}) Removing caches...")
     if os.path.exists('pix_cache.txt'):
         os.remove('pix_cache.txt')
     if os.path.exists('desc_cache.txt'):
@@ -596,6 +633,8 @@ async def update_addons(shipped=False):
 
     for item in list(Path(f"{globals.spice_config}\\Themes").glob("**/*.js")):
         fullpath = str(item)
+        if re.search(r'theme(?:\.|\.js)', fullpath):
+            continue 
         destpath = (f"{globals.spice_config}\\Extensions"
         + fullpath[fullpath.rfind('\\') : fullpath.rfind('.')]
         + ".js"
@@ -690,6 +729,9 @@ async def update_addons(shipped=False):
             # Moving all theme extensions to the extensions folder
             for item in list(Path(f"{globals.spice_config}\\Themes").glob("**/*.js")):
                 fullpath = str(item)
+                if re.search(r'theme(?:\.|\.js)', fullpath):
+                    continue 
+
                 destpath = (f"{globals.spice_config}\\Extensions"
                 + fullpath[fullpath.rfind('\\') : fullpath.rfind('.')]
                 + ".js"

@@ -7,20 +7,20 @@ from PyQt5 import QtCore
 ## All '__xyz__' variables are temporary variables used for re-assigning.
 
 # Github Variables
-RELEASE = "3.4"
+RELEASE = "3.5"
 HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
 WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL" 
 
 # Download URLS
-SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.2.9.743.g85d9593d-295.exe"
-THEMES_URL = "https://codeload.github.com/spicetify/spicetify-themes/zip/7d2e48bcfbf6105a8f21840e6dfbbbea8b55c907"
-ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/c9ca314115ee6457118698159a449d8b4f4de320"
+SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.2.12.902.g1924b088-3133.exe"
+THEMES_URL = "https://codeload.github.com/spicetify/spicetify-themes/zip/89d76b4afabd3a9ab027d53d0cbde0bdaad675f8"
+ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/113535f6679eefd89b69eec06abd695f0bfab8f4"
 __SPOTIFY_URL__ = SPOTIFY_URL
 __THEMES_URL__ = THEMES_URL
 __ADDONS_URL__ = ADDONS_URL
 
 # Version Variables
-SPICETIFY_VERSION = "2.17.2"
+SPICETIFY_VERSION = "2.19.0"
 SPOTIFY_VERSION = "/".join(SPOTIFY_URL.split("/")[-1:])
 THEMES_VERSION = f"spicetify-themes-{'/'.join(THEMES_URL.split('/')[-1:])}"
 ADDONS_VERSION = f"spicetify-cli-{'/'.join(ADDONS_URL.split('/')[-1:])}"
@@ -70,12 +70,12 @@ else:
 
 # Custom Addon URLs
 CUSTOM_EXTENSIONS = {
-    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/edaec2f43c7fcf61ca30fa7eff500cfd70aa8e6f": f"{spice_config}\\Extensions\\Charlie-Repo.zip",
-    "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/63a8b90538e90dd6d5ea9170fc1df087faacb2c7": f"{spice_config}\\Extensions\\Power-Bar.zip",
+    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/d87cef88f7b5e3ad5bfd01b05d03ef05763a4233": f"{spice_config}\\Extensions\\Charlie-Repo.zip",
+    "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/3b7e0559e91e76975cca41bafdb4ea2990dd468a": f"{spice_config}\\Extensions\\Power-Bar.zip",
 }
 
 CUSTOM_APPS = {
-    "https://codeload.github.com/spicetify/spicetify-marketplace/zip/9a9cd575584aaa5ba16bb28e7c7ccecf41027a37": f"{spice_config}\\CustomApps\\marketplace.zip",
+    "https://codeload.github.com/spicetify/spicetify-marketplace/zip/abedee28485f93453daec945db777873ba0bf5ce": f"{spice_config}\\CustomApps\\marketplace.zip",
 }
 
 CUSTOM_THEMES = {
@@ -93,18 +93,7 @@ INSTALL_RUNDOWN_MD = (
 
 UNINSTALL_RUNDOWN_MD = (
     """
- - **Spotify Uninstall**:
-
- *Version:* `{}`
-
- *Effects:* `{}`
-
-** **
- - **Spicetify Uninstall**:
-
- *Version:* `{}`
-
- *Effects:* `{}`
+ - **Spicetify Version**: `{}`
 """.strip()
 )
 
@@ -120,11 +109,10 @@ UPDATE_APP_RUNDOWN_MD = (
 )
 
 UPDATE_LATEST_RUNDOWN_MD = """
-*Downloads Latest Addons [Which May Not Work]*
+*Downloads Latest Addons*
 ** **
- - **Themes Version**: `master [Latest Commit]`
- - **Extension Version**: `Not Implemented`
- - **Custom Addons**: `Not Implemented`
+ - **Themes Version**: master
+ - **Addon List**: Not Implemented
 """.strip()
 
 # Project license agreement
