@@ -809,8 +809,10 @@ class UpdateAddonsConfirmScreen(gui.ConfirmScreen):
             next_screen="update_addons_log_screen",
         )
         self.version = QtWidgets.QCheckBox(parent=self, text="Re-install Stock Addons")
+        self.warning = QtWidgets.QLabel(parent=self, text="<b>WARNING</b>: This process will delete all addons in both Spicetify folders.")
         gui.clickable(self.version)
         self.layout().addWidget(self.version)
+        self.layout().addWidget(self.warning)
 
     @asyncSlot()
     async def shownCallback(self):
