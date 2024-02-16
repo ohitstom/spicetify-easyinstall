@@ -39,7 +39,6 @@ spice_config = f"{appdata}\\spicetify"
 installer_config = f"{appdata}\\spicetify-easyinstall"
 pix_cache_path = os.path.join(installer_config, "pix_cache.txt")
 desc_cache_path = os.path.join(installer_config, "desc_cache.txt")
-cwd = os.getcwd()
 temp = f"{installer_config}\\temp"
 
 # Temporary Variables + caches
