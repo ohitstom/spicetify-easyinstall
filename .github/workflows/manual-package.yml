@@ -55,6 +55,7 @@ jobs:
         shell: cmd
         run: |
           cd .\Spicetify-Easyinstall
+          ls
           del  /f dist\windows\Spicetify-Easyinstall\_internal\opengl32sw.dll
           del  /f dist\windows\Spicetify-Easyinstall\_internal\Qt5DBus.dll
           del  /f dist\windows\Spicetify-Easyinstall\_internal\Qt5Network.dll
