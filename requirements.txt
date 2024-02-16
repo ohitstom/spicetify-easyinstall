@@ -9,3 +9,4 @@ packaging==23.2
 PyQt5==5.15.10
 PyQt5-sip==12.13.0
 requests
+sip
