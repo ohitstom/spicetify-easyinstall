@@ -54,7 +54,17 @@ jobs:
       - name: investigatory
         shell: cmd
         run: |
-          cd  .\Spicetify-Easyinstall\dist\windows
+          cd  .\Spicetify-Easyinstall\dist
+          ls
+          cd windows
+          ls
+      
+      - name: investigatory3
+        shell: cmd
+        run: |
+          cd  .\Spicetify-Easyinstall\temp
+          ls
+          cd build
           ls
           
       - name: Get short SHA string
