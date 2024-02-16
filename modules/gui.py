@@ -635,7 +635,7 @@ class MenuScreen(SlidingScreen):
                     typing="ByteArray",
                 )
                 globals.pix_cache[kwargs["background"]] = [pixmapByteArray, Brightness]
-                with open("pix_cache.txt", "a") as f:
+                with open(globals.pix_cache_path, "a") as f:
                     f.write(
                         f'{kwargs["background"]}: {str(pixmapByteArray.toBase64())}, {Brightness}\n'
                     )
