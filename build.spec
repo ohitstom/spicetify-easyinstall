@@ -31,7 +31,7 @@ exe = EXE(pyz,
           console=False,
           uac_admin=False,
           icon='resources/icons/icon.ico',
-          contents_directory='resources'
+          contents_directory='resources')
 
 coll = COLLECT(exe,
                a.binaries,
