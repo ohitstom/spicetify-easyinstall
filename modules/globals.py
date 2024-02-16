@@ -37,6 +37,8 @@ spotify_prefs = Path(f"{appdata}\\Spotify\\prefs")
 spice_executable = f"{appdata_local}\\spicetify"
 spice_config = f"{appdata}\\spicetify"
 installer_config = f"{appdata}\\spicetify-easyinstall"
+pix_cache_path = os.path.join(installer_config, "pix_cache.txt")
+desc_cache_path = os.path.join(installer_config, "desc_cache.txt")
 cwd = os.getcwd()
 temp = f"{installer_config}\\temp"
 
@@ -48,8 +50,6 @@ verbose = None
 json = None
 pix_cache = {}
 desc_cache = {}
-pix_cache_path = os.path.join(installer_config, "pix_cache.txt")
-desc_cache_path = os.path.join(installer_config, "desc_cache.txt")
 
 if os.path.exists(pix_cache_path):
     with open(pix_cache_path, "r") as f:
