@@ -369,9 +369,9 @@ async def install(launch=False, leaveSpotify=False, latest=False):
     current_step += 1
     print(f"({current_step}/{steps_count}) Caching pixmaps...")
     try:
-        if os.path.exists('pix_cache.txt'):
-            os.remove('pix_cache.txt')
-        open('pix_cache.txt', 'w').close()
+        if os.path.exists(globals.pix_cache_path):
+            os.remove(globals.pix_cache_path)
+        open(globals.pix_cache_path, 'w').close()
         globals.pix_cache.clear()
 
         themes = utils.list_config_available("themes")
@@ -382,7 +382,7 @@ async def install(launch=False, leaveSpotify=False, latest=False):
                 Brightness = gui.brightness(background)   
                 pixmapByteArray = gui.buttonPixmap(bg=background, rounded=True, width=284, height=160, typing="ByteArray")
                 globals.pix_cache[background] = [pixmapByteArray, Brightness]                
-                with open('pix_cache.txt', 'a') as f:
+                with open(globals.pix_cache_path, 'a') as f:
                     f.write(f'{background}: {str(pixmapByteArray.toBase64())}, {Brightness}\n') 
     except:
         print("Pixmaps could not be cached, this does not hinder your install.\nHowever customization page might take a second to load.")
@@ -541,8 +541,8 @@ async def uninstall(spotify=False):
 
     current_step += 1
     print(f"({current_step}/{steps_count}) Removing caches...")
-    if os.path.exists('pix_cache.txt'):
-        os.remove('pix_cache.txt')
+    if os.path.exists(globals.pix_cache_path):
+        os.remove(globals.pix_cache_path)
     if os.path.exists('desc_cache.txt'):
         os.remove('desc_cache.txt')
     print("Finished removing cached caches!\n")
@@ -746,9 +746,9 @@ async def update_addons(shipped=False):
 
 
     print(f"(4/{steps_count}) Caching pixmaps...")
-    if os.path.exists('pix_cache.txt'):
-        os.remove('pix_cache.txt')
-    open('pix_cache.txt', 'w').close()
+    if os.path.exists(globals.pix_cache_path):
+        os.remove(globals.pix_cache_path)
+    open(globals.pix_cache_path, 'w').close()
     globals.pix_cache.clear()
 
     themes = utils.list_config_available("themes")
@@ -759,7 +759,7 @@ async def update_addons(shipped=False):
             Brightness = gui.brightness(background)   
             pixmapByteArray = gui.buttonPixmap(bg=background, rounded=True, width=284, height=160, typing="ByteArray")
             globals.pix_cache[background] = [pixmapByteArray, Brightness]                
-            with open('pix_cache.txt', 'a') as f:
+            with open(globals.pix_cache_path, 'a') as f:
                 f.write(f'{background}: {str(pixmapByteArray.toBase64())}, {Brightness}\n') 
     print("Finished caching pixmaps!\n")
 
