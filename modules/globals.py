@@ -9,7 +9,7 @@ from PyQt5 import QtCore
 # Github Variables
 RELEASE = "3.7"
 HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
-WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL" 
+WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL"
 
 # Download URLS
 SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86_64/spotify_installer-1.2.30.1135.g02fef27a-399.exe"
@@ -47,26 +47,32 @@ verbose = None
 json = None
 pix_cache = {}
 desc_cache = {}
+pix_cache_path = os.path.join(installer_config, "pix_cache.txt")
+desc_cache_path = os.path.join(installer_config, "desc_cache.txt")
 
-if os.path.exists('pix_cache.txt'):
-    with open('pix_cache.txt', 'r') as f:
-      sections = f.readlines()
-      for count, line in enumerate(sections[:-1]):
-        (key, value) = sections[count].split(": ", 1)
-        (pix, bright) = value.rsplit(", ", 1)
-        pix_cache[key] = [QtCore.QByteArray.fromBase64(pix[2:-1].encode()), float(bright)]
-else:
-    open('pix_cache.txt', 'w').close()
-
-if os.path.exists('desc_cache.txt'):
-    with open('desc_cache.txt', 'r') as f:
-      sections = f.readlines()
-      for count, line in enumerate(sections[:-1]):
-        (key, value) = sections[count].split(": ", 1)
-        desc_cache[key] = value.strip()
+if os.path.exists(pix_cache_path):
+    with open(pix_cache_path, "r") as f:
+        sections = f.readlines()
+        for count, line in enumerate(sections[:-1]):
+            (key, value) = sections[count].split(": ", 1)
+            (pix, bright) = value.rsplit(", ", 1)
+            pix_cache[key] = [
+                QtCore.QByteArray.fromBase64(pix[2:-1].encode()),
+                float(bright),
+            ]
 
 else:
-  open('desc_cache.txt', 'w').close()
+    open(pix_cache_path, "w").close()
+
+if os.path.exists(desc_cache_path):
+    with open(desc_cache_path, "r") as f:
+        sections = f.readlines()
+        for count, line in enumerate(sections[:-1]):
+            (key, value) = sections[count].split(": ", 1)
+            desc_cache[key] = value.strip()
+
+else:
+    open(desc_cache_path, "w").close()
 
 # Custom Addon URLs
 CUSTOM_EXTENSIONS = {
@@ -83,22 +89,17 @@ CUSTOM_THEMES = {
 }
 
 # Text Pages For GUI
-INSTALL_RUNDOWN_MD = (
-    """
+INSTALL_RUNDOWN_MD = """
  - **Spicetify Version**: `{}{}`
  - **Spotify Version**: `{}{}`
  - **Official Themes Version**: `{}`
 """.strip()
-)
 
-UNINSTALL_RUNDOWN_MD = (
-    """
+UNINSTALL_RUNDOWN_MD = """
  - **Spicetify Version**: `{}`
 """.strip()
-)
 
-UPDATE_APP_RUNDOWN_MD = (
-    """
+UPDATE_APP_RUNDOWN_MD = """
 *Updates Your Spicetify-EasyInstall To Latest Release*
 - **Version**: `{}{}`
 ** **
@@ -106,7 +107,6 @@ UPDATE_APP_RUNDOWN_MD = (
 
 {}
 """.strip()
-)
 
 UPDATE_LATEST_RUNDOWN_MD = """
 *Downloads Latest Addons*
