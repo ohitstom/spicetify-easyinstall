@@ -15,10 +15,6 @@ a = Analysis(['Spicetify-Easyinstall.py'],
              win_private_assemblies=False,
              cipher=block_cipher,
              noarchive=False)
-             
-a.binaries = a.binaries - TOC([
-  ('opengl32sw.dll', None, None)
-])
 
 pyz = PYZ(a.pure, a.zipped_data,
           cipher=block_cipher)
