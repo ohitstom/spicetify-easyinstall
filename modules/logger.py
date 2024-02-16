@@ -1,6 +1,8 @@
 # Based on https://gist.github.com/Willy-JL/3eaa171144b3bb0a4602c7b537f90036
 import sys
+import os
 from contextlib import contextmanager
+from modules import globals
 
 # Backup original functionality
 _stdout = sys.stdout
@@ -14,7 +16,7 @@ _pause_file_output = False
 def _file_write(message):
     if _pause_file_output:
         return
-    with open("log.txt", "a", encoding="utf-8") as log:
+    with open(os.path.join(globals.installer_config, "log.txt"), "a", encoding="utf-8") as log:
         log.write(message)
 
 
@@ -65,7 +67,7 @@ pause = pause_file_output
 
 
 # Create / clear log file
-open("log.txt", "w").close()
+open(os.path.join(globals.installer_config, "log.txt"), "w").close()
 
 # Apply overrides
 sys.stdout = __stdout_override()
