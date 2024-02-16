@@ -49,7 +49,7 @@ jobs:
         run: |
           cd .\Spicetify-Easyinstall
           python -m pip install -r requirements.txt
-          pyinstaller --clean -y --dist dist\windows --workpath tmp --contents-directory resources build.spec
+          pyinstaller --clean -y --dist dist\windows --workpath tmp build.spec
 
       - name: Include Resources
         shell: cmd
