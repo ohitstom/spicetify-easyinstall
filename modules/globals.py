@@ -7,20 +7,20 @@ from PyQt5 import QtCore
 ## All '__xyz__' variables are temporary variables used for re-assigning.
 
 # Github Variables
-RELEASE = "3.6"
+RELEASE = "3.7"
 HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
 WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL" 
 
 # Download URLS
-SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86/spotify_installer-1.2.22.982.g794acc0a-900.exe"
-THEMES_URL = "https://codeload.github.com/spicetify/spicetify-themes/zip/62e2f6d22a02db38567983c7501bf8d87890cfc9"
-ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/b4341e217a1bbfd08704306e5e2c0e6c1ce2c214"
+SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86_64/spotify_installer-1.2.30.1135.g02fef27a-399.exe"
+THEMES_URL = "https://codeload.github.com/spicetify/spicetify-themes/zip/72488a0c245cde37a52dcf10da0a624eb279bb53"
+ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/6f2879098ef2189902231ab75da471659eaed2f4"
 __SPOTIFY_URL__ = SPOTIFY_URL
 __THEMES_URL__ = THEMES_URL
 __ADDONS_URL__ = ADDONS_URL
 
 # Version Variables
-SPICETIFY_VERSION = "2.24.2"
+SPICETIFY_VERSION = "2.31.3"
 SPOTIFY_VERSION = "/".join(SPOTIFY_URL.split("/")[-1:])
 THEMES_VERSION = f"spicetify-themes-{'/'.join(THEMES_URL.split('/')[-1:])}"
 ADDONS_VERSION = f"spicetify-cli-{'/'.join(ADDONS_URL.split('/')[-1:])}"
@@ -75,11 +75,11 @@ CUSTOM_EXTENSIONS = {
 }
 
 CUSTOM_APPS = {
-    "https://codeload.github.com/spicetify/spicetify-marketplace/zip/916ff8c38741db7cb0b87c59f0864d7077512c19": f"{spice_config}\\CustomApps\\marketplace.zip",
+    "https://codeload.github.com/spicetify/spicetify-marketplace/zip/e32bbf50dc24a2226807e61fb1a9f1374dc6bb60": f"{spice_config}\\CustomApps\\marketplace.zip",
 }
 
 CUSTOM_THEMES = {
-    "https://codeload.github.com/Comfy-Themes/Spicetify/zip/9454faff0ba58f6f71a4001cb213bde809f33317": f"{spice_config}\\Themes\\Comfy-Collection.zip",
+    "https://codeload.github.com/Comfy-Themes/Spicetify/zip/328fe29fdf807bff3a5df836ace2e72f85c0abc5": f"{spice_config}\\Themes\\Comfy-Collection.zip",
 }
 
 # Text Pages For GUI
