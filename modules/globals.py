@@ -36,8 +36,9 @@ appdata = os.environ["APPDATA"]
 spotify_prefs = Path(f"{appdata}\\Spotify\\prefs")
 spice_executable = f"{appdata_local}\\spicetify"
 spice_config = f"{appdata}\\spicetify"
+installer_config = f"{appdata}\\spicetify-easyinstall"
 cwd = os.getcwd()
-temp = f"{cwd}\\temp"
+temp = f"{installer_config}\\temp"
 
 # Temporary Variables + caches
 app = None
