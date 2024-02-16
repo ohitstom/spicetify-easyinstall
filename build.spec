@@ -1,11 +1,9 @@
-from PyInstaller.utils.hooks import collect_data_files
-
 block_cipher = None
 
 a = Analysis(['Spicetify-Easyinstall.py'],
              pathex=[],
              binaries=[],
-             datas=collect_data_files("resources"),
+             datas=[('resources', 'resources_spec')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
