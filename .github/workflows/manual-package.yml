@@ -50,12 +50,6 @@ jobs:
           cd .\Spicetify-Easyinstall
           python -m pip install -r requirements.txt
           pyinstaller --clean -y --dist dist\windows --workpath tmp build.spec
-
-      - name: Include Resources
-        shell: cmd
-        run: |
-          cd .\Spicetify-Easyinstall
-          copy /y dist\windows\Spicetify-Easyinstall\_internal\resources dist\windows\Spicetify-Easyinstall\WORKFLOW_RESOURCES
           
       - name: Cleanup
         shell: cmd
@@ -146,7 +140,7 @@ jobs:
           rmdir /S /Q dist\windows\Spicetify-Easyinstall\_internal\PyQt5\Qt\plugins\sensorgestures
           rmdir /S /Q dist\windows\Spicetify-Easyinstall\_internal\PyQt5\Qt\plugins\sensors
           rmdir /S /Q dist\windows\Spicetify-Easyinstall\_internal\PyQt5\Qt\plugins\sqldrivers
-
+          
       - name: Get short SHA string
         uses: benjlevesque/short-sha@v3.0
         id: short-sha
