@@ -30,8 +30,8 @@ exe = EXE(pyz,
           upx=True,
           console=False,
           uac_admin=False,
-          icon='resources/icons/icon.ico'),
-          contents_directory="resources"
+          icon='resources/icons/icon.ico',
+          contents_directory='resources'
 
 coll = COLLECT(exe,
                a.binaries,
