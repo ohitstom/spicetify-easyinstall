@@ -38,7 +38,7 @@ jobs:
         run: |
           cd ./pyinstaller
           python -m pip install wheel
-          python setup.py install
+          pip install .
 
       - name: Clone repo
         uses: actions/checkout@v4.1.1
