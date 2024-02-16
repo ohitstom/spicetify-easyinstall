@@ -1,3 +1,8 @@
+### Archived 📦
+This was my first ever official "project" and in the current state of Spicetify (especially with a rust rewrite coming in the future) i do not have the time or passion to maintain this codespace anymore.
+
+Not only have i not used python properly in around 2 years, but alot of what this installer aimed to solve has been implemented directly into Spicetifys install script and preprocessing logic.
+
 <h1 align="center">
   <img src="https://i.ibb.co/TPVYWJY/68747470733a2f2f692e696d6775722e636f6d2f6977634c4954512e706e67.png" height="280px">
 </h1>
