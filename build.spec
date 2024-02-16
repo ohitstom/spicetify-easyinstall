@@ -21,9 +21,7 @@ pyz = PYZ(a.pure, a.zipped_data,
 
 exe = EXE(pyz,
           a.scripts,
-          a.binaries,
-          a.zipfiles,
-          a.datas,
+          [],
           exclude_binaries=True,
           name='Spicetify-Easyinstall',
           debug=False,
@@ -34,3 +32,12 @@ exe = EXE(pyz,
           uac_admin=False,
           icon='resources/icons/icon.ico',
           contents_directory='resources')
+
+coll = COLLECT(exe,
+               a.binaries,
+               a.zipfiles,
+               a.datas,
+               strip=False,
+               upx=True,
+               upx_exclude=[],
+               name='Spicetify-Easyinstall')
