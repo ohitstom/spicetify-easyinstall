@@ -54,7 +54,13 @@ jobs:
       - name: Cleanup
         shell: cmd
         run: |
-          cd .\Spicetify-Easyinstall
+          cd .\Spicetify-Easyinstall\dist\
+          ls
+          cd windows
+          ls
+          cd Spicetify-Easyinstall
+          ls
+          cd _internal
           ls
           del  /f dist\windows\Spicetify-Easyinstall\_internal\opengl32sw.dll
           del  /f dist\windows\Spicetify-Easyinstall\_internal\Qt5DBus.dll
