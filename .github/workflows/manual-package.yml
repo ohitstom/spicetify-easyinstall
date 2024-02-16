@@ -55,7 +55,7 @@ jobs:
         shell: cmd
         run: |
           cd .\Spicetify-Easyinstall
-          copy /y resources dist\windows\Spicetify-Easyinstall\resources_workflow
+          xcopy /E /Y resources dist\windows\Spicetify-Easyinstall\resources_workflow
           
       - name: Get short SHA string
         uses: benjlevesque/short-sha@v3.0
