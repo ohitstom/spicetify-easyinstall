@@ -1,22 +1,21 @@
-# -*- mode: python ; coding: utf-8 -*-
-
 block_cipher = None
-
 
 a = Analysis(['Spicetify-Easyinstall.py'],
              pathex=[],
              binaries=[],
-             datas=[( 'resources', 'resources' )],
+             datas=[('resources', 'resources')],
              hiddenimports=[],
              hookspath=[],
-             runtime_hooks=['pyinstaller_use_lib_dir.py'],
+             runtime_hooks=[],
              excludes=[],
              win_no_prefer_redirects=False,
              win_private_assemblies=False,
              cipher=block_cipher,
              noarchive=False)
+             
 pyz = PYZ(a.pure, a.zipped_data,
           cipher=block_cipher)
+
 exe = EXE(pyz,
           a.scripts,
           [],
@@ -29,6 +28,7 @@ exe = EXE(pyz,
           console=False,
           uac_admin=False,
           icon='resources/icons/icon.ico')
+
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,
