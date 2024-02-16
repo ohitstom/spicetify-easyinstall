@@ -50,9 +50,13 @@ jobs:
           cd .\Spicetify-Easyinstall
           python -m pip install -r requirements.txt
           pyinstaller --clean -y --dist dist\windows --workpath tmp build.spec
-          cd dist\windows
+      
+      - name: investigatory
+        shell: cmd
+        run: |
+          cd  .\Spicetify-Easyinstall\dist\windows
           ls
-
+          
       - name: Get short SHA string
         uses: benjlevesque/short-sha@v3.0
         id: short-sha
