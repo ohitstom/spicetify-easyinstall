@@ -5,6 +5,6 @@ pywin32
 aiofiles
 pillow
 bs4
-PyQt5==5.15.9
-PyQt5-sip==12.12.1
+PyQt5==5.15.10
+PyQt5-sip==12.13.0
 requests
