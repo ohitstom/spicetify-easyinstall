@@ -2,7 +2,6 @@ block_cipher = None
 
 a = Analysis(['Spicetify-Easyinstall.py'],
              pathex=[],
-             binaries=[],
              datas=[],
              hiddenimports=[],
              hookspath=[],
@@ -13,8 +12,9 @@ a = Analysis(['Spicetify-Easyinstall.py'],
              cipher=block_cipher,
              noarchive=False)
              
-to_exclude = {'opengl32sw.dll'}
-a.binaries -= [(os.path.normcase(x), None, None) for x in to_exclude]
+a.binaries = a.binaries - TOC([
+  ('opengl32sw.dll', None, None)
+])
 
 pyz = PYZ(a.pure, a.zipped_data,
           cipher=block_cipher)
