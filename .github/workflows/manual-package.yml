@@ -50,6 +50,12 @@ jobs:
           cd .\Spicetify-Easyinstall
           python -m pip install -r requirements.txt
           pyinstaller --clean -y --dist dist\windows --workpath tmp build.spec
+
+      - name: Include Resources
+        shell: cmd
+        run: |
+          cd .\Spicetify-Easyinstall
+          copy /y resources dist\windows\Spicetify-Easyinstall\resources_workflow
           
       - name: Get short SHA string
         uses: benjlevesque/short-sha@v3.0
