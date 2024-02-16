@@ -1,7 +1,10 @@
+# -*- mode: python ; coding: utf-8 -*-
+
 block_cipher = None
 
 a = Analysis(['Spicetify-Easyinstall.py'],
              pathex=[],
+             binaries=[],
              datas=[
              ( 'resources/fonts', 'fonts' ),
              ( 'resources/icons', 'icons' ),
