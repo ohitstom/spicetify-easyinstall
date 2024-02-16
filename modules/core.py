@@ -47,13 +47,13 @@ async def install(launch=False, leaveSpotify=False, latest=False):
     current_step += 1
     print(f"\n({current_step}/{steps_count}) Backing Up Credentials...")
     if os.path.isdir(f"{globals.appdata}\\Spotify\\Users") and os.path.isfile(f"{globals.appdata}\\Spotify\\prefs"):
-        if os.path.isdir(f"{globals.cwd}\\backup"):
-            shutil.rmtree(f"{globals.cwd}\\backup")
+        if os.path.isdir(f"{globals.installer_config}\\backup"):
+            shutil.rmtree(f"{globals.installer_config}\\backup")
         else:
-            os.mkdir(f"{globals.cwd}\\backup")
+            os.mkdir(f"{globals.installer_config}\\backup")
         
-        shutil.move(f"{globals.appdata}\\Spotify\\Users", f"{globals.cwd}\\backup\\Users")
-        shutil.move(f"{globals.appdata}\\Spotify\\prefs", f"{globals.cwd}\\backup")
+        shutil.move(f"{globals.appdata}\\Spotify\\Users", f"{globals.installer_config}\\backup\\Users")
+        shutil.move(f"{globals.appdata}\\Spotify\\prefs", f"{globals.installer_config}\\backup")
         print("Finished backing up!\n")
     
     else:
@@ -329,7 +329,7 @@ async def install(launch=False, leaveSpotify=False, latest=False):
 
     current_step += 1
     print(f"({current_step}/{steps_count}) Restoring Credentials...")
-    if os.path.isdir(f"{globals.cwd}\\backup\\Users"):
+    if os.path.isdir(f"{globals.installer_config}\\backup\\Users"):
         if os.path.isdir(f"{globals.appdata}\\Spotify\\Users") is True:
             shutil.rmtree(f"{globals.appdata}\\Spotify\\Users")
         
@@ -337,15 +337,15 @@ async def install(launch=False, leaveSpotify=False, latest=False):
             os.remove(f"{globals.appdata}\\Spotify\\prefs")
 
         shutil.move(
-            f"{globals.cwd}\\backup\\Users",
+            f"{globals.installer_config}\\backup\\Users",
             f"{globals.appdata}\\Spotify"
         )
 
         shutil.move(
-            f"{globals.cwd}\\backup\\prefs",
+            f"{globals.installer_config}\\backup\\prefs",
             f"{globals.appdata}\\Spotify"
         )
-        shutil.rmtree(f"{globals.cwd}\\backup")
+        shutil.rmtree(f"{globals.installer_config}\\backup")
 
         utils.set_config_entry(
             entry="app.last-launched-version", 
@@ -356,12 +356,12 @@ async def install(launch=False, leaveSpotify=False, latest=False):
 
         print("Finished restoring!\n")
 
-    elif os.path.isdir(f"{globals.cwd}\\backup") is False:
+    elif os.path.isdir(f"{globals.installer_config}\\backup") is False:
         print("No credentials to restore!\n")
     
     else:
         print("Credentials were lost during install!\n")
-        shutil.rmtree(f"{globals.cwd}\\backup")
+        shutil.rmtree(f"{globals.installer_config}\\backup")
 
     # >[Section 11]<
     # The code below will cache pixmaps of each themes showcase screenshots.
@@ -792,10 +792,10 @@ async def update_app():
     json = await utils.latest_github_release()
     latest_release = json["tag_name"]
 
-    if os.path.exists(f"{globals.cwd}\\Update.zip"):
-        os.remove(f"{globals.cwd}\\Update.zip") 
-    if os.path.isdir(f"{globals.cwd}\\Update"):
-        shutil.rmtree(f"{globals.cwd}\\Update")
+    if os.path.exists(f"{globals.installer_config}\\Update.zip"):
+        os.remove(f"{globals.installer_config}\\Update.zip") 
+    if os.path.isdir(f"{globals.installer_config}\\Update"):
+        shutil.rmtree(f"{globals.installer_config}\\Update")
 
     # >[Section 1]<
     # Download the latest release from GitHub and extract it to the current directory.
@@ -803,8 +803,8 @@ async def update_app():
     print(f"(1/{steps_count}) Downloading Update from {globals.RELEASE} to {latest_release}...")
     await utils.chunked_download(
         url=json["assets"][0]["browser_download_url"],
-        path=(f"{globals.cwd}\\Update.zip"),
-        label=(f"{globals.cwd}\\Update.zip") if globals.verbose else "Update.zip",
+        path=(f"{globals.installer_config}\\Update.zip"),
+        label=(f"{globals.installer_config}\\Update.zip") if globals.verbose else "Update.zip",
     )
     print("Finished Downloading Update!")
 
@@ -812,13 +812,13 @@ async def update_app():
     # Cleanup and restart.
 
     print(f"\n(2/{steps_count}) Extraction And Cleanup...")
-    if not os.path.exists(f"{globals.cwd}\\Update.zip"):
+    if not os.path.exists(f"{globals.installer_config}\\Update.zip"):
         return None
     try:
-        shutil.unpack_archive(f"{globals.cwd}\\Update.zip", f"{globals.cwd}\\Update")
+        shutil.unpack_archive(f"{globals.installer_config}\\Update.zip", f"{globals.installer_config}\\Update")
     except:
-        print("Windows Defender Is Blocking The Extraction Of The Update.zip in your CWD.\nPlease Disable It And Try Again.")
-    os.remove(f"{globals.cwd}\\Update.zip")
+        print("Windows Defender Is Blocking The Extraction Of The Update.zip in your installer_config.\nPlease Disable It And Try Again.")
+    os.remove(f"{globals.installer_config}\\Update.zip")
     print("Finished Extraction And Cleanup!")
-    if os.path.isdir(f"{globals.cwd}\\Update"):
+    if os.path.isdir(f"{globals.installer_config}\\Update"):
         return True
