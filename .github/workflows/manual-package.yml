@@ -50,6 +50,9 @@ jobs:
           cd .\Spicetify-Easyinstall
           python -m pip install -r requirements.txt
           pyinstaller --clean -y --dist dist\windows --workpath tmp build.spec
+          ls
+          cd dist\windows
+          ls
 
       - name: Get short SHA string
         uses: benjlevesque/short-sha@v3.0
@@ -57,13 +60,9 @@ jobs:
         with:
           length: 7
 
-      - name: Zip package
-        shell: cmd
-        run: 7z a -r .\Spicetify-Easyinstall-manual-${{ steps.short-sha.outputs.sha }}.zip .\Spicetify-Easyinstall\dist\windows\Spicetify-Easyinstall\*
-
       - name: Upload Artifact
         uses: actions/upload-artifact@v4.3.1
         with:
           name: Spicetify-Easyinstall-manual-${{ steps.short-sha.outputs.sha }}
-          path: ./Spicetify-Easyinstall-manual-${{ steps.short-sha.outputs.sha }}.zip
+          path: ./dist/windows/Spicetify-Easyinstall.exe
           retention-days: 1
