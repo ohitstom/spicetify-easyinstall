@@ -2,7 +2,11 @@ block_cipher = None
 
 a = Analysis(['Spicetify-Easyinstall.py'],
              pathex=[],
-             datas=[],
+             datas=[
+             ( 'resources/fonts', 'fonts' ),
+             ( 'resources/icons', 'icons' ),
+             ( 'resources/notes', 'notes' )
+             ],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
