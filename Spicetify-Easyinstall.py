@@ -11,6 +11,11 @@ import sys
 if __name__ == "__main__":
     # Setup logging console to file output
     from modules import logger
+    import os
+    print(f"DEBUG: os.getcwd() = {os.getcwd()}")
+    print(f"DEBUG: sys._MEIPASS = {getattr(sys, '_MEIPASS', None)}")
+    print(f"DEBUG: sys.executable = {sys.executable}")
+    print(f"DEBUG: __file__ = {__file__}")
 
     # Sanity check: try importing all needed third party libs
     from PyQt5 import QtCore, QtGui, QtWidgets
