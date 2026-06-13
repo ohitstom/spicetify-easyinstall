@@ -76,14 +76,23 @@ async def install(launch=False, leaveSpotify=False, latest=False):
             utils.kill_processes("spicetify.exe")
             utils.kill_processes("Spotify.exe")
             
-            await utils.powershell(
-                '\n'.join([
-                    'cmd /c "%USERPROFILE%\\AppData\\Roaming\\Spotify\\Spotify.exe" /UNINSTALL /SILENT',
-                    'cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:D',
-                    'cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:R'
-                ]),
-                verbose=False,
-            )
+            uninstaller = f"{globals.appdata}\\Spotify\\uninstall.exe"
+            if os.path.isfile(uninstaller):
+                print("Running dedicated Spotify uninstaller...")
+                await utils.powershell(
+                    f'cmd /c "{uninstaller}" /S',
+                    verbose=False,
+                )
+            else:
+                print("Running legacy Spotify uninstaller...")
+                await utils.powershell(
+                    '\n'.join([
+                        'cmd /c "%USERPROFILE%\\AppData\\Roaming\\Spotify\\Spotify.exe" /UNINSTALL /SILENT',
+                        'cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:D',
+                        'cmd /c icacls %localappdata%\\Spotify\\Update /grant %username%:R'
+                    ]),
+                    verbose=False,
+                )
             print("Finished uninstalling Spotify!\n")
         
         else:
