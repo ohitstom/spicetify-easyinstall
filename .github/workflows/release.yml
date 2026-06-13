@@ -60,7 +60,9 @@ jobs:
           
       - name: Zip package
         shell: cmd
-        run: 7z a -r .\Spicetify-Easyinstall-v${{ github.event.release.tag_name }}.zip .\Spicetify-Easyinstall\dist\windows\Spicetify-Easyinstall\*
+        run: |
+          cd .\Spicetify-Easyinstall\dist\windows\Spicetify-Easyinstall
+          7z a -tzip ..\..\..\..\Spicetify-Easyinstall-v${{ github.event.release.tag_name }}.zip *
 
       - name: Publish package
         uses: softprops/action-gh-release@v1

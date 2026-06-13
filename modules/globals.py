@@ -12,7 +12,7 @@ HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
 WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL"
 
 # Download URLS
-SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86_64/spotify_installer-1.2.30.1135.g02fef27a-399.exe"
+SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86_64/spotify_installer-1.2.51.345.gcc39d911-63.exe"
 THEMES_URL = "https://codeload.github.com/spicetify/spicetify-themes/zip/72488a0c245cde37a52dcf10da0a624eb279bb53"
 ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/6f2879098ef2189902231ab75da471659eaed2f4"
 __SPOTIFY_URL__ = SPOTIFY_URL
@@ -20,7 +20,7 @@ __THEMES_URL__ = THEMES_URL
 __ADDONS_URL__ = ADDONS_URL
 
 # Version Variables
-SPICETIFY_VERSION = "2.31.3"
+SPICETIFY_VERSION = "2.38.5"
 SPOTIFY_VERSION = "/".join(SPOTIFY_URL.split("/")[-1:])
 THEMES_VERSION = f"spicetify-themes-{'/'.join(THEMES_URL.split('/')[-1:])}"
 ADDONS_VERSION = f"spicetify-cli-{'/'.join(ADDONS_URL.split('/')[-1:])}"

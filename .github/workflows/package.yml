@@ -63,6 +63,6 @@ jobs:
         uses: actions/upload-artifact@v4.3.1
         with:
           name: Spicetify-Easyinstall-manual-${{ steps.short-sha.outputs.sha }}
-          path: .\Spicetify-Easyinstall\dist\windows\Spicetify-Easyinstall\*
+          path: .\Spicetify-Easyinstall\dist\windows\Spicetify-Easyinstall\
           retention-days: 1
 
