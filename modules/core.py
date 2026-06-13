@@ -130,18 +130,59 @@ async def install(launch=False, leaveSpotify=False, latest=False):
         # The code below will download Spotify.
         
         current_step += 1
-        print(f"({current_step}/{steps_count}) Downloading correct Spotify version...")
         if not os.path.isdir(globals.temp):
             os.mkdir(globals.temp)
+            
+        import sys
+        exec_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
+        local_src = os.path.join(exec_dir, globals.SPOTIFY_VERSION)
+        temp_dest = os.path.join(globals.temp, globals.SPOTIFY_VERSION)
         
-        await utils.chunked_download(
-            url=globals.SPOTIFY_URL,
-            path=(f"{globals.temp}\\{globals.SPOTIFY_VERSION}"),
-            label=(f"{globals.temp}\\{globals.SPOTIFY_VERSION}")
-            if globals.verbose
-            else globals.SPOTIFY_VERSION,
-        )
-        print("Finished downloading Spotify!\n")
+        local_found = False
+        def is_valid_exe(file_path):
+            if os.path.isfile(file_path) and os.path.getsize(file_path) > 50000000:
+                try:
+                    with open(file_path, "rb") as f:
+                        return f.read(2).startswith(b'MZ')
+                except Exception:
+                    pass
+            return False
+
+        if is_valid_exe(local_src):
+            print("Found local Spotify installer next to executable, copying...")
+            shutil.copy2(local_src, temp_dest)
+            local_found = True
+        elif is_valid_exe(temp_dest):
+            print("Found valid local Spotify installer in temp directory!")
+            local_found = True
+            
+        if local_found:
+            print("Skipping download phase.\n")
+        else:
+            print(f"({current_step}/{steps_count}) Downloading correct Spotify version...")
+            download_success = False
+            for idx, url in enumerate(globals.SPOTIFY_FALLBACK_URLS, 1):
+                print(f"Attempting download from source {idx}/{len(globals.SPOTIFY_FALLBACK_URLS)}...")
+                try:
+                    if os.path.exists(temp_dest):
+                        os.remove(temp_dest)
+                    await utils.chunked_download(
+                        url=url,
+                        path=temp_dest,
+                        label=temp_dest if globals.verbose else globals.SPOTIFY_VERSION,
+                    )
+                    if is_valid_exe(temp_dest):
+                        print("Download succeeded and verified!\n")
+                        download_success = True
+                        break
+                    else:
+                        print("Downloaded file was invalid or blocked. Trying next source...")
+                except Exception as e:
+                    print(f"Download failed: {e}. Trying next source...")
+            
+            if not download_success:
+                raise FileNotFoundError("Could not download a valid Spotify installer from any source. Please check your internet connection or download it manually.")
+
 
         # >[Section 5]<
         # The code below will install Spotify.

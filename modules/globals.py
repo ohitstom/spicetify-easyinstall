@@ -13,6 +13,11 @@ WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL"
 
 # Download URLS
 SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86_64/spotify_installer-1.2.51.345.gcc39d911-63.exe"
+SPOTIFY_FALLBACK_URLS = [
+    "https://upgrade.scdn.co/upgrade/client/win32-x86_64/spotify_installer-1.2.51.345.gcc39d911-63.exe",
+    "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.51.345.gcc39d911-x64.exe",
+    "https://web.archive.org/web/20251127164501oe_/https://upgrade.scdn.co/upgrade/client/win32-x86_64/spotify_installer-1.2.51.345.gcc39d911-63.exe"
+]
 THEMES_URL = "https://codeload.github.com/spicetify/spicetify-themes/zip/c6e82dfeaa46ee9060d0c02fc437989eb77f6c61"
 ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/b26a60e41dd4296ba337b58f68ec2b1de2b422cf"
 __SPOTIFY_URL__ = SPOTIFY_URL
