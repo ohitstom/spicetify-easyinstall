@@ -22,27 +22,58 @@ def _file_write(message):
 
 class __stdout_override:
     def write(self, message):
-        _stdout.write(message)
+        if _stdout is not None:
+            try:
+                _stdout.write(message)
+            except Exception:
+                pass
         _file_write(message)
 
+    def flush(self):
+        if _stdout is not None:
+            try:
+                _stdout.flush()
+            except Exception:
+                pass
+
     def __getattr__(self, name):
-        return getattr(_stdout, name)
+        if _stdout is not None:
+            return getattr(_stdout, name)
+        raise AttributeError(name)
 
 
 class __stderr_override:
     def write(self, message):
-        _stderr.write(message)
+        if _stderr is not None:
+            try:
+                _stderr.write(message)
+            except Exception:
+                pass
         _file_write(message)
 
+    def flush(self):
+        if _stderr is not None:
+            try:
+                _stderr.flush()
+            except Exception:
+                pass
+
     def __getattr__(self, name):
-        return getattr(_stderr, name)
+        if _stderr is not None:
+            return getattr(_stderr, name)
+        raise AttributeError(name)
 
 
 class __stdin_override:
     def readline(self):
-        message = _stdin.readline()
-        _file_write(message)
-        return message
+        if _stdin is not None:
+            try:
+                message = _stdin.readline()
+                _file_write(message)
+                return message
+            except Exception:
+                pass
+        return ""
 
     def __getattr__(self, name):
         # The input() function tries to use sys.stdin.fileno()
@@ -52,7 +83,9 @@ class __stdin_override:
         # input() to use sys.stdin.readline()
         if name == "fileno":
             raise AttributeError
-        return getattr(_stdin, name)
+        if _stdin is not None:
+            return getattr(_stdin, name)
+        raise AttributeError(name)
 
 
 @contextmanager
@@ -67,6 +100,8 @@ pause = pause_file_output
 
 
 # Create / clear log file
+if not os.path.exists(globals.installer_config):
+    os.makedirs(globals.installer_config)
 open(os.path.join(globals.installer_config, "log.txt"), "w").close()
 
 # Apply overrides
