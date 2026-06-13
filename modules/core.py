@@ -79,10 +79,8 @@ async def install(launch=False, leaveSpotify=False, latest=False):
             uninstaller = f"{globals.appdata}\\Spotify\\uninstall.exe"
             if os.path.isfile(uninstaller):
                 print("Running dedicated Spotify uninstaller...")
-                await utils.powershell(
-                    f'cmd /c "{uninstaller}" /S',
-                    verbose=False,
-                )
+                uninstall_proc = await utils.start_process(uninstaller, "/S")
+                await uninstall_proc.wait()
             else:
                 print("Running legacy Spotify uninstaller...")
                 await utils.powershell(
