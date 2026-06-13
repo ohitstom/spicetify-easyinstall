@@ -12,6 +12,17 @@ from qasync import asyncSlot
 
 from modules import globals, logger
 
+def get_resource_path(relative_path):
+    """Get absolute path to resource, works for dev and for PyInstaller"""
+    if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+        path_in_meipass = relative_path[len("resources/"):] if relative_path.startswith("resources/") else relative_path
+        return os.path.join(sys._MEIPASS, path_in_meipass.replace("/", os.sep))
+    else:
+        base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        return os.path.join(base_path, relative_path.replace("/", os.sep))
+
+CHECK_ICON_PATH = get_resource_path("resources/icons/check.png").replace("\\", "/")
+
 if hasattr(QtCore.Qt, "AA_EnableHighDpiScaling"):
     QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
 
@@ -73,7 +84,7 @@ QCheckBox::indicator {{
 QCheckBox::indicator:checked {{
     border-color: {ACCENT};
     background: {ACCENT};
-    image: url(resources/icons/check.png);
+    image: url({CHECK_ICON_PATH});
 }}
 QCheckBox::indicator:unchecked:hover {{
     border-color: {HOVER_BORDER};
@@ -284,14 +295,14 @@ class MainWindow(QuickWidget):
         self.exit_request = asyncio.Event()
         
         self.setWindowTitle("Spicetify EasyInstall")
-        self.setWindowIcon(QtGui.QIcon("resources/icons/icon.png"))
+        self.setWindowIcon(QtGui.QIcon(get_resource_path("resources/icons/icon.png")))
 
         QtGui.QFontDatabase.addApplicationFont(
-            "resources/fonts/materialdesignicons-webfont.ttf"
+            get_resource_path("resources/fonts/materialdesignicons-webfont.ttf")
         )
-        QtGui.QFontDatabase.addApplicationFont("resources/fonts/MesloLGS-Regular.ttf")
-        QtGui.QFontDatabase.addApplicationFont("resources/fonts/Poppins-Medium.ttf")
-        QtGui.QFontDatabase.addApplicationFont("resources/fonts/Inter.ttf")
+        QtGui.QFontDatabase.addApplicationFont(get_resource_path("resources/fonts/MesloLGS-Regular.ttf"))
+        QtGui.QFontDatabase.addApplicationFont(get_resource_path("resources/fonts/Poppins-Medium.ttf"))
+        QtGui.QFontDatabase.addApplicationFont(get_resource_path("resources/fonts/Inter.ttf"))
 
         self.slider = SlidingFrame(parent=self)
         self.layout().addWidget(self.slider)
@@ -395,7 +406,7 @@ class BottomBar(QuickWidget):
         self.icon = QtWidgets.QLabel(parent=self)
         # Read image, scale to small square, cut off sides to only keep the relevant part
         self.icon.setPixmap(
-            QtGui.QPixmap("resources/icons/icon.png")
+            QtGui.QPixmap(get_resource_path("resources/icons/icon.png"))
             .scaled(36, 36, transformMode=QtCore.Qt.SmoothTransformation)
             .copy(6, 0, 24, 36)
         )
