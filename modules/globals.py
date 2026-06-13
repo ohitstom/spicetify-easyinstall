@@ -13,8 +13,8 @@ WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL"
 
 # Download URLS
 SPOTIFY_URL = "https://upgrade.scdn.co/upgrade/client/win32-x86_64/spotify_installer-1.2.51.345.gcc39d911-63.exe"
-THEMES_URL = "https://codeload.github.com/spicetify/spicetify-themes/zip/72488a0c245cde37a52dcf10da0a624eb279bb53"
-ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/6f2879098ef2189902231ab75da471659eaed2f4"
+THEMES_URL = "https://codeload.github.com/spicetify/spicetify-themes/zip/c6e82dfeaa46ee9060d0c02fc437989eb77f6c61"
+ADDONS_URL = "https://codeload.github.com/spicetify/spicetify-cli/zip/b26a60e41dd4296ba337b58f68ec2b1de2b422cf"
 __SPOTIFY_URL__ = SPOTIFY_URL
 __THEMES_URL__ = THEMES_URL
 __ADDONS_URL__ = ADDONS_URL
@@ -79,16 +79,16 @@ else:
 
 # Custom Addon URLs
 CUSTOM_EXTENSIONS = {
-    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/d618561c232f02a56223bae6276fc9fd8c6a357a": f"{spice_config}\\Extensions\\Charlie-Repo.zip",
-    "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/cb05b9b7db4ddb9aff49e140535f1d901aa2f3c7": f"{spice_config}\\Extensions\\Power-Bar.zip",
+    "https://codeload.github.com/CharlieS1103/spicetify-extensions/zip/ab8fe9ccabc86477bc55a561fc532a0fa416d58c": f"{spice_config}\\Extensions\\Charlie-Repo.zip",
+    "https://codeload.github.com/jeroentvb/spicetify-power-bar/zip/5872bc18e7d01198f1acd9bc913b3d4a74c4e7f6": f"{spice_config}\\Extensions\\Power-Bar.zip",
 }
 
 CUSTOM_APPS = {
-    "https://codeload.github.com/spicetify/spicetify-marketplace/zip/e32bbf50dc24a2226807e61fb1a9f1374dc6bb60": f"{spice_config}\\CustomApps\\marketplace.zip",
+    "https://codeload.github.com/spicetify/spicetify-marketplace/zip/50bd22a03fd4fea4c2ef5d161b8f53ddcad656b2": f"{spice_config}\\CustomApps\\marketplace.zip",
 }
 
 CUSTOM_THEMES = {
-    "https://codeload.github.com/Comfy-Themes/Spicetify/zip/328fe29fdf807bff3a5df836ace2e72f85c0abc5": f"{spice_config}\\Themes\\Comfy-Collection.zip",
+    "https://codeload.github.com/Comfy-Themes/Spicetify/zip/db9a174bfe30cd39370ae6a31d854e119617b4aa": f"{spice_config}\\Themes\\Comfy-Collection.zip",
 }
 
 # Text Pages For GUI
