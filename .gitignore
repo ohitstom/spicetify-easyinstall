@@ -8,3 +8,13 @@ build/
 dist/
 *.log
 log.txt
+.venv/
+legacy-patch/spotify_installer.exe
+legacy-patch/legacy-patch.exe
+legacy-patch/cert.pem
+legacy-patch/key.pem
+legacy-patch.zip
+legacy-patch.spec
+tmp/
+rel_body.txt
+

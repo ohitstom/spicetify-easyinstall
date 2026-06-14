@@ -89,7 +89,7 @@ CUSTOM_EXTENSIONS = {
 }
 
 CUSTOM_APPS = {
-    "https://codeload.github.com/spicetify/spicetify-marketplace/zip/50bd22a03fd4fea4c2ef5d161b8f53ddcad656b2": f"{spice_config}\\CustomApps\\marketplace.zip",
+    "https://github.com/spicetify/marketplace/releases/latest/download/marketplace.zip": f"{spice_config}\\CustomApps\\marketplace.zip",
 }
 
 CUSTOM_THEMES = {
