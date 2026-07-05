@@ -49,13 +49,11 @@ def fetch_json(url, headers=None):
 async def update_spotify_presets():
     print("Updating spotify_presets.json...")
     data = fetch_json("https://loadspot.pages.dev/versions.json")
-    if not data:
-        return None
-        
-    try:
-        with open("resources/data/spotify_presets.json", "r", encoding="utf-8") as f:
-            old_presets = json.load(f)
-    except Exception:
+    os.makedirs("resources/data", exist_ok=True)
+    
+    # Try to load existing cached data directly from the data branch to avoid re-fetching all 80+ archive mirrors
+    old_presets = fetch_json("https://raw.githubusercontent.com/ohitstom/spicetify-easyinstall/data/spotify_presets.json")
+    if old_presets is None:
         old_presets = {}
         
     presets = {}
