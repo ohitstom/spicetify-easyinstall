@@ -12,6 +12,10 @@ sys.modules['PyQt5.QtCore'] = unittest.mock.MagicMock()
 sys.modules['PyQt5.QtGui'] = unittest.mock.MagicMock()
 sys.modules['PyQt5.QtWidgets'] = unittest.mock.MagicMock()
 
+# Mock Windows environment variables so globals.py doesn't crash on Ubuntu
+os.environ.setdefault("APPDATA", "")
+os.environ.setdefault("LOCALAPPDATA", "")
+
 # We need to import utils for fetch_archive_mirror_url
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from modules import globals
