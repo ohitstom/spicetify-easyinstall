@@ -5,6 +5,13 @@ import asyncio
 from datetime import datetime
 import sys
 
+# Mock PyQt5 so we can import utils on a headless Github Action runner
+import unittest.mock
+sys.modules['PyQt5'] = unittest.mock.MagicMock()
+sys.modules['PyQt5.QtCore'] = unittest.mock.MagicMock()
+sys.modules['PyQt5.QtGui'] = unittest.mock.MagicMock()
+sys.modules['PyQt5.QtWidgets'] = unittest.mock.MagicMock()
+
 # We need to import utils for fetch_archive_mirror_url
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from modules import globals
