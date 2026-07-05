@@ -5,22 +5,35 @@ import asyncio
 from datetime import datetime
 import sys
 
-# Mock PyQt5 so we can import utils on a headless Github Action runner
-import unittest.mock
-sys.modules['PyQt5'] = unittest.mock.MagicMock()
-sys.modules['PyQt5.QtCore'] = unittest.mock.MagicMock()
-sys.modules['PyQt5.QtGui'] = unittest.mock.MagicMock()
-sys.modules['PyQt5.QtWidgets'] = unittest.mock.MagicMock()
-
-# Mock Windows environment variables so globals.py doesn't crash on Ubuntu
-os.environ.setdefault("APPDATA", "")
-os.environ.setdefault("LOCALAPPDATA", "")
-
-# We need to import utils for fetch_archive_mirror_url
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from modules import globals
-globals.verbose = True
-from modules import utils
+async def fetch_archive_mirror_url(version_filename):
+    if "spotify_installer-" not in version_filename:
+        return None
+        
+    base_ver = version_filename.replace("spotify_installer-", "").replace("-x64.exe", "")
+    base_ver = base_ver.rsplit("-", 1)[0] if "-" in base_ver else base_ver
+    
+    search_prefix = f"spotify_installer-{base_ver}"
+    archive_url = "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/"
+    
+    import aiohttp
+    import re
+    
+    try:
+        async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=20)) as session:
+            headers = {"User-Agent": "Spicetify-EasyInstall"}
+            async with session.get(archive_url, headers=headers) as resp:
+                if resp.status == 200:
+                    html = await resp.text()
+                    links = re.findall(r'href=[\'\"]?([^\'\" >]+)', html)
+                    for link in links:
+                        if search_prefix in link and link.endswith(".exe"):
+                            print(f"Archive mirror found: {archive_url + link}")
+                            return archive_url + link
+                else:
+                    return ""
+    except Exception as e:
+        print(f"Archive lookup error: {e}")
+    return ""
 
 def fetch_json(url, headers=None):
     if headers is None:
@@ -104,8 +117,8 @@ async def update_spotify_presets():
             
             print(f"Resolving mirror for {key}...")
             # We must use async archive mirror lookup just like the user's golden thread
-            archive_x64 = await utils.fetch_archive_mirror_url(filename_x64)
-            archive_x86 = await utils.fetch_archive_mirror_url(filename_x86) if filename_x86 else ""
+            archive_x64 = await fetch_archive_mirror_url(filename_x64)
+            archive_x86 = await fetch_archive_mirror_url(filename_x86) if filename_x86 else ""
             
             presets[key] = {
                 "version": version_str,
