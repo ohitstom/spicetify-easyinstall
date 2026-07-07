@@ -1,0 +1,4 @@
+[submodule "resources/data"]
+	path = resources/data
+	url = https://github.com/ohitstom/spicetify-easyinstall.git
+	branch = data

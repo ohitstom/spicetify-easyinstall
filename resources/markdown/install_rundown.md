@@ -1,0 +1,3 @@
+- **Spicetify Version**: `{}{}`
+ - **Spotify Version**: `{}{}`
+ - **Official Themes Version**: `{}`
