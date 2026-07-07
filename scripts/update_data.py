@@ -5,7 +5,7 @@ import asyncio
 from datetime import datetime
 import sys
 
-async def fetch_archive_mirror_url(version_filename):
+async def fetch_archive_mirror_url(version_filename, arch="x64"):
     if "spotify_installer-" not in version_filename:
         return None
         
@@ -13,7 +13,10 @@ async def fetch_archive_mirror_url(version_filename):
     base_ver = base_ver.rsplit("-", 1)[0] if "-" in base_ver else base_ver
     
     search_prefix = f"spotify_installer-{base_ver}"
-    archive_url = "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/"
+    
+    # Map the arch to the correct archive.org folder
+    arch_folder = "x86_64" if arch == "x64" else arch
+    archive_url = f"https://archive.org/download/spotify-installer-museum/windows/{arch_folder}/exe/"
     
     import aiohttp
     import re
@@ -65,18 +68,21 @@ async def update_spotify_presets():
             
         x64_dict = info["win"].get("x64")
         x86_dict = info["win"].get("x86")
+        arm64_dict = info["win"].get("arm64")
         
-        if not x64_dict and not x86_dict:
+        if not x64_dict and not x86_dict and not arm64_dict:
             continue
             
         if x64_dict:
             url_x64 = x64_dict.get("url", "")
             url_x86 = x86_dict.get("url", "") if x86_dict else ""
+            url_arm64 = arm64_dict.get("url", "") if arm64_dict else ""
             raw_date = x64_dict.get("date", "")
         else:
             # Fallback for very old versions where LoadSpot only lists x86 in JSON
             url_x86 = x86_dict.get("url", "")
             url_x64 = url_x86.replace("-x86.exe", "-x64.exe")
+            url_arm64 = url_x86.replace("-x86.exe", "-arm64.exe")
             raw_date = x86_dict.get("date", "")
         
         if not url_x64 or not raw_date:
@@ -85,6 +91,7 @@ async def update_spotify_presets():
         # Extract filename (e.g., spotify_installer-1.2.92.148.g882cc571-x64.exe)
         filename_x64 = url_x64.split('/')[-1]
         filename_x86 = url_x86.split('/')[-1] if url_x86 else ""
+        filename_arm64 = url_arm64.split('/')[-1] if url_arm64 else ""
         
         # We need the fullversion string, typically something like "1.2.92.148.g882cc571"
         version_str = filename_x64.replace("spotify_installer-", "").replace("-x64.exe", "")
@@ -110,20 +117,40 @@ async def update_spotify_presets():
             key = f"{major_ver} ({iso_date})"
             
             if key in old_presets and "archive_url" in old_presets[key] and old_presets[key]["archive_url"]:
-                presets[key] = old_presets[key]
+                # If old presets didn't have arm64 keys explicitly baked in, we should inject them now.
+                old_preset = old_presets[key].copy()
+                if "loadspot_url_arm64" not in old_preset:
+                    old_preset["loadspot_url_arm64"] = url_arm64 if url_arm64 else f"https://loadspot.amd64fox1.workers.dev/download/spotify_installer-{version_str}-arm64.exe"
+                    print(f"Resolving ARM64 mirror for cached {key}...")
+                    archive_arm64 = await fetch_archive_mirror_url(filename_arm64, arch="arm64") if filename_arm64 else ""
+                    old_preset["archive_url_arm64"] = archive_arm64 or (f"https://web.archive.org/web/2/{old_preset['loadspot_url_arm64']}" if old_preset["loadspot_url_arm64"] else "")
+                
+                # Restructure dictionary to keep loadspot urls together, then archive urls together
+                presets[key] = {
+                    "version": old_preset.get("version", ""),
+                    "loadspot_url": old_preset.get("loadspot_url", ""),
+                    "loadspot_url_x86": old_preset.get("loadspot_url_x86", ""),
+                    "loadspot_url_arm64": old_preset.get("loadspot_url_arm64", ""),
+                    "archive_url": old_preset.get("archive_url", ""),
+                    "archive_url_x86": old_preset.get("archive_url_x86", ""),
+                    "archive_url_arm64": old_preset.get("archive_url_arm64", "")
+                }
                 continue
             
             print(f"Resolving mirror for {key}...")
             # We must use async archive mirror lookup just like the user's golden thread
-            archive_x64 = await fetch_archive_mirror_url(filename_x64)
-            archive_x86 = await fetch_archive_mirror_url(filename_x86) if filename_x86 else ""
+            archive_x64 = await fetch_archive_mirror_url(filename_x64, arch="x64")
+            archive_x86 = await fetch_archive_mirror_url(filename_x86, arch="x86") if filename_x86 else ""
+            archive_arm64 = await fetch_archive_mirror_url(filename_arm64, arch="arm64") if filename_arm64 else ""
             
             presets[key] = {
                 "version": version_str,
                 "loadspot_url": url_x64,
-                "archive_url": archive_x64 or f"https://web.archive.org/web/2/{url_x64}",
                 "loadspot_url_x86": url_x86,
-                "archive_url_x86": archive_x86 or (f"https://web.archive.org/web/2/{url_x86}" if url_x86 else "")
+                "loadspot_url_arm64": url_arm64 if url_arm64 else f"https://loadspot.amd64fox1.workers.dev/download/spotify_installer-{version_str}-arm64.exe",
+                "archive_url": archive_x64 or f"https://web.archive.org/web/2/{url_x64}",
+                "archive_url_x86": archive_x86 or (f"https://web.archive.org/web/2/{url_x86}" if url_x86 else ""),
+                "archive_url_arm64": archive_arm64 or (f"https://web.archive.org/web/2/{url_arm64}" if url_arm64 else "")
             }
             
     return presets
