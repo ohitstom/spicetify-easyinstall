@@ -36,7 +36,7 @@ def _load_md(filename):
 ## All '__xyz__' variables are temporary variables used for re-assigning.
 
 # Github Variables
-RELEASE = "3.8"
+RELEASE = "4.0-beta"
 HOMEPAGE = "https://github.com/ohitstom/spicetify-easyinstall"
 WATERMARK = "Spicetify EasyInstall by OhItsTom and WillyJL"
 
