@@ -58,28 +58,32 @@ RECOMMENDED = _load_json("recommended.json")
 SPOTIFY_PRESETS = _load_json("spotify_presets.json")
 SPICETIFY_DATES = _load_json("spicetify_dates.json")
 SHIPPED_SHAS = _load_json("shipped_shas.json")
-DEFAULT_EXTENSIONS = _load_json("default_extensions.json")
-DEFAULT_APPS = _load_json("default_apps.json")
-DEFAULT_THEMES = _load_json("default_themes.json")
-
 # Version Variables dynamically loaded
 if RELEASE in RECOMMENDED:
-    SPICETIFY_VERSION = RECOMMENDED[RELEASE].get("spicetify", "2.38.5")
-    SPOTIFY_VERSION = RECOMMENDED[RELEASE].get("spotify", "1.2.51 (2024-12-01)")
+    _release_data = RECOMMENDED[RELEASE]
 else:
-    SPICETIFY_VERSION = "2.38.5"
-    SPOTIFY_VERSION = "1.2.51 (2024-12-01)"
+    # Fallback to the most recently defined release if not explicitly found
+    _fallback_release = list(RECOMMENDED.keys())[-1]
+    _release_data = RECOMMENDED[_fallback_release]
+
+SPICETIFY_VERSION = _release_data.get("spicetify")
+SPOTIFY_VERSION = _release_data.get("spotify")
+_default_exts_raw = _release_data.get("extensions", {})
+_default_apps_raw = _release_data.get("apps", {})
+_default_themes_raw = _release_data.get("themes", {})
+
+DEFAULT_EXTENSIONS = {url: f"{spice_config}\\Extensions\\{filename}" for url, filename in _default_exts_raw.items()}
+DEFAULT_APPS = {url: f"{spice_config}\\CustomApps\\{filename}" for url, filename in _default_apps_raw.items()}
+DEFAULT_THEMES = {url: f"{spice_config}\\Themes\\{filename}" for url, filename in _default_themes_raw.items()}
 
 # Download URLS dynamically resolved from SHIPPED_SHAS based on the recommended SPICETIFY_VERSION
 _themes_sha = SHIPPED_SHAS.get(SPICETIFY_VERSION, {}).get("themes", "c6e82dfeaa46ee9060d0c02fc437989eb77f6c61")
 _addons_sha = SHIPPED_SHAS.get(SPICETIFY_VERSION, {}).get("cli", "b26a60e41dd4296ba337b58f68ec2b1de2b422cf")
 
-
-
 DEFAULT_CONFIG = {
-    "extensions": DEFAULT_EXTENSIONS.copy() if isinstance(DEFAULT_EXTENSIONS, dict) else DEFAULT_EXTENSIONS,
-    "apps": DEFAULT_APPS.copy() if isinstance(DEFAULT_APPS, dict) else DEFAULT_APPS,
-    "themes": DEFAULT_THEMES.copy() if isinstance(DEFAULT_THEMES, dict) else DEFAULT_THEMES,
+    "extensions": DEFAULT_EXTENSIONS,
+    "apps": DEFAULT_APPS,
+    "themes": DEFAULT_THEMES,
     "theme_commit_cache": {},
     "selected_spicetify_version": SPICETIFY_VERSION,
     "selected_spotify_version": SPOTIFY_VERSION,
