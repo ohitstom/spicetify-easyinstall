@@ -1087,7 +1087,8 @@ class AdvancedSettingsDialog(QtWidgets.QDialog):
         quick_actions_layout.addWidget(self.btn_set_recommended)
 
         self.architecture_toggle = QtWidgets.QPushButton(self)
-        self.architecture_toggle.setText("64x" if state.architecture == "64-bit" else "32x")
+        arch_map = {"64-bit": "64x", "32-bit": "32x", "ARM64": "ARM64"}
+        self.architecture_toggle.setText(arch_map.get(state.architecture, "64x"))
         self.architecture_toggle.setFixedSize(48, 28)
         self.architecture_toggle.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.architecture_toggle.setStyleSheet(f"""
@@ -1105,7 +1106,13 @@ class AdvancedSettingsDialog(QtWidgets.QDialog):
             }}
         """)
         def toggle_arch():
-            self.architecture_toggle.setText("32x" if self.architecture_toggle.text() == "64x" else "64x")
+            current = self.architecture_toggle.text()
+            if current == "64x":
+                self.architecture_toggle.setText("32x")
+            elif current == "32x":
+                self.architecture_toggle.setText("ARM64")
+            else:
+                self.architecture_toggle.setText("64x")
         self.architecture_toggle.clicked.connect(toggle_arch)
         quick_actions_layout.addWidget(self.architecture_toggle)
 
@@ -1900,7 +1907,13 @@ class AdvancedSettingsDialog(QtWidgets.QDialog):
         # Update settings variables in globals
         state.selected_spicetify_version = self.spicetify_combo.currentText().split(" ")[0]
         state.selected_spotify_version = self.spotify_combo.currentText().split(" ")[0]
-        state.architecture = "64-bit" if self.architecture_toggle.text() == "64x" else "32-bit"
+        arch_text = self.architecture_toggle.text()
+        if arch_text == "64x":
+            state.architecture = "64-bit"
+        elif arch_text == "32x":
+            state.architecture = "32-bit"
+        else:
+            state.architecture = "ARM64"
 
         themes_text = self.themes_combo.currentText().strip()
         if themes_text == "Latest":

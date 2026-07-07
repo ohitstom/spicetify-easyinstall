@@ -87,10 +87,15 @@ async def prepare_variables(spicetify_version, spotify_version, pin_date, themes
                 if isinstance(preset_val, dict):
                     base_ver = preset_val.get("version", clean_ver)
                     is_x86 = (state.architecture == "32-bit")
+                    is_arm64 = (state.architecture == "ARM64")
                     if is_x86:
                         filename = f"spotify_installer-{base_ver}-x86.exe"
                         state.runtime_spotify_url = preset_val.get("loadspot_url_x86", f"https://loadspot.amd64fox1.workers.dev/download/{filename}")
                         state.runtime_archive_url = preset_val.get("archive_url_x86")
+                    elif is_arm64:
+                        filename = f"spotify_installer-{base_ver}-arm64.exe"
+                        state.runtime_spotify_url = preset_val.get("loadspot_url_arm64", f"https://loadspot.amd64fox1.workers.dev/download/{filename}")
+                        state.runtime_archive_url = preset_val.get("archive_url_arm64")
                     else:
                         filename = f"spotify_installer-{base_ver}-x64.exe"
                         state.runtime_spotify_url = preset_val.get("loadspot_url", f"https://loadspot.amd64fox1.workers.dev/download/{filename}")
@@ -105,7 +110,13 @@ async def prepare_variables(spicetify_version, spotify_version, pin_date, themes
                     else:
                         base_ver = full_ver
                     is_x86 = (state.architecture == "32-bit")
-                    arch_tag = "x86" if is_x86 else "x64"
+                    is_arm64 = (state.architecture == "ARM64")
+                    if is_x86:
+                        arch_tag = "x86"
+                    elif is_arm64:
+                        arch_tag = "arm64"
+                    else:
+                        arch_tag = "x64"
                     filename = f"spotify_installer-{base_ver}-{arch_tag}.exe"
                     state.runtime_spotify_version = filename
                     state.runtime_spotify_url = f"https://loadspot.amd64fox1.workers.dev/download/{filename}"
@@ -247,7 +258,7 @@ async def download_spotify(filenames):
         # Primary endpoint failed (e.g. 429 Rate Limited or 403 Forbidden).
         # Initiate fallback to the Archive.org mirror
         try:
-            print("Primary download failed. Attempting fallback mirror...")
+            utils.verbose_print("Primary download failed. Attempting fallback mirror...")
             mirror_url = state.runtime_archive_url
             if not mirror_url:
                 mirror_url = await utils.fetch_archive_mirror_url(curr_filename)
@@ -336,7 +347,7 @@ async def install_spicetify():
             progress_label="Installing Spicetify..."
         )
     except Exception as e:
-        print(f"Failed to run modified installer: {e}. Falling back to original installer...")
+        utils.verbose_print(f"Failed to run modified installer: {e}. Falling back to original installer...")
         await utils.run_ps1_script(
             "install_spicetify_web.ps1",
             state.runtime_spicetify_version,
