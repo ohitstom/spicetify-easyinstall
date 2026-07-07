@@ -87,7 +87,8 @@ async def prepare_variables(spicetify_version, spotify_version, pin_date, themes
                 if isinstance(preset_val, dict):
                     base_ver = preset_val.get("version", clean_ver)
                     import platform
-                    machine = platform.machine().lower()
+                    from modules import globals
+                    machine = globals.DEBUG_ARCH.lower() if globals.DEBUG_ARCH else platform.machine().lower()
                     is_x86 = "x86" in machine and not "64" in machine
                     is_arm64 = "arm" in machine or "aarch64" in machine
                     if is_x86:

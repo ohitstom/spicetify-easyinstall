@@ -1101,7 +1101,8 @@ class AdvancedSettingsDialog(QtWidgets.QDialog):
         self.spotify_combo.setEditable(False)
 
         import platform
-        machine = platform.machine().lower()
+        from modules import globals
+        machine = globals.DEBUG_ARCH.lower() if globals.DEBUG_ARCH else platform.machine().lower()
         is_x86 = "x86" in machine and not "64" in machine
         is_arm64 = "arm" in machine or "aarch64" in machine
         
@@ -1471,7 +1472,8 @@ class AdvancedSettingsDialog(QtWidgets.QDialog):
                     return (0,)
 
             import platform
-            machine = platform.machine().lower()
+            from modules import globals
+            machine = globals.DEBUG_ARCH.lower() if globals.DEBUG_ARCH else platform.machine().lower()
             is_x86 = "x86" in machine and not "64" in machine
             is_arm64 = "arm" in machine or "aarch64" in machine
             

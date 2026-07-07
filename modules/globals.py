@@ -5,6 +5,10 @@ from pathlib import Path
 
 verbose = False
 
+# SPOOF SYSTEM ARCHITECTURE FOR TESTING:
+# Set this to "x86", "arm64", "x64", or None to auto-detect.
+DEBUG_ARCH = None
+
 def _get_resource_path(relative_path):
     if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
         path_in_meipass = relative_path[len("resources/"):] if relative_path.startswith("resources/") else relative_path
