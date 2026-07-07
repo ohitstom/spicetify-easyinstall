@@ -12,13 +12,16 @@ _stdin = sys.stdin
 # Used to temporarily stop output to log file
 _pause_file_output = False
 
-
 def _file_write(message):
-    if _pause_file_output:
-        return
-    with open(os.path.join(globals.installer_config, "log.txt"), "a", encoding="utf-8") as log:
-        log.write(message)
-
+    if _pause_file_output: return
+    try:
+        with open(os.path.join(globals.installer_config, "log.txt"), "a", encoding="utf-8") as log:
+            if message.startswith("\r") or message == "\n":
+                log.write(message)
+            else:
+                log.write(message + "\n")
+    except FileNotFoundError:
+        pass
 
 class __stdout_override:
     def write(self, message):
@@ -41,7 +44,6 @@ class __stdout_override:
             return getattr(_stdout, name)
         raise AttributeError(name)
 
-
 class __stderr_override:
     def write(self, message):
         if _stderr is not None:
@@ -63,7 +65,6 @@ class __stderr_override:
             return getattr(_stderr, name)
         raise AttributeError(name)
 
-
 class __stdin_override:
     def readline(self):
         if _stdin is not None:
@@ -76,17 +77,11 @@ class __stdin_override:
         return ""
 
     def __getattr__(self, name):
-        # The input() function tries to use sys.stdin.fileno()
-        # and then do the printing and input reading on the C
-        # side, causing this .readline() override to not work.
-        # Denying access to .fileno() fixes this and forces
-        # input() to use sys.stdin.readline()
         if name == "fileno":
             raise AttributeError
         if _stdin is not None:
             return getattr(_stdin, name)
         raise AttributeError(name)
-
 
 @contextmanager
 def pause_file_output():
@@ -95,9 +90,7 @@ def pause_file_output():
     yield
     _pause_file_output = False
 
-
 pause = pause_file_output
-
 
 # Create / clear log file
 if not os.path.exists(globals.installer_config):
