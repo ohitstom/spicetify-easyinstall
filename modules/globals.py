@@ -86,8 +86,7 @@ DEFAULT_CONFIG = {
     "themes": DEFAULT_THEMES,
     "theme_commit_cache": {},
     "selected_spicetify_version": SPICETIFY_VERSION,
-    "selected_spotify_version": SPOTIFY_VERSION,
-    "architecture": "64-bit"
+    "selected_spotify_version": SPOTIFY_VERSION
 }
 
 INSTALL_RUNDOWN_MD = _load_md("install_rundown.md")

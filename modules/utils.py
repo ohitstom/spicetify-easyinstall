@@ -215,17 +215,22 @@ async def simultaneous_chunked_download(urls_paths, label):  # utils.simultaneou
                         verbose_print(f"Error downloading {url}: HTTP {r.status}")
                         raise Exception(f"HTTP Status {r.status}")
                     os.makedirs(os.path.dirname(path), exist_ok=True)
+                    dl_size = 0
                     async with aiofiles.open(path, "wb") as f:
                         async for chunk in r.content.iter_any():
                             if not chunk:
                                 break
                             size = await f.write(chunk)
+                            dl_size += size
                             if not indeterminate:
                                 bar._done += size
                                 bar.show(bar._done)
                         if indeterminate:
                             bar._done += 1
                             bar.show(bar._done)
+                    if dl_size < 22:
+                        os.remove(path)
+                        raise Exception(f"Downloaded file {url} is suspiciously small ({dl_size} bytes).")
             except Exception as e:
                 verbose_print(f"Download exception for {url}: {e}")
                 raise
@@ -377,8 +382,10 @@ async def chunked_download(url, path, label):  # chunked_download("urltodownload
                     await f.truncate()
                     done = 0
             logger._pause_file_output = False
+            if done < 22:
+                bar.abort()
+                raise Exception(f"Downloaded file is suspiciously small ({done} bytes). URL: {url}")
             bar.done()
-
 
 def verbose_print(*args, **kwargs):
     '''

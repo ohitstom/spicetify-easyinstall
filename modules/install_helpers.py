@@ -86,8 +86,10 @@ async def prepare_variables(spicetify_version, spotify_version, pin_date, themes
 
                 if isinstance(preset_val, dict):
                     base_ver = preset_val.get("version", clean_ver)
-                    is_x86 = (state.architecture == "32-bit")
-                    is_arm64 = (state.architecture == "ARM64")
+                    import platform
+                    machine = platform.machine().lower()
+                    is_x86 = "x86" in machine and not "64" in machine
+                    is_arm64 = "arm" in machine or "aarch64" in machine
                     if is_x86:
                         filename = f"spotify_installer-{base_ver}-x86.exe"
                         state.runtime_spotify_url = preset_val.get("loadspot_url_x86", f"https://loadspot.amd64fox1.workers.dev/download/{filename}")
@@ -109,8 +111,10 @@ async def prepare_variables(spicetify_version, spotify_version, pin_date, themes
                         base_ver = full_ver.rsplit("-", 1)[0]
                     else:
                         base_ver = full_ver
-                    is_x86 = (state.architecture == "32-bit")
-                    is_arm64 = (state.architecture == "ARM64")
+                    import platform
+                    machine = platform.machine().lower()
+                    is_x86 = "x86" in machine and not "64" in machine
+                    is_arm64 = "arm" in machine or "aarch64" in machine
                     if is_x86:
                         arch_tag = "x86"
                     elif is_arm64:
@@ -248,12 +252,15 @@ async def download_spotify(filenames):
         await utils.chunked_download(
             url=url,
             path=curr_temp_dest,
-            label=curr_temp_dest if globals.verbose else curr_filename,
+            label=f"{curr_filename[:10]}...exe",
         )
-        if is_valid_exe(curr_temp_dest):
-            return curr_temp_dest, False
-        else:
+        if not is_valid_exe(curr_temp_dest):
+            if getattr(utils.logger, '_pause_file_output', False):
+                sys.stdout.write("\033[F\033[K\r")
+                sys.stdout.flush()
             raise ValueError("Downloaded file is not a valid executable.")
+        else:
+            return curr_temp_dest, False
     except Exception:
         # Primary endpoint failed (e.g. 429 Rate Limited or 403 Forbidden).
         # Initiate fallback to the Archive.org mirror
@@ -354,7 +361,7 @@ async def install_spicetify():
             progress_label="Installing Spicetify..."
         )
 
-    await utils.powershell(f'{environ_check}', progress_label="Checking Environment...")
+    await utils.powershell(f'{environ_check}', progress_label="Checking Env.")
 
     if os.path.isfile(f"{globals.spice_config}\\config-xpui.ini"):
         prefs_check = utils.find_config_data("prefs_path")
@@ -364,9 +371,12 @@ async def install_spicetify():
         print("Config wasnt created, Spicetify might not have installed correctly. Please retry with verbose if it doesnt work.")
 
     # Launch Spotify briefly to generate the offline.bnk cache file, preventing the Spicetify offline.bnk error
-    print("Generating Spotify cache files...")
     await utils.start_process(f"{globals.appdata}\\Spotify\\Spotify.exe", silent=True)
-    await asyncio.sleep(4)
+    import progress
+    with progress.Bar(label="Generating Cache.", expected_size=40, hide=getattr(utils.logger, 'verbose', False)) as bar:
+        for i in range(40):
+            await asyncio.sleep(0.1)
+            bar.show(i + 1)
     utils.kill_processes("Spotify.exe")
 
     await utils.run_ps1_script(
@@ -374,7 +384,7 @@ async def install_spicetify():
         f"{globals.spice_executable}\\spicetify.exe",
         progress_label="Configuring Spicetify..."
     )
-    print("Finished installing Spicetify!\n")
+    print("Finished installing Spicetify!")
 
 async def prevent_spotify_updates():
 

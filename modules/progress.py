@@ -43,8 +43,16 @@ class Bar:
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.done()
+        if exc_type:
+            self.abort()
+        else:
+            self.done()
         return False  # we're not suppressing exceptions
+
+    def abort(self):
+        if not self.hide:
+            STREAM.write("\r\033[K")
+            STREAM.flush()
 
     def __init__(
         self,

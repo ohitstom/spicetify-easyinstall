@@ -59,7 +59,7 @@ class StateManager:
                 "theme_commit_cache": saved.get("theme_commit_cache", defaults.get("theme_commit_cache", {})),
                 "selected_spicetify_version": saved.get("selected_spicetify_version", defaults.get("selected_spicetify_version")),
                 "selected_spotify_version": saved.get("selected_spotify_version", defaults.get("selected_spotify_version")),
-                "architecture": saved.get("architecture", defaults.get("architecture")),
+
                 "selected_themes_version": saved.get("selected_themes_version", defaults.get("selected_themes_version")),
                 "pin_date": saved.get("pin_date", defaults.get("pin_date")),
                 "github_token": saved.get("github_token", defaults.get("github_token")),
@@ -184,17 +184,6 @@ class StateManager:
     def theme_commit_cache(self, val):
         if not self._config: self.load_config()
         self._config["theme_commit_cache"] = val
-        self.save_config()
-
-    @property
-    def architecture(self):
-        if not self._config: self.load_config()
-        return self._config.get("architecture", "64-bit")
-
-    @architecture.setter
-    def architecture(self, val):
-        if not self._config: self.load_config()
-        self._config["architecture"] = val
         self.save_config()
 
     def get_pix_cache(self):

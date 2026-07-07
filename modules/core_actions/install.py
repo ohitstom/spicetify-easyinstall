@@ -30,6 +30,7 @@ async def install(launch=False, leaveSpotify=False, spicetify_version="Latest", 
     current_step += 1
     print(f"\n({current_step}/{steps_count}) Backing Up Credentials...")
     install_helpers.backup_credentials()
+    print("Finished backing up!")
 
     current_step += 1
     print(f"\n({current_step}/{steps_count}) Uninstalling Spotify...")
