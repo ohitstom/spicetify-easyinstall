@@ -119,6 +119,20 @@ async def update_spotify_presets():
             if key in old_presets and "archive_url" in old_presets[key] and old_presets[key]["archive_url"]:
                 # If old presets didn't have arm64 keys explicitly baked in, we should inject them now.
                 old_preset = old_presets[key].copy()
+                
+                # Heal proxy URLs if they exist for cached versions
+                if "web.archive.org" in old_preset.get("archive_url", ""):
+                    print(f"Healing x64 proxy URL for cached {key}...")
+                    archive_x64 = await fetch_archive_mirror_url(filename_x64, arch="x64") if filename_x64 else ""
+                    if archive_x64:
+                        old_preset["archive_url"] = archive_x64
+
+                if "web.archive.org" in old_preset.get("archive_url_x86", ""):
+                    print(f"Healing x86 proxy URL for cached {key}...")
+                    archive_x86 = await fetch_archive_mirror_url(filename_x86, arch="x86") if filename_x86 else ""
+                    if archive_x86:
+                        old_preset["archive_url_x86"] = archive_x86
+
                 if "loadspot_url_arm64" not in old_preset:
                     old_preset["loadspot_url_arm64"] = url_arm64 if url_arm64 else f"https://loadspot.amd64fox1.workers.dev/download/spotify_installer-{version_str}-arm64.exe"
                     print(f"Resolving ARM64 mirror for cached {key}...")
