@@ -5,6 +5,9 @@ import sys
 import webbrowser
 import json as json_lib
 
+# Suppress libpng warnings from PyQt5 image loading
+os.environ["QT_LOGGING_RULES"] = "*.debug=false;qt.qpa.*=false;qt.gui.imageio.warning=false"
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QPixmap
 from qasync import asyncSlot
@@ -1097,9 +1100,20 @@ class AdvancedSettingsDialog(QtWidgets.QDialog):
         self.spotify_combo = QtWidgets.QComboBox(self)
         self.spotify_combo.setEditable(False)
 
+        import platform
+        machine = platform.machine().lower()
+        is_x86 = "x86" in machine and not "64" in machine
+        is_arm64 = "arm" in machine or "aarch64" in machine
+        
         spotify_keys = sorted(globals.SPOTIFY_PRESETS.keys(), key=version_key, reverse=True)
         spotify_options = ["Latest"]
         for k in spotify_keys:
+            preset_val = globals.SPOTIFY_PRESETS.get(k)
+            if isinstance(preset_val, dict):
+                if is_x86 and not preset_val.get("loadspot_url_x86") and not preset_val.get("archive_url_x86"):
+                    continue
+                elif is_arm64 and not preset_val.get("loadspot_url_arm64") and not preset_val.get("archive_url_arm64"):
+                    continue
             if k == globals.SPOTIFY_VERSION:
                 spotify_options.append(f"{k} (Recommended)")
             else:
@@ -1456,9 +1470,25 @@ class AdvancedSettingsDialog(QtWidgets.QDialog):
                 except Exception:
                     return (0,)
 
+            import platform
+            machine = platform.machine().lower()
+            is_x86 = "x86" in machine and not "64" in machine
+            is_arm64 = "arm" in machine or "aarch64" in machine
+            
             spotify_options = ["Latest"]
             sorted_spotify = sorted(list(globals.SPOTIFY_PRESETS.keys()), key=spotify_version_key, reverse=True)
             for k in sorted_spotify:
+                preset_val = globals.SPOTIFY_PRESETS.get(k)
+                
+                # Check architecture support
+                if isinstance(preset_val, dict):
+                    if is_x86:
+                        if not preset_val.get("loadspot_url_x86") and not preset_val.get("archive_url_x86"):
+                            continue
+                    elif is_arm64:
+                        if not preset_val.get("loadspot_url_arm64") and not preset_val.get("archive_url_arm64"):
+                            continue
+                
                 label = k
                 if k.split(" ")[0] == globals.SPOTIFY_VERSION.split(" ")[0]:
                     label += " (Recommended)"

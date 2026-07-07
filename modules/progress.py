@@ -178,12 +178,15 @@ class Bar:
             self.etadisp = self.format_time(self.eta)
 
             if avg_time_per_byte > 0:
-                speed_bps = 1.0 / avg_time_per_byte
-                self.speeddisp = f"{self.format_size(speed_bps)}/s"
-
-            prog_size = self.format_size(progress)
-            tot_size = self.format_size(self.expected_size)
-            self.sizedisp = f"{prog_size} / {tot_size}"
+                speed = 1.0 / avg_time_per_byte
+                self.speeddisp = f"{self.format_size(speed)}/s"
+            else:
+                self.speeddisp = "0 B/s"
+            
+            if self.expected_size < 100: # Hacky check for indeterminate file count which is usually a very small integer (e.g. 5) instead of file size
+                self.sizedisp = f"{int(progress)} / {int(self.expected_size)} Files"
+            else:
+                self.sizedisp = f"{self.format_size(progress)} / {self.format_size(self.expected_size)}"
         if not self.hide and (
             (progress % self.every) == 0
             or (  # True every "every" updates
