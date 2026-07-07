@@ -26,24 +26,56 @@ if __name__ == "__main__":
     import psutil
 
     # Sanity checck: try importing all local modules
-    from modules import globals, core, gui, progress, screens, singleton, utils
+    from modules import globals, gui, progress, screens, singleton, utils, styles
+    from modules.state_manager import state
+
+    import argparse
+    parser = argparse.ArgumentParser(description="Spicetify Easyinstall")
+    parser.add_argument("--diagnose", action="store_true", help="Dump diagnostics to diagnostics.json and exit")
+    parser.add_argument("--debug", action="store_true", help="Enable verbose debug logging")
+    args, unknown = parser.parse_known_args()
+
+    if args.debug:
+        globals.verbose = True
+        print("Debug mode enabled.")
+
+    if args.diagnose:
+        import json
+        diag = {
+            "state_config": state._config,
+            "globals": {k: getattr(globals, k) for k in dir(globals) if not k.startswith("__") and isinstance(getattr(globals, k), (str, int, float, bool, dict, list))},
+            "spicetify_installed": utils.is_installed(),
+            "env": {
+                "APPDATA": os.environ.get("APPDATA"),
+                "LOCALAPPDATA": os.environ.get("LOCALAPPDATA"),
+                "USERNAME": os.environ.get("USERNAME"),
+            }
+        }
+        with open("diagnostics.json", "w", encoding="utf-8") as f:
+            json.dump(diag, f, indent=4)
+        print("Diagnostics dumped to diagnostics.json")
+        sys.exit(0)
 
     # Setup singleton: only one app instance running at a time
-    globals.singleton = singleton.Singleton("spicetify-easyinstall")
+    # state.singleton = singleton.Singleton("spicetify-easyinstall")
 
     # Create App
-    globals.app = QtWidgets.QApplication(sys.argv)
-    globals.app.setStyleSheet(gui.QSS)
+    state.app = QtWidgets.QApplication(sys.argv)
+    state.app.setStyle(styles.QuickToolTipStyle())
+    state.app.setStyleSheet(styles.QSS)
 
     # Configure asyncio loop to work with PyQt5
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    loop = QEventLoop(globals.app)
+    loop = QEventLoop(state.app)
     asyncio.set_event_loop(loop)
 
+    # Fetch updates asynchronously in the background so they are ready by the time the user opens settings
+    asyncio.ensure_future(utils.fetch_data_updates())
+
     # Setup GUI
-    globals.gui = gui.MainWindow()
-    globals.gui.show()
-    
+    state.gui = gui.MainWindow()
+    state.gui.show()
+
     # Set off loop
     with loop:
-        sys.exit(loop.run_until_complete(globals.gui.exit_request.wait()))
+        sys.exit(loop.run_until_complete(state.gui.exit_request.wait()))
