@@ -127,11 +127,13 @@ async def update_spotify_presets():
                     if archive_x64:
                         old_preset["archive_url"] = archive_x64
 
-                if "web.archive.org" in old_preset.get("archive_url_x86", ""):
+                if "web.archive.org" in old_preset.get("archive_url_x86", "") or "windows/x86_64" in old_preset.get("archive_url_x86", ""):
                     print(f"Healing x86 proxy URL for cached {key}...")
                     archive_x86 = await fetch_archive_mirror_url(filename_x86, arch="x86") if filename_x86 else ""
                     if archive_x86:
                         old_preset["archive_url_x86"] = archive_x86
+                    elif "windows/x86_64" in old_preset.get("archive_url_x86", ""):
+                        old_preset["archive_url_x86"] = f"https://web.archive.org/web/2/{old_preset.get('loadspot_url_x86', '')}"
 
                 if "loadspot_url_arm64" not in old_preset:
                     old_preset["loadspot_url_arm64"] = url_arm64 if url_arm64 else f"https://loadspot.amd64fox1.workers.dev/download/spotify_installer-{version_str}-arm64.exe"
