@@ -1,1 +1,1127 @@
-
+{
+    "1.2.93 (2026-07-01)": {
+        "version": "1.2.93.667.g7b5cc0ce",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.93.667.g7b5cc0ce-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.93.667.g7b5cc0ce-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.93.667.g7b5cc0ce-516.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.93.667.g7b5cc0ce-2382.exe"
+    },
+    "1.2.92 (2026-06-12)": {
+        "version": "1.2.92.148.g882cc571",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.92.148.g882cc571-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.92.148.g882cc571-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.92.148.g882cc571-26.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.92.148.g882cc571-26.exe"
+    },
+    "1.2.90 (2026-05-19)": {
+        "version": "1.2.90.451.gb094aab0",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.90.451.gb094aab0-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.90.451.gb094aab0-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.90.451.gb094aab0-262.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.90.451.gb094aab0-262.exe"
+    },
+    "1.2.89 (2026-05-06)": {
+        "version": "1.2.89.539.gfb3c63a3",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.89.539.gfb3c63a3-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.89.539.gfb3c63a3-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.89.539.gfb3c63a3-481.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.89.539.gfb3c63a3-482.exe"
+    },
+    "1.2.88 (2026-04-30)": {
+        "version": "1.2.88.485.g1012a6e0",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.88.485.g1012a6e0-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.88.485.g1012a6e0-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.88.485.g1012a6e0-x64.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.88.485.g1012a6e0-arm64.exe"
+    },
+    "1.2.87 (2026-04-15)": {
+        "version": "1.2.87.415.g88652836",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.87.415.g88652836-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.87.415.g88652836-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.87.415.g88652836-7484.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.87.415.g88652836-2378.exe"
+    },
+    "1.2.86 (2026-03-25)": {
+        "version": "1.2.86.502.g8cd7fb22",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/temporary-download/spotify_installer-1.2.86.502.g8cd7fb22-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.86.502.g8cd7fb22-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.86.502.g8cd7fb22-5431.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.86.502.g8cd7fb22-5057.exe"
+    },
+    "1.2.85 (2026-03-13)": {
+        "version": "1.2.85.519.g549a528b",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.85.519.g549a528b-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.85.519.g549a528b-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.85.519.g549a528b-4062.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.85.519.g549a528b-4019.exe"
+    },
+    "1.2.84 (2026-02-25)": {
+        "version": "1.2.84.477.gcfdf84e8",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.84.477.gcfdf84e8-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.84.477.gcfdf84e8-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.84.477.gcfdf84e8-2359.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": ""
+    },
+    "1.2.83 (2026-02-15)": {
+        "version": "1.2.83.461.g4d9c3dae",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.83.461.g4d9c3dae-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.83.461.g4d9c3dae-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.83.461.g4d9c3dae-x64.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.83.461.g4d9c3dae-801.exe"
+    },
+    "1.2.82 (2026-01-27)": {
+        "version": "1.2.82.428.g0ac8be2b",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.82.428.g0ac8be2b-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.82.428.g0ac8be2b-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.82.428.g0ac8be2b-1220.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.82.428.g0ac8be2b-1212.exe"
+    },
+    "1.2.81 (2026-01-13)": {
+        "version": "1.2.81.264.gb4ad4efa",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.81.264.gb4ad4efa-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.81.264.gb4ad4efa-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.81.264.gb4ad4efa-1866.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.81.264.gb4ad4efa-1845.exe"
+    },
+    "1.2.80 (2026-01-03)": {
+        "version": "1.2.80.358.g74e46c21",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.80.358.g74e46c21-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.80.358.g74e46c21-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.80.358.g74e46c21-1087.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.80.358.g74e46c21-1074.exe"
+    },
+    "1.2.79 (2025-12-19)": {
+        "version": "1.2.79.427.g80eb4a07",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.79.427.g80eb4a07-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.79.427.g80eb4a07-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.79.427.g80eb4a07-589.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.79.427.g80eb4a07-arm64.exe"
+    },
+    "1.2.78 (2025-12-03)": {
+        "version": "1.2.78.418.gaeeb5ebd",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.78.418.gaeeb5ebd-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.78.418.gaeeb5ebd-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.78.418.gaeeb5ebd-1067.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.78.418.gaeeb5ebd-arm64.exe"
+    },
+    "1.2.77 (2025-11-19)": {
+        "version": "1.2.77.358.g4339a634",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.77.358.g4339a634-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.77.358.g4339a634-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.77.358.g4339a634-545.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.77.358.g4339a634-547.exe"
+    },
+    "1.2.76 (2025-11-06)": {
+        "version": "1.2.76.298.g2316a870",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.76.298.g2316a870-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.76.298.g2316a870-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.76.298.g2316a870-2.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": ""
+    },
+    "1.2.75 (2025-10-24)": {
+        "version": "1.2.75.510.g8f748905",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.75.510.g8f748905-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.75.510.g8f748905-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.75.510.g8f748905-369.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.75.510.g8f748905-368.exe"
+    },
+    "1.2.74 (2025-09-30)": {
+        "version": "1.2.74.477.g3be53afe",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.74.477.g3be53afe-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.74.477.g3be53afe-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.74.477.g3be53afe-1297.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.74.477.g3be53afe-1281.exe"
+    },
+    "1.2.73 (2025-09-19)": {
+        "version": "1.2.73.474.g7b30bb2b",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.73.474.g7b30bb2b-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.73.474.g7b30bb2b-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.73.474.g7b30bb2b-593.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.73.474.g7b30bb2b-593.exe"
+    },
+    "1.2.72 (2025-09-01)": {
+        "version": "1.2.72.438.g8c88c31c",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.72.438.g8c88c31c-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.72.438.g8c88c31c-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.72.438.g8c88c31c-1513.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.72.438.g8c88c31c-1510.exe"
+    },
+    "1.2.71 (2025-08-22)": {
+        "version": "1.2.71.421.g794ff5e5",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.71.421.g794ff5e5-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.71.421.g794ff5e5-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.71.421.g794ff5e5-317.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.71.421.g794ff5e5-317.exe"
+    },
+    "1.2.70 (2025-08-18)": {
+        "version": "1.2.70.409.gd4fa4141",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.70.409.gd4fa4141-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.70.409.gd4fa4141-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.70.409.gd4fa4141-417.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.70.409.gd4fa4141-415.exe"
+    },
+    "1.2.69 (2025-08-04)": {
+        "version": "1.2.69.449.gfda8591a",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.69.449.gfda8591a-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.69.449.gfda8591a-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.69.449.gfda8591a-745.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.69.449.gfda8591a-742.exe"
+    },
+    "1.2.68 (2025-07-25)": {
+        "version": "1.2.68.528.g50f97d42",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.68.528.g50f97d42-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.68.528.g50f97d42-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.68.528.g50f97d42-1008.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.68.528.g50f97d42-1008.exe"
+    },
+    "1.2.67 (2025-07-16)": {
+        "version": "1.2.67.560.g46a15f6b",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.67.560.g46a15f6b-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.67.560.g46a15f6b-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.67.560.g46a15f6b-193.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.67.560.g46a15f6b-193.exe"
+    },
+    "1.2.66 (2025-06-24)": {
+        "version": "1.2.66.447.g4e37e896",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.66.447.g4e37e896-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.66.447.g4e37e896-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.66.447.g4e37e896-540.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.66.447.g4e37e896-536.exe"
+    },
+    "1.2.65 (2025-06-11)": {
+        "version": "1.2.65.255.g85e641b4",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.65.255.g85e641b4-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.65.255.g85e641b4-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.65.255.g85e641b4-609.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.65.255.g85e641b4-609.exe"
+    },
+    "1.2.64 (2025-06-05)": {
+        "version": "1.2.64.408.g0a9b557c",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.64.408.g0a9b557c-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.64.408.g0a9b557c-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.64.408.g0a9b557c-184.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.64.408.g0a9b557c-2424.exe"
+    },
+    "1.2.63 (2025-05-25)": {
+        "version": "1.2.63.394.g126b0d89",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.63.394.g126b0d89-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.63.394.g126b0d89-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.63.394.g126b0d89-2269.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.63.394.g126b0d89-1777.exe"
+    },
+    "1.2.62 (2025-05-03)": {
+        "version": "1.2.62.580.gb27ad23e",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.62.580.gb27ad23e-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.62.580.gb27ad23e-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.62.580.gb27ad23e-680.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.62.580.gb27ad23e-206.exe"
+    },
+    "1.2.61 (2025-04-16)": {
+        "version": "1.2.61.443.gc51c574b",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.61.443.gc51c574b-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.61.443.gc51c574b-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.61.443.gc51c574b-2143.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.61.443.gc51c574b-1533.exe"
+    },
+    "1.2.60 (2025-03-26)": {
+        "version": "1.2.60.564.gcc6305cb",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.60.564.gcc6305cb-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.60.564.gcc6305cb-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.60.564.gcc6305cb-914.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.60.564.gcc6305cb-335.exe"
+    },
+    "1.2.59 (2025-03-24)": {
+        "version": "1.2.59.518.g42b3652d",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.59.518.g42b3652d-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.59.518.g42b3652d-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.59.518.g42b3652d-247.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.59.518.g42b3652d-108.exe"
+    },
+    "1.2.58 (2025-03-14)": {
+        "version": "1.2.58.498.g6afe77b7",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.58.498.g6afe77b7-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.58.498.g6afe77b7-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.58.498.g6afe77b7-407.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.58.498.g6afe77b7-406.exe"
+    },
+    "1.2.57 (2025-02-19)": {
+        "version": "1.2.57.463.g4f748c64",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.57.463.g4f748c64-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.57.463.g4f748c64-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.57.463.g4f748c64-3096.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.57.463.g4f748c64-3113.exe"
+    },
+    "1.2.56 (2025-02-04)": {
+        "version": "1.2.56.502.ga68d2d4f",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.56.502.ga68d2d4f-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.56.502.ga68d2d4f-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.56.502.ga68d2d4f-1913.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.56.502.ga68d2d4f-1920.exe"
+    },
+    "1.2.55 (2025-01-20)": {
+        "version": "1.2.55.235.g5eaa0904",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.55.235.g5eaa0904-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.55.235.g5eaa0904-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.55.235.g5eaa0904-463.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.55.235.g5eaa0904-465.exe"
+    },
+    "1.2.54 (2025-01-20)": {
+        "version": "1.2.54.304.gcc3c7f45",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.54.304.gcc3c7f45-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.54.304.gcc3c7f45-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.54.304.gcc3c7f45-2388.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.54.304.gcc3c7f45-2396.exe"
+    },
+    "1.2.53 (2025-02-10)": {
+        "version": "1.2.53.440.g7b2f582a",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.53.440.g7b2f582a-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.53.440.g7b2f582a-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.53.440.g7b2f582a-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.53.440.g7b2f582a-58.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.53.440.g7b2f582a-58.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.53.440.g7b2f582a-3.exe"
+    },
+    "1.2.52 (2024-12-10)": {
+        "version": "1.2.52.442.g01893f92",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.52.442.g01893f92-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.52.442.g01893f92-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.52.442.g01893f92-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.52.442.g01893f92-588.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.52.442.g01893f92-587.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.52.442.g01893f92-586.exe"
+    },
+    "1.2.51 (2024-12-01)": {
+        "version": "1.2.51.345.gcc39d911",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.51.345.gcc39d911-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.51.345.gcc39d911-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.51.345.gcc39d911-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.51.345.gcc39d911-63.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.51.345.gcc39d911-63.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.51.345.gcc39d911-63.exe"
+    },
+    "1.2.50 (2024-11-21)": {
+        "version": "1.2.50.335.g5e2860a8",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.50.335.g5e2860a8-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.50.335.g5e2860a8-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.50.335.g5e2860a8-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.50.335.g5e2860a8-548.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.50.335.g5e2860a8-546.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.50.335.g5e2860a8-547.exe"
+    },
+    "1.2.49 (2024-10-24)": {
+        "version": "1.2.49.439.gfae492c7",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.49.439.gfae492c7-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.49.439.gfae492c7-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.49.439.gfae492c7-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.49.439.gfae492c7-3243.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.49.439.gfae492c7-3225.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.49.439.gfae492c7-3215.exe"
+    },
+    "1.2.48 (2024-10-10)": {
+        "version": "1.2.48.405.gf2c48e6f",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.48.405.gf2c48e6f-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.48.405.gf2c48e6f-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.48.405.gf2c48e6f-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.48.405.gf2c48e6f-2022.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.48.405.gf2c48e6f-2008.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.48.405.gf2c48e6f-2002.exe"
+    },
+    "1.2.47 (2024-09-30)": {
+        "version": "1.2.47.366.g0d3bd570",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.47.366.g0d3bd570-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.47.366.g0d3bd570-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.47.366.g0d3bd570-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.47.366.g0d3bd570-1430.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.47.366.g0d3bd570-1418.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.47.366.g0d3bd570-1409.exe"
+    },
+    "1.2.46 (2024-09-14)": {
+        "version": "1.2.46.462.gf57913e0",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.46.462.gf57913e0-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.46.462.gf57913e0-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.46.462.gf57913e0-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.46.462.gf57913e0-290.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.46.462.gf57913e0-290.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.46.462.gf57913e0-290.exe"
+    },
+    "1.2.45 (2024-09-02)": {
+        "version": "1.2.45.454.gc16ec9f6",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.45.454.gc16ec9f6-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.45.454.gc16ec9f6-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.45.454.gc16ec9f6-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.45.454.gc16ec9f6-122.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.45.454.gc16ec9f6-118.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.45.454.gc16ec9f6-119.exe"
+    },
+    "1.2.44 (2024-08-11)": {
+        "version": "1.2.44.405.g81fd6352",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.44.405.g81fd6352-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.44.405.g81fd6352-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.44.405.g81fd6352-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.44.405.g81fd6352-5914.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.44.405.g81fd6352-5851.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.44.405.g81fd6352-5867.exe"
+    },
+    "1.2.43 (2024-07-30)": {
+        "version": "1.2.43.420.gc7b23f70",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.43.420.gc7b23f70-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.43.420.gc7b23f70-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.43.420.gc7b23f70-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.43.420.gc7b23f70-4758.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.43.420.gc7b23f70-4702.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.43.420.gc7b23f70-4719.exe"
+    },
+    "1.2.42 (2024-07-19)": {
+        "version": "1.2.42.290.g242057a2",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.42.290.g242057a2-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.42.290.g242057a2-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.42.290.g242057a2-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.42.290.g242057a2-3547.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.42.290.g242057a2-3493.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.42.290.g242057a2-3507.exe"
+    },
+    "1.2.41 (2024-07-08)": {
+        "version": "1.2.41.434.g39a25e2c",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.41.434.g39a25e2c-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.41.434.g39a25e2c-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.41.434.g39a25e2c-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.41.434.g39a25e2c-2539.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.41.434.g39a25e2c-2490.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.41.434.g39a25e2c-2505.exe"
+    },
+    "1.2.40 (2024-06-21)": {
+        "version": "1.2.40.599.g606b7f29",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.40.599.g606b7f29-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.40.599.g606b7f29-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.40.599.g606b7f29-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.40.599.g606b7f29-1502.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.40.599.g606b7f29-1500.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.40.599.g606b7f29-1509.exe"
+    },
+    "1.2.39 (2024-06-04)": {
+        "version": "1.2.39.578.g0ea3f38b",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.39.578.g0ea3f38b-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.39.578.g0ea3f38b-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.39.578.g0ea3f38b-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.39.578.g0ea3f38b-107.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.39.578.g0ea3f38b-107.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.39.578.g0ea3f38b-107.exe"
+    },
+    "1.2.38 (2024-05-27)": {
+        "version": "1.2.38.720.ga4a70a0e",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.38.720.ga4a70a0e-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.38.720.ga4a70a0e-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.38.720.ga4a70a0e-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.38.720.ga4a70a0e-1223.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.38.720.ga4a70a0e-1222.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.38.720.ga4a70a0e-1223.exe"
+    },
+    "1.2.37 (2024-05-16)": {
+        "version": "1.2.37.701.ge66eb7bc",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.37.701.ge66eb7bc-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.37.701.ge66eb7bc-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.37.701.ge66eb7bc-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.37.701.ge66eb7bc-1202.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.37.701.ge66eb7bc-1204.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.37.701.ge66eb7bc-1202.exe"
+    },
+    "1.2.36 (2024-05-03)": {
+        "version": "1.2.36.959.g04bf500c",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.36.959.g04bf500c-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.36.959.g04bf500c-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.36.959.g04bf500c-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.36.959.g04bf500c-847.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.36.959.g04bf500c-845.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.36.959.g04bf500c-845.exe"
+    },
+    "1.2.35 (2024-04-14)": {
+        "version": "1.2.35.663.gb699649e",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.35.663.gb699649e-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.35.663.gb699649e-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.35.663.gb699649e-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.35.663.gb699649e-6898.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.35.663.gb699649e-6892.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.35.663.gb699649e-1001.exe"
+    },
+    "1.2.34 (2024-04-05)": {
+        "version": "1.2.34.783.g923721d9",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.34.783.g923721d9-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.34.783.g923721d9-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.34.783.g923721d9-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.34.783.g923721d9-5829.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.34.783.g923721d9-5822.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.34.783.g923721d9-5696.exe"
+    },
+    "1.2.33 (2024-03-27)": {
+        "version": "1.2.33.1042.g26c92729",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.33.1042.g26c92729-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.33.1042.g26c92729-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.33.1042.g26c92729-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.33.1042.g26c92729-5650.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.33.1042.g26c92729-5643.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.33.1042.g26c92729-5519.exe"
+    },
+    "1.2.32 (2024-03-04)": {
+        "version": "1.2.32.997.g4c6498b6",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.32.997.g4c6498b6-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.32.997.g4c6498b6-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.32.997.g4c6498b6-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.32.997.g4c6498b6-2899.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.32.997.g4c6498b6-2894.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.32.997.g4c6498b6-2855.exe"
+    },
+    "1.2.31 (2024-02-14)": {
+        "version": "1.2.31.1205.g4d59ad7c",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.31.1205.g4d59ad7c-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.31.1205.g4d59ad7c-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.31.1205.g4d59ad7c-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.31.1205.g4d59ad7c-1562.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.31.1205.g4d59ad7c-1561.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.31.1205.g4d59ad7c-1527.exe"
+    },
+    "1.2.30 (2024-02-02)": {
+        "version": "1.2.30.1135.g02fef27a",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.30.1135.g02fef27a-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.30.1135.g02fef27a-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.30.1135.g02fef27a-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.30.1135.g02fef27a-399.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.30.1135.g02fef27a-399.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.30.1135.g02fef27a-386.exe"
+    },
+    "1.2.29 (2024-01-20)": {
+        "version": "1.2.29.605.g66a43ceb",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.29.605.g66a43ceb-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.29.605.g66a43ceb-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.29.605.g66a43ceb-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.29.605.g66a43ceb-1229.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.29.605.g66a43ceb-1227.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.29.605.g66a43ceb-1234.exe"
+    },
+    "1.2.28 (2024-01-06)": {
+        "version": "1.2.28.581.gd0e8a92c",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.28.581.gd0e8a92c-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.28.581.gd0e8a92c-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.28.581.gd0e8a92c-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.28.581.gd0e8a92c-444.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.28.581.gd0e8a92c-444.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.28.581.gd0e8a92c-442.exe"
+    },
+    "1.2.26 (2023-12-24)": {
+        "version": "1.2.26.1187.g36b715a1",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.26.1187.g36b715a1-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.26.1187.g36b715a1-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.26.1187.g36b715a1-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.26.1187.g36b715a1-269.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.26.1187.g36b715a1-269.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.26.1187.g36b715a1-267.exe"
+    },
+    "1.2.25 (2023-11-27)": {
+        "version": "1.2.25.1011.g0348b2ea",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.25.1011.g0348b2ea-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.25.1011.g0348b2ea-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.25.1011.g0348b2ea-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.25.1011.g0348b2ea-713.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.25.1011.g0348b2ea-701.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.25.1011.g0348b2ea-706.exe"
+    },
+    "1.2.24 (2023-11-13)": {
+        "version": "1.2.24.756.g7a7fc7f0",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.24.756.g7a7fc7f0-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.24.756.g7a7fc7f0-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.24.756.g7a7fc7f0-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.24.756.g7a7fc7f0-1482.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.24.756.g7a7fc7f0-1487.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.24.756.g7a7fc7f0-1457.exe"
+    },
+    "1.2.23 (2023-11-07)": {
+        "version": "1.2.23.1125.g920a7ada",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.23.1125.g920a7ada-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.23.1125.g920a7ada-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.23.1125.g920a7ada-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.23.1125.g920a7ada-912.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.23.1125.g920a7ada-925.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.23.1125.g920a7ada-897.exe"
+    },
+    "1.2.22 (2023-10-11)": {
+        "version": "1.2.22.982.g794acc0a",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.22.982.g794acc0a-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.22.982.g794acc0a-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.22.982.g794acc0a-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.22.982.g794acc0a-900.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.22.982.g794acc0a-900.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.22.982.g794acc0a-895.exe"
+    },
+    "1.2.21 (2023-09-28)": {
+        "version": "1.2.21.1104.g42cf0a50",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.21.1104.g42cf0a50-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.21.1104.g42cf0a50-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.21.1104.g42cf0a50-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.21.1104.g42cf0a50-302.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.21.1104.g42cf0a50-303.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.21.1104.g42cf0a50-306.exe"
+    },
+    "1.2.20 (2023-09-22)": {
+        "version": "1.2.20.1218.g02aff7a4",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.20.1218.g02aff7a4-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.20.1218.g02aff7a4-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.20.1218.g02aff7a4-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.20.1218.g02aff7a4-243.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.20.1218.g02aff7a4-243.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.20.1218.g02aff7a4-247.exe"
+    },
+    "1.2.19 (2023-08-31)": {
+        "version": "1.2.19.941.gbf202593",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.19.941.gbf202593-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.19.941.gbf202593-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.19.941.gbf202593-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.19.941.gbf202593-410.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.19.941.gbf202593-411.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.19.941.gbf202593-404.exe"
+    },
+    "1.2.18 (2023-08-24)": {
+        "version": "1.2.18.999.g9b38fc27",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.18.999.g9b38fc27-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.18.999.g9b38fc27-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.18.999.g9b38fc27-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.18.999.g9b38fc27-20.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.18.999.g9b38fc27-20.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.18.999.g9b38fc27-18.exe"
+    },
+    "1.2.17 (2023-08-17)": {
+        "version": "1.2.17.834.g26ee1129",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.17.834.g26ee1129-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.17.834.g26ee1129-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.17.834.g26ee1129-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.17.834.g26ee1129-633.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.17.834.g26ee1129-632.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.17.834.g26ee1129-631.exe"
+    },
+    "1.2.16 (2023-07-23)": {
+        "version": "1.2.16.947.gcfbaa410",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.16.947.gcfbaa410-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.16.947.gcfbaa410-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.16.947.gcfbaa410-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.16.947.gcfbaa410-104.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.16.947.gcfbaa410-105.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.16.947.gcfbaa410-105.exe"
+    },
+    "1.2.15 (2023-07-10)": {
+        "version": "1.2.15.828.g79f41970",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.15.828.g79f41970-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.15.828.g79f41970-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.15.828.g79f41970-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.15.828.g79f41970-1030.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.15.828.g79f41970-1030.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.15.828.g79f41970-1033.exe"
+    },
+    "1.2.14 (2023-06-22)": {
+        "version": "1.2.14.1149.ga3ae422d",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.14.1149.ga3ae422d-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.14.1149.ga3ae422d-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.14.1149.ga3ae422d-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.14.1149.ga3ae422d-1029.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.14.1149.ga3ae422d-1027.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.14.1149.ga3ae422d-1023.exe"
+    },
+    "1.2.13 (2023-06-12)": {
+        "version": "1.2.13.661.ga588f749",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.13.661.ga588f749-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.13.661.ga588f749-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.13.661.ga588f749-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.13.661.ga588f749-4071.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.13.661.ga588f749-4064.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.13.661.ga588f749-4057.exe"
+    },
+    "1.2.12 (2023-05-25)": {
+        "version": "1.2.12.902.g1924b088",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.12.902.g1924b088-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.12.902.g1924b088-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.12.902.g1924b088-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.12.902.g1924b088-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.12.902.g1924b088-3133.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.12.902.g1924b088-3117.exe"
+    },
+    "1.2.11 (2023-05-16)": {
+        "version": "1.2.11.916.geb595a67",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.11.916.geb595a67-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.11.916.geb595a67-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.11.916.geb595a67-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.11.916.geb595a67-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.11.916.geb595a67-2498.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.11.916.geb595a67-2492.exe"
+    },
+    "1.2.10 (2023-05-03)": {
+        "version": "1.2.10.760.g52970952",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.10.760.g52970952-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.10.760.g52970952-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.10.760.g52970952-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.10.760.g52970952-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.10.760.g52970952-1106.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.10.760.g52970952-1112.exe"
+    },
+    "1.2.9 (2023-04-22)": {
+        "version": "1.2.9.746.gbc57b7ae",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.9.746.gbc57b7ae-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.9.746.gbc57b7ae-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.9.746.gbc57b7ae-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.9.746.gbc57b7ae-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.9.746.gbc57b7ae-1510.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.9.746.gbc57b7ae-arm64.exe"
+    },
+    "1.2.8 (2023-03-31)": {
+        "version": "1.2.8.923.g4f94bf0d",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.8.923.g4f94bf0d-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.8.923.g4f94bf0d-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.8.923.g4f94bf0d-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.8.923.g4f94bf0d-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.8.923.g4f94bf0d-1195.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.8.923.g4f94bf0d-1154.exe"
+    },
+    "1.2.7 (2023-03-17)": {
+        "version": "1.2.7.1277.g2b3ce637",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.7.1277.g2b3ce637-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.7.1277.g2b3ce637-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.7.1277.g2b3ce637-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.7.1277.g2b3ce637-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.7.1277.g2b3ce637-219.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.7.1277.g2b3ce637-217.exe"
+    },
+    "1.2.6 (2023-03-02)": {
+        "version": "1.2.6.863.ge7902f05",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.6.863.ge7902f05-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.6.863.ge7902f05-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.6.863.ge7902f05-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.6.863.ge7902f05-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.6.863.ge7902f05-163.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.6.863.ge7902f05-160.exe"
+    },
+    "1.2.5 (2023-02-20)": {
+        "version": "1.2.5.1006.g22820f93",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.5.1006.g22820f93-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.5.1006.g22820f93-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.5.1006.g22820f93-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.5.1006.g22820f93-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.5.1006.g22820f93-1078.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.5.1006.g22820f93-1057.exe"
+    },
+    "1.2.4 (2023-02-09)": {
+        "version": "1.2.4.912.g949d5fd0",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.4.912.g949d5fd0-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.4.912.g949d5fd0-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.4.912.g949d5fd0-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.4.912.g949d5fd0-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.4.912.g949d5fd0-272.exe",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.4.912.g949d5fd0-263.exe"
+    },
+    "1.2.3 (2023-01-19)": {
+        "version": "1.2.3.1115.gd61a8f5c",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.3.1115.gd61a8f5c-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.3.1115.gd61a8f5c-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.3.1115.gd61a8f5c-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.3.1115.gd61a8f5c-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.3.1115.gd61a8f5c-384.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.3.1115.gd61a8f5c-arm64.exe"
+    },
+    "1.2.2 (2023-01-08)": {
+        "version": "1.2.2.582.gfae9c59b",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.2.582.gfae9c59b-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.2.582.gfae9c59b-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.2.582.gfae9c59b-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.2.582.gfae9c59b-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.2.582.gfae9c59b-54.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.2.582.gfae9c59b-arm64.exe"
+    },
+    "1.2.1 (2022-12-28)": {
+        "version": "1.2.1.968.g21027577",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.1.968.g21027577-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.1.968.g21027577-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.1.968.g21027577-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.1.968.g21027577-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.1.968.g21027577-2.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.1.968.g21027577-arm64.exe"
+    },
+    "1.2.0 (2022-12-05)": {
+        "version": "1.2.0.1165.gabf054ab",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.0.1165.gabf054ab-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.0.1165.gabf054ab-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.0.1165.gabf054ab-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.0.1165.gabf054ab-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.2.0.1165.gabf054ab-1082.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.0.1165.gabf054ab-arm64.exe"
+    },
+    "1.1.99 (2022-11-24)": {
+        "version": "1.1.99.878.g1e4ccc6e",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.99.878.g1e4ccc6e-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.99.878.g1e4ccc6e-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.99.878.g1e4ccc6e-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.99.878.g1e4ccc6e-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.99.878.g1e4ccc6e-2136.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.99.878.g1e4ccc6e-arm64.exe"
+    },
+    "1.1.97 (2022-10-31)": {
+        "version": "1.1.97.962.g24733a46",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.97.962.g24733a46-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.97.962.g24733a46-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.97.962.g24733a46-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.97.962.g24733a46-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.97.962.g24733a46-543.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.97.962.g24733a46-arm64.exe"
+    },
+    "1.1.96 (2022-10-12)": {
+        "version": "1.1.96.785.g464c973a",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.96.785.g464c973a-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.96.785.g464c973a-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.96.785.g464c973a-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.96.785.g464c973a-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.96.785.g464c973a-1287.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.96.785.g464c973a-arm64.exe"
+    },
+    "1.1.94 (2022-09-19)": {
+        "version": "1.1.94.870.gf994cb0b",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.94.870.gf994cb0b-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.94.870.gf994cb0b-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.94.870.gf994cb0b-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.94.870.gf994cb0b-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.94.870.gf994cb0b-16.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.94.870.gf994cb0b-arm64.exe"
+    },
+    "1.1.93 (2022-08-27)": {
+        "version": "1.1.93.896.g3ae3b4f3",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.93.896.g3ae3b4f3-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.93.896.g3ae3b4f3-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.93.896.g3ae3b4f3-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.93.896.g3ae3b4f3-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.93.896.g3ae3b4f3-10.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.93.896.g3ae3b4f3-arm64.exe"
+    },
+    "1.1.90 (2022-07-25)": {
+        "version": "1.1.90.859.gf1bb1e36",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.90.859.gf1bb1e36-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.90.859.gf1bb1e36-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.90.859.gf1bb1e36-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.90.859.gf1bb1e36-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.90.859.gf1bb1e36-11.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.90.859.gf1bb1e36-arm64.exe"
+    },
+    "1.1.89 (2022-07-05)": {
+        "version": "1.1.89.862.g94554d24",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.89.862.g94554d24-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.89.862.g94554d24-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.89.862.g94554d24-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.89.862.g94554d24-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.89.862.g94554d24-13.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.89.862.g94554d24-arm64.exe"
+    },
+    "1.1.87 (2022-06-09)": {
+        "version": "1.1.87.612.gf8d110e2",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.87.612.gf8d110e2-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.87.612.gf8d110e2-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.87.612.gf8d110e2-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.87.612.gf8d110e2-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.87.612.gf8d110e2-19.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.87.612.gf8d110e2-arm64.exe"
+    },
+    "1.1.86 (2022-05-24)": {
+        "version": "1.1.86.857.g3751ee08",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.86.857.g3751ee08-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.86.857.g3751ee08-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.86.857.g3751ee08-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.86.857.g3751ee08-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.86.857.g3751ee08-34.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.86.857.g3751ee08-arm64.exe"
+    },
+    "1.1.85 (2022-05-09)": {
+        "version": "1.1.85.895.g2a71e1b8",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.85.895.g2a71e1b8-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.85.895.g2a71e1b8-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.85.895.g2a71e1b8-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.85.895.g2a71e1b8-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.85.895.g2a71e1b8-31.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.85.895.g2a71e1b8-arm64.exe"
+    },
+    "1.1.84 (2022-04-28)": {
+        "version": "1.1.84.716.gc5f8b819",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.84.716.gc5f8b819-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.84.716.gc5f8b819-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.84.716.gc5f8b819-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.84.716.gc5f8b819-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.84.716.gc5f8b819-8.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.84.716.gc5f8b819-arm64.exe"
+    },
+    "1.1.83 (2022-04-12)": {
+        "version": "1.1.83.956.gbe7ea9a7",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.83.956.gbe7ea9a7-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.83.956.gbe7ea9a7-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.83.956.gbe7ea9a7-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.83.956.gbe7ea9a7-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.83.956.gbe7ea9a7-21.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.83.956.gbe7ea9a7-arm64.exe"
+    },
+    "1.1.80 (2022-03-03)": {
+        "version": "1.1.80.699.gc3dac750",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.80.699.gc3dac750-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.80.699.gc3dac750-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.80.699.gc3dac750-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.80.699.gc3dac750-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.80.699.gc3dac750-9.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.80.699.gc3dac750-arm64.exe"
+    },
+    "1.1.79 (2022-02-15)": {
+        "version": "1.1.79.763.gc2965cdf",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.79.763.gc2965cdf-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.79.763.gc2965cdf-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.79.763.gc2965cdf-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.79.763.gc2965cdf-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.79.763.gc2965cdf-21.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.79.763.gc2965cdf-arm64.exe"
+    },
+    "1.1.78 (2022-02-08)": {
+        "version": "1.1.78.765.g5ea20b00",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.78.765.g5ea20b00-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.78.765.g5ea20b00-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.78.765.g5ea20b00-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.78.765.g5ea20b00-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.78.765.g5ea20b00-15.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.78.765.g5ea20b00-arm64.exe"
+    },
+    "1.1.77 (2022-01-20)": {
+        "version": "1.1.77.643.g3c4c6fc6",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.77.643.g3c4c6fc6-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.77.643.g3c4c6fc6-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.77.643.g3c4c6fc6-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.77.643.g3c4c6fc6-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.77.643.g3c4c6fc6-20.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.77.643.g3c4c6fc6-arm64.exe"
+    },
+    "1.1.76 (2022-01-10)": {
+        "version": "1.1.76.447.g11f432d8",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.76.447.g11f432d8-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.76.447.g11f432d8-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.76.447.g11f432d8-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.76.447.g11f432d8-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.76.447.g11f432d8-14.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.76.447.g11f432d8-arm64.exe"
+    },
+    "1.1.74 (2021-12-13)": {
+        "version": "1.1.74.631.g0b24d9ad",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.74.631.g0b24d9ad-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.74.631.g0b24d9ad-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.74.631.g0b24d9ad-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.74.631.g0b24d9ad-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.74.631.g0b24d9ad-16.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.74.631.g0b24d9ad-arm64.exe"
+    },
+    "1.1.73 (2021-11-29)": {
+        "version": "1.1.73.517.gbef50fdb",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.73.517.gbef50fdb-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.73.517.gbef50fdb-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.73.517.gbef50fdb-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.73.517.gbef50fdb-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.73.517.gbef50fdb-23.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.73.517.gbef50fdb-arm64.exe"
+    },
+    "1.1.72 (2021-11-15)": {
+        "version": "1.1.72.439.gc253025e",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.72.439.gc253025e-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.72.439.gc253025e-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.72.439.gc253025e-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.72.439.gc253025e-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.72.439.gc253025e-33.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.72.439.gc253025e-arm64.exe"
+    },
+    "1.1.71 (2021-10-27)": {
+        "version": "1.1.71.560.gc21c3367",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.71.560.gc21c3367-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.71.560.gc21c3367-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.71.560.gc21c3367-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.71.560.gc21c3367-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.71.560.gc21c3367-42.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.71.560.gc21c3367-arm64.exe"
+    },
+    "1.1.70 (2021-10-08)": {
+        "version": "1.1.70.610.g4585142b",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.70.610.g4585142b-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.70.610.g4585142b-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.70.610.g4585142b-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.70.610.g4585142b-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.70.610.g4585142b-8.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.70.610.g4585142b-arm64.exe"
+    },
+    "1.1.69 (2021-10-04)": {
+        "version": "1.1.69.612.gb7409abc",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.69.612.gb7409abc-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.69.612.gb7409abc-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.69.612.gb7409abc-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.69.612.gb7409abc-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.69.612.gb7409abc-16.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.69.612.gb7409abc-arm64.exe"
+    },
+    "1.1.68 (2021-09-20)": {
+        "version": "1.1.68.628.geb44bd66",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.68.628.geb44bd66-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.68.628.geb44bd66-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.68.628.geb44bd66-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.68.628.geb44bd66-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.68.628.geb44bd66-13.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.68.628.geb44bd66-arm64.exe"
+    },
+    "1.1.67 (2021-08-31)": {
+        "version": "1.1.67.586.gbb5ef64e",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.67.586.gbb5ef64e-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.67.586.gbb5ef64e-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.67.586.gbb5ef64e-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.67.586.gbb5ef64e-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.67.586.gbb5ef64e-21.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.67.586.gbb5ef64e-arm64.exe"
+    },
+    "1.1.66 (2021-08-20)": {
+        "version": "1.1.66.580.gbd43cbc9",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.66.580.gbd43cbc9-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.66.580.gbd43cbc9-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.66.580.gbd43cbc9-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.66.580.gbd43cbc9-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.66.580.gbd43cbc9-18.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.66.580.gbd43cbc9-arm64.exe"
+    },
+    "1.1.65 (2021-08-02)": {
+        "version": "1.1.65.643.g2d707698",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.65.643.g2d707698-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.65.643.g2d707698-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.65.643.g2d707698-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.65.643.g2d707698-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.65.643.g2d707698-27.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.65.643.g2d707698-arm64.exe"
+    },
+    "1.1.64 (2021-07-16)": {
+        "version": "1.1.64.561.g71bd09eb",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.64.561.g71bd09eb-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.64.561.g71bd09eb-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.64.561.g71bd09eb-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.64.561.g71bd09eb-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.64.561.g71bd09eb-18.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.64.561.g71bd09eb-arm64.exe"
+    },
+    "1.1.63 (2021-07-07)": {
+        "version": "1.1.63.568.gda8cb5ac",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.63.568.gda8cb5ac-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.63.568.gda8cb5ac-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.63.568.gda8cb5ac-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.63.568.gda8cb5ac-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.63.568.gda8cb5ac-23.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.63.568.gda8cb5ac-arm64.exe"
+    },
+    "1.1.62 (2021-06-22)": {
+        "version": "1.1.62.583.gdac868ed",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.62.583.gdac868ed-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.62.583.gdac868ed-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.62.583.gdac868ed-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.62.583.gdac868ed-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.62.583.gdac868ed-25.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.62.583.gdac868ed-arm64.exe"
+    },
+    "1.1.61 (2021-06-04)": {
+        "version": "1.1.61.583.gad060c66",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.61.583.gad060c66-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.61.583.gad060c66-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.61.583.gad060c66-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.61.583.gad060c66-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.61.583.gad060c66-7.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.61.583.gad060c66-arm64.exe"
+    },
+    "1.1.60 (2021-05-27)": {
+        "version": "1.1.60.672.g6ad9c215",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.60.672.g6ad9c215-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.60.672.g6ad9c215-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.60.672.g6ad9c215-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.60.672.g6ad9c215-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.60.672.g6ad9c215-15.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.60.672.g6ad9c215-arm64.exe"
+    },
+    "1.1.59 (2021-05-21)": {
+        "version": "1.1.59.714.g7e040462",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.59.714.g7e040462-x64.exe",
+        "loadspot_url_x86": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.59.714.g7e040462-x86.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.59.714.g7e040462-arm64.exe",
+        "archive_url": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.59.714.g7e040462-x64.exe",
+        "archive_url_x86": "https://archive.org/download/spotify-installer-museum/windows/x86/exe/spotify_installer-1.1.59.714.g7e040462-34.exe",
+        "archive_url_arm64": "https://web.archive.org/web/2/https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.1.59.714.g7e040462-arm64.exe"
+    }
+}
