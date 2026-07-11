@@ -1,4 +1,13 @@
 {
+    "1.2.94 (2026-07-10)": {
+        "version": "1.2.94.569.ge980d670",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.94.569.ge980d670-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.94.569.ge980d670-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.94.569.ge980d670-x64.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.94.569.ge980d670-arm64.exe"
+    },
     "1.2.93 (2026-07-01)": {
         "version": "1.2.93.667.g7b5cc0ce",
         "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.93.667.g7b5cc0ce-x64.exe",
