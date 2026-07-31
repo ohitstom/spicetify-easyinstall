@@ -71,10 +71,6 @@
         "cli": "4097185447ccc88a2ce045aa3d21d78a3bafca6e",
         "themes": "41bc619d10b1f6e95d8edac61006a3c13cc4f5e0"
     },
-    "2.42.1": {
-        "cli": "b18e0efb25cd1014f7d6d63fc2fd3f94bd40b25d",
-        "themes": "ed002f291b3b9a14b1a14d6fdf9b8edabf4082ec"
-    },
     "2.42.0": {
         "cli": "6f82fa9ac54606fbccc42364f3a58d36f9f789e0",
         "themes": "726097a544172523cdae15da8d3c84032aec8c3b"
