@@ -1,12 +1,12 @@
 {
-    "1.2.97 (2026-08-14)": {
-        "version": "1.2.97.257.g333c4d12",
-        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.97.257.g333c4d12-x64.exe",
+    "1.2.97 (2026-08-18)": {
+        "version": "1.2.97.270.ge94a76a2",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.97.270.ge94a76a2-x64.exe",
         "loadspot_url_x86": "",
-        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.97.257.g333c4d12-arm64.exe",
-        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.97.257.g333c4d12-x64.exe",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.2.97.270.ge94a76a2-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.2.97.270.ge94a76a2-x64.exe",
         "archive_url_x86": "",
-        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.97.257.g333c4d12-arm64.exe"
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.2.97.270.ge94a76a2-arm64.exe"
     },
     "1.2.96 (2026-08-11)": {
         "version": "1.2.96.518.g366879e1",
