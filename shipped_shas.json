@@ -1,4 +1,8 @@
 {
+    "3.0.0-beta.11": {
+        "cli": "1f13f736163165234eef4fb792a03f9b5b732aa4",
+        "themes": "3508edd96a2adebd6daa78d1f2c9e7367ef693f8"
+    },
     "3.0.0-beta.10": {
         "cli": "c9571cd0365ec653f18f002c9958f36026d753d5",
         "themes": "3508edd96a2adebd6daa78d1f2c9e7367ef693f8"
@@ -466,10 +470,6 @@
     "2.22.2": {
         "cli": "7b498111c49ccc6280f33b6366568f14ad134fef",
         "themes": "e4a15de2e02642c7d5ba2cde6cb610dc3c9fac91"
-    },
-    "2.22.1": {
-        "cli": "2b23613b894859d383fbe5de308eaf91ce05dcce",
-        "themes": "b2269a9650b735b955d5b024d69c7a38022d4a7e"
     },
     "2.22.0": {
         "cli": "e9d70b0f311c4c1d97b4c6ab127f0e4142a21e0e",
