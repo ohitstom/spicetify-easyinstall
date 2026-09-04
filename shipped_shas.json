@@ -1,4 +1,8 @@
 {
+    "3.0.0-beta.12": {
+        "cli": "1f13f736163165234eef4fb792a03f9b5b732aa4",
+        "themes": "3508edd96a2adebd6daa78d1f2c9e7367ef693f8"
+    },
     "3.0.0-beta.11": {
         "cli": "1f13f736163165234eef4fb792a03f9b5b732aa4",
         "themes": "3508edd96a2adebd6daa78d1f2c9e7367ef693f8"
