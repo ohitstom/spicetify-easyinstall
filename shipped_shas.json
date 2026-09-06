@@ -1,4 +1,12 @@
 {
+    "3.0.0-beta.14": {
+        "cli": "7062ff48ab698c9d292477017e801bb9ae91b9c4",
+        "themes": "3f55a3702bd6d87799dc97023e0fe2b11d88c704"
+    },
+    "3.0.0-beta.13": {
+        "cli": "7062ff48ab698c9d292477017e801bb9ae91b9c4",
+        "themes": "3f55a3702bd6d87799dc97023e0fe2b11d88c704"
+    },
     "3.0.0-beta.12": {
         "cli": "1f13f736163165234eef4fb792a03f9b5b732aa4",
         "themes": "3508edd96a2adebd6daa78d1f2c9e7367ef693f8"
