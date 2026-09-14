@@ -1,4 +1,8 @@
 {
+    "3.0.0-beta.15": {
+        "cli": "5caf1949001465a7cde0bc0d5a36fb1da2f92043",
+        "themes": "3dae51f0229323c256b1a1bfd433e89a0fbb72c5"
+    },
     "2.45.0": {
         "cli": "0eb878e0ef981623f86fa3252dd830a5990847fb",
         "themes": "3f55a3702bd6d87799dc97023e0fe2b11d88c704"
