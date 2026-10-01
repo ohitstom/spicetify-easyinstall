@@ -1,4 +1,24 @@
 {
+    "3.0.0-rc.1": {
+        "cli": "4de3dd58d104e1bbe96dcf28bf7c951d8b22de7b",
+        "themes": "33a08ea009687f5a42ff678015c28797fe142a7c"
+    },
+    "3.0.0-beta.23": {
+        "cli": "4de3dd58d104e1bbe96dcf28bf7c951d8b22de7b",
+        "themes": "33a08ea009687f5a42ff678015c28797fe142a7c"
+    },
+    "3.0.0-beta.22": {
+        "cli": "4de3dd58d104e1bbe96dcf28bf7c951d8b22de7b",
+        "themes": "33a08ea009687f5a42ff678015c28797fe142a7c"
+    },
+    "3.0.0-beta.21": {
+        "cli": "4de3dd58d104e1bbe96dcf28bf7c951d8b22de7b",
+        "themes": "33a08ea009687f5a42ff678015c28797fe142a7c"
+    },
+    "3.0.0-beta.20": {
+        "cli": "c95fee328ec5b6d3186aa7f6e11f0af972cee559",
+        "themes": "33a08ea009687f5a42ff678015c28797fe142a7c"
+    },
     "3.0.0-beta.19": {
         "cli": "c01a9db39d008e4331f4d91d79012060e73ae643",
         "themes": "a563bdf6e04dd2c8be5f308d0ae4457ca7343471"
