@@ -1,4 +1,8 @@
 {
+    "3.0.0-rc.2": {
+        "cli": "4de3dd58d104e1bbe96dcf28bf7c951d8b22de7b",
+        "themes": "33a08ea009687f5a42ff678015c28797fe142a7c"
+    },
     "3.0.0-rc.1": {
         "cli": "4de3dd58d104e1bbe96dcf28bf7c951d8b22de7b",
         "themes": "33a08ea009687f5a42ff678015c28797fe142a7c"
