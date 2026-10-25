@@ -1,4 +1,8 @@
 {
+    "2.46.3": {
+        "cli": "c2ea16caa724464249a78d8e7cedf2aefe5a40b5",
+        "themes": "c432012478e1f2e2ffccca8e943e188af40d6190"
+    },
     "2.46.2": {
         "cli": "dc00e57f2fa8d4502a8efe8633bfaace953f3b09",
         "themes": "c432012478e1f2e2ffccca8e943e188af40d6190"
