@@ -1,4 +1,12 @@
 {
+    "2.46.7": {
+        "cli": "867df4af012a07f0b9d5c6b4bc8d7c29badb8ca9",
+        "themes": "176fdc7b334c3579475edc3f17452bf87f53d51b"
+    },
+    "2.46.5": {
+        "cli": "aff5b4071eeaf02e8061ae7c902ea1fd9f44935f",
+        "themes": "176fdc7b334c3579475edc3f17452bf87f53d51b"
+    },
     "2.46.4": {
         "cli": "c3fd98f6fbf922ae944d1ecd64f97c380d04368e",
         "themes": "c432012478e1f2e2ffccca8e943e188af40d6190"
