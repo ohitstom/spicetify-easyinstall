@@ -1,4 +1,13 @@
 {
+    "1.3.10 (2026-11-13)": {
+        "version": "1.3.10.2586.g81a118a22460",
+        "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.3.10.2586.g81a118a22460-x64.exe",
+        "loadspot_url_x86": "",
+        "loadspot_url_arm64": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.3.10.2586.g81a118a22460-arm64.exe",
+        "archive_url": "https://archive.org/download/spotify-installer-museum/windows/x86_64/exe/spotify_installer-1.3.10.2586.g81a118a22460-x64.exe",
+        "archive_url_x86": "",
+        "archive_url_arm64": "https://archive.org/download/spotify-installer-museum/windows/arm64/exe/spotify_installer-1.3.10.2586.g81a118a22460-arm64.exe"
+    },
     "1.3.9 (2026-11-10)": {
         "version": "1.3.9.2055.g806b5b278de8",
         "loadspot_url": "https://loadspot.amd64fox1.workers.dev/download/spotify_installer-1.3.9.2055.g806b5b278de8-x64.exe",
