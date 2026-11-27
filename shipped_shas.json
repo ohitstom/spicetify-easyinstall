@@ -327,6 +327,10 @@
         "cli": "01f5cc5427627d83f08f16ad9fec9f1e69636532",
         "themes": "ca4264263a51800a119fa0bea231f25f58857d5f"
     },
+    "2.38.6": {
+        "cli": "fa1070dbde6e2360efbbfaab4861b76caaef51f9",
+        "themes": "ca4264263a51800a119fa0bea231f25f58857d5f"
+    },
     "2.38.5": {
         "cli": "b26a60e41dd4296ba337b58f68ec2b1de2b422cf",
         "themes": "c6e82dfeaa46ee9060d0c02fc437989eb77f6c61"
